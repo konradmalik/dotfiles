@@ -9,19 +9,29 @@
     - gdbinit
 
 - block:
-  - name: link private dot files
-    file:
-      src: "{{ repo_path }}/private/{{ item }}"
-      path: "~/.{{ item }}"
-      state: link
-      force: yes
-    with_items:
-      - netrc
+    - name: Check if private configs submodule is cloned before proceeding
+      find:
+        paths:
+          - "{{ repo_path }}/private"
+        recurse: yes
+      register: private_found
 
-  - name: make sure netrc file mode is ok
-    file:
-      path: ~/.netrc
-      mode: og-rw
+    - name: link private dot files
+      file:
+        src: "{{ repo_path }}/private/{{ item }}"
+        path: "~/.{{ item }}"
+        state: link
+        force: yes
+      with_items:
+        - netrc
+      when: private_found.matched > 0
+
+    - name: make sure netrc file mode is ok
+      file:
+        path: ~/.netrc
+        mode: og-rw
+      when: private_found.matched > 0
+
   when: private_machine
 
 - name: create .gnupg
