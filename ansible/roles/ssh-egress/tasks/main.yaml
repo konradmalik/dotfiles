@@ -1,0 +1,38 @@
+- name: Check if private configs submodule is cloned before proceeding
+  find:
+    paths:
+      - "{{ repo_path }}/private"
+    recurse: yes
+  register: private_found
+
+- name: make sure config.d folder exists and has proper mode
+  file:
+    path: ~/.ssh/config.d
+    state: directory
+    mode: 0700
+
+- name: make sure config files modes are ok
+  file:
+    path: "{{ repo_path }}/private/ssh/{{ item }}"
+    mode: 0600
+  with_items:
+    - aur
+    - cerebre
+    - evaris
+    - git
+    - private
+  when: private_found.matched > 0
+
+- name: link configs
+  file:
+    src: "{{ repo_path }}/private/ssh/{{ item }}"
+    path: "~/.ssh/config.d/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - aur
+    - cerebre
+    - evaris
+    - git
+    - private
+  when: private_found.matched > 0

@@ -1,0 +1,20 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: Ensures GOPATH/bin dir exists
+  file: path=~/.go/bin state=directory
+  when: ansible_system == "Linux"
+
+- name: install golangci-lint from github (linux only, osx installed from brew)
+  shell:
+    cmd: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v{{ git_versions.golangci_lint }}
+    creates: ~/.go/bin/golangci-lint
+  environment:
+    GO_PATH: "~/.go"
+  when: ansible_system == "Linux"

@@ -1,0 +1,51 @@
+- name: install neovim from appimage
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -LO https://github.com/neovim/neovim/releases/download/v{{ git_versions.nvim }}/nvim.appimage
+      chmod u+x ./nvim.appimage
+      ./nvim.appimage --appimage-extract
+      # additional geek points for this beauty
+      (cd ./squashfs-root/usr && tar c .) | (cd /usr && tar xf -)
+      rm -rf ./squashfs-root nvim.appimage
+    creates: /usr/bin/nvim
+  when: ansible_architecture == "x86_64"
+
+- name: install newer nodejs repo
+  become: yes
+  shell:
+    cmd: |
+      curl -sL https://deb.nodesource.com/setup_14.x | bash -
+    creates: /etc/apt/sources.list.d/nodesource.list
+
+- name: install nodejs (provides npm)
+  become: yes
+  apt:
+    name:
+      - nodejs
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+
+- name: install pyright and prettier globally
+  become: yes
+  community.general.npm:
+    name: "{{ item }}"
+    global: yes
+  with_items:
+    - pyright
+    - prettier
+
+- name: install efm-langserver
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      # install efm from github releases
+      curl -L https://github.com/mattn/efm-langserver/releases/download/v{{ git_versions.efm_langserver }}/efm-langserver_v{{ git_versions.efm_langserver }}_linux_amd64.tar.gz | tar xvfz -
+      mv **/efm-langserver /usr/local/bin/efm-langserver
+      rm -rf efm-langserver*
+    creates: /usr/local/bin/efm-langserver
+  when: ansible_architecture == "x86_64"

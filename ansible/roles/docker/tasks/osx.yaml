@@ -1,0 +1,10 @@
+- name: install docker cask
+  community.general.homebrew_cask:
+    name:
+      - docker
+
+- name: install docker brew packages
+  community.general.homebrew:
+    name:
+      - dive
+    update_homebrew: yes

@@ -1,0 +1,6 @@
+- name: install vscode snap package (amd64 only)
+  become: yes
+  community.general.snap:
+    name: code
+    classic: yes
+  when: ansible_architecture == "x86_64"

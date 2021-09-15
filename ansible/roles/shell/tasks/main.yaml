@@ -1,0 +1,33 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: link zsh files
+  file:
+    src: "{{ repo_path }}/files/zsh/{{ item }}"
+    path: "~/.{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - zshrc
+    - zshenv
+    - zprofile
+
+- name: link starship config
+  file:
+    src: "{{ repo_path }}/files/zsh/starship.toml"
+    path: ~/.config/starship.toml
+    state: link
+    force: yes
+
+- name: change shell to zsh for "{{ target_user }}"
+  become: yes
+  user:
+    name: "{{ target_user }}"
+    shell: /bin/zsh
+  when: ansible_system == "Linux"

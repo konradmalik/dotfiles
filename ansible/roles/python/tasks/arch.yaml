@@ -1,0 +1,19 @@
+- name: install pyenv and python compile-dependencies
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - pyenv
+      - base-devel
+      - openssl
+      - zlib
+      - xz
+
+- name: install poetry
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - python-poetry

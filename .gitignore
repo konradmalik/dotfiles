@@ -1,0 +1,14 @@
+.DS_store
+#nvim
+.netrwhist
+**/packer_compiled.vim
+#vscode
+.config/Code/*
+!.config/Code/User/
+globalStorage
+workspaceStorage
+vscode/User/sync
+**/.vagrant
+**/.vscode
+**/.metals
+

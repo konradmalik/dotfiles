@@ -1,0 +1,9 @@
+- name: install zsh, plugins and starship
+  community.general.homebrew:
+    name:
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - zsh-completions
+      - fzf 
+      - starship
+    update_homebrew: yes

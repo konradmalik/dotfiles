@@ -1,0 +1,26 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: ubuntu-aarch64.yaml
+  when: ansible_architecture == "aarch64"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: create neovim dir
+  file:
+    path: ~/.config/nvim
+    state: directory
+
+- name: link neovim files
+  file:
+    src: "{{ repo_path }}/files/neovim/{{ item }}"
+    path: "~/.config/nvim/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - init.lua
+    - lua

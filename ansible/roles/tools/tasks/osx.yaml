@@ -1,0 +1,34 @@
+- name: custom taps
+  community.general.homebrew_tap:
+    name:
+      - sachaos/tap
+
+- name: install brew packages
+  community.general.homebrew:
+    name:
+      - fzf
+      - bat
+      - exa
+      - fd
+      - ripgrep
+      - jq
+      - jenv
+      - procs
+      - ncdu
+      - nq
+      - direnv
+      - zoxide
+      - tree
+      - up
+      - viddy
+      - shellcheck
+      - duf
+      - gotop
+      - croc
+      - pipx
+    update_homebrew: yes
+
+- name: install brew casks
+  community.general.homebrew_cask:
+    name:
+      - ngrok

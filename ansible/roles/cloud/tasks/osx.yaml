@@ -1,0 +1,11 @@
+- name: hashicorp tap
+  community.general.homebrew_tap:
+    name:
+      - hashicorp/tap
+
+- name: install cloud brew packages
+  community.general.homebrew:
+    name:
+      - azure-cli
+      - terraform
+    update_homebrew: yes

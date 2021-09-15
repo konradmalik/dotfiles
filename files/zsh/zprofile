@@ -1,0 +1,9 @@
+# sourced on login shell. Once in linux, on every new terminal in macos
+#
+# pyenv must be here (zprofile)
+# initialize pyenv path (needed only for non-macos)
+if [ ! "$(uname)" = "Darwin" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+eval "$(pyenv init --path)"

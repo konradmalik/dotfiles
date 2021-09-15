@@ -1,0 +1,9 @@
+- name: install nerd fonts
+  shell:
+    cmd: |
+      mkdir -p ~/.local/share/fonts
+      rm -rf ~/.local/share/fonts/Sauce*
+      cd ~/.local/share/fonts
+      curl -fLo ~/.local/share/fonts/"Sauce Code Pro Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
+      fc-cache
+    creates: "~/.local/share/fonts/Sauce Code Pro Nerd Font Complete Mono.ttf"

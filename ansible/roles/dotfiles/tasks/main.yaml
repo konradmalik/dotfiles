@@ -1,0 +1,37 @@
+- name: link general dot files
+  file:
+    src: "{{ repo_path }}/files/{{ item }}"
+    path: "~/.{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - inputrc
+    - gdbinit
+
+- block:
+  - name: link private dot files
+    file:
+      src: "{{ repo_path }}/private/{{ item }}"
+      path: "~/.{{ item }}"
+      state: link
+      force: yes
+    with_items:
+      - netrc
+
+  - name: make sure netrc file mode is ok
+    file:
+      path: ~/.netrc
+      mode: og-rw
+  when: private_machine
+
+- name: create .gnupg
+  file:
+    path: ~/.gnupg
+    state: directory
+
+- name: link gpg-agent config
+  file:
+    src: "{{ repo_path }}/files/gpg-agent.conf"
+    path: ~/.gnupg/gpg-agent.conf
+    state: link
+    force: yes

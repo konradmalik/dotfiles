@@ -1,0 +1,12 @@
+- name: install apt packages
+  become: yes
+  apt:
+    name:
+      - gpg-agent
+      - git
+      - unzip
+      - pip
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes

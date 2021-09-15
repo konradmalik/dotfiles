@@ -1,0 +1,22 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: link general git config
+  file:
+    src: "{{ repo_path }}/files/git/gitconfig"
+    path: ~/.gitconfig
+    state: link
+    force: yes
+
+- name: link platform-specifig git config
+  file:
+    src: "{{ repo_path }}/files/git/gitconfig.{{ ansible_system }}"
+    path: ~/.gitconfig.Platform
+    state: link
+    force: yes

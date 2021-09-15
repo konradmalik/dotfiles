@@ -1,0 +1,18 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: link tmux files
+  file:
+    src: "{{ repo_path }}/files/tmux/{{ item }}"
+    path: "~/.{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - tmux
+    - tmux.conf

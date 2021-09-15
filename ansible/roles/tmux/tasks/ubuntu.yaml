@@ -1,0 +1,9 @@
+- name: install tmux
+  become: yes
+  apt:
+    name:
+      - tmux
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes

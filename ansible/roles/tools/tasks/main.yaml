@@ -1,0 +1,11 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- include: ubuntu-aarch64.yaml
+  when: ansible_architecture == "aarch64"

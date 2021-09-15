@@ -1,0 +1,20 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: install vagrant share plugin
+  command:
+    cmd: vagrant plugin install vagrant-share
+    creates: "~/.vagrant.d/gems/*/specifications/vagrant-share-*"
+  when: ansible_architecture == "x86_64"
+
+- name: install vagrant vbguest plugin
+  command:
+    cmd: vagrant plugin install vagrant-vbguest
+    creates: "~/.vagrant.d/gems/*/specifications/vagrant-vbguest-*"
+  when: ansible_architecture == "x86_64"

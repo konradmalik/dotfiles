@@ -1,0 +1,10 @@
+- name: install vagrant
+  become: yes
+  apt:
+    name:
+      - vagrant
+      - virtualbox
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes

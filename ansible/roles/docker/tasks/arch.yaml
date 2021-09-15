@@ -1,0 +1,20 @@
+- name: install docker packages from aur
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - docker
+      - docker-compose-cli
+      - docker-credential-pass
+      - dive
+
+- name: Ensures .docker/cli-plugins dir exists
+  file: path=~/.docker/cli-plugins state=directory
+
+- name: install docker-compose 2 (amd64)
+  get_url:
+    url: https://github.com/docker/compose-cli/releases/download/v{{ git_versions.docker_compose }}/docker-compose-linux-amd64
+    dest: ~/.docker/cli-plugins/docker-compose
+    mode: "0755"
+  when: ansible_architecture == "x86_64"

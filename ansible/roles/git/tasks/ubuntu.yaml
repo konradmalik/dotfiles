@@ -1,0 +1,31 @@
+- name: install git tools
+  become: yes
+  apt:
+    name:
+      - git-extras
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+
+- name: install delta from github amd
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o delta.deb -L https://github.com/dandavison/delta/releases/download/{{ git_versions.git_delta }}/git-delta_{{ git_versions.git_delta }}_amd64.deb
+      dpkg -i delta.deb
+      rm -rf delta.deb
+    creates: /usr/bin/delta
+  when: ansible_architecture == "x86_64"
+
+- name: install delta from github arm
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o delta.deb -L https://github.com/dandavison/delta/releases/download/{{ git_versions.git_delta }}/git-delta_{{ git_versions.git_delta }}_arm64.deb
+      dpkg -i delta.deb
+      rm -rf delta.deb
+    creates: /usr/bin/delta
+  when: ansible_architecture == "aarch64"

@@ -1,0 +1,9 @@
+- name: fonts taps
+  community.general.homebrew_tap:
+    name:
+      - homebrew/cask-fonts
+
+- name: install fonts
+  community.general.homebrew_cask:
+    name:
+      - font-sourcecodepro-nerd-font-mono

@@ -1,0 +1,52 @@
+- name: install kubectl and helm from snap
+  become: yes
+  community.general.snap:
+    name:
+      - kubectl
+      - helm
+    classic: yes
+
+- name: install flux from github (amd)
+  become: yes
+  shell:
+    cmd: |
+      curl -L https://github.com/fluxcd/flux2/releases/download/v{{ git_versions.flux }}/flux_{{ git_versions.flux }}_linux_amd64.tar.gz | tar xvzf -
+      mv ./flux /usr/local/bin/flux
+    creates: /usr/local/bin/flux
+  when: ansible_architecture == "x86_64"
+
+- name: install flux from github (arm)
+  become: yes
+  shell:
+    cmd: |
+      curl -L https://github.com/fluxcd/flux2/releases/download/v{{ git_versions.flux }}/flux_{{ git_versions.flux }}_linux_arm64.tar.gz | tar xvzf -
+      mv ./flux /usr/local/bin/flux
+    creates: /usr/local/bin/flux
+  when: ansible_architecture == "aarch64"
+
+- name: install k3d from github
+  become: yes
+  shell:
+    cmd: |
+      curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+    creates: /usr/local/bin/k3d
+
+- name: install k9s from github (amd64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -L https://github.com/derailed/k9s/releases/download/v{{ git_versions.k9s }}/k9s_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz | tar xvfz -
+      mv k9s /usr/local/bin/k9s
+    creates: /usr/local/bin/k9s
+  when: ansible_architecture == "x86_64"
+
+- name: install k9s from github (arm64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -L https://github.com/derailed/k9s/releases/download/v{{ git_versions.k9s }}/k9s_{{ ansible_system }}_arm64.tar.gz | tar xvfz -
+      mv k9s /usr/local/bin/k9s
+    creates: /usr/local/bin/k9s
+  when: ansible_architecture == "aarch64"

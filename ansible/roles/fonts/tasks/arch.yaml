@@ -1,0 +1,9 @@
+- name: install fonts
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - nerd-fonts-source-code-pro
+      - nerd-fonts-hack
+      - nerd-fonts-fira-code

@@ -1,0 +1,15 @@
+- name: remove rust because it conflicts with rustup
+  become: yes
+  community.general.pacman:
+    name:
+      - rust
+    state: absent
+
+- name: install rustup (arch)
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - rustup
+      - rust-analyzer

@@ -1,0 +1,67 @@
+[alias]
+    graph = log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
+
+[color]
+    ui = auto
+
+[commit]
+    gpgsign = true
+
+[core]
+    autocrlf = input
+    editor = nvim
+
+[delta]
+    line-numbers = true
+    navigate = true
+    hyperlinks = false
+    side-by-side = false
+
+[diff]
+    tool = vimdiff
+    colorMoved = zebra
+
+[fetch]
+    prune = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[help]
+    autocorrect = 10
+
+[include]
+    path = ~/.gitconfig.Platform
+
+[init]
+    defaultBranch = master
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[mergetool]
+    keepBackup = false
+
+[mergetool "vimdiff"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[pull]
+    rebase = merges
+
+[user]
+    name = Konrad Malik
+    email = konrad.malik@gmail.com
+    signingkey = F75F59DD45C0D9016CCC3287DE3F236F1516A431

@@ -1,0 +1,22 @@
+# https://github.com/kewlfft/ansible-aur
+- name: install required packages from repo (arch)
+  become: yes
+  community.general.pacman:
+    name:
+      - fakeroot
+      - base-devel
+
+- name: create aur_builder user for arch AUR
+  become: yes
+  user:
+    name: aur_builder
+    create_home: yes
+    group: wheel
+
+- name: add aur_builder to sudoers
+  become: yes
+  lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+    create: yes
+    validate: "visudo -cf %s"

@@ -1,0 +1,9 @@
+- name: install ranger
+  become: yes
+  apt:
+    name:
+      - ranger
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes

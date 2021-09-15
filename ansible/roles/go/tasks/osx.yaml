@@ -1,0 +1,5 @@
+- name: install go brew packages
+  community.general.homebrew:
+    name:
+      - go
+    update_homebrew: yes

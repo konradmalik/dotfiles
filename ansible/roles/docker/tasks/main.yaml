@@ -1,0 +1,37 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- block:
+    - name: Create "docker" group
+      group:
+        name: docker
+        state: present
+
+    - name: adding existing user "{{ target_user }}" to group "docker"
+      user:
+        name: "{{ target_user }}"
+        groups: [docker]
+        append: yes
+
+    - name: create fake docker-compose command
+      copy:
+        content: |
+          #!/bin/sh
+          docker compose "$@"
+        dest: /usr/local/bin/docker-compose
+
+    - name: make fake docker-compose command executable
+      file:
+        dest: /usr/local/bin/docker-compose
+        mode: a+x
+
+  become: yes
+  when:
+    - ansible_system == "Linux"
+    - ansible_architecture == "x86_64"

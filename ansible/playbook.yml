@@ -1,0 +1,44 @@
+- hosts: all
+  gather_facts: true
+  vars_files:
+    - vars/default.yaml
+  roles:
+    - name: aur_builder-setup
+      when: ansible_distribution == "Archlinux"
+    - system
+    - tools
+    - dotfiles
+    - git
+    - name: ssh-config
+    - name: ssh-egress
+      when: private_machine
+    - name: ssh-ingress
+      when:
+        - enable_ssh
+        - ansible_system == "Linux"
+    - python
+    - go
+    - rust
+    - tmux
+    - neovim
+    - ranger
+    - shell
+    # macos should go through app store
+    - name: tailscale
+      when: ansible_system == "Linux"
+    - docker
+    - kubernetes
+    - name: cloud
+      when: private_machine
+    - name: fonts
+      when:
+        - gui_apps
+    - name: vscode
+      when:
+        - gui_apps
+        - ansible_architecture == "x86_64"
+    - name: vagrant
+      when:
+        - ansible_architecture == "x86_64"
+    - name: aur_builder-cleanup
+      when: ansible_distribution == "Archlinux"

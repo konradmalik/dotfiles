@@ -1,0 +1,8 @@
+- name: install brew packages
+  community.general.homebrew:
+    name:
+      - neovim
+      - efm-langserver
+      - prettier
+      - pyright
+    update_homebrew: yes

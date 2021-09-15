@@ -1,0 +1,29 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: create ranger dir
+  file:
+    path: ~/.config/ranger
+    state: directory
+
+- name: link ranger files
+  file:
+    src: "{{ repo_path }}/files/ranger/{{ item }}"
+    path: "~/.config/ranger/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - rc.conf
+    - rifle.conf
+
+- name: install ranger devicons
+  shell:
+    cmd: |
+      git clone https://github.com/alexanderjeurissen/ranger_devicons ~/.config/ranger/plugins/ranger_devicons
+    creates: ~/.config/ranger/plugins/ranger_devicons

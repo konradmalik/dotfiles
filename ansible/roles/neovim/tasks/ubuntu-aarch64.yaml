@@ -1,0 +1,40 @@
+- name: install compile dependencies for neovim
+  become: yes
+  apt:
+    name:
+      - ninja-build
+      - gettext
+      - libtool
+      - libtool-bin
+      - autoconf
+      - automake
+      - cmake
+      - g++
+      - pkg-config
+      - unzip
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+
+- name: compile neovim from github (for arm64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      git clone --depth 1 --branch v{{ git_versions.nvim }} https://github.com/neovim/neovim
+      cd neovim
+      make CMAKE_BUILD_TYPE=Release
+      make CMAKE_INSTALL_PREFIX=/usr/local install
+    creates: /usr/local/bin/nvim
+
+- name: install efm-langserver from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      git clone --depth 1 https://github.com/mattn/efm-langserver.git
+      cd efm-langserver
+      make all
+      mv efm-langserver /usr/local/bin/efm-langserver
+    creates: /usr/local/bin/efm-langserver

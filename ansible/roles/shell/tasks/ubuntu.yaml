@@ -1,0 +1,39 @@
+- name: install zsh, plugins
+  become: yes
+  apt:
+    name:
+      - zsh
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - fzf
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+
+- name: install zsh-completions from github
+  become: yes
+  shell:
+    chdir: /usr/local/share/zsh/
+    cmd: |
+      mkdir -p plugins
+      cd plugins
+      git clone --depth 1 git://github.com/zsh-users/zsh-completions.git
+    creates: /usr/local/share/zsh/plugins/zsh-completions
+
+- name: install starship amd
+  become: yes
+  community.general.snap:
+    name:
+      - starship
+  when: ansible_architecture == "x86_64"
+
+- name: install starship arm
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -L https://github.com/starship/starship/releases/download/v{{ git_versions.starship }}/starship-{{ ansible_architecture }}-unknown-linux-musl.tar.gz | tar xvfz -
+      mv starship /usr/local/bin/starship
+    creates: /usr/local/bin/starship
+  when: ansible_architecture == "aarch64"

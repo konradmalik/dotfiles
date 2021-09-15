@@ -1,0 +1,14 @@
+- name: custom taps
+  community.general.homebrew_tap:
+    name:
+      - fluxcd/tap
+
+# kubectl installed with docker
+- name: install kubernetes brew packages
+  community.general.homebrew:
+    name:
+      - helm
+      - flux
+      - k3d
+      - k9s
+    update_homebrew: yes

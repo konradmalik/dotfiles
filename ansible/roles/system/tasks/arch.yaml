@@ -1,0 +1,21 @@
+- name: install yay
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: auto
+    name: yay
+
+- name: upgrade packages
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    upgrade: yes
+
+- name: install system dependencies
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - python-pip

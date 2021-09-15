@@ -1,0 +1,19 @@
+- name: install vscode
+  community.general.homebrew_cask:
+    name:
+      - visual-studio-code
+
+- name: create vscode dir
+  file:
+    path: ~/Library/Application\ Support/Code
+    state: directory
+
+- name: link configurations
+  file:
+    src: "{{ repo_path }}/files/vscode/{{ item }}"
+    path: "~/Library/Application\ Support/Code/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - User
+    - Dictionaries

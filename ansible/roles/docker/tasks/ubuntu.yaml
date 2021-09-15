@@ -1,0 +1,72 @@
+- name: add docker apt key
+  become: yes
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add docker apt repo (amd64)
+  become: yes
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+    update_cache: yes
+  when: ansible_architecture == "x86_64"
+
+- name: add docker apt repo (arm64)
+  become: yes
+  apt_repository:
+    repo: "deb [arch=arm64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+    update_cache: yes
+  when: ansible_architecture == "aarch64"
+
+- name: install docker and it's dependencies
+  become: yes
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+
+- name: start and enable docker daemon
+  become: yes
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Ensures .docker/cli-plugins dir exists
+  file: path=~/.docker/cli-plugins state=directory
+
+- name: install docker-compose 2 (amd64)
+  get_url:
+    url: https://github.com/docker/compose-cli/releases/download/v{{ git_versions.docker_compose }}/docker-compose-linux-amd64
+    dest: ~/.docker/cli-plugins/docker-compose
+    mode: "0755"
+  when: ansible_architecture == "x86_64"
+
+- name: install docker-compose 2 (arm64)
+  get_url:
+    url: https://github.com/docker/compose-cli/releases/download/v{{ git_versions.docker_compose }}/docker-compose-linux-arm64
+    dest: ~/.docker/cli-plugins/docker-compose
+    mode: "0755"
+  when: ansible_architecture == "aarch64"
+
+- name: install dive from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o dive.deb -L https://github.com/wagoodman/dive/releases/download/v{{ git_versions.dive }}/dive_{{ git_versions.dive }}_linux_amd64.deb 
+      dpkg -i dive.deb
+      rm -rf dive.deb
+    creates: /usr/local/bin/dive
+  when: ansible_architecture == "x86_64"
+
+- name: install edge snap packages (amd64 only)
+  become: yes
+  community.general.snap:
+    name: docker-credential-pass
+    channel: latest/edge
+  when: ansible_architecture == "x86_64"

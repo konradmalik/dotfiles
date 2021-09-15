@@ -1,0 +1,115 @@
+- name: install apt packages
+  become: yes
+  apt:
+    name:
+      - gdb
+      - curl
+      - fzf
+      - fd-find
+      - jq
+      - ncdu
+      - nq
+      - direnv
+      - sshfs
+      - tree
+      - bat
+      - ripgrep
+      - shellcheck
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+    # the last one required by bat/ripgrep
+    dpkg_options: "force-confdef,force-confold,force-overwrite"
+
+- name: install exa from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      # install efm from github releases
+      curl -o exa.zip -L https://github.com/ogham/exa/releases/download/v{{ git_versions.exa }}/exa-linux-{{ ansible_architecture }}-v{{ git_versions.exa }}.zip
+      unzip exa.zip
+      mv **/exa /usr/local/bin/exa
+      rm -rf bin man completions
+    creates: /usr/local/bin/exa
+  when: ansible_architecture == "x86_64"
+
+- name: link bat
+  become: yes
+  file:
+    src: /usr/bin/batcat
+    path: /usr/local/bin/bat
+    state: link
+    force: yes
+
+- name: install non-classic snap packages
+  become: yes
+  community.general.snap:
+    name:
+      - procs
+      - duf-utility
+
+- name: install zoxide from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -L https://github.com/ajeetdsouza/zoxide/releases/latest/download/zoxide-x86_64-unknown-linux-musl.tar.gz | tar xvfz -
+      mv **/zoxide /usr/local/bin/zoxide
+    creates: /usr/local/bin/zoxide
+
+- name: install up from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -LO https://github.com/akavel/up/releases/latest/download/up
+      chmod +x up
+      mv up /usr/local/bin/
+    creates: /usr/local/bin/up
+  when: ansible_architecture == "x86_64"
+
+- name: install viddy from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -L https://github.com/sachaos/viddy/releases/download/v{{ git_versions.viddy }}/viddy_{{ git_versions.viddy }}_{{ ansible_system }}_{{ ansible_architecture }}.tar.gz | tar xvfz -
+      chmod +x viddy
+      mv viddy /usr/local/bin/
+    creates: /usr/local/bin/viddy
+  when: ansible_architecture == "x86_64"
+
+- name: install gotop amd64 from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -L https://github.com/xxxserxxx/gotop/releases/download/v{{ git_versions.gotop }}/gotop_v{{ git_versions.gotop }}_{{ ansible_system | lower }}_amd64.tgz | tar xvfz -
+      mv gotop /usr/local/bin/gotop
+    creates: /usr/local/bin/gotop
+  when: ansible_architecture == "x86_64"
+
+- name: install ngrok amd64
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -LO https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+      unzip ngrok-stable-linux-amd64.zip
+      mv ./ngrok /usr/local/bin/ngrok
+    creates: "/usr/local/bin/ngrok"
+  when: ansible_architecture == "x86_64"
+
+- name: install croc
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl https://getcroc.schollz.com | bash
+    creates: /usr/local/bin/croc
+
+- name: Install pipx from pip
+  pip:
+    name: pipx

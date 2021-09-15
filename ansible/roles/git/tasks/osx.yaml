@@ -1,0 +1,6 @@
+- name: install git tools
+  community.general.homebrew:
+    name:
+      - git-delta
+      - git-extras
+    update_homebrew: yes

@@ -1,0 +1,28 @@
+- name: install yay packages
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - fzf
+      - curl
+      - bat
+      - exa
+      - fd
+      - ripgrep
+      - jq
+      - zoxide
+      - procs
+      - ncdu
+      - nq-git
+      - direnv
+      - sshfs
+      - tree
+      - up
+      - viddy
+      - shellcheck
+      - duf
+      - gotop
+      - ngrok
+      - croc
+      - python-pipx
