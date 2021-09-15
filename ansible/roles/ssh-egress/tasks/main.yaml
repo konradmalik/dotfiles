@@ -21,6 +21,7 @@
     - evaris
     - git
     - private
+    - pw
   when: private_found.matched > 0
 
 - name: link configs
@@ -35,4 +36,5 @@
     - evaris
     - git
     - private
+    - pw
   when: private_found.matched > 0
