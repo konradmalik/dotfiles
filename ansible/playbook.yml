@@ -8,7 +8,6 @@
     - name: repository
     - dotfiles
     - git
-    - name: ssh-config
     - name: ssh-egress
     - name: ssh-ingress
       when:

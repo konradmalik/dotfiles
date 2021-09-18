@@ -1,3 +1,21 @@
+- name: make sure ssh folder exists and has proper mode
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: 0700
+
+- name: make sure the config file mode is ok
+  file:
+    path: "{{ repo_path }}/files/ssh/config"
+    mode: 0600
+
+- name: link config
+  file:
+    src: "{{ repo_path }}/files/ssh/config"
+    path: ~/.ssh/config
+    state: link
+    force: yes
+
 - name: make sure config.d folder exists and has proper mode
   file:
     path: ~/.ssh/config.d
