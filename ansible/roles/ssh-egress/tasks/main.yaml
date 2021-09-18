@@ -1,3 +1,28 @@
+- name: make sure config.d folder exists and has proper mode
+  file:
+    path: ~/.ssh/config.d
+    state: directory
+    mode: 0700
+
+- block:
+    - name: make sure config files modes are ok
+      file:
+        path: "{{ repo_path }}/files/ssh/{{ item }}"
+        mode: 0600
+      with_items:
+        - aur
+        - git
+
+    - name: link configs
+      file:
+        src: "{{ repo_path }}/files/ssh/{{ item }}"
+        path: "~/.ssh/config.d/{{ item }}"
+        state: link
+        force: yes
+      with_items:
+        - aur
+        - git
+
 - name: Check if private configs submodule is cloned before proceeding
   find:
     paths:
@@ -5,36 +30,28 @@
     recurse: yes
   register: private_found
 
-- name: make sure config.d folder exists and has proper mode
-  file:
-    path: ~/.ssh/config.d
-    state: directory
-    mode: 0700
+- block:
+    - name: make sure private config files modes are ok
+      file:
+        path: "{{ repo_path }}/private/ssh/{{ item }}"
+        mode: 0600
+      with_items:
+        - cerebre
+        - evaris
+        - private
+        - pw
 
-- name: make sure config files modes are ok
-  file:
-    path: "{{ repo_path }}/private/ssh/{{ item }}"
-    mode: 0600
-  with_items:
-    - aur
-    - cerebre
-    - evaris
-    - git
-    - private
-    - pw
-  when: private_found.matched > 0
-
-- name: link configs
-  file:
-    src: "{{ repo_path }}/private/ssh/{{ item }}"
-    path: "~/.ssh/config.d/{{ item }}"
-    state: link
-    force: yes
-  with_items:
-    - aur
-    - cerebre
-    - evaris
-    - git
-    - private
-    - pw
-  when: private_found.matched > 0
+    - name: link private configs
+      file:
+        src: "{{ repo_path }}/private/ssh/{{ item }}"
+        path: "~/.ssh/config.d/{{ item }}"
+        state: link
+        force: yes
+      with_items:
+        - cerebre
+        - evaris
+        - private
+        - pw
+  when:
+    - private_machine
+    - private_found.matched > 0

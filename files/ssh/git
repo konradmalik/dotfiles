@@ -1,0 +1,14 @@
+Host github.com
+  PubkeyAuthentication yes
+  IdentityFile ~/.ssh/github-private
+  User git
+
+Host gitlab.com
+  PubkeyAuthentication yes
+  IdentityFile ~/.ssh/gitlab-cerebre
+  User git
+  
+Host bitbucket.org
+  PubkeyAuthentication yes
+  IdentityFile ~/.ssh/bitbucket-private
+  User git
