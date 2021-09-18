@@ -17,9 +17,5 @@
     force: yes
 
 - name: bootstrap earthly
-  become: yes
-  shell:
-    chdir: /tmp
-    cmd: |
-      earthly bootstrap --with-autocomplete
-    creates: /usr/share/bash-completion/completions/earthly
+  command:
+    cmd: earthly bootstrap

@@ -1,12 +1,11 @@
-- hosts: all
+- hosts: vaio-tailscale
   gather_facts: true
-  vars_files:
-    - vars/default.yaml
   roles:
     - name: aur_builder-setup
       when: ansible_distribution == "Archlinux"
     - system
     - tools
+    - repository
     - dotfiles
     - git
     - name: ssh-config

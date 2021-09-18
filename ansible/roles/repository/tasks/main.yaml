@@ -1,0 +1,7 @@
+- name: Ensure this repo exists
+  ansible.builtin.git:
+    repo: git@github.com:konradmalik/dotfiles.git
+    dest: ~/Code/dotfiles
+    single_branch: yes
+    version: master
+    recursive: "{{ 'yes' if private_machine | bool else 'no' }}"
