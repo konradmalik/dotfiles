@@ -1,4 +1,4 @@
-- hosts: vaio-tailscale
+- hosts: "{{ variable_host | default('local') }}"
   gather_facts: true
   roles:
     - name: aur_builder-setup
