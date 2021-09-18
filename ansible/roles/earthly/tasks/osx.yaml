@@ -1,0 +1,10 @@
+- name: earthly tap
+  community.general.homebrew_tap:
+    name:
+      - earthly/earthly
+
+- name: install earthly brew
+  community.general.homebrew:
+    name:
+      - earthly
+    update_homebrew: yes

@@ -1,0 +1,20 @@
+- include: linux.yaml
+  when: ansible_system == "Linux"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- name: link earthly config
+  file:
+    src: "{{ repo_path }}/files/earthly.yml"
+    path: "~/.earthly/config.yml"
+    state: link
+    force: yes
+
+- name: bootstrap earthly
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      earthly bootstrap --with-autocomplete
+    creates: /usr/share/bash-completion/completions/earthly

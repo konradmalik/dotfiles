@@ -26,6 +26,8 @@
     - name: tailscale
       when: ansible_system == "Linux"
     - docker
+    # earthly requires docker
+    - earthly
     - kubernetes
     - name: cloud
       when: private_machine
