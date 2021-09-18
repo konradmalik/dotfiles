@@ -36,6 +36,8 @@
         path: "{{ repo_path }}/private/ssh/{{ item }}"
         mode: 0600
       with_items:
+        - aur-identity
+        - git-identity
         - cerebre
         - evaris
         - private
@@ -48,6 +50,8 @@
         state: link
         force: yes
       with_items:
+        - aur-identity
+        - git-identity
         - cerebre
         - evaris
         - private

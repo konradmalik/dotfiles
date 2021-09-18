@@ -1,5 +1,4 @@
 Host aur.archlinux.org
   PubkeyAuthentication yes
-  IdentityFile ~/.ssh/aur
   User aur
 
