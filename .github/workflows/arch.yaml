@@ -21,6 +21,12 @@ jobs:
       - name: Show Vagrant version
         run: vagrant --version
 
+      - name: Update box
+        run: vagrant box update
+
+      - name: Clean old boxes
+        run: vagrant box prune --force
+
       - name: Run vagrant up
         run: vagrant up
 
