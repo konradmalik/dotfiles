@@ -4,6 +4,11 @@
 - include: osx.yaml
   when: ansible_distribution == "MacOSX"
 
+- name: make sure earthly folder exists and has proper mode
+  file:
+    path: ~/.earthly
+    state: directory
+
 - name: link earthly config
   file:
     src: "{{ repo_path }}/files/earthly.yml"
