@@ -7,7 +7,7 @@ Host gitlab.com
   PubkeyAuthentication yes
   IdentitiesOnly no
   User git
-  
+
 Host bitbucket.org
   PubkeyAuthentication yes
   IdentitiesOnly no

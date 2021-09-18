@@ -2,4 +2,3 @@ Host aur.archlinux.org
   PubkeyAuthentication yes
   IdentitiesOnly no
   User aur
-
