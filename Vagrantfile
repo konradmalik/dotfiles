@@ -27,6 +27,8 @@ Vagrant.configure(API_VERSION) do |config|
   # main provisioning
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = REPO_PATH + "/ansible/playbook.yml"
+    ansible.inventory_path = REPO_PATH + "/ansible/inventory.yaml"
+    ansible.limit  = "local"
     ansible.provisioning_path = REPO_PATH
     # set this just to force running galaxy
     ansible.galaxy_role_file = REPO_PATH + "/ansible/requirements.yml"

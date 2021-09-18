@@ -5,7 +5,7 @@
       when: ansible_distribution == "Archlinux"
     - system
     - tools
-    - repository
+    - name: repository
     - dotfiles
     - git
     - name: ssh-config

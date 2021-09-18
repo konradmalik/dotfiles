@@ -17,5 +17,6 @@
     force: yes
 
 - name: bootstrap earthly
+  become: yes
   command:
     cmd: earthly bootstrap
