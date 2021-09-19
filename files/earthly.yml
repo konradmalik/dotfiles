@@ -1,6 +1,4 @@
 global:
   cache_size_mb: 10000
   disable_analytics: true
-git:
-  global:
-    url_instead_of: "git@github.com:=https://github.com/,git@gitlab.com:=https://gitlab.com/"
+
