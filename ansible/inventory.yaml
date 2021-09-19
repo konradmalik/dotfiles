@@ -19,6 +19,7 @@ all:
       exa: 0.10.1
       flux: 0.17.0
       k9s: 0.24.15
+      kind: 0.11.1
       git_delta: 0.8.3
       golangci_lint: 1.42.1
       gotop: 4.1.2

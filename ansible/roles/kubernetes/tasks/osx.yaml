@@ -11,4 +11,5 @@
       - flux
       - k3d
       - k9s
+      - kind
     update_homebrew: yes

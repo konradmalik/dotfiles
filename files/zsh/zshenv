@@ -42,6 +42,7 @@ generate_completions() {
     zfunc_completions_helper "kubectl completion zsh" _kubectl
     zfunc_completions_helper "helm completion zsh" _helm
     zfunc_completions_helper "k3d completion zsh" _k3d
+    zfunc_completions_helper "kind completion zsh" _kind
     zfunc_completions_helper "flux completion zsh" _flux
     # earthly
     zfunc_completions_helper "earthly bootstrap --source zsh" _earthly
