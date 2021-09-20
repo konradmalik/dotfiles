@@ -6,5 +6,5 @@
 - name: install earthly brew
   community.general.homebrew:
     name:
-      - earthly
+      - earthly/earthly/earthly
     update_homebrew: yes
