@@ -29,13 +29,6 @@
       - containerd.io
     state: present
 
-- name: start and enable docker daemon
-  become: yes
-  service:
-    name: docker
-    state: started
-    enabled: yes
-
 - name: Ensures .docker/cli-plugins dir exists
   file: path=~/.docker/cli-plugins state=directory
 
