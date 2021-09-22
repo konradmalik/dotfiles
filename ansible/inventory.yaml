@@ -25,6 +25,7 @@ all:
       gotop: 4.1.2
       nvim: 0.5.0
       starship: 0.57.0
+      tilt: 0.22.9
       viddy: 0.2.1
 
 local:

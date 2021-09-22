@@ -10,3 +10,4 @@
       - rancher-k3d-bin
       - kind-bin
       - k9s
+      - tilt-bin

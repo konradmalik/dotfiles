@@ -2,14 +2,16 @@
   community.general.homebrew_tap:
     name:
       - fluxcd/tap
+      - tilt-dev/tap
 
 # kubectl installed with docker
 - name: install kubernetes brew packages
   community.general.homebrew:
     name:
       - helm
-      - flux
+      - fluxcd/tap/flux
       - k3d
       - k9s
       - kind
+      - tilt-dev/tap/tilt
     update_homebrew: yes

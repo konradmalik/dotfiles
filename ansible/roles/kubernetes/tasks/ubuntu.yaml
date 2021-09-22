@@ -70,3 +70,25 @@
       chmod +x /usr/local/bin/kind
     creates: /usr/local/bin/kind
   when: ansible_architecture == "aarch64"
+
+- name: install tilt (amd64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -fsSL https://github.com/tilt-dev/tilt/releases/download/v{{ git_versions.tilt }}/tilt.{{ git_versions.tilt }}.linux.{{ ansible_architecture }}.tar.gz | tar -xzv tilt
+      mv ./tilt /usr/local/bin/tilt
+      chmod +x /usr/local/bin/kind
+    creates: /usr/local/bin/tilt
+  when: ansible_architecture == "x86_64"
+
+- name: install tilt (arm64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -fsSL https://github.com/tilt-dev/tilt/releases/download/v{{ git_versions.tilt }}/tilt.{{ git_versions.tilt }}.linux.arm64_ALPHA.tar.gz | tar -xzv tilt
+      mv ./tilt /usr/local/bin/tilt
+      chmod +x /usr/local/bin/kind
+    creates: /usr/local/bin/tilt
+  when: ansible_architecture == "aarch64"
