@@ -26,3 +26,4 @@
       - ngrok
       - croc
       - python-pipx
+      - tidy-viewer

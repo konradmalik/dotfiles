@@ -116,6 +116,9 @@ alias mv='mv -i'
 # modern watch
 alias watch='viddy'
 
+# csv pretty print
+alias tv='tidy-viewer'
+
 # directory stack movement
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index

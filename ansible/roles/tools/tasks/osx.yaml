@@ -32,3 +32,13 @@
   community.general.homebrew_cask:
     name:
       - ngrok
+
+- name: install tidy-viewer from git (darwin)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -L https://github.com/alexhallam/tv/releases/download/{{ git_versions.tidy_viewer }}/tidy-viewer--{{ ansible_architecture }}-apple-darwin.tar.gz | tar xvfz - --wildcards "**/tidy-viewer"
+      mv **/tidy-viewer /usr/local/bin/
+      chmod +x /usr/local/bin/tidy-viewer
+    creates: /usr/local/bin/tidy-viewer

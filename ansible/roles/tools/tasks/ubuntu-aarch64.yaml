@@ -45,3 +45,12 @@
       tar xvf ngrok-stable-linux-arm64.tgz
       mv ./ngrok /usr/local/bin/ngrok
     creates: "/usr/local/bin/ngrok"
+
+- name: install tidy-viewer from github (ubuntu arm64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      rustup default stable
+      cargo install --git https://github.com/alexhallam/tv.git --tag {{ git_versions.tidy_viewer }} --root /usr/local/
+    creates: /usr/local/bin/tidy-viewer
