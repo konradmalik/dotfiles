@@ -25,7 +25,6 @@
   },
   "git.ignoreMissingGitWarning": true,
   "extensions.ignoreRecommendations": true,
-  "breadcrumbs.enabled": false,
   "editor.fontFamily": "'SauceCodePro Nerd Font Mono', 'monospace'",
   "editor.fontLigatures": true,
   "editor.inlineSuggest.enabled": true,
