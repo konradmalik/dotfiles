@@ -11,8 +11,8 @@
   when: ansible_distribution == "Archlinux"
 
 - name: install black through pipx (python formatting)
-  command:
-    cmd: pipx install black
+  shell:
+    cmd: pipx install black || ~/.local/bin/pipx install black
     creates: ~/.local/bin/black
 
 - name: create neovim dir
