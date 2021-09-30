@@ -4,7 +4,6 @@ local cmd = vim.cmd
 local indent = 4
 
 cmd 'set nomodeline'                                        -- disable modelines for security and because we dont need them
-cmd 'syntax enable'
 cmd 'filetype plugin indent on'
 cmd 'autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab' -- fix indents (2 spaces) for yaml
 utils.opt('b', 'expandtab', true)                           -- Use spaces instead of tabs

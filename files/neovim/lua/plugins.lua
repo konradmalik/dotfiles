@@ -3,12 +3,9 @@ return require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = true}
 
     -- Treesitter (syntax highlight)
-    use { "nvim-treesitter/nvim-treesitter" }
-
-    -- Fuzzy finder
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'}
+    use { 
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
     }
 
     -- LSP and completion
@@ -17,20 +14,23 @@ return require('packer').startup(function()
         requires = {'steelsojka/completion-buffers', opt = true},
     }
 
+    -- Fuzzy finder
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            {'kyazdani42/nvim-web-devicons', opt = true},
+        },
+    }
+
+    -- statusline
+    use {
+        'hoob3rt/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
+
     -- Fugitive for Git
     use { 'tpope/vim-fugitive' }
-
-    -- fast statusline
-    use {
-        "hoob3rt/lualine.nvim",
-        requires = {'kyazdani42/nvim-web-devicons'}
-    }
-
-    -- bufferline
-    use {
-        "jose-elias-alvarez/buftabline.nvim",
-        requires = {"kyazdani42/nvim-web-devicons"}
-    }
 
     -- theme
     use { 'joshdick/onedark.vim' }

@@ -10,6 +10,11 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
+- name: install black through pipx (python formatting)
+  command:
+    cmd: pipx install black
+    creates: ~/.local/bin/black
+
 - name: create neovim dir
   file:
     path: ~/.config/nvim

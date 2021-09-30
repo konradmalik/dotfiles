@@ -1,6 +1,5 @@
 local lspconfig = require('lspconfig')
--- sorting
-vim.g.completion_sorting='none'
+local completion = require('completion')
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -33,52 +32,25 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
-  -- Set autocommands conditional on server_capabilities
-  -- disabled for now...
-  if false and client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
+  -- enable lsp completion for all languages that invoke this function
+  completion.on_attach(client, bufnr)
 end
 
 -- https://github.com/microsoft/pyright
 lspconfig.pyright.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    init_options = { provideFormatter = true },
 }
 
 -- https://github.com/golang/tools/tree/master/gopls
 lspconfig.gopls.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
 }
 
 -- https://github.com/rust-analyzer/rust-analyzer
 lspconfig.rust_analyzer.setup {
-    on_attach = on_attach
-}
-
--- force latex flavor
-vim.g.tex_flavor='latex'
--- https://github.com/latex-lsp/texlab
-lspconfig.texlab.setup {
     on_attach = on_attach,
-    settings = {
-        latex = {
-            build = {
-                onSave = false;
-            },
-            lint = {
-                onSave = true;
-            },
-        }
-    }
+    init_options = { provideFormatter = true },
 }
 
 -- prettier setup
@@ -92,12 +64,12 @@ vim.g.format_options_json = format_options_prettier
 vim.g.format_options_yaml = format_options_prettier
 vim.g.format_options_markdown = format_options_prettier
 
-local autopep8 = require("config/efm/autopep8")
 local black = require("config/efm/black")
+local autopep8 = require("config/efm/autopep8")
 local goimports = require("config/efm/goimports")
 local prettier = require("config/efm/prettier")
 local languages = {
-    python = { autopep8, black },
+    python = {black,  autopep8 },
     go = { goimports },
     yaml = { prettier },
     json = { prettier },
