@@ -1,7 +1,13 @@
 local lspconfig = require('lspconfig')
 local completion = require('completion')
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
+
+-- capabilites for cmp
+-- add it to each server you want
+local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local on_attach = function(client, bufnr)
+  -- set options etc for lsp
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -31,26 +37,26 @@ local on_attach = function(client, bufnr)
   elseif client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
-
-  -- enable lsp completion for all languages that invoke this function
-  completion.on_attach(client, bufnr)
 end
 
 -- https://github.com/microsoft/pyright
 lspconfig.pyright.setup {
     on_attach = on_attach,
     init_options = { provideFormatter = true },
+    capabilites = capabilities,
 }
 
 -- https://github.com/golang/tools/tree/master/gopls
 lspconfig.gopls.setup {
     on_attach = on_attach,
+    capabilites = capabilities,
 }
 
 -- https://github.com/rust-analyzer/rust-analyzer
 lspconfig.rust_analyzer.setup {
     on_attach = on_attach,
     init_options = { provideFormatter = true },
+    capabilites = capabilities,
 }
 
 -- prettier setup
@@ -81,6 +87,7 @@ lspconfig.efm.setup {
     init_options = {
         documentFormatting = true,
     },
+    capabilites = capabilities,
     filetypes = vim.tbl_keys(languages),
     settings = {
         languages = languages,

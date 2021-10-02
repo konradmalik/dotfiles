@@ -9,9 +9,15 @@ return require('packer').startup(function()
     }
 
     -- LSP and completion
-    use { 'neovim/nvim-lspconfig' }
-    use { 'nvim-lua/completion-nvim',
-        requires = {'steelsojka/completion-buffers', opt = true},
+    use { 'neovim/nvim-lspconfig' } -- Collection of configurations for built-in LSP client
+    use { 'nvim-lua/completion-nvim' } 
+    use {
+        'hrsh7th/nvim-cmp', -- Autocompletion plugin
+        requires = {
+            'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+            'hrsh7th/cmp-buffer',   -- buffer source for nvim-cmp
+            'hrsh7th/cmp-path',     -- path source for nvim-cmp
+        },
     }
 
     -- Fuzzy finder
@@ -19,14 +25,14 @@ return require('packer').startup(function()
         'nvim-telescope/telescope.nvim',
         requires = {
             {'nvim-lua/plenary.nvim'},
-            {'kyazdani42/nvim-web-devicons', opt = true},
+            {'kyazdani42/nvim-web-devicons'},
         },
     }
 
     -- statusline
     use {
         'hoob3rt/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        requires = {'kyazdani42/nvim-web-devicons'}
     }
 
     -- Fugitive for Git
