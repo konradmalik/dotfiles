@@ -7,9 +7,9 @@
       chmod u+x ./nvim.appimage
       ./nvim.appimage --appimage-extract
       # additional geek points for this beauty
-      (cd ./squashfs-root/usr && tar c .) | (cd /usr/local && tar xf -)
+      (cd ./squashfs-root/usr && tar c .) | (cd /usr && tar xf -)
       rm -rf ./squashfs-root nvim.appimage
-    creates: /usr/bin/local/nvim
+    creates: /usr/bin/nvim
   when: ansible_architecture == "x86_64"
 
 - name: install newer nodejs repo
