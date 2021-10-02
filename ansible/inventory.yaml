@@ -23,7 +23,7 @@ all:
       git_delta: 0.8.3
       golangci_lint: 1.42.1
       gotop: 4.1.2
-      nvim: 0.5.0
+      nvim: 0.5.1
       starship: 0.57.0
       tidy_viewer: 0.0.13
       tilt: 0.22.9
