@@ -41,7 +41,8 @@
   "workbench.colorTheme": "Gruvbox Dark Hard",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.editorAssociations": {
-    "*.ipynb": "jupyter-notebook"
+    "*.ipynb": "jupyter-notebook",
+    "git-rebase-todo": "default"
   },
   "vsintellicode.sql.completionsEnabled": false,
   "go.useLanguageServer": true,
@@ -75,5 +76,9 @@
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "remote.SSH.configFile": "~/.ssh/config.d/private"
+  "remote.SSH.configFile": "~/.ssh/config.d/private",
+  "gitlens.currentLine.enabled": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.codeLens.enabled": false,
+  "gitlens.hovers.enabled": false
 }
