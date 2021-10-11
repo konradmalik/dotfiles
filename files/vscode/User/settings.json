@@ -1,5 +1,6 @@
 {
   "telemetry.enableTelemetry": false,
+  "telemetry.telemetryLevel": "off",
   "redhat.telemetry.enabled": false,
   "files.exclude": {
     "**/.classpath": true,
