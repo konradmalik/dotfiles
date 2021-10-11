@@ -13,7 +13,7 @@ all:
     private_machine: false
     # versions used mostly by ubuntu tasks that install stuff from github directly
     git_versions:
-      docker_compose: 2.0.0-rc.2
+      docker_compose: 2.0.1
       dive: 0.10.0
       efm_langserver: 0.0.36
       exa: 0.10.1
