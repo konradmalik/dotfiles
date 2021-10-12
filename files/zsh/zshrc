@@ -168,6 +168,8 @@ if [ "$(uname)" = "Darwin" ]; then
         $0 "$@"
     }
 fi
+# broot
+autoload -Uz br
 
 # source fzf functionality if available
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -188,4 +190,3 @@ elif [ "$(uname)" = "Linux" ]; then
         source "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 	fi
 fi
-

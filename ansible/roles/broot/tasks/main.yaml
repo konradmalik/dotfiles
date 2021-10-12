@@ -1,0 +1,40 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: create broot dir
+  file:
+    path: ~/.config/broot
+    state: directory
+
+- name: link config file
+  file:
+    src: "{{ repo_path }}/files/broot/{{ item }}"
+    path: "~/.config/broot/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - conf.hjson
+
+- name: install broot completion
+  shell:
+    cmd: |
+      curl -o ~/.zfunc/_broot -L https://dystroy.org/broot/download/completion/_broot
+    creates: ~/.zfunc/_broot
+
+- name: install br completion
+  shell:
+    cmd: |
+      curl -o ~/.zfunc/_br -L https://dystroy.org/broot/download/completion/_br
+    creates: ~/.zfunc/_br
+
+- name: install br zsh function
+  shell:
+    cmd: |
+      broot --print-shell-function zsh > ~/.zfunc/br
+    creates: ~/.zfunc/_br

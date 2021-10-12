@@ -20,6 +20,7 @@
     - neovim
     - ranger
     - shell
+    - broot
     # macos should go through app store
     - name: tailscale
       when: ansible_system == "Linux"

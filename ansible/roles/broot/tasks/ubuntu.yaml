@@ -1,0 +1,10 @@
+- name: install broot ubuntu
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -LO https://github.com/Canop/broot/releases/download/v{{ git_versions.broot }}/broot_{{ git_versions.broot }}.zip
+      unzip *.zip
+      mv build/{{ ansible_architecture }}-{{ ansible_system | lower }}*/broot /usr/local/bin/broot
+      chmod +x /usr/local/bin/broot
+    creates: /usr/local/bin/broot
+  when: ansible_architecture == "x86_64"

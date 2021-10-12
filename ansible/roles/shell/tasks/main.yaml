@@ -18,6 +18,12 @@
     - zshenv
     - zprofile
 
+- name: make sure ~/.zfunc exists
+  file:
+    path: ~/.zfunc
+    state: directory
+    mode: 0755
+
 - name: link starship config
   file:
     src: "{{ repo_path }}/files/zsh/starship.toml"
