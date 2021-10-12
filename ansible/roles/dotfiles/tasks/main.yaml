@@ -29,7 +29,7 @@
     - name: make sure netrc file mode is ok
       file:
         path: ~/.netrc
-        mode: og-rw
+        mode: o-rw
       when: private_found.matched > 0
 
   when: private_machine

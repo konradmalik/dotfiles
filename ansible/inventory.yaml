@@ -5,8 +5,8 @@ all:
     # for ssh-ingress if below is enabled
     enable_ssh: false
     copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-    # absolute path to this repository on a host
-    repo_path: "{{ playbook_dir }}/.."
+    # absolute path to this repository on a host. Replace is needed for macos compatibility
+    repo_path: "{{ (playbook_dir + '/..') | realpath | replace('/Users','/home')}}"
     # if enabled - some gui only apps will be installed as well
     gui_apps: false
     # if enabled, ssh config will be linked (outbound ssh)
