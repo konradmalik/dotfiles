@@ -29,6 +29,7 @@ all:
       tidy_viewer: 0.0.13
       tilt: 0.22.9
       viddy: 0.2.1
+      zoxide: 0.7.7
 
 local:
   hosts:
