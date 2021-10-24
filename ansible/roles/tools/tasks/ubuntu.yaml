@@ -14,6 +14,7 @@
       - tree
       - bat
       - ripgrep
+      - silversearcher-ag
       - shellcheck
     state: latest
     update_cache: yes

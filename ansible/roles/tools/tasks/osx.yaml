@@ -11,6 +11,7 @@
       - exa
       - fd
       - ripgrep
+      - the_silver_searcher
       - jq
       - jenv
       - procs

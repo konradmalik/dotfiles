@@ -10,6 +10,7 @@
       - exa
       - fd
       - ripgrep
+      - the_silver_searcher
       - jq
       - zoxide
       - procs
