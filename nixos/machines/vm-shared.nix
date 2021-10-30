@@ -1,14 +1,6 @@
 { config, pkgs, currentSystem, ... }:
 
 {
-  # use unstable nix so we can access flakes
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-   };
-
   # We expect to run the VM on hidpi machines.
   hardware.video.hidpi.enable = true;
 
@@ -49,15 +41,6 @@
 
     displayManager = {
       defaultSession = "none+i3";
-      lightdm.enable = true;
-
-      # AARCH64: For now, on Apple Silicon, we must manually set the
-      # display resolution. This is a known issue with VMware Fusion.
-      sessionCommands = ''
-        ${pkgs.xlibs.xset}/bin/xset r rate 200 40
-      '' + (if currentSystem == "aarch64-linux" then ''
-        ${pkgs.xorg.xrandr}/bin/xrandr -s '2880x1800'
-      '' else "");
     };
 
     windowManager = {
@@ -68,20 +51,6 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
 
-  # Manage fonts. We pull these from a secret directory since most of these
-  # fonts require a purchase.
-  fonts = {
-    fontDir.enable = true;
-
-    fonts = [
-      (builtins.path {
-        name = "custom-fonts";
-        path = ../secret/fonts;
-        recursive = true;
-      })
-    ];
-  };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -90,20 +59,7 @@
     niv
     rxvt_unicode
     xclip
-
-    # This is needed for the vmware user tools clipboard to work.
-    # You can test if you don't need this by deleting this and seeing
-    # if the clipboard sill works.
-    gtkmm3
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
