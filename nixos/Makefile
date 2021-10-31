@@ -85,7 +85,8 @@ vm/copy:
 		--exclude='.git-crypt/' \
 		--exclude='iso/' \
 		--rsync-path="sudo rsync" \
-		$(MAKEFILE_DIR)/ $(NIXUSER)@$(NIXADDR):/nix-config
+		$(MAKEFILE_DIR)/ $(MAKEFILE_DIR)/../files \
+		$(NIXUSER)@$(NIXADDR):/nix-config
 
 # run the nixos-rebuild switch command. This does NOT copy files so you
 # have to run vm/copy before.

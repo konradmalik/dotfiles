@@ -13,6 +13,7 @@
   home.packages = [
     pkgs.fzf
     pkgs.htop
+    pkgs.gotop
     pkgs.jq
     pkgs.rofi
     pkgs.tree
@@ -33,28 +34,39 @@
     MANPAGER = "less -FirSwX";
   };
 
+  home.file.".inputrc".source = ./inputrc;
+
+
+  xdg.configFile = {
+    "i3/config".text = builtins.readFile ./i3;
+    "rofi/config.rasi".text = builtins.readFile ./rofi;
+    nvim = {
+      source = ../../files/neovim;
+      recursive = true;
+    };
+  };
+
   #---------------------------------------------------------------------
   # Programs
   #---------------------------------------------------------------------
 
   programs.gpg.enable = true;
 
+  programs.bash = {
+    enable = true;
+    shellOptions = [];
+    historyControl = [ "ignoredups" "ignorespace" ];
+    initExtra = builtins.readFile ./bashrc;
+  };
+
   programs.direnv= {
     enable = true;
-    config = {
-      whitelist = {
-        prefix= [
-          "$HOME/code/go/src/github.com/hashicorp"
-          "$HOME/code/go/src/github.com/mitchellh"
-        ];
-
-        exact = ["$HOME/.envrc"];
-      };
-    };
   };
 
   programs.neovim = {
     enable = true;
+    viAlias = true;
+    vimAlias = true;
   };
 
   programs.git = {
@@ -65,25 +77,9 @@
     enable = true;
   };
 
-  programs.alacritty = {
+  programs.kitty = {
     enable = true;
-
-    settings = {
-      env.TERM = "xterm-256color";
-
-      key_bindings = [
-        { key = "K"; mods = "Command"; chars = "ClearHistory"; }
-        { key = "V"; mods = "Command"; action = "Paste"; }
-        { key = "C"; mods = "Command"; action = "Copy"; }
-        { key = "Key0"; mods = "Command"; action = "ResetFontSize"; }
-        { key = "Equals"; mods = "Command"; action = "IncreaseFontSize"; }
-        { key = "Subtract"; mods = "Command"; action = "DecreaseFontSize"; }
-      ];
-    };
-  };
-
-    programs.kitty = {
-    enable = true;
+    extraConfig = builtins.readFile ./kitty;
   };
 
   programs.i3status = {
@@ -111,6 +107,8 @@
     defaultCacheTtl = 31536000;
     maxCacheTtl = 31536000;
   };
+
+  xresources.extraConfig = builtins.readFile ./Xresources;
 
   # Make cursor not tiny on HiDPI screens
   xsession.pointerCursor = {
