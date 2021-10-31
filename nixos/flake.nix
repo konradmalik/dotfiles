@@ -25,5 +25,12 @@
       system = "x86_64-linux";
       user   = "konrad";
     };
+
+    nixosConfigurations.vm-darwin-intel = mkVM "vm-darwin-intel" {
+      nixpkgs = nixpkgs;
+      home-manager = home-manager;
+      system = "x86_64-linux";
+      user   = "konrad";
+    };
   };
 }
