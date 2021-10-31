@@ -8,7 +8,7 @@
 
   boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -26,5 +26,7 @@
   swapDevices = [ ];
 
   virtualisation.virtualbox.guest.enable = true;
+
+  networking.interfaces.enp0s3.useDHCP = true;
 
 }

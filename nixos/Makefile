@@ -10,7 +10,7 @@ NIXBLOCKDEVICE ?= sda
 MAKEFILE_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 # The name of the nixosConfiguration in the flake
-NIXNAME ?= vm-linux-intel
+NIXNAME ?= vb-darwin-intel
 
 # SSH options that are used. These aren't meant to be overridden but are
 # reused a lot so we just store them up here.
@@ -32,16 +32,18 @@ test:
 vm/bootstrap0:
 	ssh $(SSH_OPTIONS) -p$(NIXPORT) root@$(NIXADDR) " \
 		parted /dev/$(NIXBLOCKDEVICE) -- mklabel gpt; \
-		parted /dev/$(NIXBLOCKDEVICE) -- mkpart nixos 512MiB 100\%; \
+		parted /dev/$(NIXBLOCKDEVICE) -- mkpart primary 512MiB 100\%; \
 		parted /dev/$(NIXBLOCKDEVICE) -- mkpart ESP fat32 1MiB 512MiB; \
 		parted /dev/$(NIXBLOCKDEVICE) -- set 2 esp on; \
-		mkfs.ext4 -L nixos /dev/disk/by-partlabel/nixos; \
-		mkfs.fat -F 32 -n boot /dev/disk/by-partlabel/ESP; \
+		mkfs.ext4 -L nixos /dev/$(NIXBLOCKDEVICE)1; \
+		mkfs.fat -F 32 -n boot /dev/$(NIXBLOCKDEVICE)2; \
 		mount /dev/disk/by-label/nixos /mnt; \
 		mkdir -p /mnt/boot; \
 		mount /dev/disk/by-label/boot /mnt/boot; \
 		nixos-generate-config --root /mnt; \
 		sed --in-place '/system\.stateVersion = .*/a \
+			nix.package = pkgs.nixUnstable;\n \
+			nix.extraOptions = \"experimental-features = nix-command flakes\";\n \
   			services.openssh.enable = true;\n \
 			services.openssh.passwordAuthentication = true;\n \
 			services.openssh.permitRootLogin = \"yes\";\n \
@@ -91,7 +93,3 @@ vm/switch:
 	ssh $(SSH_OPTIONS) -p$(NIXPORT) $(NIXUSER)@$(NIXADDR) " \
 		sudo NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild switch --flake \"/nix-config#${NIXNAME}\" \
 	"
-
-# Build an ISO image
-iso/nixos.iso:
-	cd iso; ./build.sh

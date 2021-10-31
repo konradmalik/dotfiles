@@ -1,8 +1,13 @@
 { config, pkgs, currentSystem, ... }:
 
 {
-  # We expect to run the VM on hidpi machines.
-  hardware.video.hidpi.enable = true;
+
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+   };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -49,14 +54,15 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.mutableUsers = false;
+  # set mutable to true if you don't have a password yet
+  users.mutableUsers = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     gnumake
+    neovim
     killall
-    niv
     rxvt_unicode
     xclip
   ];
