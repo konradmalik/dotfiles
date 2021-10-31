@@ -27,6 +27,9 @@
 
   virtualisation.virtualbox.guest.enable = true;
 
+  # internet access
   networking.interfaces.enp0s3.useDHCP = true;
+  # host-guest access
+  networking.interfaces.enp0s8.useDHCP = true;
 
 }
