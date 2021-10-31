@@ -14,21 +14,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # For our aarch64 VM, we use different versions since there are some
-    # changes that are required for aarch64 to build in reliably.
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager/release-21.05";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, home-manager-unstable }: let
+  outputs = { self, nixpkgs, home-manager }: let
     mkVM = import ./lib/mkvm.nix;
   in {
     nixosConfigurations.vb-darwin-intel = mkVM "vb-darwin-intel" {
-      nixpkgs = nixpkgs-unstable;
-      home-manager = home-manager-unstable;
+      nixpkgs = nixpkgs;
+      home-manager = home-manager;
       system = "x86_64-linux";
       user   = "konrad";
     };
