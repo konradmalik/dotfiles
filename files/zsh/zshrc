@@ -159,6 +159,8 @@ fi
 # }
 # to record "cd" history, zoxide cannot be lazy
 eval "$(zoxide init zsh)"
+# enable asdf
+. $HOME/.asdf/asdf.sh
 # Hook direnv into your shell.
 eval "$(asdf exec direnv hook zsh)"
 # A shortcut for asdf managed direnv.
