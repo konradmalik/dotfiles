@@ -105,8 +105,6 @@ export PAGER='less'
 # environments for languages
 # platform dependent
 if [ "$(uname)" = "Darwin" ]; then
-    # jenv
-    export PATH="$HOME/.jenv/bin:$PATH"
     # gnu coreutils by default instead of BSD-based that macos provides, may cause problems later but I want that!
     export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:${PATH}"
     export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:${MANPATH}"

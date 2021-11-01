@@ -1,0 +1,6 @@
+- name: install asdf ubuntu
+  shell:
+    chdir: /tmp
+    cmd: |
+      git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v{{ git_versions.asdf }} --depth 1
+    creates: ~/.asdf

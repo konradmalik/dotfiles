@@ -1,0 +1,52 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: create config dir
+  file:
+    path: ~/.config
+    state: directory
+
+- name: link direnvrc file
+  file:
+    src: "{{ repo_path }}/files/{{ item }}"
+    path: "~/.config/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - direnvrc
+
+- block:
+  - name: Check that the completion file exists
+    stat:
+      path: "~/.asdf/completions/_asdf"
+    register: stat_result
+
+  - name: link asdf completion
+    file:
+      src: "~/.asdf/completions/_asdf"
+      path: "~/.zfunc/_asdf"
+      state: link
+      force: yes
+    when: stat_result.stat.exists
+
+- name: install asdf direnv plugin
+  shell:
+    chdir: /tmp
+    cmd: |
+      asdf plugin-add direnv
+      asdf install direnv latest
+      asdf global direnv latest
+    creates: ~/.asdf/plugins/direnv
+
+- name: install asdf python plugin
+  shell:
+    chdir: /tmp
+    cmd: |
+      asdf plugin-add python
+    creates: ~/.asdf/plugins/python

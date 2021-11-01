@@ -17,7 +17,6 @@
       - procs
       - ncdu
       - nq
-      - direnv
       - zoxide
       - tree
       - up

@@ -20,6 +20,7 @@
     - neovim
     - ranger
     - shell
+    - asdf
     - broot
     # macos should go through app store
     - name: tailscale

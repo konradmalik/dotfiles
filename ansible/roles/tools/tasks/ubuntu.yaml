@@ -9,7 +9,6 @@
       - jq
       - ncdu
       - nq
-      - direnv
       - sshfs
       - tree
       - bat

@@ -151,23 +151,18 @@ elif [ "$(uname)" = "Linux" ]; then
 fi
 
 # other programs inits (lazy load where possible)
-pyenv() {
-    unfunction "$0"
-    eval "$(pyenv init -)"
-    $0 "$@"
-}
+# keep this as an example for the future
+# pyenv() {
+#     unfunction "$0"
+#     eval "$(pyenv init -)"
+#     $0 "$@"
+# }
 # to record "cd" history, zoxide cannot be lazy
 eval "$(zoxide init zsh)"
-# direnv cannot be lazy
-eval "$(direnv hook zsh)"
-# only for macos
-if [ "$(uname)" = "Darwin" ]; then
-    jenv() {
-        unfunction "$0"
-        eval "$(jenv init -)"
-        $0 "$@"
-    }
-fi
+# Hook direnv into your shell.
+eval "$(asdf exec direnv hook zsh)"
+# A shortcut for asdf managed direnv.
+direnv() { asdf exec direnv "$@"; }
 # broot
 autoload -Uz br
 

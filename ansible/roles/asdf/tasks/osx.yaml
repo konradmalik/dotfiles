@@ -1,0 +1,5 @@
+- name: install asdf
+  community.general.homebrew:
+    name:
+      - asfg
+    update_homebrew: yes

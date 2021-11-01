@@ -16,7 +16,6 @@
       - procs
       - ncdu
       - nq-git
-      - direnv
       - sshfs
       - tree
       - up
