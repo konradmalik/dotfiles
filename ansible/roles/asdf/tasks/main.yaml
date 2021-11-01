@@ -48,6 +48,8 @@
       when: stat_result.stat.exists
 
 - name: install asdf direnv plugin
+  args:
+    executable: /bin/bash
   shell:
     chdir: /tmp
     cmd: |
@@ -58,6 +60,8 @@
     creates: ~/.asdf/plugins/direnv
 
 - name: install asdf python plugin
+  args:
+    executable: /bin/bash
   shell:
     chdir: /tmp
     cmd: |
