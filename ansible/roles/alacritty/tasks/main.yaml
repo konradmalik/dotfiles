@@ -1,0 +1,28 @@
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- include: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: create config dir
+  file:
+    path: ~/.config
+    state: directory
+
+- name: make sure config/alacritty does not exist
+  file:
+    path: "~/.config/alacritty"
+    state: absent
+
+- name: link alacritty folder
+  file:
+    src: "{{ repo_path }}/files/{{ item }}"
+    path: "~/.config/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - alacritty
+

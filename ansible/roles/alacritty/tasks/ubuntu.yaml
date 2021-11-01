@@ -1,0 +1,5 @@
+- name: install alacritty snap package
+  become: yes
+  community.general.snap:
+    name: alacritty
+    classic: yes
