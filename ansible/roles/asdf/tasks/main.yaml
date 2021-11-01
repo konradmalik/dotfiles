@@ -5,6 +5,15 @@
       git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v{{ git_versions.asdf }} --depth 1
     creates: ~/.asdf
 
+- name: link asdf config
+  file:
+    src: "{{ repo_path }}/files/{{ item }}"
+    path: "~/.{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - asdfrc
+
 - name: create config dir
   file:
     path: ~/.config
@@ -42,9 +51,9 @@
   shell:
     chdir: /tmp
     cmd: |
-      . ~/.asdf/asdf.sh
-      asdf plugin-add direnv
-      asdf install direnv latest
+      . ~/.asdf/asdf.sh && \
+      asdf plugin-add direnv && \
+      asdf install direnv latest && \
       asdf global direnv latest
     creates: ~/.asdf/plugins/direnv
 
@@ -52,6 +61,6 @@
   shell:
     chdir: /tmp
     cmd: |
-      . ~/.asdf/asdf.sh
+      . ~/.asdf/asdf.sh && \
       asdf plugin-add python
     creates: ~/.asdf/plugins/python
