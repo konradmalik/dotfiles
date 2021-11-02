@@ -82,5 +82,6 @@
   "gitlens.hovers.currentLine.over": "line",
   "gitlens.codeLens.enabled": false,
   "gitlens.hovers.enabled": false,
-  "go.toolsManagement.autoUpdate": true
+  "go.toolsManagement.autoUpdate": true,
+  "security.workspace.trust.untrustedFiles": "open"
 }
