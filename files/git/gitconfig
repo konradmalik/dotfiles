@@ -1,5 +1,6 @@
 [alias]
     graph = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+    root = "rev-parse --show-toplevel"
 
 [color]
     ui = auto
@@ -37,7 +38,7 @@
     path = ~/.gitconfig.Platform
 
 [init]
-    defaultBranch = master
+    defaultBranch = main
 
 [interactive]
     diffFilter = delta --color-only
