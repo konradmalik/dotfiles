@@ -65,6 +65,8 @@
 
   programs.neovim = {
     enable = true;
+    # until 0.5 makes its way to stable
+    package = pkgs.neovim-nightly;
     viAlias = true;
     vimAlias = true;
   };
