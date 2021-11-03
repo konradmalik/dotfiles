@@ -85,6 +85,8 @@ timezsh() {
 }
 
 export LANG="en_US.UTF-8"
+export LC_CTYPE="$LANG"
+export LC_ALL="$LANG"
 
 # XDG structure
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -100,7 +102,8 @@ else
 fi
 
 # set favorite pager
-export PAGER='less'
+export PAGER="less -FirSwX"
+export MANPAGER="less -FirSwX"
 
 # environments for languages
 # platform dependent

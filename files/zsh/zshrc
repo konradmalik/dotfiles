@@ -119,6 +119,17 @@ alias watch='viddy'
 # csv pretty print
 alias tv='tidy-viewer'
 
+# git
+alias ga="git add"
+alias gc="git commit"
+alias gco="git checkout"
+alias gcp="git cherry-pick"
+alias gd="git diff"
+alias gl="git graph"
+alias gp="git push"
+alias gs="git status"
+alias gt="git tag"
+
 # directory stack movement
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
@@ -139,8 +150,8 @@ elif [ "$(uname)" = "Linux" ]; then
     # pbcopy and pbpaste just like in osx
     if [ "$(loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type)" = "Type=x11" ]; then
         # x11
-        alias pbcopy='xclip -selection clipboard'
-        alias pbpaste='xclip -selection clipboard -o'
+        alias pbcopy='xclip'
+        alias pbpaste='xclip -o'
     else
         # wayland
         alias pbcopy='wl-copy'
