@@ -1,7 +1,6 @@
-- name: install pyenv and python compile-dependendies
+- name: install python compile-dependendies
   community.general.homebrew:
     name:
-      - pyenv
       - openssl
       - readline
       - sqlite3
