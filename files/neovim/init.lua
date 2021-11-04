@@ -1,8 +1,10 @@
--- map leader to comma
-vim.g.mapleader = ','
-
 local fn = vim.fn
+local g = vim.g
+local cmd = vim.cmd
 local execute = vim.api.nvim_command
+
+-- map leader to comma
+g.mapleader = ','
 
 -- sensible defaults
 require('settings')
@@ -12,9 +14,10 @@ local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
 end
-vim.cmd [[packadd packer.nvim]]
--- Auto compile when there are changes in plugins.lua
-vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile'
+cmd [[
+    packadd packer.nvim
+    autocmd BufWritePost plugins.lua PackerCompile
+]] -- Auto compile when there are changes in plugins.lua
 
 -- Install plugins
 require('plugins')
