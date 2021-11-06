@@ -7,20 +7,12 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: create ranger dir
-  file:
-    path: ~/.config/ranger
-    state: directory
-
 - name: link ranger files
-  file:
-    src: "{{ repo_path }}/files/ranger/{{ item }}"
-    path: "~/.config/ranger/{{ item }}"
-    state: link
-    force: yes
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
-    - rc.conf
-    - rifle.conf
+    - ranger
 
 - name: install ranger devicons
   shell:

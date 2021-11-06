@@ -15,17 +15,9 @@
     cmd: pipx install black || ~/.local/bin/pipx install black
     creates: ~/.local/bin/black
 
-- name: create neovim dir
-  file:
-    path: ~/.config/nvim
-    state: directory
-
-- name: link neovim files
-  file:
-    src: "{{ repo_path }}/files/neovim/{{ item }}"
-    path: "~/.config/nvim/{{ item }}"
-    state: link
-    force: yes
+- name: link neovim config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
-    - init.lua
-    - lua
+    - neovim

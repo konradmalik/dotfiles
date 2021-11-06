@@ -4,17 +4,12 @@
 - include: osx.yaml
   when: ansible_distribution == "MacOSX"
 
-- name: make sure earthly folder exists and has proper mode
-  file:
-    path: ~/.earthly
-    state: directory
-
 - name: link earthly config
-  file:
-    src: "{{ repo_path }}/files/earthly.yml"
-    path: "~/.earthly/config.yml"
-    state: link
-    force: yes
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
+  with_items:
+    - earthly
 
 - name: bootstrap earthly
   become: yes

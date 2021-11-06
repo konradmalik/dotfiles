@@ -1,0 +1,57 @@
+window:
+  dynamic_title: true
+  padding:
+    x: 2
+    y: 1
+  dynamic_padding: true
+
+cursor:
+  style:
+    shape: Block
+    blinking: on
+
+font:
+  size: 12.0
+
+  normal:
+    family: "SauceCodePro Nerd Font Mono"
+    style: Regular
+
+  bold:
+    family: "SauceCodePro Nerd Font Mono"
+    style: Bold
+
+  italic:
+    family: "SauceCodePro Nerd Font Mono"
+    style: Italic
+
+  bold_italic:
+    family: "SauceCodePro Nerd Font Mono"
+    style: Bold Italic
+
+# Colors (Gruvbox Material Dark Medium)
+colors:
+  primary:
+    background: "0x282828"
+    foreground: "0xdfbf8e"
+
+  normal:
+    black: "0x665c54"
+    red: "0xea6962"
+    green: "0xa9b665"
+    yellow: "0xe78a4e"
+    blue: "0x7daea3"
+    magenta: "0xd3869b"
+    cyan: "0x89b482"
+    white: "0xdfbf8e"
+
+  bright:
+    black: "0x928374"
+    red: "0xea6962"
+    green: "0xa9b665"
+    yellow: "0xe3a84e"
+    blue: "0x7daea3"
+    magenta: "0xd3869b"
+    cyan: "0x89b482"
+    white: "0xdfbf8e"
+

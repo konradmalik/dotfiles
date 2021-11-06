@@ -7,22 +7,9 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: create config dir
-  file:
-    path: ~/.config
-    state: directory
-
-- name: make sure config/alacritty does not exist
-  file:
-    path: "~/.config/alacritty"
-    state: absent
-
-- name: link alacritty folder
-  file:
-    src: "{{ repo_path }}/files/{{ item }}"
-    path: "~/.config/{{ item }}"
-    state: link
-    force: yes
+- name: link alacritty config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
     - alacritty
-

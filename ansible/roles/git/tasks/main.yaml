@@ -7,16 +7,10 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: link general git config
-  file:
-    src: "{{ repo_path }}/files/git/gitconfig"
-    path: ~/.gitconfig
-    state: link
-    force: yes
-
-- name: link platform-specifig git config
-  file:
-    src: "{{ repo_path }}/files/git/gitconfig.{{ ansible_system }}"
-    path: ~/.gitconfig.Platform
-    state: link
-    force: yes
+- name: link git config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
+  with_items:
+    - git
+    - git-{{ ansible_system | lower }}

@@ -1,0 +1,2 @@
+[credential]
+    helper = /usr/lib/git-core/git-credential-libsecret

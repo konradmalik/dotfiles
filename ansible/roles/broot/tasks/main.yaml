@@ -7,19 +7,12 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: create broot dir
-  file:
-    path: ~/.config/broot
-    state: directory
-
-- name: link config file
-  file:
-    src: "{{ repo_path }}/files/broot/{{ item }}"
-    path: "~/.config/broot/{{ item }}"
-    state: link
-    force: yes
+- name: link broot config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
-    - conf.hjson
+    - broot
 
 - name: install broot completion
   shell:

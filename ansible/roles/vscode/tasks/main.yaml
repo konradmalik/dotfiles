@@ -1,5 +1,15 @@
-- include: linux.yaml
-  when: ansible_system == "Linux"
+- include: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
 
 - include: osx.yaml
-  when: ansible_system == "Darwin"
+  when: ansible_distribution == "MacOSX"
+
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- name: link vscode config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" --no-folding {{ item }}
+  with_items:
+    - vscode-{{ ansible_system | lower }}

@@ -11,10 +11,12 @@
       - nq
       - sshfs
       - tree
+      - stow
       - bat
       - ripgrep
       - silversearcher-ag
       - shellcheck
+      - tldr
     state: latest
     update_cache: yes
     autoclean: yes

@@ -7,29 +7,19 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: link zsh files
-  file:
-    src: "{{ repo_path }}/files/zsh/{{ item }}"
-    path: "~/.{{ item }}"
-    state: link
-    force: yes
+- name: link zsh and starship config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
-    - zshrc
-    - zshenv
-    - zprofile
+    - zsh
+    - starship
 
 - name: make sure ~/.zfunc exists
   file:
     path: ~/.zfunc
     state: directory
     mode: 0755
-
-- name: link starship config
-  file:
-    src: "{{ repo_path }}/files/zsh/starship.toml"
-    path: ~/.config/starship.toml
-    state: link
-    force: yes
 
 - name: change shell to zsh for "{{ target_user }}"
   become: yes

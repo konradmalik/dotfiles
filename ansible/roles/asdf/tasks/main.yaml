@@ -5,32 +5,12 @@
       git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v{{ git_versions.asdf }} --depth 1
     creates: ~/.asdf
 
-- name: link asdf config
-  file:
-    src: "{{ repo_path }}/files/{{ item }}"
-    path: "~/.{{ item }}"
-    state: link
-    force: yes
+- name: link asdf and direnv config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
-    - asdfrc
-
-- name: create config dir
-  file:
-    path: ~/.config
-    state: directory
-
-- name: make sure config/direnv does not exist
-  file:
-    path: "~/.config/direnv"
-    state: absent
-
-- name: link direnv folder
-  file:
-    src: "{{ repo_path }}/files/{{ item }}"
-    path: "~/.config/{{ item }}"
-    state: link
-    force: yes
-  with_items:
+    - asdf
     - direnv
 
 - block:

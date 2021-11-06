@@ -1,12 +1,22 @@
-- name: link general dot files
+- name: create config dir (so that it is not linked)
   file:
-    src: "{{ repo_path }}/files/{{ item }}"
-    path: "~/.{{ item }}"
-    state: link
-    force: yes
+    path: ~/.config
+    state: directory
+
+- name: link general dot files
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
     - inputrc
-    - gdbinit
+    - gdb
+
+- name: link no folding general dot files
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" --no-folding {{ item }}
+  with_items:
+    - gpg
 
 - block:
     - name: Check if private configs submodule is cloned before proceeding
@@ -17,11 +27,9 @@
       register: private_found
 
     - name: link private dot files
-      file:
-        src: "{{ repo_path }}/private/{{ item }}"
-        path: "~/.{{ item }}"
-        state: link
-        force: yes
+      shell:
+        chdir: "{{ repo_path }}/private/files"
+        cmd: stow --target="$HOME" {{ item }}
       with_items:
         - netrc
       when: private_found.matched > 0
@@ -33,15 +41,3 @@
       when: private_found.matched > 0
 
   when: private_machine
-
-- name: create .gnupg
-  file:
-    path: ~/.gnupg
-    state: directory
-
-- name: link gpg-agent config
-  file:
-    src: "{{ repo_path }}/files/gpg-agent.conf"
-    path: ~/.gnupg/gpg-agent.conf
-    state: link
-    force: yes

@@ -19,11 +19,13 @@
       - nq
       - zoxide
       - tree
+      - stow
       - up
       - viddy
       - shellcheck
       - duf
       - gotop
+      - tldr
       - croc
       - pipx
     update_homebrew: yes

@@ -1,20 +1,8 @@
-- name: make sure ssh folder exists and has proper mode
+- name: make sure ssh folder has proper mode
   file:
     path: ~/.ssh
     state: directory
     mode: 0700
-
-- name: make sure the config file mode is ok
-  file:
-    path: "{{ repo_path }}/files/ssh/config"
-    mode: 0600
-
-- name: link config
-  file:
-    src: "{{ repo_path }}/files/ssh/config"
-    path: ~/.ssh/config
-    state: link
-    force: yes
 
 - name: make sure config.d folder exists and has proper mode
   file:
@@ -22,24 +10,12 @@
     state: directory
     mode: 0700
 
-- block:
-    - name: make sure config files modes are ok
-      file:
-        path: "{{ repo_path }}/files/ssh/{{ item }}"
-        mode: 0600
-      with_items:
-        - aur
-        - git
-
-    - name: link configs
-      file:
-        src: "{{ repo_path }}/files/ssh/{{ item }}"
-        path: "~/.ssh/config.d/{{ item }}"
-        state: link
-        force: yes
-      with_items:
-        - aur
-        - git
+- name: link ssh config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" --no-folding {{ item }}
+  with_items:
+    - ssh
 
 - name: Check if private configs submodule is cloned before proceeding
   find:
@@ -48,32 +24,12 @@
     recurse: yes
   register: private_found
 
-- block:
-    - name: make sure private config files modes are ok
-      file:
-        path: "{{ repo_path }}/private/ssh/{{ item }}"
-        mode: 0600
-      with_items:
-        - aur-identity
-        - git-identity
-        - cerebre
-        - evaris
-        - private
-        - pw
-
-    - name: link private configs
-      file:
-        src: "{{ repo_path }}/private/ssh/{{ item }}"
-        path: "~/.ssh/config.d/{{ item }}"
-        state: link
-        force: yes
-      with_items:
-        - aur-identity
-        - git-identity
-        - cerebre
-        - evaris
-        - private
-        - pw
+- name: link private ssh config
+  shell:
+    chdir: "{{ repo_path }}/private/files"
+    cmd: stow --target="$HOME" --no-folding {{ item }}
+  with_items:
+    - ssh
   when:
     - private_machine
     - private_found.matched > 0

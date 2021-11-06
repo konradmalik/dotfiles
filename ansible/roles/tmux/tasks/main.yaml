@@ -7,12 +7,9 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: link tmux files
-  file:
-    src: "{{ repo_path }}/files/tmux/{{ item }}"
-    path: "~/.{{ item }}"
-    state: link
-    force: yes
+- name: link tmux config
+  shell:
+    chdir: "{{ repo_path }}/files"
+    cmd: stow --target="$HOME" {{ item }}
   with_items:
     - tmux
-    - tmux.conf

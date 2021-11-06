@@ -18,11 +18,13 @@
       - nq-git
       - sshfs
       - tree
+      - stow
       - up
       - viddy
       - shellcheck
       - duf
       - gotop
+      - tldr
       - ngrok
       - croc
       - python-pipx
