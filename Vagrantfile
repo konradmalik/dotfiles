@@ -8,7 +8,7 @@ Vagrant.configure(API_VERSION) do |config|
   config.vm.box = box
 
   # networking
-  config.vm.network :private_network, ip: "192.168.10.2"
+  #config.vm.network :private_network, ip: "192.168.10.2"
   config.ssh.forward_agent = true
 
   # files syncing
