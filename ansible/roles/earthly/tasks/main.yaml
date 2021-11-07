@@ -10,8 +10,3 @@
     cmd: stow --target="$HOME" {{ item }}
   with_items:
     - earthly
-
-- name: bootstrap earthly
-  become: yes
-  command:
-    cmd: earthly bootstrap

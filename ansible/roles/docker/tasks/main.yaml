@@ -7,11 +7,11 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: start and enable docker daemon
+- name: enable docker daemon (dont start yet)
   become: yes
   service:
     name: docker
-    state: started
+    state: stopped
     enabled: yes
   when:
     - ansible_system == "Linux"

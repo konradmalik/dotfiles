@@ -37,7 +37,7 @@
     - name: make sure netrc file mode is ok
       file:
         path: ~/.netrc
-        mode: o-rw
+        mode: 600
       when: private_found.matched > 0
 
   when: private_machine
