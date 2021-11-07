@@ -1,6 +1,8 @@
-require('telescope')
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+
 local utils = require('utils')
-local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 -- Mappings.
 local opts = { noremap=true }
 utils.map('n', '<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
