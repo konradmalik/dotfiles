@@ -1,0 +1,79 @@
+API_VERSION = "2"
+GUEST_SHARED_PATH = "/vagrant"
+HOST_SHARED_PATH = ENV["HOME"]
+box = "archlinux/archlinux"
+box_version = "20211101.38317"
+
+cpus = 1
+memory = 2048
+disk_size = "150GB"
+
+Vagrant.configure(API_VERSION) do |config|
+  config.vm.box = box
+  config.vm.box_version = box_version
+
+  # networking
+  config.vm.network "private_network", ip: "192.168.55.55"
+  config.ssh.forward_agent = true
+
+  # files syncing
+  config.vm.synced_folder HOST_SHARED_PATH, GUEST_SHARED_PATH
+
+  # force disk size
+  unless Vagrant.has_plugin?("vagrant-disksize")
+    system "vagrant plugin install vagrant-disksize"
+  end
+  config.disksize.size = disk_size
+
+  ["vmware_fusion", "vmware_workstation"].each do |vmware|
+    config.vm.provider vmware do |v|
+      v.vmx['memsize'] = memory
+      v.vmx['numvcpus'] = cpus
+    end
+  end
+
+  config.vm.provider :virtualbox do |vb|
+    vb.name = "devarch"
+    vb.memory = memory
+    vb.cpus = cpus
+    vb.gui = true
+    #vb.customize ["modifyvm", :id, "--vram", "8"] # ubuntu defaults to 256 MB which is a waste of precious RAM
+    # don't need audio
+    vb.customize ["modifyvm", :id, "--audio", "none"]
+    # shared clipboard
+    vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+  end
+
+  config.vm.provider :libvirt do |lv|
+    lv.cpu_mode = "host-model"
+    lv.memory = $vm_memory
+    lv.cpus = $vm_cpus
+    lv.default_prefix = 'devarch'
+  end
+
+
+  # provisioning
+  # Disable swap for each vm
+  config.vm.provision "shell", inline: "swapoff -a"
+  # main provisioning
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = GUEST_SHARED_PATH + "/Code/dotfiles/ansible/playbook.yml"
+    ansible.inventory_path = GUEST_SHARED_PATH + "/Code/dotfiles/ansible/inventory.yaml"
+    ansible.limit  = "local"
+    ansible.provisioning_path = GUEST_SHARED_PATH
+    # set this just to force running galaxy
+    ansible.galaxy_role_file = GUEST_SHARED_PATH + "/Code/dotfiles/ansible/requirements.yml"
+    ansible.galaxy_command = "ansible-galaxy collection install -r " + GUEST_SHARED_PATH + "/Code/dotfiles/ansible/requirements.yml --force"
+  end
+  # gui env
+  $gui_script = <<-'SCRIPT'
+  echo "installing regolith"
+  yay -S --sudoloop --removemake --devel --nocleanmenu --nodiffmenu --noeditmenu --noupgrademenu regolith-full
+  SCRIPT
+  config.vm.provision "shell" do |s|
+    s.inline = $gui_script
+    s.privileged = false
+  end
+
+end
+
