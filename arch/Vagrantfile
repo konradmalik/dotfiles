@@ -83,7 +83,7 @@ Vagrant.configure(API_VERSION) do |config|
   $gui_script = <<-'SCRIPT'
   echo "installing gui apps"
   yay -S --sudoloop --answerdiff=None --noconfirm --removemake --devel --nocleanmenu --nodiffmenu --noeditmenu --noupgrademenu \
-  xorg-xinit xorg-server i3
+  xorg-xinit xorg-server xclip i3
   echo "exec i3" > ~/.xinitrc
   SCRIPT
   config.vm.provision "shell" do |s|
