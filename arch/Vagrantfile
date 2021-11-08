@@ -44,11 +44,15 @@ Vagrant.configure(API_VERSION) do |config|
     vb.memory = memory
     vb.cpus = cpus
     vb.gui = gui
-    #vb.customize ["modifyvm", :id, "--vram", "8"] # ubuntu defaults to 256 MB which is a waste of precious RAM
+    # video
+    vb.customize ["modifyvm", :id, "--vram", "64"]
+    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
     # don't need audio
     vb.customize ["modifyvm", :id, "--audio", "none"]
     # shared clipboard
     vb.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+    vb.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
   end
 
   config.vm.provider :libvirt do |lv|
