@@ -33,12 +33,10 @@ Vagrant.configure(API_VERSION) do |config|
   end
   config.disksize.size = disk_size
 
-  ["vmware_fusion", "vmware_workstation"].each do |vmware|
-    config.vm.provider vmware do |v|
-      v.gui = gui
-      v.vmx['memsize'] = memory
-      v.vmx['numvcpus'] = cpus
-    end
+  config.vm.provider :vmware_desktop do |v|
+    v.gui = gui
+    v.vmx['memsize'] = memory
+    v.vmx['numvcpus'] = cpus
   end
 
   config.vm.provider :virtualbox do |vb|
