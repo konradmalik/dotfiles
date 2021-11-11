@@ -12,4 +12,4 @@
     - i3
     - Xresources
     - rofi
-    - xinit
+    - xinitrc
