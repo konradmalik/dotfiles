@@ -9,5 +9,6 @@ Just use the Vagrantfile
 - enable ssh
 - use scp to copy files from the host (dotfiles)
 - run `run.sh` but with variable_host set to local
-
+- guest stuff: `https://wiki.archlinux.org/title/VMware/Install_Arch_Linux_as_a_guest#Xorg_configuration`
+    - open-vm-tools work ok (install gtkmm3 for clipboard support!)
 
