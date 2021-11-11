@@ -1,0 +1,11 @@
+- name: install go apt packages
+  become: yes
+  apt:
+    name:
+      - i3
+      - rofi
+      - xclip
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes

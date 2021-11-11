@@ -1,0 +1,11 @@
+- name: install yay packages
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      - xorg-xinit
+      - xorg-server
+      - xclip
+      - i3
+      - rofi

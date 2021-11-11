@@ -3,7 +3,6 @@ GUEST_SHARED_PATH = "/vagrant"
 GUEST_HOME = "/home/vagrant"
 HOST_SHARED_PATH = ENV["HOME"]
 box = "archlinux/archlinux"
-box_version = "20211101.38317"
 hostname = "devarch"
 ip = "192.168.56.56" # must be 10.0.0.0/8 192.168.0.0/16
 
@@ -14,7 +13,6 @@ gui = true # disable during provisioning, enable later if wanted
 
 Vagrant.configure(API_VERSION) do |config|
   config.vm.box = box
-  config.vm.box_version = box_version
   config.vm.hostname = hostname
 
   # networking
@@ -67,7 +65,7 @@ Vagrant.configure(API_VERSION) do |config|
   # provisioning
   # Disable swap for each vm
   config.vm.provision "shell", inline: "swapoff -a"
-  # copy our repo to the correct place (dont use file provisioner as its... not very good)
+  # copy our repo to the correct place
   config.vm.provision "shell" do |s|
     s.inline = "mkdir -p ~/Code && cp -a " + GUEST_SHARED_PATH + "/Code/dotfiles ~/Code/dotfiles"
     s.privileged = false
@@ -84,11 +82,5 @@ Vagrant.configure(API_VERSION) do |config|
     ansible.galaxy_role_file = GUEST_HOME + "/Code/dotfiles/ansible/requirements.yml"
     ansible.galaxy_command = "ansible-galaxy collection install -r " + GUEST_HOME + "/Code/dotfiles/ansible/requirements.yml --force"
   end
-  # gui stuff, arch specific
-  config.vm.provision "shell" do |s|
-    s.path = "./post-ansible.sh"
-    s.privileged = false
-  end
-
 end
 

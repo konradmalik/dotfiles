@@ -37,6 +37,10 @@
     - name: alacritty
       when:
         - gui_apps
+    - name: window_manager
+      when:
+        - gui_apps
+        - ansible_system == "Linux"
     - name: vscode
       when:
         - gui_apps

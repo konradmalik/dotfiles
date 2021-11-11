@@ -38,4 +38,4 @@ local:
   vars:
     ansible_connection: local
     private_machine: true
-    gui_apps: false
+    gui_apps: true

@@ -12,3 +12,4 @@ ansible-playbook \
     ./playbook.yml \
     --extra-vars "variable_host=remote" \
     --ask-become-pass
+

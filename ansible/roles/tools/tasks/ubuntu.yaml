@@ -17,6 +17,7 @@
       - silversearcher-ag
       - shellcheck
       - tldr
+      - zathura
     state: latest
     update_cache: yes
     autoclean: yes
