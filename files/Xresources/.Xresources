@@ -1,10 +1,10 @@
-! URXVT FONT SETTINGS
+! FONT SETTINGS
 !------------------------------------------------
-Xft.dpi: 180
+Xft.dpi: 144
 Xft.autohint: true
 Xft.antialias: true
 Xft.hinting: true
-Xft.hintstyle: hintslight
+Xft.hintstyle: hintfull
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
@@ -38,11 +38,3 @@ Xft.lcdfilter: lcddefault
 ! white
 *color7: #707880
 *color15: #C5C8C6
-
-! URXVT
-!----------------------------------------------------------------------
-! Colors
-! bold, italic, underline
-URxvt.colorBD: #B5BD68
-URxvt.colorIT: #B294BB
-URxvt.colorUL: #81A2BE

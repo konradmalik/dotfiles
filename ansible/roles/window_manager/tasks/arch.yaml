@@ -4,8 +4,14 @@
   kewlfft.aur.aur:
     use: yay
     name:
+      - xorg-xrandr
       - xorg-xinit
       - xorg-server
       - xclip
       - i3
       - rofi
+      - feh
+      # start xdg autostart desktop files
+      - dex
+      # allow regular local users to reboot etc.
+      - polkit

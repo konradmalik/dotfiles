@@ -48,5 +48,8 @@
     - name: vagrant
       when:
         - ansible_architecture == "x86_64"
+    - name: vmware_guest
+      when:
+        - vmware_guest
     - name: aur_builder-cleanup
       when: ansible_distribution == "Archlinux"

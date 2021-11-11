@@ -1,0 +1,2 @@
+- include: arch.yaml
+  when: ansible_distribution == "Archlinux"

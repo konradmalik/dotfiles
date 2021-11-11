@@ -1,0 +1,20 @@
+- name: install openvm-tools etc.
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name:
+      # copying pasting etc. in general guest tools
+      - open-vm-tools
+      - gtkmm3
+      - xf86-input-vmmouse
+      - xf86-video-vmware
+      - mesa
+
+- name: enable docker daemon (dont start yet)
+  become: yes
+  service:
+    name: vmtoolsd
+    state: stopped
+    enabled: yes
+
