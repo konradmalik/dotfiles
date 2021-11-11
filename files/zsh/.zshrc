@@ -180,21 +180,27 @@ direnv() { asdf exec direnv "$@"; }
 # broot
 autoload -Uz br
 
-# source fzf functionality if available
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # starship prompt. Should be very close to the end of the file
 eval "$(starship init zsh)"
 
 # source zsh plugins that vary by platform
 # should be last
 if [ "$(uname)" = "Darwin" ]; then
+    source ~/.fzf.zsh
+
     source "$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     source "$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 elif [ "$(uname)" = "Linux" ]; then
 	if [ -f "/etc/arch-release" ]; then
+        # fzf
+        source "/usr/share/fzf/key-bindings.zsh"
+        source "/usr/share/fzf/completion.zsh"
+
         source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
         source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 	elif [ -f "/etc/debian_version" ]; then
+        source ~/.fzf.zsh
+
         source "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
         source "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 	fi
