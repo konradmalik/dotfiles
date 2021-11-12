@@ -4,7 +4,7 @@ all:
     target_user: "{{ lookup('env','USER') or 'konrad' }}"
     # for ssh-ingress if below is enabled
     enable_ssh: false
-    copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/local_ssh_key.pub') }}"
     # absolute path to this repository on a host. Replace is needed for macos compatibility
     repo_path: "{{ (playbook_dir + '/..') | realpath | replace('/Users','/home')}}"
     # if enabled - some gui only apps will be installed as well
