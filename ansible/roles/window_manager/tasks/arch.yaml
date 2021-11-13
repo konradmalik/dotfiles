@@ -10,7 +10,6 @@
       - xclip
       - i3
       - rofi
-      - nsxiv
       - feh
       # start xdg autostart desktop files
       - dex

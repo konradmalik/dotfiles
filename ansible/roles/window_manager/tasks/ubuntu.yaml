@@ -5,6 +5,9 @@
       - i3
       - rofi
       - xclip
+      - rofi
+      - feh
+      - dex
     state: latest
     update_cache: yes
     autoclean: yes
