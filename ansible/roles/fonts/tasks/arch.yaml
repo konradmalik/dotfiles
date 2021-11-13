@@ -7,3 +7,6 @@
       - nerd-fonts-source-code-pro
       - nerd-fonts-hack
       - nerd-fonts-fira-code
+      - noto-fonts
+      - noto-fonts-cjk
+      - noto-fonts-emoji
