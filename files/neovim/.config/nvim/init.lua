@@ -3,8 +3,8 @@ local g = vim.g
 local cmd = vim.cmd
 local execute = vim.api.nvim_command
 
--- map leader to comma
-g.mapleader = ','
+-- map leader
+g.mapleader = ' '
 
 -- sensible defaults
 require('settings')
