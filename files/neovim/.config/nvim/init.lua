@@ -6,8 +6,8 @@ local execute = vim.api.nvim_command
 -- map leader
 g.mapleader = ' '
 
--- sensible defaults
 require('settings')
+require('autocommands')
 
 -- Auto install packer.nvim if not exists
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
