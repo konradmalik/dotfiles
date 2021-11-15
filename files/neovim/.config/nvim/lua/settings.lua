@@ -36,6 +36,11 @@ opt.wildmode='list:longest'                  -- Command-line completion mode
 opt.list=true                                -- Show some invisible characters (tabs...)
 opt.number=true                              -- Print line number
 opt.relativenumber=true                      -- Relative line numbers
+opt.updatetime=50
+opt.swapfile=false
+opt.backup=false
+opt.undofile=true
+opt.undodir='/tmp/.vim-undo'
 
 -- disable builtins plugins
 local disabled_built_ins = {
