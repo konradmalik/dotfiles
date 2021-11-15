@@ -9,13 +9,14 @@ vim.cmd [[
 ]]                                                          -- fix indents (2 spaces) for yaml
 
 local indent = 4
-g.nomodeline=true                                       -- disable modelines for security and because we dont need them
+g.nomodeline=true                            -- disable modelines for security and because we dont need them
 if fn.executable("rg") then
     opt.grepprg='rg --vimgrep --no-heading --smart-case'
     opt.grepformat='%f:%l:%c:%m,%f:%l:%m'
 end
-opt.lazyredraw = true     -- faster scrolling
-opt.expandtab = true                           -- Use spaces instead of tabs
+opt.hlsearch=false                           -- :noh by default
+opt.lazyredraw = true                        -- faster scrolling
+opt.expandtab = true                         -- Use spaces instead of tabs
 opt.smartindent=true                         -- Insert indents automatically
 opt.autoindent=true                          -- Insert indents automatically
 opt.shiftwidth=indent                        -- Size of an indent
@@ -24,8 +25,8 @@ opt.softtabstop=indent                       -- Number of spaces tabs count for
 opt.hidden=true                              -- Enable modified buffers in background
 opt.ignorecase=true                          -- Ignore case
 opt.joinspaces=false                         -- No double spaces with join after a dot
-opt.scrolloff= 4                             -- Lines of context
 opt.shiftround=true                          -- Round indent
+opt.scrolloff=8                              -- Lines of context
 opt.sidescrolloff=8                          -- Columns of context
 opt.smartcase=true                           -- Don't ignore case with capitals
 opt.splitbelow=true                          -- Put new windows below current
