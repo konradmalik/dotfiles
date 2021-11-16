@@ -1,2 +1,2 @@
---vim.cmd 'colorscheme base16-gruvbox-dark-medium'
-vim.cmd 'colorscheme onedark'
+--vim.cmd 'colorscheme onedark'
+vim.cmd 'colorscheme gruvbox'

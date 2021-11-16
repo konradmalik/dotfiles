@@ -31,7 +31,7 @@ cpu_usage {
 }
 
 memory {
-        format = "ram:%used|%available"
+        format = "ram: %used, avail: %available"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
 }

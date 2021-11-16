@@ -10,6 +10,8 @@
       - xclip
       - i3
       - rofi
+      # for i3blocks
+      - sysstat
       - feh
       # start xdg autostart desktop files
       - dex

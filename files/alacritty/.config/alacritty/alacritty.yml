@@ -11,7 +11,7 @@ cursor:
     blinking: on
 
 font:
-  size: 12.0
+  size: 11.0
 
   normal:
     family: "SauceCodePro Nerd Font Mono"
@@ -29,12 +29,12 @@ font:
     family: "SauceCodePro Nerd Font Mono"
     style: Bold Italic
 
-# Colors (Gruvbox Material Dark Medium)
-colors:
+# COLOR SCHEMES
+# Gruvbox Material Dark Medium
+gruvbox-dark: &gruvbox-dark
   primary:
     background: "0x282828"
     foreground: "0xdfbf8e"
-
   normal:
     black: "0x665c54"
     red: "0xea6962"
@@ -44,7 +44,6 @@ colors:
     magenta: "0xd3869b"
     cyan: "0x89b482"
     white: "0xdfbf8e"
-
   bright:
     black: "0x928374"
     red: "0xea6962"
@@ -55,3 +54,31 @@ colors:
     cyan: "0x89b482"
     white: "0xdfbf8e"
 
+# One Dark
+onedark: &onedark
+  primary:
+    background: "#282c34"
+    foreground: "#abb2bf"
+  normal:
+    # NOTE: Use '#131613' for the `black` color if you'd like to see
+    # black text on the background.
+    black: "#282c34"
+    red: "#e06c75"
+    green: "#98c379"
+    yellow: "#d19a66"
+    blue: "#61afef"
+    magenta: "#c678dd"
+    cyan: "#56b6c2"
+    white: "#abb2bf"
+  # Bright colors
+  bright:
+    black: "#5c6370"
+    red: "#e06c75"
+    green: "#98c379"
+    yellow: "#d19a66"
+    blue: "#61afef"
+    magenta: "#c678dd"
+    cyan: "#56b6c2"
+    white: "#ffffff"
+
+colors: *gruvbox-dark

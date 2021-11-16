@@ -3,14 +3,14 @@ return require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = true}
 
     -- Treesitter (syntax highlight)
-    use { 
+    use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
 
     -- LSP and completion
     use { 'neovim/nvim-lspconfig' } -- Collection of configurations for built-in LSP client
-    use { 'nvim-lua/completion-nvim' } 
+    use { 'nvim-lua/completion-nvim' }
     use {
         'hrsh7th/nvim-cmp', -- Autocompletion plugin
         requires = {
@@ -51,6 +51,7 @@ return require('packer').startup(function()
         end
     }
 
-    -- theme
+    -- themes
     use { 'joshdick/onedark.vim' }
+    use { 'gruvbox-community/gruvbox' }
 end)

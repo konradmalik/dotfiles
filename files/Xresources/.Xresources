@@ -1,6 +1,6 @@
 ! FONT SETTINGS
 !------------------------------------------------
-Xft.dpi: 144
+Xft.dpi: 96
 Xft.autohint: true
 Xft.antialias: true
 Xft.hinting: true
@@ -8,33 +8,71 @@ Xft.hintstyle: hintfull
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-! TERMINAL COLORS
-!------------------------------------------------
-*background: #1D1F21
-*foreground: #C5C8C6
-*cursorColor: #C3FF00
+! -----------------------------------------------------------------------------
+! File: gruvbox-dark.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/gruvbox-community/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+! hard contrast: *background: #1d2021
+*background: #282828
+! soft contrast: *background: #32302f
+*foreground: #ebdbb2
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color7:  #a89984
+*color15: #ebdbb2
 
-! black
-*color0: #282A2E
-*color8: #373B41
-! red
-*color1: #A54242
-*color9: #CC6666
-! green
-*color2: #8C9440
-*color10: #B5BD68
-! yellow
-*color3: #DE935F
-*color11: #F0C674
-! blue
-*color4: #5F819D
-*color12: #81A2BE
-! magenta
-*color5: #85678F
-*color13: #B294BB
-! cyan
-*color6: #5E8D87
-*color14: #8ABEB7
-! white
-*color7: #707880
-*color15: #C5C8C6
+!! -----------------------------------------------------------------------------
+!! onedark
+!! -----------------------------------------------------------------------------
+!! special
+!*.foreground:   #ABB2BF
+!*.background:   #282C34
+!*.cursorColor:  #ABB2BF
+!! black
+!*.color0:       #2C323C
+!*.color8:       #3E4452
+!! red
+!*.color1:       #E06C75
+!*.color9:       #E06C75
+!! green
+!*.color2:       #98C379
+!*.color10:      #98C379
+!! yellow
+!*.color3:       #E5C07B
+!*.color11:      #E5C07B
+!! blue
+!*.color4:       #61AFEF
+!*.color12:      #61AFEF
+!! magenta
+!*.color5:       #C678DD
+!*.color13:      #C678DD
+!! cyan
+!*.color6:       #56B6C2
+!*.color14:      #56B6C2
+!! white
+!*.color7:       #5C6370
+!*.color15:      #ABB2BF
+
