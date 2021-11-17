@@ -84,6 +84,11 @@ timezsh() {
   for i in $(seq 1 10); do time $shell -i -c exit; done
 }
 
+# for GPG agent
+function _gpg-agent_update-tty_preexec {
+  gpg-connect-agent updatestartuptty /bye &>/dev/null
+}
+
 export LANG="en_US.UTF-8"
 export LC_CTYPE="$LANG"
 export LC_ALL="$LANG"
