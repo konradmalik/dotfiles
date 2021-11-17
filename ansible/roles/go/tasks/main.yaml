@@ -16,5 +16,5 @@
     cmd: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v{{ git_versions.golangci_lint }}
     creates: ~/.go/bin/golangci-lint
   environment:
-    GO_PATH: "~/.go"
+    GOPATH: "~/.go"
   when: ansible_system == "Linux"
