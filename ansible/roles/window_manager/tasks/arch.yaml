@@ -9,6 +9,7 @@
       - xorg-server
       - xclip
       - i3
+      - picom
       - rofi
       # for i3blocks
       - sysstat
