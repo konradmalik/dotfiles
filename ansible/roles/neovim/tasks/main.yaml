@@ -10,10 +10,12 @@
 - include: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: install black through pipx (python formatting)
+- name: install python language server and extras through pipx
   shell:
-    cmd: pipx install black || ~/.local/bin/pipx install black
-    creates: ~/.local/bin/black
+    cmd: |
+      pipx install python-lsp-server || ~/.local/bin/pipx install python-lsp-server
+      pipx inject python-lsp-server pylsp-mypy python-lsp-black pyls-isort || ~/.local/bin/pipx inject python-lsp-server pylsp-mypy python-lsp-black pyls-isort
+    creates: ~/.local/bin/pylsp
 
 - name: link neovim config
   shell:

@@ -4,5 +4,4 @@
       - neovim
       - efm-langserver
       - prettier
-      - pyright
     update_homebrew: yes

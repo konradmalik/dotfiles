@@ -29,13 +29,12 @@
     autoclean: yes
     autoremove: yes
 
-- name: install pyright and prettier globally
+- name: install prettier globally
   become: yes
   community.general.npm:
     name: "{{ item }}"
     global: yes
   with_items:
-    - pyright
     - prettier
 
 - name: install efm-langserver

@@ -41,11 +41,20 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- https://github.com/microsoft/pyright
-lspconfig.pyright.setup {
+-- https://github.com/python-lsp/python-lsp-server
+lspconfig.pylsp.setup{
     on_attach = on_attach,
     init_options = { provideFormatter = true },
     capabilites = capabilities,
+    settings = {
+        pylsp = {
+            plugins = {
+                pylsp_mypy =  { enabled = true },
+                pylsp_black =  { enabled = true },
+                pyls_sort =  { enabled = true },
+            }
+        }
+    }
 }
 
 -- https://github.com/golang/tools/tree/master/gopls
