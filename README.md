@@ -27,7 +27,7 @@ $ stow --target="$HOME" --no-folding vscode-darwin
 ```
 
 No fold those dirs:
+
 - gpg
 - ssh
 - vscode-darwin/linux
-

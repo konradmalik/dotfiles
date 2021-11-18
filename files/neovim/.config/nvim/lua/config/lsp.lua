@@ -1,5 +1,4 @@
 local lspconfig = require('lspconfig')
-local completion = require('completion')
 local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
 -- capabilites for cmp
@@ -66,29 +65,17 @@ lspconfig.gopls.setup {
 -- https://github.com/rust-analyzer/rust-analyzer
 lspconfig.rust_analyzer.setup {
     on_attach = on_attach,
-    init_options = { provideFormatter = true },
     capabilites = capabilities,
 }
 
--- prettier setup
-local format_options_prettier = {
-    tabWidth = 4,
-    singleQuote = true,
-    trailingComma = "all",
-    configPrecedence = "prefer-file"
-}
-vim.g.format_options_json = format_options_prettier
-vim.g.format_options_yaml = format_options_prettier
-vim.g.format_options_markdown = format_options_prettier
-
-local black = require("config/efm/black")
-local autopep8 = require("config/efm/autopep8")
-local goimports = require("config/efm/goimports")
+-- prettier setup with efm
 local prettier = require("config/efm/prettier")
 local languages = {
-    yaml = { prettier },
+    html = { prettier },
+    javascript = { prettier },
     json = { prettier },
     markdown = { prettier },
+    yaml = { prettier },
 }
 -- https://github.com/mattn/efm-langserver
 lspconfig.efm.setup {
@@ -98,6 +85,7 @@ lspconfig.efm.setup {
     },
     capabilites = capabilities,
     filetypes = vim.tbl_keys(languages),
+    single_file_support = true,
     settings = {
         languages = languages,
     }
