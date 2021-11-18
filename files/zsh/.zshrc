@@ -83,12 +83,11 @@ bindkey '^w' backward-kill-word
 
 # GPG agent (+ ssh support)
 export GPG_TTY=$TTY
+autoload -U add-zsh-hook
+add-zsh-hook preexec _gpg-agent_update-tty_preexec
 
 # Register SSH_AUTH_SOCK via gpg agent only if not in SSH
 if [ "$SESSION_TYPE"  = 'local' ]; then
-    autoload -U add-zsh-hook
-    add-zsh-hook preexec _gpg-agent_update-tty_preexec
-
     # If enable-ssh-support is set, fix ssh agent integration
     if [[ $(gpgconf --list-options gpg-agent | awk -F: '$1=="enable-ssh-support" {print $10}') = 1 ]]; then
         unset SSH_AGENT_PID
