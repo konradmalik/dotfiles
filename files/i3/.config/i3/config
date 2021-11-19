@@ -6,6 +6,9 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:monospace 8
 
+# wallpaper
+exec_always --no-startup-id ~/.fehbg
+
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
@@ -15,10 +18,10 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-# start compisitor
-exec --no-startup-id picom -b
+# start compositor
+# exec --no-startup-id picom -b
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
