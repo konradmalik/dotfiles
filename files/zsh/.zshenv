@@ -101,9 +101,13 @@ export XDG_CACHE_HOME="$HOME/.cache"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
   export VISUAL='vim'
+  export GIT_EDITOR='vim'
+  export DIFFPROG='vim -d'
 else
   export EDITOR='nvim'
   export VISUAL='nvim'
+  export GIT_EDITOR='nvim'
+  export DIFFPROG='nvim -d'
 fi
 
 # set favorite pager
