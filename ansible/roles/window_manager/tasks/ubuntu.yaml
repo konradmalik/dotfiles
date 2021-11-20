@@ -1,13 +1,15 @@
+- name: add regolith apt repo
+  become: yes
+  apt_repository:
+    repo: "ppa:regolith-linux/stable"
+    state: present
+    update_cache: yes
+
 - name: install go apt packages
   become: yes
   apt:
     name:
-      - i3
-      - rofi
-      - xclip
-      - rofi
-      - feh
-      - dex
+      - regolith-desktop-mobile
     state: latest
     update_cache: yes
     autoclean: yes

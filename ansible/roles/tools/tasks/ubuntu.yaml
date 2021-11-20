@@ -25,6 +25,13 @@
     # the last one required by bat/ripgrep
     dpkg_options: "force-confdef,force-confold,force-overwrite"
 
+- name: link fd-find to fd
+  file:
+    src: /usr/bin/fdfind
+    path: ~/.local/bin/fd
+    state: link
+    force: yes
+
 - name: link bat
   become: yes
   file:
@@ -110,7 +117,7 @@
       shell:
         chdir: /tmp
         cmd: |
-          curl -o tv.deb -L https://github.com/alexhallam/tv/releases/download/{{ git_versions.tidy_viewer }}/tidy-viewer_{{ git_versions.tidy_viewer }}_amd64.deb 
+          curl -o tv.deb -L https://github.com/alexhallam/tv/releases/download/{{ git_versions.tidy_viewer }}/tidy-viewer_{{ git_versions.tidy_viewer }}_amd64.deb
           dpkg -i tv.deb
           rm -rf tv.deb
         creates: /usr/local/bin/tidy-viewer
