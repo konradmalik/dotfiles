@@ -25,6 +25,11 @@
     # the last one required by bat/ripgrep
     dpkg_options: "force-confdef,force-confold,force-overwrite"
 
+- name: make sure local bin folder exists
+  file:
+    path: ~/.local/bin
+    state: directory
+
 - name: link fd-find to fd
   file:
     src: /usr/bin/fdfind
