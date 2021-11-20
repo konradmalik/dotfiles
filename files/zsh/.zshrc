@@ -157,8 +157,8 @@ elif [ "$(uname)" = "Linux" ]; then
 		alias arch-upgrade='yay -Syu --sudoloop --removemake --devel --nocleanmenu --nodiffmenu --noeditmenu --noupgrademenu && flatpak update --noninteractive && generate_completions'
 		alias arch-clean='yay -Sc --noconfirm'
 	elif [ -f "/etc/debian_version" ]; then
-		alias ubuntu-upgrade='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo snap refresh && generate_completions'
-		alias ubuntu-clean='sudo apt clean'
+		alias ubuntu-upgrade='sudo apt update && sudo apt upgrade -y && sudo snap refresh && generate_completions'
+		alias ubuntu-clean='sudo apt autoremove -y && sudo apt clean'
 	fi
     # pbcopy and pbpaste just like in osx
     if [ "$(loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type)" = "Type=x11" ]; then
