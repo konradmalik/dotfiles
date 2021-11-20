@@ -85,8 +85,9 @@ lspconfig.efm.setup {
     },
     capabilites = capabilities,
     filetypes = vim.tbl_keys(languages),
-    single_file_support = true,
+    --single_file_support = true,
     settings = {
+        rootMarkers = {".git"},
         languages = languages,
     }
 }
