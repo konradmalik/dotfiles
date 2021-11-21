@@ -1,5 +1,6 @@
 # i3 config file (v4)
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -107,6 +108,7 @@ new_window 1pixel
 # set gaps
 gaps inner 5
 gaps outer 0
+smart_gaps on
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -197,41 +199,28 @@ mode "$mode_system" {
 
 bindsym $mod+BackSpace mode "$mode_system"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#
-# gruvbox colorscheme colors
-set $bg #282828
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
-set $darkgray #1d2021
-
+# gruvbox colorscheme
 bar {
     #status_command i3status
     status_command i3blocks -c ~/.config/i3/i3blocks.conf
+
     colors {
-        # bar background color
-        background $bg
-        # text color used for blocks that do not have a color specified.
-        statusline $yellow
-        # workspaces section
-        #                    border  backgr. text
-        focused_workspace    $aqua $aqua $darkgray
-        inactive_workspace   $darkgray $darkgray $yellow
-        active_workspace     $darkgray $darkgray $yellow
-        urgent_workspace     $red $red $bg
+        background #3c3836
+        statusline #ebdbb2
+        separator  #666666
+
+        focused_workspace  #458588 #458588 #ebdbb2
+        active_workspace   #83a598 #83a598 #ebdbb2
+        inactive_workspace #504945 #504945 #ebdbb2
+        urgent_workspace   #cc241d #cc241d #504945
     }
 }
 
-# window title bars & borders section
 # class                 border|backgr|text|indicator|child_border
-client.focused          $green $green $darkgray $purple $darkgray
-client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
-client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
-client.urgent           $red $red $white $red $red
+client.focused          #665c54 #665c54 #eddbb2 #2e9ef4   #665c54
+client.focused_inactive #282828 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #3c3836 #3c3836 #a89984 #292d2e   #222222
+client.urgent           #cc241d #cc241d #ebdbb2 #cc241d   #cc241d
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
+client.background       #ffffff
