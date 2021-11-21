@@ -22,7 +22,7 @@
     - name: Disable SSH password authentication
       lineinfile:
         dest: /etc/ssh/sshd_config
-        regexp: "^PasswordAuthentication"
+        regexp: "PasswordAuthentication"
         line: "PasswordAuthentication no"
         state: present
 
@@ -33,12 +33,15 @@
         name: OpenSSH
       when: ansible_distribution == "Ubuntu"
 
-    - name: UFW - Deny all other incoming traffic by default
+
+    - name: UFW - Deny all other incoming traffic by default (all but raspberry pis)
       ufw:
         state: enabled
         policy: deny
         direction: incoming
-      when: ansible_distribution == "Ubuntu"
+      when:
+        - ansible_distribution == "Ubuntu"
+        - "'rpis' not in group_names"
 
     - name: start and enable ssh daemon
       service:
