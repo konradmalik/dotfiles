@@ -4,7 +4,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:JetBrainsMonoMedium Nerd Font 9
 
 # wallpaper
 exec_always --no-startup-id ~/.fehbg
@@ -227,4 +227,11 @@ bar {
         urgent_workspace     $red $red $bg
     }
 }
+
+# window title bars & borders section
+# class                 border|backgr|text|indicator|child_border
+client.focused          $green $green $darkgray $purple $darkgray
+client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
+client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
+client.urgent           $red $red $white $red $red
 
