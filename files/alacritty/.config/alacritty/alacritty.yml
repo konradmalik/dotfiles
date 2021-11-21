@@ -11,22 +11,22 @@ cursor:
     blinking: on
 
 font:
-  size: 11.0
+  size: 12.0
 
   normal:
-    family: "JetBrainsMono Nerd Font"
-    style: Regular
+    family: "JetBrainsMonoMedium Nerd Font"
+    style: Medium
 
   bold:
-    family: "JetBrainsMono Nerd Font"
+    family: "JetBrainsMonoMedium Nerd Font"
     style: Bold
 
   italic:
-    family: "JetBrainsMono Nerd Font"
+    family: "JetBrainsMonoMedium Nerd Font"
     style: Italic
 
   bold_italic:
-    family: "JetBrainsMono Nerd Font"
+    family: "JetBrainsMonoMedium Nerd Font"
     style: Bold Italic
 
 # COLOR SCHEMES
