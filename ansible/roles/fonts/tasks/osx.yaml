@@ -6,4 +6,5 @@
 - name: install fonts
   community.general.homebrew_cask:
     name:
-      - font-sourcecodepro-nerd-font-mono
+      - font-sauce-code-pro-nerd-font
+      - font-jetbrains-mono-nerd-font

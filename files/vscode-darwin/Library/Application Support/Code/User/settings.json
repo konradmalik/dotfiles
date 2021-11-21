@@ -1,5 +1,4 @@
 {
-  "telemetry.enableTelemetry": false,
   "telemetry.telemetryLevel": "off",
   "redhat.telemetry.enabled": false,
   "files.exclude": {
@@ -26,7 +25,7 @@
   },
   "git.ignoreMissingGitWarning": true,
   "extensions.ignoreRecommendations": true,
-  "editor.fontFamily": "'SauceCodePro Nerd Font Mono', 'monospace'",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'monospace'",
   "editor.fontLigatures": true,
   "editor.inlineSuggest.enabled": true,
   "editor.multiCursorModifier": "alt",

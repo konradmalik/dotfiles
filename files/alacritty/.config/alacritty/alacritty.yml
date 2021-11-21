@@ -14,19 +14,19 @@ font:
   size: 11.0
 
   normal:
-    family: "SauceCodePro Nerd Font Mono"
+    family: "JetBrainsMono Nerd Font"
     style: Regular
 
   bold:
-    family: "SauceCodePro Nerd Font Mono"
+    family: "JetBrainsMono Nerd Font"
     style: Bold
 
   italic:
-    family: "SauceCodePro Nerd Font Mono"
+    family: "JetBrainsMono Nerd Font"
     style: Italic
 
   bold_italic:
-    family: "SauceCodePro Nerd Font Mono"
+    family: "JetBrainsMono Nerd Font"
     style: Bold Italic
 
 # COLOR SCHEMES
