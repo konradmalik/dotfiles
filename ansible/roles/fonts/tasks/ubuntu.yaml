@@ -2,8 +2,10 @@
   shell:
     cmd: |
       mkdir -p ~/.local/share/fonts
-      rm -rf ~/.local/share/fonts/Sauce*
+      rm -rf ~/.local/share/fonts/*
       cd ~/.local/share/fonts
-      curl -fLo ~/.local/share/fonts/"Sauce Code Pro Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
+      curl -fLo ~/.local/share/fonts/"SauceCodePro Nerd Font.ttf" "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete.ttf?raw=true"
+      curl -fLo ~/.local/share/fonts/"JetBrainsMono Nerd Font.ttf" "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete.ttf?raw=true"
       fc-cache
-    creates: "~/.local/share/fonts/Sauce Code Pro Nerd Font Complete Mono.ttf"
+    creates: "~/.local/share/fonts/SauceCodePro Nerd Font.ttf"
+
