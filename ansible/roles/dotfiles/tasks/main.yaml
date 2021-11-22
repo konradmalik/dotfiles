@@ -18,26 +18,3 @@
   with_items:
     - gpg
 
-- block:
-    - name: Check if private configs submodule is cloned before proceeding
-      find:
-        paths:
-          - "{{ repo_path }}/private"
-        recurse: yes
-      register: private_found
-
-    - name: link private dot files
-      shell:
-        chdir: "{{ repo_path }}/private/files"
-        cmd: stow --target="$HOME" {{ item }}
-      with_items:
-        - netrc
-      when: private_found.matched > 0
-
-    - name: make sure netrc file mode is ok
-      file:
-        path: ~/.netrc
-        mode: 600
-      when: private_found.matched > 0
-
-  when: private_machine
