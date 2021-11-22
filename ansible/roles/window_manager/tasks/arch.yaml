@@ -8,7 +8,7 @@
       - xorg-xinit
       - xorg-server
       - xclip
-      - i3
+      - i3-gaps
       - picom
       - rofi
       # for i3blocks
