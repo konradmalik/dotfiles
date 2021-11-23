@@ -84,11 +84,22 @@ timezsh() {
   for i in $(seq 1 10); do time $shell -i -c exit; done
 }
 
-# fix for tmux ssh socket (dont use/wont work on multiuser setting)
+# fix for tmux ssh socket
 fix_ssh_auth_sock() {
-    local sock="$(echo /tmp/ssh*/agent*)"
-    export SSH_AUTH_SOCK="$sock"
-    echo "New socket: $sock"
+    local socks="$(echo /tmp/ssh*/agent*)"
+    local sock
+    for tsock in $socks; do
+        if [ -O "$tsock" ]; then
+            sock=$tsock
+            break
+        fi
+    done
+    if [ -n "$sock" ]; then
+        export SSH_AUTH_SOCK="$sock"
+        echo "New socket: $sock"
+    else
+        echo "Could not find appropriate socket :("
+    fi
 }
 
 # for GPG agent
