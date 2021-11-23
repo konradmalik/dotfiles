@@ -48,9 +48,16 @@ lspconfig.pylsp.setup{
     settings = {
         pylsp = {
             plugins = {
-                pylsp_mypy =  { enabled = true },
-                pylsp_black =  { enabled = true },
-                pyls_sort =  { enabled = true },
+                pylsp_mypy = {
+                    enabled = true,
+                    live_mode = true,
+                },
+                pylsp_black = {
+                    enabled = true,
+                },
+                pyls_isort = {
+                    enabled = true
+                },
             }
         }
     }
