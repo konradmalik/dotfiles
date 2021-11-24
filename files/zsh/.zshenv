@@ -86,12 +86,11 @@ timezsh() {
 
 # fix for tmux ssh socket
 fix_ssh_auth_sock() {
-    local socks="$(echo /tmp/ssh*/agent*)"
-    local sock
-    for tsock in $socks[@]; do
+    local socks=($(echo /tmp/ssh*/agent*))
+    for tsock in $socks; do
         if [ -O "$tsock" ]; then
             sock=$tsock
-            break
+            # we do not break to always have the latest one set
         fi
     done
     if [ -n "$sock" ]; then
