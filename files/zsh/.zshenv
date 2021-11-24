@@ -88,7 +88,7 @@ timezsh() {
 fix_ssh_auth_sock() {
     local socks="$(echo /tmp/ssh*/agent*)"
     local sock
-    for tsock in $socks; do
+    for tsock in $socks[@]; do
         if [ -O "$tsock" ]; then
             sock=$tsock
             break
@@ -104,7 +104,7 @@ fix_ssh_auth_sock() {
 
 # for GPG agent
 function _gpg-agent_update-tty_preexec {
-  gpg-connect-agent updatestartuptty /bye &>/dev/null
+  gpg-connect-agent updatestartuptty /bye &> /dev/null
 }
 
 export LANG="en_US.UTF-8"
