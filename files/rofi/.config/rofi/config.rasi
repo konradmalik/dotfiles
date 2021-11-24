@@ -1,5 +1,4 @@
 configuration {
+    theme: "gruvbox-dark";
     show-icons: true;
 }
-
-@theme "gruvbox-dark"
