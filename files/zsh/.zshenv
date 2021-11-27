@@ -107,6 +107,15 @@ function _gpg-agent_update-tty_preexec {
   gpg-connect-agent updatestartuptty /bye &> /dev/null
 }
 
+# platform dependent
+if [ "$(uname)" = "Darwin" ]; then
+    # gnu coreutils by default instead of BSD-based that macos provides, may cause problems later but I want that!
+    export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:${PATH}"
+    export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:${MANPATH}"
+    # hardcode as nvim. Can't do it interactively because it will be loaded later than this script (from brew)
+    export EDITOR='nvim'
+fi
+
 export LANG="en_US.UTF-8"
 export LC_CTYPE="$LANG"
 export LC_ALL="$LANG"
@@ -116,10 +125,17 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
+# editors and stuff
+if [ -z "$EDITOR" ]; then
+    if command -v nvim &>/dev/null; then
+        export EDITOR='nvim'
+    elif command -v vim &>/dev/null; then
+        export EDITOR='nvim'
+    elif command -v vi &>/dev/null; then
+        export EDITOR='vi'
+    else
+        echo "Warning! No proper editor (nvim, vim or vi) found."
+    fi
 fi
 export VISUAL="$EDITOR"
 export GIT_EDITOR="$EDITOR"
@@ -129,13 +145,6 @@ export DIFFPROG="$EDITOR -d"
 export PAGER="less -FirSwX"
 export MANPAGER="less -FirSwX"
 
-# environments for languages
-# platform dependent
-if [ "$(uname)" = "Darwin" ]; then
-    # gnu coreutils by default instead of BSD-based that macos provides, may cause problems later but I want that!
-    export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:${PATH}"
-    export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:${MANPATH}"
-fi
 
 # docker buildkit feature
 export DOCKER_BUILDKIT=1
