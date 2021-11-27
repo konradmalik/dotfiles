@@ -86,11 +86,12 @@ timezsh() {
 
 # fix for tmux ssh socket
 fix_ssh_auth_sock() {
-    local socks=($(echo /tmp/ssh*/agent*))
-    for tsock in $socks; do
+    # (On) reverses globbing order
+    # https://unix.stackexchange.com/a/27400
+    for tsock in /tmp/ssh*/agent*(On); do
         if [ -O "$tsock" ]; then
             sock=$tsock
-            # we do not break to always have the latest one set
+            break
         fi
     done
     if [ -n "$sock" ]; then
