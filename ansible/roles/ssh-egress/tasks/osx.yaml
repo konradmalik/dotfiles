@@ -1,0 +1,5 @@
+- name: install mosh
+  community.general.homebrew:
+    name:
+      - mosh
+    update_homebrew: yes
