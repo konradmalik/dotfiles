@@ -4,7 +4,7 @@ all:
     target_user: "{{ lookup('env','USER') or 'konrad' }}"
     # for ssh-ingress if below is enabled
     enable_ssh: false
-    copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/local_ssh_key.pub') }}"
+    copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/private.pub') }}"
     # absolute path to this repository on a host. Replace is needed for macos compatibility
     repo_path: "{{ (playbook_dir + '/..') | realpath | replace('/Users','/home')}}"
     # if enabled - some gui only apps will be installed as well
@@ -15,24 +15,24 @@ all:
     vmware_guest: false
     # versions used mostly by ubuntu tasks that install stuff from github directly
     git_versions:
-      asdf: 0.8.1
-      broot: 1.6.4
-      docker_compose: 2.1.1
+      asdf: 0.9.0
+      broot: 1.7.4
+      docker_compose: 2.2.2
       dive: 0.10.0
       efm_langserver: 0.0.38
       exa: 0.10.1
-      flux: 0.17.0
-      k9s: 0.24.15
+      flux: 0.24.0
+      k9s: 0.25.8
       kind: 0.11.1
-      git_delta: 0.8.3
+      git_delta: 0.10.3
       golangci_lint: 1.43.0
       gotop: 4.1.2
-      nvim: 0.5.1
-      starship: 0.57.0
-      tidy_viewer: 0.0.13
-      tilt: 0.22.9
-      viddy: 0.2.1
-      zoxide: 0.7.7
+      nvim: 0.6.0
+      starship: 1.0.0
+      tidy_viewer: 1.4.3
+      tilt: 0.23.2
+      viddy: 0.3.4
+      zoxide: 0.7.9
 
 local:
   hosts:
