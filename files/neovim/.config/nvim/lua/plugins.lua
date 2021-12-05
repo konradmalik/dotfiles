@@ -51,6 +51,14 @@ return require('packer').startup(function()
         end
     }
 
+    -- Harpoon by ThePrimeagen
+    use {
+        'ThePrimeagen/harpoon',
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+        },
+    }
+
     -- themes
     use { 'joshdick/onedark.vim' }
     use { 'gruvbox-community/gruvbox' }

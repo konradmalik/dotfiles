@@ -51,6 +51,7 @@ lspconfig.pylsp.setup{
                 pylsp_mypy = {
                     enabled = true,
                     live_mode = true,
+                    dmypy = false,
                 },
                 pylsp_black = {
                     enabled = true,
