@@ -58,7 +58,7 @@
     chdir: /tmp
     cmd: |
       curl -L https://github.com/ajeetdsouza/zoxide/releases/download/v{{ git_versions.zoxide }}/zoxide-v{{ git_versions.zoxide }}-{{ ansible_architecture }}-unknown-linux-musl.tar.gz | tar xvfz -
-      mv **/zoxide /usr/local/bin/zoxide
+      mv zoxide /usr/local/bin/zoxide
     creates: /usr/local/bin/zoxide
 
 - name: Install pipx from pip
