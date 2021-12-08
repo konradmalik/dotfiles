@@ -64,7 +64,11 @@ load_bash_completions() {
         if [ "$(uname)" = "Darwin" ]; then
             source "$BREW_PREFIX/etc/bash_completion.d/az"
         elif [ "$(uname)" = "Linux" ]; then
-            source "/etc/bash_completion.d/azure-cli"
+            if [ -f "/etc/arch-release" ]; then
+                source "/usr/share/bash-completion/completions/az"
+            elif [ -f "/etc/debian_version" ]; then
+                source "/etc/bash_completion.d/azure-cli"
+            fi
         fi
     fi
 }
