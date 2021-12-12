@@ -146,7 +146,7 @@ if [ "$(uname)" = "Darwin" ]; then
     alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 elif [ "$(uname)" = "Linux" ]; then
 	if [ -f "/etc/arch-release" ]; then
-		alias arch-upgrade='yay -Syu --sudoloop --removemake --devel --nocleanmenu --nodiffmenu --noeditmenu --noupgrademenu && flatpak update --noninteractive && generate_completions'
+		alias arch-upgrade='yay -Syu --sudoloop --removemake --devel --nocleanmenu --nodiffmenu --noeditmenu --noupgrademenu && generate_completions'
 		alias arch-clean='yay -Sc --noconfirm'
 	elif [ -f "/etc/debian_version" ]; then
 		alias ubuntu-upgrade='sudo apt update && sudo apt upgrade -y && sudo snap refresh && generate_completions'
