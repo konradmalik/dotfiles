@@ -131,16 +131,8 @@ alias watch='viddy'
 # csv pretty print
 alias tv='tidy-viewer'
 
-# git
-alias ga="git add"
-alias gc="git commit"
-alias gco="git checkout"
-alias gcp="git cherry-pick"
-alias gd="git diff"
-alias gl="git graph"
-alias gp="git push"
-alias gs="git status"
-alias gt="git tag"
+# git (use for example ga instead of git add)
+alias g="git"
 
 # directory stack movement
 alias d='dirs -v'
