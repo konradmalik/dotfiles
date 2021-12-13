@@ -6,6 +6,9 @@ local cmd = vim.cmd
 utils.map('n', '<S-Tab>', ':bp<CR>')
 utils.map('n', '<Tab>', ':bn<CR>')
 
+-- quick grep word under the cursor
+utils.map('n', '<leader>*', ':grep <cword><CR>')
+
 -- quickfix niceness
 utils.map('n', '<C-k>', ':cp<CR>')
 utils.map('n', '<C-j>', ':cn<CR>')
