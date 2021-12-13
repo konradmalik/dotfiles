@@ -106,6 +106,11 @@ fix_ssh_auth_sock() {
     fi
 }
 
+# magic to prune local branches that are not on remote
+git-prune-local-branches() {
+    git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
+}
+
 # for GPG agent
 function _gpg-agent_update-tty_preexec {
   gpg-connect-agent updatestartuptty /bye &> /dev/null
