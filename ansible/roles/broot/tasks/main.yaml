@@ -30,4 +30,4 @@
   shell:
     cmd: |
       broot --print-shell-function zsh > ~/.zfunc/br
-    creates: ~/.zfunc/_br
+    creates: ~/.zfunc/br
