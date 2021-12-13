@@ -28,6 +28,8 @@
       - tldr
       - croc
       - pipx
+      - bats-core
+      - watchexec
     update_homebrew: yes
 
 - name: install brew casks

@@ -18,6 +18,7 @@
       - shellcheck
       - tldr
       - zathura
+      - bats
     state: latest
     update_cache: yes
     autoclean: yes
@@ -136,3 +137,13 @@
     cmd: |
       curl https://getcroc.schollz.com | bash
     creates: /usr/local/bin/croc
+
+- name: install watchexec from git releases
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o watchexec.deb -L https://github.com/watchexec/watchexec/releases/download/cli-v{{ git_versions.watchexec }}/watchexec-{{ git_versions.watchexec }}-{{ ansible_architecture }}-unknown-linux-gnu.deb
+      dpkg -i watchexec.deb
+      rm -rf watchexec.deb
+    creates: /usr/bin/watchexec
