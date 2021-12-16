@@ -103,6 +103,7 @@ fix_ssh_auth_sock() {
         echo "New socket: $sock"
     else
         echo "Could not find appropriate socket :("
+        unset SSH_AUTH_SOCK
     fi
 }
 
