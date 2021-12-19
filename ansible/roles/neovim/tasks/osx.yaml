@@ -2,6 +2,5 @@
   community.general.homebrew:
     name:
       - neovim
-      - efm-langserver
       - prettier
     update_homebrew: yes

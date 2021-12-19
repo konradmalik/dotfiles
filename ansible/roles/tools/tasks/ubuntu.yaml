@@ -72,7 +72,7 @@
       shell:
         chdir: /tmp
         cmd: |
-          # install efm from github releases
+          # install exa from github releases
           curl -o exa.zip -L https://github.com/ogham/exa/releases/download/v{{ git_versions.exa }}/exa-linux-{{ ansible_architecture }}-v{{ git_versions.exa }}.zip
           unzip exa.zip
           mv **/exa /usr/local/bin/exa

@@ -28,13 +28,3 @@
       make CMAKE_INSTALL_PREFIX=/usr/local install
     creates: /usr/local/bin/nvim
 
-- name: install efm-langserver from github
-  become: yes
-  shell:
-    chdir: /tmp
-    cmd: |
-      git clone --depth 1 https://github.com/mattn/efm-langserver.git
-      cd efm-langserver
-      make all
-      mv efm-langserver /usr/local/bin/efm-langserver
-    creates: /usr/local/bin/efm-langserver

@@ -39,6 +39,14 @@ return require('packer').startup(function()
     -- Fugitive for Git
     use { 'tpope/vim-fugitive' }
 
+    -- no ls lsp
+    use {
+        "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+        },
+    }
+
     -- which key
     use {
         "folke/which-key.nvim",

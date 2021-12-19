@@ -19,7 +19,6 @@ all:
       broot: 1.7.4
       docker_compose: 2.2.2
       dive: 0.10.0
-      efm_langserver: 0.0.38
       exa: 0.10.1
       flux: 0.24.0
       k9s: 0.25.8
