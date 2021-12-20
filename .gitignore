@@ -11,4 +11,7 @@ vscode/User/sync
 **/.vagrant
 **/.vscode
 **/.metals
-
+#zsh
+.zcompdump
+.zcompcache
+zfunc

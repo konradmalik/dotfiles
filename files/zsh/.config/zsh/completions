@@ -1,0 +1,33 @@
+# depending on platform, add more
+if [ "$(uname)" = "Darwin" ]; then
+    fpath+="$BREW_PREFIX/share/zsh-completions"
+    fpath+="$BREW_PREFIX/share/zsh/site-functions"
+elif [ "$(uname)" = "Linux" ]; then
+    if [ -f "/etc/arch-release" ]; then
+        # arch has it already done in a proper dir
+    elif [ -f "/etc/debian_version" ]; then
+        fpath+="/usr/local/share/zsh/plugins/zsh-completions/src"
+    fi
+fi
+# local user folder for custom autocompletion functions
+fpath+="${HOME}/.zfunc"
+
+# autocompletion
+autoload -Uz compinit; compinit
+# bash-complatible autocompletion
+autoload -Uz bashcompinit; bashcompinit
+# specific bash-completions need to be called here
+load_bash_completions
+# use cache
+zstyle ':completion::complete:*' use-cache 1
+# autocompletion menu
+zstyle ':completion:*' menu select
+# aliases autocompletion
+setopt COMPLETE_ALIASES
+# autocomplete with sudo
+zstyle ':completion::complete:*' gain-privileges 1
+# case insensitive https://superuser.com/questions/1092033/how-can-i-make-zsh-tab-completion-fix-capitalization-errors-for-directories-and
+# case-insensitive matching only if there are no case-sensitive matches add '', e.g.
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+# display completer while waiting
+zstyle ":completion:*" show-completer true
