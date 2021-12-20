@@ -1,4 +1,4 @@
-local utils = require('utils')
+local utils = require('user.utils')
 local api = vim.api
 
 function nvim_create_augroups(definitions)
@@ -18,7 +18,10 @@ end
 
 local autocmds = {
     personal = {
-        { "BufWritePre", "*", "lua require('utils').trim_trailing_whitespace()" }
+        { "BufWritePre", "*", "lua require('user.utils').trim_trailing_whitespace()" }
+    };
+    packer_user_config = {
+        { "BufWritePost", "plugins.lua", "source <afile> | PackerSync" }
     };
 }
 

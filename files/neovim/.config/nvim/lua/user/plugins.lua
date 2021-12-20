@@ -1,6 +1,16 @@
-return require('packer').startup(function()
+local fn = vim.fn
+
+-- Auto install packer.nvim if not exists
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+end
+
+local packer = require('packer')
+
+return packer.startup(function(use)
     -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim'}
 
     -- Treesitter (syntax highlight)
     use {
@@ -70,4 +80,10 @@ return require('packer').startup(function()
     -- themes
     use { 'joshdick/onedark.vim' }
     use { 'gruvbox-community/gruvbox' }
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Put this at the end after all plugins
+    if packer_bootstrap then
+        packer.sync()
+    end
 end)

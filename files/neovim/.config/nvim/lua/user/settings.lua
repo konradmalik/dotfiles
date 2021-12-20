@@ -1,12 +1,7 @@
-local cmd = vim.cmd     				-- execute Vim commands
-local fn = vim.fn       				-- call Vim functions
-local g = vim.g         				-- global variables
-local opt = vim.opt         		-- global/buffer/windows-scoped options
-
-vim.cmd [[
-    filetype plugin indent on
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-]]                                                          -- fix indents (2 spaces) for yaml
+local cmd = vim.cmd                          -- execute Vim commands
+local fn = vim.fn                            -- call Vim functions
+local g = vim.g                              -- global variables
+local opt = vim.opt                          -- global/buffer/windows-scoped options
 
 local indent = 4
 g.nomodeline=true                            -- disable modelines for security and because we dont need them

@@ -1,29 +1,14 @@
-local fn = vim.fn
-local g = vim.g
-local cmd = vim.cmd
-local execute = vim.api.nvim_command
+require('user.settings')
+require('user.keymaps')
+require('user.plugins')
 
--- map leader
-g.mapleader = ' '
+require('user.colorscheme')
+require('user.cmp')
+require('user.fugitive')
+require('user.harpoon')
+require('user.lsp')
+require('user.lualine')
+require('user.telescope')
+require('user.treesitter')
 
-require('settings')
-require('autocommands')
-
--- Auto install packer.nvim if not exists
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-end
-cmd [[
-    packadd packer.nvim
-    autocmd BufWritePost plugins.lua PackerCompile
-]] -- Auto compile when there are changes in plugins.lua
-
--- Install plugins
-require('plugins')
-
--- Key mappings
-require('keymappings')
-
--- plugins configurations in lua
-require('config')
+require('user.autocommands')

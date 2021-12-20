@@ -1,22 +1,35 @@
-local utils = require('utils')
 local g = vim.g
 local cmd = vim.cmd
 
+local opts = { noremap = true, silent = true }
+local keymap = vim.api.nvim_set_keymap
+
+-- map leader
+g.mapleader = ' '
+
+-- Modes
+--   normal_mode = "n",
+--   insert_mode = "i",
+--   visual_mode = "v",
+--   visual_block_mode = "x",
+--   term_mode = "t",
+--   command_mode = "c",
+
 -- <Tab> to navigate buffers in normal mode
-utils.map('n', '<S-Tab>', ':bp<CR>')
-utils.map('n', '<Tab>', ':bn<CR>')
+keymap('n', '<S-Tab>', ':bp<CR>', opts)
+keymap('n', '<Tab>', ':bn<CR>', opts)
 
 -- quick grep word under the cursor
-utils.map('n', '<leader>*', ':grep <cword><CR>')
+keymap('n', '<leader>*', ':grep <cword><CR>', opts)
 
 -- quickfix niceness
-utils.map('n', '<C-k>', ':cp<CR>')
-utils.map('n', '<C-j>', ':cn<CR>')
-utils.map('n', '<C-q>', ':lua ToggleQFList(1)<CR>')
-utils.map('n', '<leader>q', ':lua ToggleQFList(0)<CR>')
+keymap('n', '<C-k>', ':cp<CR>', opts)
+keymap('n', '<C-j>', ':cn<CR>', opts)
+keymap('n', '<C-q>', ':lua ToggleQFList(1)<CR>', opts)
+keymap('n', '<leader>q', ':lua ToggleQFList(0)<CR>', opts)
 
 -- ctrl c as esc in insert mode? why not
-utils.map('i', '<C-c>', '<esc>')
+keymap('i', '<C-c>', '<esc>', opts)
 
 -- the_primeagen's quickfix toggler
 -- local list
