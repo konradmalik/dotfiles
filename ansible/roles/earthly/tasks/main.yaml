@@ -1,7 +1,7 @@
-- include: linux.yaml
+- import_tasks: linux.yaml
   when: ansible_system == "Linux"
 
-- include: osx.yaml
+- import_tasks: osx.yaml
   when: ansible_distribution == "MacOSX"
 
 - name: link earthly config

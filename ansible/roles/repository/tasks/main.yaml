@@ -4,6 +4,7 @@
     dest: ~/Code/dotfiles
     version: master
     recursive: "{{ 'yes' if private_machine | bool else 'no' }}"
+    force: yes
   when: inventory_hostname != "localhost" # do this only if *not* a local machine
 
 - name: Ensure repo exists without cloning

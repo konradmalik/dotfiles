@@ -1,5 +1,5 @@
-- include: ubuntu.yaml
+- import_tasks: ubuntu.yaml
   when: ansible_distribution == "Ubuntu"
 
-- include: arch.yaml
+- import_tasks: arch.yaml
   when: ansible_distribution == "Archlinux"

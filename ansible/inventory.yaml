@@ -16,7 +16,7 @@ all:
     # versions used mostly by ubuntu tasks that install stuff from github directly
     git_versions:
       asdf: 0.9.0
-      broot: 1.7.4
+      broot: 1.7.5
       docker_compose: 2.2.2
       dive: 0.10.0
       exa: 0.10.1
