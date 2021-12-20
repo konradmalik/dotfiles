@@ -28,3 +28,10 @@
       make CMAKE_INSTALL_PREFIX=/usr/local install
     creates: /usr/local/bin/nvim
 
+- name: install shfmt binary (arm64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o /usr/local/bin/shfmt -L https://github.com/mvdan/sh/releases/download/v{{ git_versions.shfmt }}/shfmt_v{{ git_versions.shfmt }}_linux_arm64
+    creates: /usr/local/bin/shfmt

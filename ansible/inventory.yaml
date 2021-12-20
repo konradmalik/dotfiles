@@ -27,6 +27,7 @@ all:
       golangci_lint: 1.43.0
       gotop: 4.1.2
       nvim: 0.6.0
+      shfmt: 3.4.1
       starship: 1.0.0
       tidy_viewer: 1.4.3
       tilt: 0.23.2

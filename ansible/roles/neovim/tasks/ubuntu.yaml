@@ -37,3 +37,11 @@
   with_items:
     - prettier
 
+- name: install shfmt binary (amd64)
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o /usr/local/bin/shfmt -L https://github.com/mvdan/sh/releases/download/v{{ git_versions.shfmt }}/shfmt_v{{ git_versions.shfmt }}_linux_amd64
+    creates: /usr/local/bin/shfmt
+  when: ansible_architecture == "x86_64"

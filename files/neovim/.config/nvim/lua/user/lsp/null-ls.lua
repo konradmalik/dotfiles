@@ -9,6 +9,8 @@ null_ls.setup {
     on_attach = on_attach,
     sources = {
         formatting.prettier,
+        formatting.terraform_fmt,
+        formatting.shfmt,
         diagnostics.shellcheck,
     },
 }

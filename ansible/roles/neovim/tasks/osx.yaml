@@ -3,4 +3,5 @@
     name:
       - neovim
       - prettier
+      - shfmt
     update_homebrew: yes
