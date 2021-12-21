@@ -15,12 +15,6 @@
     - zsh
     - starship
 
-- name: make sure ~/.zfunc exists
-  file:
-    path: ~/.zfunc
-    state: directory
-    mode: 0755
-
 - name: change shell to zsh for "{{ target_user }}"
   become: yes
   user:
