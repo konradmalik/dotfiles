@@ -9,6 +9,7 @@ if fn.executable("rg") then
     opt.grepprg='rg --vimgrep --no-heading --smart-case'
     opt.grepformat='%f:%l:%c:%m,%f:%l:%m'
 end
+opt.inccommand='nosplit'                     -- live preview when search/replace
 opt.hlsearch=false                           -- :noh by default
 opt.lazyredraw = true                        -- faster scrolling
 opt.expandtab = true                         -- Use spaces instead of tabs
