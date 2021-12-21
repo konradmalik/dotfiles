@@ -13,5 +13,6 @@ vscode/User/sync
 **/.metals
 #zsh
 .zcompdump
+.zsh_sessions
 .zcompcache
 zfunc
