@@ -22,7 +22,7 @@
     - name: link asdf completion
       file:
         src: "~/.asdf/completions/_asdf"
-        path: "~/.zfunc/_asdf"
+        path: "{{ zdotdir }}/zfunc/_asdf"
         state: link
         force: yes
       when: stat_result.stat.exists

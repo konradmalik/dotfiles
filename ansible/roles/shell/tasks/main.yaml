@@ -21,3 +21,8 @@
     name: "{{ target_user }}"
     shell: /bin/zsh
   when: ansible_system == "Linux"
+
+- name: makes sure zfunc exists (sets it up for the later tasks)
+  file:
+    path: "~/.config/zsh/zfunc"
+    state: directory

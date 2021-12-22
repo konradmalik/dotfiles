@@ -7,6 +7,8 @@ all:
     copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/private.pub') }}"
     # absolute path to this repository on a host. Replace is needed for macos compatibility
     repo_path: "{{ (playbook_dir + '/..') | realpath | replace('/Users','/home')}}"
+    # zsh files dir (same as in zshenv)
+    zdotdir: "~/.config/zsh"
     # if enabled - some gui only apps will be installed as well
     gui_apps: false
     # if enabled, ssh config will be linked (outbound ssh)

@@ -17,17 +17,17 @@
 - name: install broot completion
   shell:
     cmd: |
-      curl -o ~/.zfunc/_broot -L https://dystroy.org/broot/download/completion/_broot
-    creates: ~/.zfunc/_broot
+      curl -o {{ zdotdir }}/zfunc/_broot -L https://dystroy.org/broot/download/completion/_broot
+    creates: "{{ zdotdir }}/zfunc/_broot"
 
 - name: install br completion
   shell:
     cmd: |
-      curl -o ~/.zfunc/_br -L https://dystroy.org/broot/download/completion/_br
-    creates: ~/.zfunc/_br
+      curl -o {{ zdotdir }}/zfunc/_br -L https://dystroy.org/broot/download/completion/_br
+    creates: "{{ zdotdir }}/zfunc/_br"
 
 - name: install br zsh function
   shell:
     cmd: |
-      broot --print-shell-function zsh > ~/.zfunc/br
-    creates: ~/.zfunc/br
+      broot --print-shell-function zsh > {{ zdotdir }}/zfunc/br
+    creates: "{{ zdotdir }}/zfunc/br"
