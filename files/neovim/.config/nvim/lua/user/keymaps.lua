@@ -15,9 +15,9 @@ g.mapleader = ' '
 --   term_mode = "t",
 --   command_mode = "c",
 
--- <Tab> to navigate buffers in normal mode
-keymap('n', '<S-Tab>', ':bp<CR>', opts)
-keymap('n', '<Tab>', ':bn<CR>', opts)
+-- to navigate buffers in normal mode
+keymap('n', '<S-h>', ':bprevious<CR>', opts)
+keymap('n', '<S-l>', ':bnext<CR>', opts)
 
 -- quick grep word under the cursor
 keymap('n', '<leader>*', ':grep <cword><CR>', opts)
@@ -25,34 +25,9 @@ keymap('n', '<leader>*', ':grep <cword><CR>', opts)
 -- quickfix niceness
 keymap('n', '<C-k>', ':cp<CR>', opts)
 keymap('n', '<C-j>', ':cn<CR>', opts)
-keymap('n', '<C-q>', ':lua ToggleQFList(1)<CR>', opts)
-keymap('n', '<leader>q', ':lua ToggleQFList(0)<CR>', opts)
+keymap('n', '<C-q>', ':lua require("user.utils").ToggleQFList(1)<CR>', opts)
+keymap('n', '<leader>q', ':lua require("user.utils").ToggleQFList(0)<CR>', opts)
 
 -- ctrl c as esc in insert mode? why not
 keymap('i', '<C-c>', '<esc>', opts)
 
--- the_primeagen's quickfix toggler
--- local list
-g.the_primeagen_qf_l = 0
--- global quick fix
-g.the_primeagen_qf_g = 0
-
-function ToggleQFList(global)
-    if global == 1 then
-        if g.the_primeagen_qf_g == 1 then
-            g.the_primeagen_qf_g = 0
-            cmd('cclose')
-        else
-            g.the_primeagen_qf_g = 1
-            cmd('copen')
-        end
-    else
-        if g.the_primeagen_qf_l == 1 then
-            g.the_primeagen_qf_l = 0
-            cmd('lclose')
-        else
-            g.the_primeagen_qf_l = 1
-            cmd('lopen')
-        end
-    end
-end
