@@ -9,7 +9,7 @@ end
 local packer = require('packer')
 
 return packer.startup(function(use)
-    -- Packer can manage itself as an optional plugin
+    -- Packer can manage itself
     use {'wbthomason/packer.nvim'}
 
     -- Treesitter (syntax highlight)
