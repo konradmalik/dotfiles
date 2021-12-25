@@ -10,13 +10,6 @@
 - import_tasks: arch.yaml
   when: ansible_distribution == "Archlinux"
 
-- name: install python language server and extras through pipx
-  shell:
-    cmd: |
-      pipx install 'python-lsp-server[all]' || ~/.local/bin/pipx install 'python-lsp-server[all]'
-      pipx inject python-lsp-server pylsp-mypy python-lsp-black pyls-isort || ~/.local/bin/pipx inject python-lsp-server pylsp-mypy python-lsp-black pyls-isort
-    creates: ~/.local/bin/pylsp
-
 - name: link neovim config
   shell:
     chdir: "{{ repo_path }}/files"

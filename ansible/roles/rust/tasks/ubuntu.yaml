@@ -3,11 +3,3 @@
     cmd: |
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain=stable
     creates: ~/.cargo/bin/rustup
-
-- name: install rust-analyzer from github
-  become: yes
-  shell:
-    cmd: |
-      curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-linux -o /usr/local/bin/rust-analyzer
-      chmod +x /usr/local/bin/rust-analyzer
-    creates: /usr/local/bin/rust-analyzer

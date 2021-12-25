@@ -12,4 +12,3 @@
     use: yay
     name:
       - rustup
-      - rust-analyzer

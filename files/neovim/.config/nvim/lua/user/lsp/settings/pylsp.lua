@@ -1,10 +1,6 @@
-local lspconfig = require('lspconfig')
-local handlers = require("user.lsp.handlers")
 -- https://github.com/python-lsp/python-lsp-server
-lspconfig.pylsp.setup{
-    on_attach = handlers.on_attach,
+return {
     init_options = { provideFormatter = true },
-    capabilites = handlers.capabilities,
     settings = {
         pylsp = {
             plugins = {

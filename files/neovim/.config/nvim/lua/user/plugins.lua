@@ -20,6 +20,7 @@ return packer.startup(function(use)
 
     -- LSP and completion
     use { 'neovim/nvim-lspconfig' } -- Collection of configurations for built-in LSP client
+    use { "williamboman/nvim-lsp-installer" } -- simple to use language server installer
     use { 'nvim-lua/completion-nvim' }
     use {
         'hrsh7th/nvim-cmp', -- Autocompletion plugin
