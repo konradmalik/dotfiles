@@ -10,7 +10,7 @@ elif [ "$(uname)" = "Linux" ]; then
     fi
 fi
 # local user folder for custom autocompletion functions
-fpath+="${HOME}/.zfunc"
+fpath+="${ZDOTDIR}/zfunc"
 
 # autocompletion
 autoload -Uz compinit; compinit
