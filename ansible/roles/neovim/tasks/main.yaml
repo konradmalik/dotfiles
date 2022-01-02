@@ -19,5 +19,9 @@
 
 # this is required by 'distant' plugin for neovim
 - name: install 'distant' from cargo
+  args:
+    executable: /bin/bash
   shell:
-    cmd: cargo install distant
+    cmd: |
+      source ~/.cargo/env && \
+      cargo install distant
