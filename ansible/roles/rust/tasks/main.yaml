@@ -6,3 +6,8 @@
 
 - import_tasks: arch.yaml
   when: ansible_distribution == "Archlinux"
+
+- name: set default toolchain
+  shell:
+    cmd: |
+      rustup default stable && rustup install stable
