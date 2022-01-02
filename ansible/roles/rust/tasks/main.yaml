@@ -8,6 +8,10 @@
   when: ansible_distribution == "Archlinux"
 
 - name: set default toolchain
+  args:
+    executable: /bin/bash
   shell:
     cmd: |
-      source ~/.cargo/env && rustup default stable && rustup install stable
+      source ~/.cargo/env && \
+      rustup default stable && \
+      rustup install stable
