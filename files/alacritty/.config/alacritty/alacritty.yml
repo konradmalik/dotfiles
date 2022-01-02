@@ -8,9 +8,9 @@ window:
 cursor:
   style:
     shape: Block
-    blinking: on
+    blinking: Always
 
-fontfamily: &fontfamily "JetBrainsMonoMedium Nerd Font"
+fontfamily: &fontfamily "JetBrainsMono Nerd Font"
 font:
   size: 11.0
 
