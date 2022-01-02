@@ -28,6 +28,7 @@ return packer.startup(function(use)
             'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
             'hrsh7th/cmp-buffer',   -- buffer source for nvim-cmp
             'hrsh7th/cmp-path',     -- path source for nvim-cmp
+            'lukas-reineke/cmp-rg', -- ripgrep text source for nvim-cmp
         },
     }
 
