@@ -16,3 +16,8 @@
     cmd: stow --target="$HOME" {{ item }}
   with_items:
     - neovim
+
+# this is required by 'distant' plugin for neovim
+- name: install 'distant' from cargo
+  shell:
+    cmd: cargo install distant

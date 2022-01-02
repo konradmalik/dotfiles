@@ -18,10 +18,19 @@ return packer.startup(function(use)
         run = ':TSUpdate'
     }
 
-    -- LSP and completion
+    -- LSP
     use { 'neovim/nvim-lspconfig' } -- Collection of configurations for built-in LSP client
     use { "williamboman/nvim-lsp-installer" } -- simple to use language server installer
-    use { 'nvim-lua/completion-nvim' }
+    --
+    -- no ls lsp server for formatters and linters
+    use {
+        "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+        },
+    }
+
+    -- completion
     use {
         'hrsh7th/nvim-cmp', -- Autocompletion plugin
         requires = {
@@ -48,17 +57,36 @@ return packer.startup(function(use)
         requires = {'kyazdani42/nvim-web-devicons'}
     }
 
+    -- remote development (requires 'distant' binary)
+    use {
+        'chipsenkbeil/distant.nvim',
+        config = function()
+            require('distant').setup {
+            -- Applies Chip's personal settings to every machine you connect to
+            --
+            -- 1. Ensures that distant servers terminate with no connections
+            -- 2. Provides navigation bindings for remote directories
+            -- 3. Provides keybinding to jump into a remote file's parent directory
+            ['*'] = require('distant.settings').chip_default()
+            }
+        end
+    }
+
+    -- remote containers (vscode based)
+    use { 'jamestthompson3/nvim-remote-containers' }
+
     -- Fugitive for Git
     use { 'tpope/vim-fugitive' }
 
-    -- no ls lsp
+
+    -- Harpoon by ThePrimeagen
     use {
-        "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+        'ThePrimeagen/harpoon',
         requires = {
             {'nvim-lua/plenary.nvim'},
         },
     }
-
+    --
     -- which key
     use {
         "folke/which-key.nvim",
@@ -69,14 +97,6 @@ return packer.startup(function(use)
             -- refer to the configuration section below
             }
         end
-    }
-
-    -- Harpoon by ThePrimeagen
-    use {
-        'ThePrimeagen/harpoon',
-        requires = {
-            {'nvim-lua/plenary.nvim'},
-        },
     }
 
     -- themes
