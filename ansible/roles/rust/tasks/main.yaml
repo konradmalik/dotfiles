@@ -10,4 +10,4 @@
 - name: set default toolchain
   shell:
     cmd: |
-      rustup default stable && rustup install stable
+      source ~/.cargo/env && rustup default stable && rustup install stable
