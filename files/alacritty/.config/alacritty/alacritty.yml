@@ -10,23 +10,24 @@ cursor:
     shape: Block
     blinking: on
 
+fontfamily: &fontfamily "JetBrainsMonoMedium Nerd Font"
 font:
   size: 11.0
 
   normal:
-    family: "JetBrainsMonoMedium Nerd Font"
+    family: *fontfamily
     style: Medium
 
   bold:
-    family: "JetBrainsMonoMedium Nerd Font"
+    family: *fontfamily
     style: Bold
 
   italic:
-    family: "JetBrainsMonoMedium Nerd Font"
+    family: *fontfamily
     style: Italic
 
   bold_italic:
-    family: "JetBrainsMonoMedium Nerd Font"
+    family: *fontfamily
     style: Bold Italic
 
 # COLOR SCHEMES
