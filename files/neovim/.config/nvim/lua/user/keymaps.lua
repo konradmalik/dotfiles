@@ -31,3 +31,5 @@ keymap('n', '<leader>q', ':lua require("user.utils").ToggleQFList(0)<CR>', opts)
 -- ctrl c as esc in insert mode? why not
 keymap('i', '<C-c>', '<esc>', opts)
 
+-- nvim tree
+keymap('n', '<leader>t', ':NvimTreeToggle<cr>', opts)
