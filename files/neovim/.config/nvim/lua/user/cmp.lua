@@ -56,7 +56,6 @@ cmp.setup {
         nvim_lsp = "[LSP]",
         buffer = "[Buffer]",
         path = "[Path]",
-        rg = "[Rg]",
       })[entry.source.name]
       return vim_item
     end,
@@ -65,7 +64,6 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'rg' },
   },
   documentation = {
     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
