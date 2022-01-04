@@ -32,6 +32,7 @@ opt.wildmode='list:longest'                  -- Command-line completion mode
 opt.list=true                                -- Show some invisible characters (tabs...)
 opt.number=true                              -- Print line number
 opt.relativenumber=true                      -- Relative line numbers
+opt.wrap=false                               -- no line wrapping
 opt.updatetime=50
 opt.swapfile=false
 opt.backup=false
