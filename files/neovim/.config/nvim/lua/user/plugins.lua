@@ -75,19 +75,7 @@ return packer.startup(function(use)
     }
 
     -- remote development (requires 'distant' binary)
-    use {
-        'chipsenkbeil/distant.nvim',
-        config = function()
-            require('distant').setup {
-            -- Applies Chip's personal settings to every machine you connect to
-            --
-            -- 1. Ensures that distant servers terminate with no connections
-            -- 2. Provides navigation bindings for remote directories
-            -- 3. Provides keybinding to jump into a remote file's parent directory
-            ['*'] = require('distant.settings').chip_default()
-            }
-        end
-    }
+    use { 'chipsenkbeil/distant.nvim' }
 
     -- remote containers (vscode based)
     use { 'jamestthompson3/nvim-remote-containers' }
@@ -104,16 +92,7 @@ return packer.startup(function(use)
     }
 
     -- which key
-    use {
-        "folke/which-key.nvim",
-        config = function()
-            require("which-key").setup {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-            }
-        end
-    }
+    use { "folke/which-key.nvim" }
 
     -- themes
     use { 'joshdick/onedark.vim' }
