@@ -52,6 +52,9 @@ return packer.startup(function(use)
     }
     use { "nvim-telescope/telescope-file-browser.nvim" }
 
+    -- misc plugins
+    use { "windwp/nvim-autopairs" }
+
     -- statusline
     use {
         'hoob3rt/lualine.nvim',
@@ -79,7 +82,6 @@ return packer.startup(function(use)
     -- Fugitive for Git
     use { 'tpope/vim-fugitive' }
 
-
     -- Harpoon by ThePrimeagen
     use {
         'ThePrimeagen/harpoon',
@@ -87,7 +89,7 @@ return packer.startup(function(use)
             {'nvim-lua/plenary.nvim'},
         },
     }
-    --
+
     -- which key
     use {
         "folke/which-key.nvim",
