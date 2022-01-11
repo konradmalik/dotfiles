@@ -9,8 +9,8 @@ require('nvim-treesitter.configs').setup {
     indent = {
         enable = true,
         disable = {
-            -- until https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
             "yaml",
+            -- until https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
             "python",
         },
     },
