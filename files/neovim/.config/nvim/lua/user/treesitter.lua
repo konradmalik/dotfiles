@@ -11,7 +11,7 @@ require('nvim-treesitter.configs').setup {
         disable = {
             "yaml",
             -- until https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
-            "python",
+            --"python",
         },
     },
 }
