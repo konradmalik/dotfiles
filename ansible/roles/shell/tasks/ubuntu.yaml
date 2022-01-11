@@ -18,7 +18,7 @@
     cmd: |
       mkdir -p plugins
       cd plugins
-      git clone --depth 1 git://github.com/zsh-users/zsh-completions.git
+      git clone --depth 1 https://github.com/zsh-users/zsh-completions.git
     creates: /usr/local/share/zsh/plugins/zsh-completions
 
 - name: install starship amd
