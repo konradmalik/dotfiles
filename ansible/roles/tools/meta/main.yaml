@@ -1,2 +1,4 @@
 dependencies:
   - role: system
+  - role: go
+  - role: rust
