@@ -10,6 +10,8 @@
 - name: set default toolchain
   args:
     executable: /bin/bash
+  environment:
+    PATH: "~/.cargo/bin:{{ ansible_env.PATH }}"
   shell:
     cmd: |
       rustup default stable && \
