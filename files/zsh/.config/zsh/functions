@@ -121,3 +121,58 @@ fix_ssh_auth_sock() {
 git-prune-local-branches() {
     git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
 }
+
+# update all cargo-installed binaries
+cargo-update-binaries() {
+    cargo install $(cargo install --list | egrep '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
+}
+
+# update functions
+if [ "$(uname)" = "Darwin" ]; then
+    mac-upgrade() {
+        brew update && \
+        brew upgrade && \
+        brew upgrade --cask
+        # try to upgrade cargo stuff
+        cargo-update-binaries
+        generate_completions
+    }
+    mac-clean() {
+        brew cleanup
+    }
+elif [ "$(uname)" = "Linux" ]; then
+    if [ -f "/etc/arch-release" ]; then
+        arch-upgrade() {
+            yay -Syu --sudoloop \
+                --removemake \
+                --devel \
+                --nocleanmenu \
+                --nodiffmenu \
+                --noeditmenu \
+                --noupgrademenu
+            # try flatpak if exists
+            flatpak update || true
+            # try to upgrade cargo stuff
+            cargo-update-binaries
+            generate_completions
+        }
+        arch-clean() {
+            yay -Sc --noconfirm
+        }
+    elif [ -f "/etc/debian_version" ]; then
+        ubuntu-upgrade() {
+            sudo apt update && \
+            sudo apt upgrade -y && \
+            sudo snap refresh
+            # try flatpak if exists
+            flatpak update || true
+            # try to upgrade cargo stuff
+            cargo-update-binaries
+            generate_completions
+        }
+        ubuntu-clean() {
+            sudo apt autoremove -y && \
+            sudo apt clean
+        }
+	fi
+fi
