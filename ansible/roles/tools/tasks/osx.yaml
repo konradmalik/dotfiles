@@ -30,6 +30,8 @@
       - pipx
       - bats-core
       - watchexec
+      - unzip
+      - wget
     update_homebrew: yes
 
 - name: install brew casks

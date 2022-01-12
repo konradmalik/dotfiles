@@ -19,6 +19,8 @@
       - tldr
       - zathura
       - bats
+      - unzip
+      - wget
     state: latest
     update_cache: yes
     autoclean: yes
