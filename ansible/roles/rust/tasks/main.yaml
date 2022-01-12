@@ -12,6 +12,5 @@
     executable: /bin/bash
   shell:
     cmd: |
-      source ~/.cargo/env && \
       rustup default stable && \
       rustup install stable
