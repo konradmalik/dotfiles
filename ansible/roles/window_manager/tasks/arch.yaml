@@ -4,15 +4,20 @@
   kewlfft.aur.aur:
     use: yay
     name:
+      # X11
       - xorg-xrandr
       - xorg-xinit
       - xorg-server
+      # hide mouse
+      - unclutter
+      # copy-paste
       - xclip
+      # i3 stuff
       - i3-gaps
       - i3blocks
       - i3status
       - i3lock
-      - picom
+      # launcher
       - rofi
       # for i3blocks
       - sysstat
