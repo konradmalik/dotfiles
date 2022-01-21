@@ -22,8 +22,10 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<leader>*", ":grep <cword><CR>", opts)
 
 -- quickfix niceness
-keymap("n", "<C-k>", ":cp<CR>", opts)
-keymap("n", "<C-j>", ":cn<CR>", opts)
+keymap("n", "<C-k>", ":cprevious<CR>", opts)
+keymap("n", "<C-j>", ":cnext<CR>", opts)
+keymap("n", "<leader>k", ":lprevious<CR>", opts)
+keymap("n", "<leader>j", ":lnext<CR>", opts)
 keymap("n", "<C-q>", ':lua require("user.utils").ToggleQFList(1)<CR>', opts)
 keymap("n", "<leader>q", ':lua require("user.utils").ToggleQFList(0)<CR>', opts)
 
