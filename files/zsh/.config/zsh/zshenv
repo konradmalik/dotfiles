@@ -1,8 +1,5 @@
 # sourced every time
 
-# beeping is annoying
-unsetopt BEEP
-
 # platform dependent
 if [ "$(uname)" = "Darwin" ]; then
     # hardcode homebrew prefix to speed things up

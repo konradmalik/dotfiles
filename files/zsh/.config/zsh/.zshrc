@@ -1,26 +1,33 @@
 # Sourced on every interactive shell
-#
+
+# beeping is annoying
+unsetopt beep
+
 # Save most-recent X lines
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE="$HOME/.zsh_history"
 # share history between sessions
-setopt share_history
+setopt sharehistory
 # save each entry to history (as opposed to on shell exit)
-setopt INC_APPEND_HISTORY
+setopt incappendhistory
 # Delete old recorded entry if new entry is a duplicate.
-setopt HIST_IGNORE_ALL_DUPS
+setopt histignorealldups
+setopt histignoredups
+setopt histsavenodups
 # Do not display a line previously found.
-setopt HIST_FIND_NO_DUPS
+setopt histfindnodups
 # disable saving commands starting with space to history
-setopt HIST_IGNORE_SPACE
+setopt histignorespace
 # Remove superfluous blanks before recording entry.
-setopt HIST_REDUCE_BLANKS
+setopt histreduceblanks
+# autocd - if no executable named like that, cd into dir
+setopt autocd
 
 # enable directories stack
-setopt AUTO_PUSHD           # Push the current directory visited on the stack.
-setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
-setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+setopt autopushd           # Push the current directory visited on the stack.
+setopt pushdignoredups    # Do not store duplicates in the stack.
+setopt pushdsilent         # Do not print the directory stack after pushd or popd.
 
 # Useful Functions
 source "$ZDOTDIR/functions"
