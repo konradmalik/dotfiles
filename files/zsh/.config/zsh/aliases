@@ -33,7 +33,7 @@ alias watch='viddy'
 alias tv='tidy-viewer'
 
 # git (use for example ga instead of git add)
-alias g="git"
+alias g='git'
 
 # directory stack movement
 alias d='dirs -v'

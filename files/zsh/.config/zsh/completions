@@ -22,8 +22,6 @@ load_bash_completions
 zstyle ':completion::complete:*' use-cache 1
 # autocompletion menu
 zstyle ':completion:*' menu select
-# aliases autocompletion
-setopt COMPLETE_ALIASES
 # autocomplete with sudo
 zstyle ':completion::complete:*' gain-privileges 1
 # case insensitive https://superuser.com/questions/1092033/how-can-i-make-zsh-tab-completion-fix-capitalization-errors-for-directories-and
