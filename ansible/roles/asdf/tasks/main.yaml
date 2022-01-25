@@ -48,3 +48,13 @@
       . ~/.asdf/asdf.sh && \
       asdf plugin-add python
     creates: ~/.asdf/plugins/python
+
+- name: install asdf golang plugin
+  args:
+    executable: /bin/bash
+  shell:
+    chdir: /tmp
+    cmd: |
+      . ~/.asdf/asdf.sh && \
+      asdf plugin-add golang
+    creates: ~/.asdf/plugins/golang
