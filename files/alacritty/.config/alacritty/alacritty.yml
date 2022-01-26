@@ -82,4 +82,4 @@ onedark: &onedark
     cyan: "#56b6c2"
     white: "#ffffff"
 
-colors: *onedark
+colors: *gruvbox-dark
