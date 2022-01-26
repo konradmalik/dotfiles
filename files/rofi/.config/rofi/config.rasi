@@ -1,4 +1,5 @@
 configuration {
     show-icons: true;
 }
-@theme "gruvbox-dark"
+/* @theme "gruvbox-dark" */
+@theme "Arc-Dark.rasi"
