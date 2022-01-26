@@ -101,7 +101,7 @@ return packer.startup(function(use)
 	use({ "folke/which-key.nvim" })
 
 	-- themes
-	use({ "joshdick/onedark.vim" })
+	use({ "navarasu/onedark.nvim" })
 	use({ "gruvbox-community/gruvbox" })
 
 	-- Automatically set up your configuration after cloning packer.nvim
