@@ -3,4 +3,4 @@ configuration {
 }
 /* @theme "gruvbox-dark" */
 /* @theme "Arc-Dark.rasi" */
-@theme "dracula1.rasi"
+@theme "dracula2.rasi"
