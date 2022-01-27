@@ -106,6 +106,7 @@ return packer.startup(function(use)
 	-- themes
 	use({ "navarasu/onedark.nvim" })
 	use({ "gruvbox-community/gruvbox" })
+	use({ "dracula/vim" })
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
