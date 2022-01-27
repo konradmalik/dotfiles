@@ -25,6 +25,16 @@ return packer.startup(function(use)
 		run = ":TSUpdate",
 	})
 
+	-- completion
+	use({
+		"hrsh7th/nvim-cmp", -- Autocompletion plugin
+		requires = {
+			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
+			"hrsh7th/cmp-buffer", -- buffer source for nvim-cmp
+			"hrsh7th/cmp-path", -- path source for nvim-cmp
+		},
+	})
+
 	-- LSP
 	use({ "neovim/nvim-lspconfig" }) -- Collection of configurations for built-in LSP client
 	use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
@@ -36,16 +46,9 @@ return packer.startup(function(use)
 			{ "nvim-lua/plenary.nvim" },
 		},
 	})
-
-	-- completion
-	use({
-		"hrsh7th/nvim-cmp", -- Autocompletion plugin
-		requires = {
-			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
-			"hrsh7th/cmp-buffer", -- buffer source for nvim-cmp
-			"hrsh7th/cmp-path", -- path source for nvim-cmp
-		},
-	})
+	-- snippets
+	use({ "L3MON4D3/LuaSnip" }) --snippet engine
+	use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
 
 	-- Fuzzy finder
 	use({

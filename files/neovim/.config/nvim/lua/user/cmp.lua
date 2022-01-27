@@ -1,5 +1,14 @@
 local cmp = require("cmp")
 
+local snip_status_ok, luasnip = pcall(require, "luasnip")
+if not snip_status_ok then
+	vim.notify("cannot load luasnip")
+	return
+end
+
+-- init luasnip
+require("luasnip/loaders/from_vscode").lazy_load()
+
 --   פּ ﯟ   some other good icons
 local kind_icons = {
 	Text = "",
@@ -31,7 +40,11 @@ local kind_icons = {
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
 cmp.setup({
-	snippet = {},
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body) -- For `luasnip` users.
+		end,
+	},
 	mapping = {
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
