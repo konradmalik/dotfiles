@@ -1,5 +1,7 @@
 local telescope = require("telescope")
-telescope.setup({})
+telescope.setup({
+	defaults = { file_ignore_patterns = { "node_modules", "vendor" } },
+})
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 telescope.load_extension("fzf")
