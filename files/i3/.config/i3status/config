@@ -6,12 +6,22 @@
 # ß
 # If the above line is not correctly displayed, fix your editor first!
 
+# # gruvbox-like colors
+# general {
+#         colors = true
+#         color_good = "#98971a"
+#         color_bad = "#cc241d"
+#         color_degraded = "#fabd2f"
+#         interval = 5
+# }
+
+# dracula
 general {
-        colors = true
-        color_good = "#98971a"
-        color_bad = "#cc241d"
-        color_degraded = "#fabd2f"
-        interval = 5
+  output_format = "i3bar"
+  colors = true
+  color_good = "#50FA7B"
+  color_degraded = "#F1FA8C"
+  color_bad = "#FF5555"
 }
 
 order += "ethernet _first_"
