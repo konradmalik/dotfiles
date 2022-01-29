@@ -20,7 +20,7 @@
 - name: Enable backup and check timers
   become: yes
   ansible.builtin.systemd:
-    name: {{ item }}
+    name: "{{ item }}"
     enabled: yes
     masked: no
     state: stopped
