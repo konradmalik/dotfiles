@@ -169,5 +169,5 @@
   shell:
     cmd: |
       source ~/.cargo/env && \
-      cargo install ripgrep-all
+      cargo install --locked ripgrep_all
 
