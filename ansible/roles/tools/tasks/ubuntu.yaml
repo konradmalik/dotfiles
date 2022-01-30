@@ -149,3 +149,25 @@
       dpkg -i watchexec.deb
       rm -rf watchexec.deb
     creates: /usr/bin/watchexec
+
+- name: install ripgrep-all deps
+  become: yes
+  apt:
+    name:
+      - pandoc
+      - poppler-utils
+      - ffmpeg
+      - tesseract-ocr
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+
+- name: install 'ripgrep-all' from cargo
+  args:
+    executable: /bin/bash
+  shell:
+    cmd: |
+      source ~/.cargo/env && \
+      cargo install ripgrep-all
+

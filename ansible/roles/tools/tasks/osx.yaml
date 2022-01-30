@@ -48,3 +48,14 @@
       mv **/tidy-viewer /usr/local/bin/
       chmod +x /usr/local/bin/tidy-viewer
     creates: /usr/local/bin/tidy-viewer
+
+- name: install ripgrep-all and deps
+  community.general.homebrew:
+    name:
+      - pandoc
+      - poppler
+      - tesseract
+      - ffmpeg
+      - ripgrep-all
+    update_homebrew: yes
+
