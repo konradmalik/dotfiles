@@ -10,7 +10,13 @@
       - exa
       - fd
       - ripgrep
+      # ripgrep-all and deps start
       - ripgrep-all
+      - graphicsmagick
+      - pandoc
+      - poppler
+      - tesseract
+      # ripgrep-all deps end
       - the_silver_searcher
       - jq
       - zoxide

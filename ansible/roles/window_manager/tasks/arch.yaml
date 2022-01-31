@@ -4,6 +4,8 @@
   kewlfft.aur.aur:
     use: yay
     name:
+      # for battery, backup and stuff
+      - acpi
       # X11
       - xorg-xrandr
       - xorg-xinit
