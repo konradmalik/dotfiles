@@ -43,5 +43,6 @@
     chdir: /tmp
     cmd: |
       curl -o /usr/local/bin/shfmt -L https://github.com/mvdan/sh/releases/download/v{{ git_versions.shfmt }}/shfmt_v{{ git_versions.shfmt }}_linux_amd64
+      chmod +x /usr/local/bin/shfmt
     creates: /usr/local/bin/shfmt
   when: ansible_architecture == "x86_64"
