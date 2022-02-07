@@ -13,6 +13,7 @@
       - ripgrep
       - the_silver_searcher
       - jq
+      - jo
       - jenv
       - procs
       - ncdu
