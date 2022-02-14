@@ -1,3 +1,4 @@
+*.log
 .DS_store
 #nvim
 .netrwhist
@@ -16,3 +17,4 @@ vscode/User/sync
 .zsh_sessions
 .zcompcache
 zfunc
+
