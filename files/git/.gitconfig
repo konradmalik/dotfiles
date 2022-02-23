@@ -4,6 +4,7 @@
     unstage = "reset HEAD --"
     last = "log --name-status HEAD^..HEAD"
     conflicts = "diff --name-only --diff-filter=U"
+    whatadded = "log --diff-filter=A"
 
     a = add
     ap = add -p
