@@ -1,0 +1,35 @@
+- import_tasks: ubuntu.yaml
+  when: ansible_distribution == "Ubuntu"
+
+- import_tasks: osx.yaml
+  when: ansible_distribution == "MacOSX"
+
+- import_tasks: arch.yaml
+  when: ansible_distribution == "Archlinux"
+
+- block:
+    - name: create fake docker command
+      copy:
+        content: |
+          #!/bin/sh
+          docker "$@"
+        dest: /usr/local/bin/docker
+
+    - name: make fake docker command executable
+      file:
+        dest: /usr/local/bin/docker
+        mode: a+x
+
+    - name: create fake docker-compose command
+      copy:
+        content: |
+          #!/bin/sh
+          docker compose "$@"
+        dest: /usr/local/bin/docker-compose
+
+    - name: make fake docker-compose command executable
+      file:
+        dest: /usr/local/bin/docker-compose
+        mode: a+x
+
+  become: yes

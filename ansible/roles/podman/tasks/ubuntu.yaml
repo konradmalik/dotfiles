@@ -1,0 +1,30 @@
+- name: add podman apt key
+  become: yes
+  apt_key:
+    url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key
+    state: present
+
+- name: add podman apt repo
+  become: yes
+  apt_repository:
+    repo: "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /"
+    state: present
+    update_cache: yes
+
+- name: install podman
+  become: yes
+  apt:
+    pkg:
+      - podman
+    state: present
+
+- name: install dive from github
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o dive.deb -L https://github.com/wagoodman/dive/releases/download/v{{ git_versions.dive }}/dive_{{ git_versions.dive }}_linux_amd64.deb
+      dpkg -i dive.deb
+      rm -rf dive.deb
+    creates: /usr/local/bin/dive
+  when: ansible_architecture == "x86_64"

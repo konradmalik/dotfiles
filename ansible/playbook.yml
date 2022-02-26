@@ -28,6 +28,8 @@
     - name: tailscale
       when: ansible_system == "Linux"
     - docker
+    # deprecate docker once comfortable with podman
+    - podman
     # earthly requires docker
     - earthly
     - kubernetes

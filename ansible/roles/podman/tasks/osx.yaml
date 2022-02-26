@@ -1,0 +1,15 @@
+- name: install podman brew packages
+  community.general.homebrew:
+    name:
+      - podman
+      - dive
+    update_homebrew: yes
+
+- name: install podman-compose from pip via pipx
+  become: no
+  shell:
+    chdir: /tmp
+    cmd: |
+      ~/.local/bin/pipx install podman-compose
+    creates: ~/.local/bin/podman-compose
+
