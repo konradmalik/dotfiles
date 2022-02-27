@@ -10,10 +10,10 @@
     - rust
     #
     - tools
-    - name: repository
+    - repository
     - dotfiles
     - git
-    - name: ssh-egress
+    - ssh-egress
     - name: ssh-ingress
       when:
         - enable_ssh
@@ -57,5 +57,6 @@
         - vmware_guest
     - name: aur_builder-cleanup
       when: ansible_distribution == "Archlinux"
+    # a backup solution
     - name: restic
       when: "'devarch' in inventory_hostname"

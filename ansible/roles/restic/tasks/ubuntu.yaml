@@ -1,0 +1,9 @@
+- name: install restic from apt
+  become: yes
+  apt:
+    name:
+      - restic
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
