@@ -12,3 +12,15 @@
     use: yay
     name:
       - rustup
+
+- name: set default toolchain for aur_builder
+  become: yes
+  become_user: aur_builder
+  args:
+    executable: /bin/bash
+  environment:
+    PATH: "~/.cargo/bin:{{ ansible_env.PATH }}"
+  shell:
+    cmd: |
+      rustup install stable && \
+      rustup default stable
