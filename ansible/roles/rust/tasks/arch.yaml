@@ -13,14 +13,28 @@
     name:
       - rustup
 
-- name: set default toolchain for aur_builder
-  become: yes
-  become_user: aur_builder
-  args:
-    executable: /bin/bash
-  environment:
-    PATH: "~/.cargo/bin:{{ ansible_env.PATH }}"
-  shell:
-    cmd: |
-      rustup install stable && \
-      rustup default stable
+# we need to set default toolchain for rust for aur_builder user
+# otherwise rust-based aur packages will fail
+# so we check if the user exists first, then set the toolchain
+- block:
+    - name: get passwd contents
+      getent:
+        database: passwd
+
+    - name: get usernames from passwd
+      set_fact:
+        users_present: "{{ getent_passwd.keys()|list }}"
+
+    - name: set default toolchain for aur_builder it exists
+      become: yes
+      become_user: aur_builder
+      args:
+        executable: /bin/bash
+      environment:
+        PATH: "~/.cargo/bin:{{ ansible_env.PATH }}"
+      shell:
+        cmd: |
+          rustup install stable && \
+          rustup default stable
+      when:
+        - '"aur_builder" in users_present'
