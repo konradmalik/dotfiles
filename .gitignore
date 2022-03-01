@@ -18,3 +18,5 @@ vscode/User/sync
 .zcompcache
 zfunc
 
+#terraform
+.terraform
