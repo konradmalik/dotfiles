@@ -21,6 +21,7 @@ all:
       broot: 1.7.5
       docker_compose: 2.2.2
       dive: 0.10.0
+      dsq: 0.5.0
       exa: 0.10.1
       flux: 0.24.0
       k9s: 0.25.8

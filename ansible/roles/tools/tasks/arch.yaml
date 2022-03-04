@@ -22,6 +22,7 @@
       - jq
       - jo
       # json tools end
+      - dsq
       - zoxide
       - procs
       - ncdu

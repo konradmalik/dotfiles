@@ -9,3 +9,4 @@
 
 - import_tasks: ubuntu-aarch64.yaml
   when: ansible_architecture == "aarch64"
+
