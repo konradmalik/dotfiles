@@ -5,3 +5,4 @@
     use: yay
     name:
       - go
+      - tinygo

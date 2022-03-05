@@ -7,6 +7,16 @@
       cargo install --git https://github.com/neepoo/exa.git --branch fix-issue-887 --root /usr/local/
     creates: /usr/local/bin/exa
 
+- name: install duf from git releases
+  become: yes
+  shell:
+    chdir: /tmp
+    cmd: |
+      curl -o duf.deb -L https://github.com/muesli/duf/releases/download/v{{ git_versions.duf }}/duf_{{ git_versions.duf }}_linux_arm64.deb
+      dpkg -i duf.deb
+      rm -rf duf.deb
+    creates: /usr/bin/duf
+
 - name: install up from github
   become: yes
   shell:

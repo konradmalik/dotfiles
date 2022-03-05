@@ -54,7 +54,6 @@
   community.general.snap:
     name:
       - procs
-      - duf-utility
 
 - name: install zoxide from github
   become: yes
@@ -91,6 +90,16 @@
           chmod +x up
           mv up /usr/local/bin/
         creates: /usr/local/bin/up
+
+    - name: install duf from git releases
+      become: yes
+      shell:
+        chdir: /tmp
+        cmd: |
+          curl -o duf.deb -L https://github.com/muesli/duf/releases/download/v{{ git_versions.duf }}/duf_{{ git_versions.duf }}_linux_amd64.deb
+          dpkg -i duf.deb
+          rm -rf duf.deb
+        creates: /usr/bin/duf
 
     - name: install viddy from github
       become: yes
