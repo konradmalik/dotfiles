@@ -1,8 +1,0 @@
-- name: install go packages from aur
-  become: yes
-  become_user: aur_builder
-  kewlfft.aur.aur:
-    use: yay
-    name:
-      - go
-      - tinygo

@@ -1,8 +1,0 @@
-- name: install git tools
-  become: yes
-  become_user: aur_builder
-  kewlfft.aur.aur:
-    use: yay
-    name:
-      - git-delta
-      - git-extras

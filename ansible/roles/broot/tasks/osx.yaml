@@ -1,5 +1,0 @@
-- name: install broot
-  community.general.homebrew:
-    name:
-      - broot
-    update_homebrew: yes

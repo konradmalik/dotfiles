@@ -1,5 +1,0 @@
-- name: install alacritty
-  community.general.homebrew_cask:
-    name:
-      - alacritty
-    update_homebrew: yes

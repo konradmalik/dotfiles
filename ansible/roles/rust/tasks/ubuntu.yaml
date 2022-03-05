@@ -1,5 +1,0 @@
-- name: install rustup using online installer
-  shell:
-    cmd: |
-      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain=stable
-    creates: ~/.cargo/bin/rustup

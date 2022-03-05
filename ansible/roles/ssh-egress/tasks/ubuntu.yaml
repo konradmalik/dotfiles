@@ -1,6 +1,0 @@
-- name: install mosh
-  become: yes
-  apt:
-    pkg:
-      - mosh
-    state: present

@@ -1,7 +1,0 @@
-- name: install brew packages
-  community.general.homebrew:
-    name:
-      - neovim
-      - prettier
-      - shfmt
-    update_homebrew: yes

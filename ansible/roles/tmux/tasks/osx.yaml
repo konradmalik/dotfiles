@@ -1,5 +1,0 @@
-- name: install tmux
-  community.general.homebrew:
-    name:
-      - tmux
-    update_homebrew: yes

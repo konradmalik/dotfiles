@@ -1,5 +1,0 @@
-- name: install ranger
-  community.general.homebrew:
-    name:
-      - ranger
-    update_homebrew: yes

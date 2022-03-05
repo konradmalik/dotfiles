@@ -1,9 +1,0 @@
-- name: install podman packages from aur
-  become: yes
-  become_user: aur_builder
-  kewlfft.aur.aur:
-    use: yay
-    name:
-      - podman
-      - podman-compose
-      - dive
