@@ -4,7 +4,7 @@
 if [ "$(uname)" = "Darwin" ]; then
     # hardcode homebrew prefix to speed things up
     export BREW_PREFIX="/usr/local"
-    # gnu coreutils by default instead of BSD-based that macos provides, may cause problems later but I want that!
+    # gnu coreutils by default instead of BSD-based that macos provides
     export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:${PATH}"
     export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:${MANPATH}"
     # hardcode as nvim. Can't do it interactively because it will be loaded later than this script (from brew)
@@ -26,7 +26,7 @@ if [ -z "$EDITOR" ]; then
     if command -v nvim &>/dev/null; then
         export EDITOR='nvim'
     elif command -v vim &>/dev/null; then
-        export EDITOR='nvim'
+        export EDITOR='vim'
     elif command -v vi &>/dev/null; then
         export EDITOR='vi'
     else
@@ -41,17 +41,10 @@ export DIFFPROG="$EDITOR -d"
 export PAGER="less -FirSwX"
 export MANPAGER="less -FirSwX"
 
-
 # docker buildkit feature
 export DOCKER_BUILDKIT=1
 
-# krew (kubectl package manager)
-export PATH="$PATH:$HOME/.krew/bin"
-# Gopath
-export GOPATH="$HOME/.go"
-# go binaries
-export PATH="$GOPATH/bin:$PATH"
 # rust binaries
 export PATH="$HOME/.cargo/bin:$PATH"
-# custom binaries in PATH
+# user's binaries in PATH
 export PATH="$HOME/.local/bin:$PATH"
