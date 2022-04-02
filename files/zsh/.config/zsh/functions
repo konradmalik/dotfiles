@@ -31,8 +31,8 @@ zfunc_completions_helper() {
 
     if [ ! -f $ZSH_VENDOR_COMPLETIONS/$completions_filename ]; then
         # keep || true in case some of these programs are not in path (fail gracefully)
-        mkdir -p "$zfunc"
-        eval "$generate_command" > "${zfunc}/$completions_filename" || true
+        mkdir -p "$zfunc" \
+        && (eval "$generate_command" > "${zfunc}/$completions_filename" || true)
     else
         # remove if exists locally because it is already provided by package manager
         rm -f "${zfunc}/$completions_filename"
@@ -149,7 +149,6 @@ elif [ "$(uname)" = "Linux" ]; then
                 --nodiffmenu \
                 --noeditmenu \
                 --noupgrademenu \
-            # try flatpak if exists
             && (flatpak update || true) \
             && cargo-update-binaries \
             && generate_completions
@@ -162,7 +161,6 @@ elif [ "$(uname)" = "Linux" ]; then
             sudo apt update \
             && sudo apt upgrade -y \
             && sudo snap refresh \
-            # try flatpak if exists
             && (flatpak update || true) \
             && cargo-update-binaries \
             generate_completions
