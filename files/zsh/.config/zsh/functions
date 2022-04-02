@@ -130,12 +130,11 @@ cargo-update-binaries() {
 # update functions
 if [ "$(uname)" = "Darwin" ]; then
     mac-upgrade() {
-        brew update && \
-        brew upgrade && \
-        brew upgrade --cask
-        # try to upgrade cargo stuff
-        cargo-update-binaries
-        generate_completions
+        brew update \
+        && brew upgrade \
+        && brew upgrade --cask \
+        && cargo-update-binaries \
+        && generate_completions
     }
     mac-clean() {
         brew cleanup
@@ -149,30 +148,28 @@ elif [ "$(uname)" = "Linux" ]; then
                 --nocleanmenu \
                 --nodiffmenu \
                 --noeditmenu \
-                --noupgrademenu
+                --noupgrademenu \
             # try flatpak if exists
-            flatpak update || true
-            # try to upgrade cargo stuff
-            cargo-update-binaries
-            generate_completions
+            && (flatpak update || true) \
+            && cargo-update-binaries \
+            && generate_completions
         }
         arch-clean() {
             yay -Sc --noconfirm
         }
     elif [ -f "/etc/debian_version" ]; then
         ubuntu-upgrade() {
-            sudo apt update && \
-            sudo apt upgrade -y && \
-            sudo snap refresh
+            sudo apt update \
+            && sudo apt upgrade -y \
+            && sudo snap refresh \
             # try flatpak if exists
-            flatpak update || true
-            # try to upgrade cargo stuff
-            cargo-update-binaries
+            && (flatpak update || true) \
+            && cargo-update-binaries \
             generate_completions
         }
         ubuntu-clean() {
-            sudo apt autoremove -y && \
-            sudo apt clean
+            sudo apt autoremove -y \
+            && sudo apt clean
         }
 	fi
 fi
