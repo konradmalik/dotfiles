@@ -163,7 +163,7 @@ elif [ "$(uname)" = "Linux" ]; then
             && sudo snap refresh \
             && (flatpak update || true) \
             && cargo-update-binaries \
-            generate_completions
+            && generate_completions
         }
         ubuntu-clean() {
             sudo apt autoremove -y \
