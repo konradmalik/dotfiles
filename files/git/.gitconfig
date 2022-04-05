@@ -43,16 +43,19 @@
 [core]
     autocrlf = input
     editor = nvim
+    pager = delta
 
 [delta]
+    features = side-by-side
+    syntax-theme = Dracula
     line-numbers = true
     navigate = true
     hyperlinks = false
-    side-by-side = false
+    dark = true
 
 [diff]
     tool = vimdiff
-    colorMoved = zebra
+    colorMoved = default
 
 [fetch]
     prune = true
@@ -84,12 +87,6 @@
 
 [mergetool "vimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-[pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
 
 [push]
     default = tracking
