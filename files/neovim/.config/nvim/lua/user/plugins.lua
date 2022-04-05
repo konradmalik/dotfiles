@@ -83,9 +83,6 @@ return packer.startup(function(use)
 		requires = { "kyazdani42/nvim-web-devicons" },
 	})
 
-	-- remote development (requires 'distant' binary)
-	use({ "chipsenkbeil/distant.nvim" })
-
 	-- remote containers (vscode based)
 	use({ "jamestthompson3/nvim-remote-containers" })
 
