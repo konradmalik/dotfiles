@@ -46,5 +46,7 @@ export DOCKER_BUILDKIT=1
 
 # rust binaries
 export PATH="$HOME/.cargo/bin:$PATH"
+# ho binaries
+export PATH="$HOME/go/bin:$PATH"
 # user's binaries in PATH
 export PATH="$HOME/.local/bin:$PATH"

@@ -1,3 +1,4 @@
 direnv 2.31.0
 python system
-golang 1.18
+golang system
+rust system
