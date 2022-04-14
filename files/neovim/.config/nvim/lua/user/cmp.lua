@@ -80,9 +80,8 @@ cmp.setup({
 		{ name = "path" },
 	}),
 	window = {
-		documentation = {
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-		},
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
 	},
 	experimental = {
 		ghost_text = false,
