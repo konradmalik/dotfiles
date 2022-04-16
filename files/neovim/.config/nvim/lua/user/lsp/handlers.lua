@@ -17,33 +17,29 @@ M.setup = function()
 end
 
 local lsp_keymaps = function(client, bufnr)
-    local function buf_set_keymap(...)
-        keymap.set(bufnr, ...)
-    end
-
     -- Mappings.
-    local opts = { noremap = true }
-    buf_set_keymap("n", "gD", vim.lsp.buf.declaration, opts)
-    buf_set_keymap("n", "gd", vim.lsp.buf.definition, opts)
-    buf_set_keymap("n", "gh", vim.lsp.buf.hover, opts)
-    buf_set_keymap("n", "gp", vim.lsp.buf.implementation, opts)
-    buf_set_keymap("n", "gs", vim.lsp.buf.signature_help, opts)
-    buf_set_keymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-    buf_set_keymap("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
-    buf_set_keymap("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
-    buf_set_keymap("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
-    buf_set_keymap("n", "<leader>D", vim.lsp.buf.type_definition, opts)
-    buf_set_keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
-    buf_set_keymap("n", "gr", vim.lsp.buf.references, opts)
-    buf_set_keymap("n", "<leader>e", vim.diagnostic.open_float, opts)
-    buf_set_keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-    buf_set_keymap("n", "]d", vim.diagnostic.goto_next, opts)
+    local opts = { buffer = bufnr, noremap = true }
+    keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+    keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    keymap.set("n", "gh", vim.lsp.buf.hover, opts)
+    keymap.set("n", "gp", vim.lsp.buf.implementation, opts)
+    keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
+    keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
+    keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
+    keymap.set("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
+    keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+    keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+    keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+    keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+    keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
     -- we have autocmd
-    --buf_set_keymap('n', '<leader>q', vim.lsp.diagnostic.set_loclist, opts)
+    --keymap.set('n', '<leader>q', vim.lsp.diagnostic.set_loclist, opts)
 
-    buf_set_keymap("n", "<leader>f", vim.lsp.buf.formatting, opts)
-    buf_set_keymap("v", "<leader>f", vim.lsp.buf.range_formatting, opts)
+    keymap.set("n", "<leader>f", vim.lsp.buf.formatting, opts)
+    keymap.set("v", "<leader>f", vim.lsp.buf.range_formatting, opts)
 end
 
 M.on_attach = function(client, bufnr)
