@@ -1,7 +1,7 @@
 local g = vim.g
 
 local opts = { noremap = true, silent = true }
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap
 
 -- map leader
 g.mapleader = " "
@@ -15,22 +15,22 @@ g.mapleader = " "
 --   command_mode = "c",
 
 -- to navigate buffers in normal mode
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
-keymap("n", "<S-l>", ":bnext<CR>", opts)
+keymap.set("n", "<S-h>", ":bprevious<CR>", opts)
+keymap.set("n", "<S-l>", ":bnext<CR>", opts)
 
 -- quick grep word under the cursor
-keymap("n", "<leader>*", ":grep <cword><CR>", opts)
+keymap.set("n", "<leader>*", ":grep <cword><CR>", opts)
 
 -- quickfix niceness
-keymap("n", "<C-k>", ":cprevious<CR>", opts)
-keymap("n", "<C-j>", ":cnext<CR>", opts)
-keymap("n", "<leader>k", ":lprevious<CR>", opts)
-keymap("n", "<leader>j", ":lnext<CR>", opts)
-keymap("n", "<C-q>", ':lua require("user.utils").ToggleQFList(1)<CR>', opts)
-keymap("n", "<leader>q", ':lua require("user.utils").ToggleQFList(0)<CR>', opts)
+keymap.set("n", "<C-k>", ":cprevious<CR>", opts)
+keymap.set("n", "<C-j>", ":cnext<CR>", opts)
+keymap.set("n", "<leader>k", ":lprevious<CR>", opts)
+keymap.set("n", "<leader>j", ":lnext<CR>", opts)
+keymap.set("n", "<C-q>", function() require("user.utils").ToggleQFList(1) end, opts)
+keymap.set("n", "<leader>q", function() require("user.utils").ToggleQFList(0) end, opts)
 
 -- ctrl c as esc in insert mode? why not
-keymap("i", "<C-c>", "<esc>", opts)
+keymap.set("i", "<C-c>", "<esc>", opts)
 
 -- nvim tree
-keymap("n", "<leader>t", ":NvimTreeToggle<cr>", opts)
+keymap.set("n", "<leader>t", ":NvimTreeToggle<cr>", opts)

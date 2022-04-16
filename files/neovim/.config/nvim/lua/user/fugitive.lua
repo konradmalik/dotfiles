@@ -1,5 +1,5 @@
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 -- Git status
-keymap("n", "<Leader>gs", "<cmd>Git<CR>", opts)
+keymap.set("n", "<Leader>gs", "<cmd>Git<CR>", opts)

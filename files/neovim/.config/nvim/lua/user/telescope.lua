@@ -8,11 +8,11 @@ telescope.load_extension("fzf")
 -- same with the file browser
 telescope.load_extension("file_browser")
 
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
-keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
-keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
-keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-keymap("n", "<leader>ft", "<cmd>lua require('telescope').extensions.file_browser.file_browser()<cr>", opts)
+keymap.set("n", "<leader>ff", require('telescope.builtin').find_files, opts)
+keymap.set("n", "<leader>fg", require('telescope.builtin').live_grep, opts)
+keymap.set("n", "<leader>fb", require('telescope.builtin').buffers, opts)
+keymap.set("n", "<leader>fh", require('telescope.builtin').help_tags, opts)
+keymap.set("n", "<leader>ft", require('telescope').extensions.file_browser.file_browser, opts)
