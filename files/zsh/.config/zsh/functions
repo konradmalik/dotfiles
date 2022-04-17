@@ -54,6 +54,7 @@ generate_completions() {
     zfunc_completions_helper "k3d completion zsh" _k3d
     zfunc_completions_helper "kind completion zsh" _kind
     zfunc_completions_helper "flux completion zsh" _flux
+    zfunc_completions_helper "tilt completion zsh" _tilt
     # earthly
     zfunc_completions_helper "earthly bootstrap --source zsh" _earthly
     # force compinit
