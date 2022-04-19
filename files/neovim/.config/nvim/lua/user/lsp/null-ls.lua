@@ -1,5 +1,9 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
-local null_ls = require("null-ls")
+local null_ls_ok, null_ls = pcall(require, "null-ls")
+if not null_ls_ok then
+    vim.notify("cannot load null-ls")
+    return
+end
 local lsp_handlers = require("user.lsp.handlers")
 
 local formatting = null_ls.builtins.formatting

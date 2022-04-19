@@ -1,13 +1,15 @@
-local fn = vim.fn
-
 -- Auto install packer.nvim if not exists
--- local fn = vim.fn
+local fn = vim.fn
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
     packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
-local packer = require("packer")
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+  vim.notify("cannot load packer")
+  return
+end
 
 return packer.startup(function(use)
     -- Packer can manage itself

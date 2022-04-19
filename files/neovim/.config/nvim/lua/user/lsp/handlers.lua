@@ -50,7 +50,11 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- capabilites for cmp
 -- add it to each server you want
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if cmp_nvim_lsp_ok then
+    M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+else
+    vim.notify("cannot load cmp_nvim_lsp")
+end
 
 return M
