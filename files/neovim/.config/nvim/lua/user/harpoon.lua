@@ -1,4 +1,8 @@
-local harpoon = require("harpoon")
+local harpoon_ok, harpoon = pcall(require, "harpoon")
+if not harpoon_ok then
+    vim.notify("cannot load harpoon")
+    return
+end
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }

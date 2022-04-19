@@ -1,6 +1,11 @@
-local telescope = require("telescope")
+local telescope_ok, telescope = pcall(require, "telescope")
+if not telescope_ok then
+    vim.notify("cannot load telescope")
+    return
+end
+
 telescope.setup({
-	defaults = { file_ignore_patterns = { "node_modules", "vendor" } },
+    defaults = { file_ignore_patterns = { "node_modules", "vendor" } },
 })
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
