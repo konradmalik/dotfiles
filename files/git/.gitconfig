@@ -99,3 +99,5 @@
     email = konrad.malik@gmail.com
     signingkey = F75F59DD45C0D9016CCC3287DE3F236F1516A431
 
+[worktree]
+    guessRemote = true
