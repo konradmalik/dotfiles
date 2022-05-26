@@ -57,6 +57,8 @@ generate_completions() {
     zfunc_completions_helper "tilt completion zsh" _tilt
     # earthly
     zfunc_completions_helper "earthly bootstrap --source zsh" _earthly
+    # gitlab
+    zfunc_completions_helper "glab completion --shell zsh" _glab
     # force compinit
     rm -f "$ZDOTDIR/.zcompdump"
     echo "completions generated; you may need to restart your shell"
