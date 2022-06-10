@@ -10,4 +10,3 @@ kind 0.13.0
 helm 3.9.0
 kubectl 1.24.0
 earthly 0.6.15
-dotnet-core 6.0.300
