@@ -94,6 +94,9 @@
 [pull]
     rebase = merges
 
+[safe]
+    directory = *
+
 [user]
     name = Konrad Malik
     email = konrad.malik@gmail.com
