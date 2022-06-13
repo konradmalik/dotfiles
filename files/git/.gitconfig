@@ -41,7 +41,7 @@
     gpgsign = true
 
 [core]
-    autocrlf = input
+	autocrlf = input
     editor = nvim
     pager = delta
 
