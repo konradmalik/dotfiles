@@ -1,4 +1,4 @@
-direnv 2.31.0
+direnv 2.32.0
 python system
 golang system
 rust system
@@ -10,3 +10,4 @@ kind 0.13.0
 helm 3.9.0
 kubectl 1.24.0
 earthly 0.6.15
+nodejs lts-gallium
