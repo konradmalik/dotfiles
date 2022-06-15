@@ -2,7 +2,7 @@
 local fn = vim.fn
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    PACKER_BOOTSTRAP = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
 local status_ok, packer = pcall(require, "packer")
@@ -78,6 +78,10 @@ return packer.startup(function(use)
         "hoob3rt/lualine.nvim",
         requires = { "kyazdani42/nvim-web-devicons" },
     })
+    use({
+        "SmiteshP/nvim-navic",
+        requires = "neovim/nvim-lspconfig"
+    })
 
     -- remote containers (vscode based)
     use({ "jamestthompson3/nvim-remote-containers" })
@@ -103,7 +107,7 @@ return packer.startup(function(use)
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
-    if packer_bootstrap then
+    if PACKER_BOOTSTRAP then
         packer.sync()
     end
 end)

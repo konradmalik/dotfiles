@@ -1,6 +1,12 @@
 local M = {}
 local keymap = vim.keymap
 
+local navic_ok, navic = pcall(require, "nvim-navic")
+if not navic_ok then
+    vim.notify("cannot load navic")
+    return
+end
+
 M.setup = function()
     local config = {
         -- disable virtual text
@@ -43,6 +49,9 @@ local lsp_keymaps = function(client, bufnr)
 end
 
 M.on_attach = function(client, bufnr)
+    -- navigation bar
+    navic.attach(client, bufnr)
+    -- keymaps
     lsp_keymaps(client, bufnr)
 end
 

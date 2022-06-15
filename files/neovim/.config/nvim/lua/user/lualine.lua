@@ -4,9 +4,14 @@ if not lualine_ok then
     return
 end
 
+local navic_ok, navic = pcall(require, "nvim-navic")
+if not navic_ok then
+    vim.notify("cannot load navic")
+    return
+end
+
 lualine.setup({
     options = {
-        --theme = "gruvbox",
         theme = "auto",
         section_separators = "",
         component_separators = "",
@@ -15,7 +20,7 @@ lualine.setup({
     sections = {
         lualine_a = { { "mode", upper = true } },
         lualine_b = { { "branch", icon = "" } },
-        lualine_c = { { "filename", file_status = true }, { "diagnostics", sources = { "nvim_diagnostic" } } },
+        lualine_c = { { "filename", file_status = true }, { "diagnostics", sources = { "nvim_diagnostic" } }, { navic.get_location, cond = navic.is_available } },
         lualine_x = { "encoding", "fileformat", "filetype" },
         lualine_y = { "hostname" },
         lualine_z = { "progress", "location" },
