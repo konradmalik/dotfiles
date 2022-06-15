@@ -50,7 +50,9 @@ end
 
 M.on_attach = function(client, bufnr)
     -- navigation bar
-    navic.attach(client, bufnr)
+    if client.server_capabilities.documentSymbolProvider then
+        navic.attach(client, bufnr)
+    end
     -- keymaps
     lsp_keymaps(client, bufnr)
 end
