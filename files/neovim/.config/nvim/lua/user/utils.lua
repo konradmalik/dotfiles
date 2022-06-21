@@ -13,6 +13,17 @@ function utils.trim_trailing_whitespace()
     end
 end
 
+-- check if array-like table has a value
+function utils.has_value(tab, val)
+    for _, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
 -- the_primeagen's quickfix toggler
 -- local list
 g.the_primeagen_qf_l = 0

@@ -1,11 +1,13 @@
 local M = {}
 local keymap = vim.keymap
+local utils = require("user.utils")
 
 local navic_ok, navic = pcall(require, "nvim-navic")
 if not navic_ok then
     vim.notify("cannot load navic")
     return
 end
+local navic_disallowed_servers = { "pylsp" }
 
 M.setup = function()
     local config = {
@@ -49,12 +51,18 @@ local lsp_keymaps = function(client, bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-    -- navigation bar
-    if client.server_capabilities.documentSymbolProvider then
-        navic.attach(client, bufnr)
-    end
     -- keymaps
     lsp_keymaps(client, bufnr)
+    -- navigation bar
+    if not client.server_capabilities.documentSymbolProvider then
+        vim.notify(client.name .. ' does not serve as a documentSymbolProvider')
+        return
+    end
+    if utils.has_value(navic_disallowed_servers, client.name) then
+        vim.notify(client.name .. ' was disabled manually in navic')
+        return
+    end
+    navic.attach(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
