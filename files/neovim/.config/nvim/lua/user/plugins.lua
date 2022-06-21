@@ -7,8 +7,8 @@ end
 
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
-  vim.notify("cannot load packer")
-  return
+    vim.notify("cannot load packer")
+    return
 end
 
 return packer.startup(function(use)
@@ -28,13 +28,13 @@ return packer.startup(function(use)
             "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
             "hrsh7th/cmp-buffer", -- buffer source for nvim-cmp
             "hrsh7th/cmp-path", -- path source for nvim-cmp
+            "hrsh7th/cmp-nvim-lua", -- lua source for nvim api
         },
     })
 
     -- LSP
     use({ "neovim/nvim-lspconfig" }) -- Collection of configurations for built-in LSP client
     use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
-    --
     -- no ls lsp server for formatters and linters
     use({
         "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
@@ -45,6 +45,8 @@ return packer.startup(function(use)
     -- snippets
     use({ "L3MON4D3/LuaSnip" }) --snippet engine
     use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
+    -- highlighting same words
+    use({ "RRethy/vim-illuminate" })
 
     -- Fuzzy finder
     use({
@@ -99,6 +101,9 @@ return packer.startup(function(use)
 
     -- which key
     use({ "folke/which-key.nvim" })
+
+    -- lua caching to speed up the load time
+    use({ 'lewis6991/impatient.nvim' })
 
     -- themes
     use({ "navarasu/onedark.nvim" })

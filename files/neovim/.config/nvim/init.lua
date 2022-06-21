@@ -1,3 +1,6 @@
+-- impatient needs to be the first
+require("user.impatient")
+
 require("user.settings")
 require("user.keymaps")
 require("user.plugins")

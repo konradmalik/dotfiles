@@ -9,6 +9,12 @@ if not navic_ok then
 end
 local navic_disallowed_servers = { "pylsp" }
 
+local illuminate_ok, illuminate = pcall(require, "illuminate")
+if not illuminate_ok then
+    vim.notify("cannot load illuminate")
+    return
+end
+
 M.setup = function()
     local config = {
         -- disable virtual text
@@ -53,6 +59,8 @@ end
 M.on_attach = function(client, bufnr)
     -- keymaps
     lsp_keymaps(client, bufnr)
+    -- same word highlighting
+    illuminate.on_attach(client, bufnr)
     -- navigation bar
     if not client.server_capabilities.documentSymbolProvider then
         vim.notify(client.name .. ' does not serve as a documentSymbolProvider')
