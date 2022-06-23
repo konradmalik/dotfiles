@@ -48,4 +48,5 @@ opt.ruler = false
 
 opt.shortmess:append "c"
 opt.whichwrap:append("<,>,[,],h,l")
-opt.iskeyword:append("-")
+opt.iskeyword:remove("-")
+opt.iskeyword:remove("_")
