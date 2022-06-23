@@ -2,6 +2,7 @@ direnv 2.32.0
 python system
 golang system
 rust system
+nodejs system
 tilt 0.30.2
 k3d 5.4.1
 flux2 0.30.2
@@ -10,4 +11,3 @@ kind 0.13.0
 helm 3.9.0
 kubectl 1.24.1
 earthly 0.6.15
-nodejs lts-gallium

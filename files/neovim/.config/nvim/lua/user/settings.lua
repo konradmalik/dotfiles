@@ -8,8 +8,9 @@ if fn.executable("rg") then
 	opt.grepprg = "rg --vimgrep --no-heading --smart-case"
 	opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 end
+opt.fileencoding = "utf-8"                  -- the encoding written to a file
 opt.inccommand = "nosplit" -- live preview when search/replace
-opt.hlsearch = false -- :noh by default
+opt.hlsearch = true -- :noh by default
 opt.lazyredraw = true -- faster scrolling
 opt.expandtab = true -- Use spaces instead of tabs
 opt.smartindent = true -- Insert indents automatically
@@ -27,13 +28,24 @@ opt.smartcase = true -- Don't ignore case with capitals
 opt.splitbelow = true -- Put new windows below current
 opt.splitright = true -- Put new windows right of current
 opt.termguicolors = false -- True color support (does not work for macos)
+opt.cmdheight = 1                           -- more space in the neovim command line for displaying messages
 opt.wildmode = "list:longest" -- Command-line completion mode
 opt.list = true -- Show some invisible characters (tabs...)
 opt.number = true -- Print line number
 opt.relativenumber = true -- Relative line numbers
 opt.wrap = false -- no line wrapping
-opt.updatetime = 50
-opt.swapfile = false
-opt.backup = false
+opt.updatetime = 300                        -- faster completion (4000ms default)
+opt.swapfile = false                        -- creates a swapfile
+opt.backup = false                          -- creates a backup file
 opt.undofile = true
 opt.undodir = "/tmp/.vim-undo"
+opt.conceallevel = 0                        -- so that `` is visible in markdown files
+opt.showmode = false                        -- we don't need to see things like -- INSERT -- anymore
+opt.showtabline = 0                         -- always show tabs
+opt.writebackup = false                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+opt.cursorline = true                       -- highlight the current line
+opt.ruler = false
+
+opt.shortmess:append "c"
+opt.whichwrap:append("<,>,[,],h,l")
+opt.iskeyword:append("-")

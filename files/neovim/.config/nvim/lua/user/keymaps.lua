@@ -32,5 +32,8 @@ keymap.set("n", "<leader>q", function() require("user.utils").ToggleQFList(0) en
 -- ctrl c as esc in insert mode? why not
 keymap.set("i", "<C-c>", "<esc>", opts)
 
+-- Clear highlights
+keymap.set("n", "<leader>h", ":nohlsearch<CR>", opts)
+
 -- nvim tree
 keymap.set("n", "<leader>t", ":NvimTreeToggle<cr>", opts)
