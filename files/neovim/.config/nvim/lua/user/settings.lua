@@ -47,6 +47,6 @@ opt.cursorline = true                       -- highlight the current line
 opt.ruler = false
 
 opt.shortmess:append "c"
-opt.whichwrap:append("<,>,[,],h,l")
+opt.whichwrap:append("<,>,[,]")
 opt.iskeyword:remove("-")
 opt.iskeyword:remove("_")
