@@ -52,7 +52,7 @@ disabled = false
 disabled = true
 
 [kubernetes]
-disabled = true
+disabled = false
 
 [lua]
 disabled = true
