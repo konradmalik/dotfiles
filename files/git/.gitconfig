@@ -43,6 +43,7 @@
 [core]
 	autocrlf = input
     editor = nvim
+    fsmonitor = true
     pager = delta
 
 [delta]
