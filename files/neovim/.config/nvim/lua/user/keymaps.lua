@@ -1,7 +1,7 @@
 local g = vim.g
 
 local keymap = vim.keymap
-local opts = { noremap = true, silent = true }
+local opts = { noremap = true, silent = false }
 
 -- map leader
 g.mapleader = " "
@@ -37,3 +37,4 @@ keymap.set("n", "<leader>h", ":nohlsearch<CR>", opts)
 
 -- nvim tree
 keymap.set("n", "<leader>t", ":NvimTreeToggle<cr>", opts)
+

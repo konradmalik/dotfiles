@@ -1,5 +1,6 @@
 -- impatient needs to be the first
 require("user.impatient")
+require("user.disable_builtin")
 
 require("user.settings")
 require("user.keymaps")
@@ -15,8 +16,10 @@ require("user.harpoon")
 require("user.lsp")
 require("user.lualine")
 require("user.nvim-tree")
+require("user.spectre")
 require("user.telescope")
 require("user.treesitter")
 require("user.which-key")
 
 require("user.autocommands")
+require("user.ftdetect")

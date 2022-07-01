@@ -3,6 +3,22 @@ local o = vim.o
 local fn = vim.fn
 local cmd = vim.cmd
 local g = vim.g
+local api = vim.api
+
+function utils.nvim_create_augroups(definitions)
+    for group_name, definition in pairs(definitions) do
+        api.nvim_command("augroup " .. group_name)
+        api.nvim_command("autocmd!")
+        for _, def in ipairs(definition) do
+            -- if type(def) == 'table' and type(def[#def]) == 'function' then
+            -- 	def[#def] = lua_callback(def[#def])
+            -- end
+            local command = table.concat(vim.tbl_flatten({ "autocmd", def }), " ")
+            api.nvim_command(command)
+        end
+        api.nvim_command("augroup END")
+    end
+end
 
 -- Deletes all trailing whitespaces in a file if it's not binary nor a diff.
 function utils.trim_trailing_whitespace()
@@ -45,7 +61,9 @@ function utils.ToggleQFList(global)
             cmd("lclose")
         else
             g.the_primeagen_qf_l = 1
-            cmd("lopen")
+            if not pcall(function() vim.cmd("lopen") end) then
+                vim.notify("no location list")
+            end
         end
     end
 end

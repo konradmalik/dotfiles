@@ -5,7 +5,17 @@ if not nvim_tree_ok then
 end
 
 nvim_tree.setup({
+    disable_netrw = true,
     diagnostics = {
         enable = true,
+    },
+    git = {
+        ignore = false,
+    },
+    view = {
+        adaptive_size = false,
+    },
+    filters = {
+        dotfiles = false,
     },
 })

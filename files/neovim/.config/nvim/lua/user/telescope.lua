@@ -16,8 +16,13 @@ telescope.load_extension("file_browser")
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-keymap.set("n", "<leader>ff", require('telescope.builtin').find_files, opts)
-keymap.set("n", "<leader>fg", require('telescope.builtin').live_grep, opts)
-keymap.set("n", "<leader>fb", require('telescope.builtin').buffers, opts)
-keymap.set("n", "<leader>fh", require('telescope.builtin').help_tags, opts)
-keymap.set("n", "<leader>ft", require('telescope').extensions.file_browser.file_browser, opts)
+local builtin = require('telescope.builtin')
+
+keymap.set("n", "<leader>ff", builtin.find_files, opts)
+keymap.set("n", "<leader>fg", builtin.live_grep, opts)
+keymap.set("n", "<leader>fb", builtin.buffers, opts)
+keymap.set("n", "<leader>fh", builtin.help_tags, opts)
+keymap.set("n", "<leader>fr", builtin.lsp_references, opts)
+keymap.set("n", "<leader>fi", builtin.lsp_implementations, opts)
+keymap.set("n", "<leader>fd", builtin.lsp_definitions, opts)
+keymap.set("n", "<leader>ft", telescope.extensions.file_browser.file_browser, opts)

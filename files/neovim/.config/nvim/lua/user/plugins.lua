@@ -48,7 +48,7 @@ return packer.startup(function(use)
     -- highlighting same words
     use({ "RRethy/vim-illuminate" })
 
-    -- Fuzzy finder
+    -- Fuzzy finder and much more
     use({
         "nvim-telescope/telescope.nvim",
         requires = {
@@ -58,6 +58,14 @@ return packer.startup(function(use)
         },
     })
     use({ "nvim-telescope/telescope-file-browser.nvim" })
+
+    -- search tool
+    use({
+        "nvim-pack/nvim-spectre",
+        requires = {
+            "nvim-lua/plenary.nvim",
+        },
+    })
 
     -- misc plugins
     use({ "windwp/nvim-autopairs" }) -- pairing of " ( etc
@@ -84,9 +92,6 @@ return packer.startup(function(use)
         "SmiteshP/nvim-navic",
         requires = "neovim/nvim-lspconfig"
     })
-
-    -- remote containers (vscode based)
-    use({ "jamestthompson3/nvim-remote-containers" })
 
     -- Fugitive for Git
     use({ "tpope/vim-fugitive" })

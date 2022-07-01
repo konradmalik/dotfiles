@@ -1,18 +1,16 @@
 local M = {}
 local keymap = vim.keymap
 local utils = require("user.utils")
+local navic_disallowed_servers = { "pylsp" }
 
 local navic_ok, navic = pcall(require, "nvim-navic")
 if not navic_ok then
     vim.notify("cannot load navic")
-    return
 end
-local navic_disallowed_servers = { "pylsp" }
 
 local illuminate_ok, illuminate = pcall(require, "illuminate")
 if not illuminate_ok then
     vim.notify("cannot load illuminate")
-    return
 end
 
 M.setup = function()
@@ -35,6 +33,7 @@ local lsp_keymaps = function(client, bufnr)
     local opts = { buffer = bufnr, noremap = true }
     keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
     keymap.set("n", "gh", vim.lsp.buf.hover, opts)
     keymap.set("n", "gp", vim.lsp.buf.implementation, opts)
     keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
@@ -60,8 +59,13 @@ M.on_attach = function(client, bufnr)
     -- keymaps
     lsp_keymaps(client, bufnr)
     -- same word highlighting
-    illuminate.on_attach(client, bufnr)
-    -- navigation bar
+    if illuminate_ok then
+        illuminate.on_attach(client, bufnr)
+    end
+    -- navigation bar (keep last due to return logic below)
+    if not navic_ok then
+        return
+    end
     if not client.server_capabilities.documentSymbolProvider then
         vim.notify(client.name .. ' does not serve as a documentSymbolProvider')
         return
