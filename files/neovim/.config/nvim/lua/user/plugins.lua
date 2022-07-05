@@ -68,7 +68,6 @@ return packer.startup(function(use)
     })
 
     -- misc plugins
-    use({ "windwp/nvim-autopairs" }) -- pairing of " ( etc
     use({ "numToStr/Comment.nvim" })
     use({
         "lewis6991/gitsigns.nvim",

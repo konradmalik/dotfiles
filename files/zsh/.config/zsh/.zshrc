@@ -1,5 +1,8 @@
 # Sourced on every interactive shell
 
+# keybinds
+source "$ZDOTDIR/keybinds"
+
 # beeping is annoying
 unsetopt beep
 
