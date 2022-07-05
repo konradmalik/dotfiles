@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(fd --hidden --type d '\.git' ~/Code --exec dirname {} | uniq | fzf)
+	selected=$(fd . --type d --min-depth 1 --max-depth 3 ~/Code | fzf)
 fi
 
 if [[ -z $selected ]]; then
@@ -23,4 +23,3 @@ if ! tmux has-session -t="$selected_name" 2>/dev/null; then
 fi
 
 tmux switch-client -t "$selected_name"
-Footer

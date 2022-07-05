@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(fd --hidden --type d '\.git' ~/Code --exec dirname {} | uniq | fzf)
+	selected=$(fd . --type d --min-depth 1 --max-depth 3 ~/Code | fzf)
 fi
 
 if [[ -z $selected ]]; then
