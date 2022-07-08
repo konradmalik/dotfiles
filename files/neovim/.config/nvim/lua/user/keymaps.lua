@@ -1,7 +1,7 @@
 local g = vim.g
 
 local keymap = vim.keymap
-local opts = { noremap = true, silent = false }
+local opts = { noremap = true, silent = true }
 
 -- map leader
 g.mapleader = " "
@@ -33,8 +33,10 @@ keymap.set("n", "<leader>q", function() require("user.utils").ToggleQFList(0) en
 keymap.set("i", "<C-c>", "<esc>", opts)
 
 -- Clear highlights
-keymap.set("n", "<leader>h", ":nohlsearch<CR>", opts)
+keymap.set("n", "<leader>hh", ":nohlsearch<CR>", opts)
 
 -- nvim tree
 keymap.set("n", "<leader>t", ":NvimTreeToggle<cr>", opts)
 
+-- select last pasted
+keymap.set("n", "<leader>p", "`[v`]", opts)
