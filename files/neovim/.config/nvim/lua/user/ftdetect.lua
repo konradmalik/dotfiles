@@ -1,10 +1,6 @@
-local utils = require('user.utils')
+local ftdetect = vim.api.nvim_create_augroup("ftdetect", {clear=true})
 
-local autocmds = {
-    ftdetect = {
-        { "BufRead,BufNewFile", "Earthfile", "setfiletype Dockerfile" },
-        { "BufRead,BufNewFile", "Tiltfile", "set syntax=python" },
-    },
-}
-
-utils.nvim_create_augroups(autocmds)
+vim.api.nvim_create_autocmd("BufRead,BufNewFile",
+    { pattern = "Earthfile", command = "setfiletype Dockerfile", group = ftdetect })
+vim.api.nvim_create_autocmd("BufRead,BufNewFile",
+    { pattern = "Tiltfile", command = "set syntax=python", group = ftdetect })
