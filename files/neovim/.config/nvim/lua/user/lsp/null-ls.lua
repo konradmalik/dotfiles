@@ -14,8 +14,9 @@ null_ls.setup({
         formatting.prettier,
         formatting.terraform_fmt,
         formatting.shfmt,
-        -- we have sumneko_lua
-        -- formatting.stylua,
+        formatting.black,
+        formatting.isort,
+        diagnostics.mypy,
         diagnostics.shellcheck,
     },
     -- required to properly register keymaps
