@@ -5,6 +5,9 @@ source "$ZDOTDIR/keybinds"
 
 # beeping is annoying
 unsetopt beep
+# alacritty icon jumping
+# https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878
+printf "\e[?1042l"
 
 # Save most-recent X lines
 HISTSIZE=100000

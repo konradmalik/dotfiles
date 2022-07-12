@@ -1,4 +1,4 @@
-direnv 2.32.0
+direnv 2.32.1
 python system
 golang system
 rust system
