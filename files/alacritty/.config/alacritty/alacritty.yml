@@ -12,8 +12,6 @@ cursor:
 
 fontfamily: &fontfamily "JetBrainsMono Nerd Font"
 font:
-  size: 14.0
-
   normal:
     family: *fontfamily
     style: Medium
@@ -33,3 +31,4 @@ font:
 # colors
 import:
   - ~/.config/alacritty/dracula.yml
+  - ~/.config/alacritty/local.yml
