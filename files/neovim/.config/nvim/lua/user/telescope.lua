@@ -7,11 +7,12 @@ end
 telescope.setup({
     defaults = { file_ignore_patterns = { "node_modules", "vendor" } },
 })
--- To get fzf loaded and working with telescope, you need to call
+-- To get extensions loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 telescope.load_extension("fzf")
--- same with the file browser
 telescope.load_extension("file_browser")
+telescope.load_extension("ui-select")
+
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
@@ -26,4 +27,9 @@ keymap.set("n", "<leader>fo", builtin.oldfiles, opts)
 keymap.set("n", "<leader>fr", builtin.lsp_references, opts)
 keymap.set("n", "<leader>fp", builtin.lsp_implementations, opts)
 keymap.set("n", "<leader>fd", builtin.lsp_definitions, opts)
+-- git
+keymap.set("n", "<leader>go", builtin.git_status, opts)
+keymap.set("n", "<leader>gb", builtin.git_branches, opts)
+keymap.set("n", "<leader>gc", builtin.git_commits, opts)
+-- extensions
 keymap.set("n", "<leader>ft", telescope.extensions.file_browser.file_browser, opts)

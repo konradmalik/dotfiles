@@ -2,7 +2,8 @@
 local fn = vim.fn
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    PACKER_BOOTSTRAP = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+        install_path })
 end
 
 local status_ok, packer = pcall(require, "packer")
@@ -39,14 +40,14 @@ return packer.startup(function(use)
     use({
         "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
         requires = {
-            { "nvim-lua/plenary.nvim" },
+            {
+                "nvim-lua/plenary.nvim",
+            },
         },
     })
     -- snippets
     use({ "L3MON4D3/LuaSnip" }) --snippet engine
     use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
-    -- highlighting same words
-    use({ "RRethy/vim-illuminate" })
 
     -- Fuzzy finder and much more
     use({
@@ -58,6 +59,7 @@ return packer.startup(function(use)
         },
     })
     use({ "nvim-telescope/telescope-file-browser.nvim" })
+    use {'nvim-telescope/telescope-ui-select.nvim' }
 
     -- search tool
     use({

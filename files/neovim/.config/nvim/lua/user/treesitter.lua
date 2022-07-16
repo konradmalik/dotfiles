@@ -26,6 +26,7 @@ treesitter.setup({
     },
 })
 
+-- maybe use UFO? https://github.com/kevinhwang91/nvim-ufo
 -- treesitter based folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
