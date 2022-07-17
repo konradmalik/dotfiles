@@ -2,7 +2,7 @@
 -- go to the above and then enter <c-v>u<unicode> and the symbold should appear
 -- or go here and upload the font file: https://mathew-kurian.github.io/CharacterMap/
 -- find more here: https://www.nerdfonts.com/cheat-sheet
---   פּ ﯟ   some other good icons
+-- ◌   פּ ﯟ   some other good icons
 
 return {
     kind = {
@@ -59,11 +59,11 @@ return {
         Diff = "",
         Repo = "",
         Branch = "",
+        Commit = "",
         Unmerged = "",
         Unstaged = "",
         Staged = "✓",
         Untracked = "★",
-        Ignored = "◌",
     },
     ui = {
         Lock = "",

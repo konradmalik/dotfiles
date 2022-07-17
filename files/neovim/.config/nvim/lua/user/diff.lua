@@ -3,6 +3,7 @@ if not status_ok then
     vim.notify("gitsigns cannot be initialized!")
     return
 end
+local icons = require("user.icons")
 
 ---@diagnostic disable-next-line: unused-function
 local function dump(o)
@@ -39,7 +40,7 @@ local function diffWith()
     vim.ui.select(commits, {
         prompt = "Select commit to compare with current file",
         format_item = function(item)
-            return item.hash_id .. " > " .. item.message
+            return icons.git.Commit .. " " .. item.hash_id .. item.message
         end,
     }, function(choice)
         gitsigns.diffthis(choice.hash_id)
