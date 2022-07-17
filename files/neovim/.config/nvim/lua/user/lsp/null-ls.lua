@@ -4,7 +4,7 @@ if not null_ls_ok then
     vim.notify("cannot load null-ls")
     return
 end
-local lsp_handlers = require("user.lsp.handlers")
+local handlers = require("user.lsp.handlers")
 
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
@@ -22,7 +22,6 @@ null_ls.setup({
         diagnostics.shellcheck,
         code_actions.gitsigns,
     },
-    -- required to properly register keymaps
-    -- all because null-ls is not recognized (installed) by lsp installer
-    on_attach = lsp_handlers.on_attach,
+    -- required to properly register keymaps etc.
+    on_attach = handlers.on_attach,
 })

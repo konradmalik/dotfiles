@@ -1,6 +1,7 @@
 local M = {}
 local utils = require("user.utils")
 local keymaps = require("user.lsp.keymaps")
+local highlight = require("user.lsp.highlight")
 local navic_disallowed_servers = {}
 
 local navic_ok, navic = pcall(require, "nvim-navic")
@@ -8,12 +9,15 @@ if not navic_ok then
     vim.notify("cannot load navic")
 end
 
+local icons = require("user.icons")
+local diagnostic_icons = icons.diagnostics
+
 M.setup = function()
     local signs = {
-        { name = "DiagnosticSignError", text = "" },
-        { name = "DiagnosticSignWarn", text = "" },
-        { name = "DiagnosticSignHint", text = "" },
-        { name = "DiagnosticSignInfo", text = "" },
+        { name = "DiagnosticSignError", text = diagnostic_icons.Error },
+        { name = "DiagnosticSignWarn", text = diagnostic_icons.Warning },
+        { name = "DiagnosticSignHint", text = diagnostic_icons.Hint },
+        { name = "DiagnosticSignInfo", text = diagnostic_icons.Information },
     }
 
     for _, sign in ipairs(signs) do
@@ -21,7 +25,7 @@ M.setup = function()
     end
 
     local config = {
-        virtual_text = { prefix = "" },
+        virtual_text = { prefix = icons.ui.Square },
         signs = {
             active = signs,
         },
@@ -40,34 +44,11 @@ M.setup = function()
     vim.diagnostic.config(config)
 end
 
-local function lsp_highlight_document(client, bufnr)
-    -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
-        local group = vim.api.nvim_create_augroup("lsp_document_highlight", {
-            clear = false
-        })
-        vim.api.nvim_clear_autocmds({
-            group = group,
-            buffer = bufnr,
-        })
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-            callback = vim.lsp.buf.document_highlight,
-            buffer = bufnr,
-            group = group,
-        })
-        vim.api.nvim_create_autocmd("CursorMoved", {
-            callback = vim.lsp.buf.clear_references,
-            group = group,
-            buffer = bufnr,
-        })
-    end
-end
-
 M.on_attach = function(client, bufnr)
-    -- keymaps
+    -- lsp keymaps
     keymaps(client, bufnr)
     -- lsp highlighting
-    lsp_highlight_document(client, bufnr)
+    highlight(client, bufnr)
     -- navigation bar (keep last due to return logic below)
     if not navic_ok then
         return

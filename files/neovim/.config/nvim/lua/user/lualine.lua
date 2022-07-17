@@ -14,11 +14,16 @@ local hide_in_width = function()
     return vim.fn.winwidth(0) > 80
 end
 
+local icons = require("user.icons")
+local diag_icons = icons.diagnostics
+local git_icons = icons.git
+local ui_icons = icons.ui
+
 local diagnostics = {
     "diagnostics",
     sources = { "nvim_diagnostic" },
     sections = { "error", "warn" },
-    symbols = { error = " ", warn = " " },
+    symbols = { error = diag_icons.Error .. " ", warn = diag_icons.Warning .. " " },
     colored = false,
     update_in_insert = false,
     always_visible = true,
@@ -27,7 +32,7 @@ local diagnostics = {
 local diff = {
     "diff",
     colored = false,
-    symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+    symbols = { added = git_icons.Add .. " ", modified = git_icons.Mod .. " ", removed = git_icons.Remove .. " " }, -- changes diff symbols
     cond = hide_in_width
 }
 
@@ -48,7 +53,7 @@ local filename = {
 local branch = {
     "branch",
     icons_enabled = true,
-    icon = "",
+    icon = git_icons.Branch,
 }
 
 local location = {
@@ -60,7 +65,8 @@ local location = {
 local progress = function()
     local current_line = vim.fn.line(".")
     local total_lines = vim.fn.line("$")
-    local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+    local chars = { ui_icons.Fill00, ui_icons.Fill01, ui_icons.Fill02, ui_icons.Fill03, ui_icons.Fill04, ui_icons.Fill05,
+        ui_icons.Fill06, ui_icons.Fill07, ui_icons.Fill08, ui_icons.Fill09, ui_icons.Fill10 }
     local line_ratio = current_line / total_lines
     local index = math.ceil(line_ratio * #chars)
     return chars[index]

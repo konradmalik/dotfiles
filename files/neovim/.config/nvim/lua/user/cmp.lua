@@ -11,37 +11,10 @@ if not snip_status_ok then
 end
 
 -- init luasnip
-require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_snipmate").lazy_load()
 
---   פּ ﯟ   some other good icons
-local kind_icons = {
-    Text = "",
-    Method = "m",
-    Function = "",
-    Constructor = "",
-    Field = "",
-    Variable = "",
-    Class = "",
-    Interface = "",
-    Module = "",
-    Property = "",
-    Unit = "",
-    Value = "",
-    Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "",
-    Event = "",
-    Operator = "",
-    TypeParameter = "",
-}
--- find more here: https://www.nerdfonts.com/cheat-sheet
+local kind_icons = require("user.icons").kind
 
 cmp.setup({
     snippet = {
