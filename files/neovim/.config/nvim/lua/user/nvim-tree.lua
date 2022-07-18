@@ -41,14 +41,7 @@ nvim_tree.setup({
             },
         },
         root_folder_modifier = ':t',
-        highlight_git = true,
         icons = {
-            show = {
-                git = true,
-                folder = true,
-                file = true,
-                folder_arrow = true
-            },
             webdev_colors = true,
             glyphs = {
                 default = docs_icons.File,
