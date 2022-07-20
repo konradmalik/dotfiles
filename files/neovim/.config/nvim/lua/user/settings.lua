@@ -44,6 +44,7 @@ opt.showtabline = 1 -- always show tabs
 opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 opt.cursorline = true -- highlight the current line
 opt.ruler = false
+opt.laststatus = 3 -- global statusline
 
 opt.shortmess:append "c"
 opt.whichwrap:append("<,>,[,]")
