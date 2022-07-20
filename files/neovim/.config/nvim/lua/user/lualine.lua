@@ -18,6 +18,7 @@ local icons = require("user.icons")
 local diag_icons = icons.diagnostics
 local git_icons = icons.git
 local ui_icons = icons.ui
+local line_icons = icons.lines
 
 local diagnostics = {
     "diagnostics",
@@ -76,7 +77,7 @@ lualine.setup({
     options = {
         icons_enabled = true,
         theme = "auto",
-        component_separators = { left = "", right = "" },
+        component_separators = { left = line_icons.Edge, right = line_icons.Edge },
         section_separators = { left = "", right = "" },
         disabled_filetypes = {},
         always_divide_middle = true,
