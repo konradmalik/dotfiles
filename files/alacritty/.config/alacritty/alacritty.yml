@@ -31,4 +31,5 @@ font:
 # colors
 import:
   - ~/.config/alacritty/dracula.yml
+  # symlink for ex. macos.yml and other if needing a machine-specific conf like font size
   - ~/.config/alacritty/local.yml
