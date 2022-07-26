@@ -69,13 +69,13 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilites for cmp
 local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if cmp_nvim_lsp_ok then
-    local cmp_capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-    cmp_capabilities.textDocument.semanticHighlighting = true
-    cmp_capabilities.offsetEncoding = "utf-8"
-
-    M.capabilities = cmp_capabilities
+    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+    capabilities.textDocument.semanticHighlighting = true
+    capabilities.offsetEncoding = "utf-8"
 else
     vim.notify("cannot load cmp_nvim_lsp")
 end
+
+M.capabilities = capabilities
 
 return M

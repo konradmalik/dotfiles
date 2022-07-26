@@ -66,8 +66,7 @@ local location = {
 local progress = function()
     local current_line = vim.fn.line(".")
     local total_lines = vim.fn.line("$")
-    local chars = { ui_icons.Fill00, ui_icons.Fill01, ui_icons.Fill02, ui_icons.Fill03, ui_icons.Fill04, ui_icons.Fill05,
-        ui_icons.Fill06, ui_icons.Fill07, ui_icons.Fill08, ui_icons.Fill09, ui_icons.Fill10 }
+    local chars = ui_icons.Animations.Fill
     local line_ratio = current_line / total_lines
     local index = math.ceil(line_ratio * #chars)
     return chars[index]

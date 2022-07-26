@@ -36,7 +36,7 @@ return packer.startup(function(use)
     -- LSP
     use({ "neovim/nvim-lspconfig" }) -- Collection of configurations for built-in LSP client
     -- simple to use language server installer
-    use ({
+    use({
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
     })
@@ -49,6 +49,8 @@ return packer.startup(function(use)
             },
         },
     })
+    -- a nice widget to display lsp progress
+    use({ "j-hui/fidget.nvim" })
     -- snippets
     use({ "L3MON4D3/LuaSnip" }) --snippet engine
     use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
@@ -63,7 +65,7 @@ return packer.startup(function(use)
         },
     })
     use({ "nvim-telescope/telescope-file-browser.nvim" })
-    use {'nvim-telescope/telescope-ui-select.nvim' }
+    use { 'nvim-telescope/telescope-ui-select.nvim' }
 
     -- search tool
     use({
