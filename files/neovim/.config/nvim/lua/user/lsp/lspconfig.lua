@@ -1,8 +1,9 @@
-local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+local status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not status_ok then
-    vim.notify("lsp-installer cannot be initialized!")
+    vim.notify("mason-lspconfig cannot be initialized!")
     return
 end
+
 
 local servers = {
     "sumneko_lua",
@@ -12,7 +13,7 @@ local servers = {
     "yamlls"
 }
 
-lsp_installer.setup({
+mason_lspconfig.setup({
     ensure_installed = servers,
     automatic_installation = true,
 })

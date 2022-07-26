@@ -64,6 +64,7 @@ return {
         Unstaged = "",
         Staged = "✓",
         Untracked = "★",
+        Deleted = "✗",
     },
     ui = {
         Lock = "",
