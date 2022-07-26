@@ -4,7 +4,7 @@ if not status_ok then
     return
 end
 
-local uiicons = require("user.icons").ui
+local uiicons = require("konrad.icons").ui
 
 mason.setup({
     ui = {

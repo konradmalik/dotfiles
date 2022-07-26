@@ -14,7 +14,7 @@ local hide_in_width = function()
     return vim.fn.winwidth(0) > 80
 end
 
-local icons = require("user.icons")
+local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
 local git_icons = icons.git
 local ui_icons = icons.ui

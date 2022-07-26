@@ -3,7 +3,7 @@ if not status_ok then
     vim.notify("gitsigns cannot be initialized!")
     return
 end
-local diff = require('user.diff')
+local diff = require("konrad.diff")
 
 gitsigns.setup({
     signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`

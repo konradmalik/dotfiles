@@ -1,4 +1,4 @@
-local utils = require('user.utils')
+local utils = require("konrad.utils")
 
 local personal = vim.api.nvim_create_augroup("personal", { clear = true })
 

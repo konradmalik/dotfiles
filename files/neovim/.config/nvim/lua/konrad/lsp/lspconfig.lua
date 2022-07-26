@@ -19,10 +19,10 @@ mason_lspconfig.setup({
 })
 
 local lspconfig = require("lspconfig")
-local lsp_handlers = require("user.lsp.handlers")
+local lsp_handlers = require("konrad.lsp.handlers")
 
 for _, server in ipairs(servers) do
-    local found, server_settings = pcall(require, "user.lsp.settings." .. server)
+    local found, server_settings = pcall(require, "konrad.lsp.settings." .. server)
     if not found then
         server_settings = { settings = {} }
     end

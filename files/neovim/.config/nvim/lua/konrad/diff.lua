@@ -3,7 +3,7 @@ if not status_ok then
     vim.notify("gitsigns cannot be initialized!")
     return
 end
-local icons = require("user.icons")
+local icons = require("konrad.icons")
 
 local function get_all_commits_of_this_file()
     -- git log --pretty=format:"%h %an %ad  %s" --date relative --follow

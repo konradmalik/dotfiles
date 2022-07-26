@@ -1,7 +1,7 @@
 local M = {}
-local utils = require("user.utils")
-local keymaps = require("user.lsp.keymaps")
-local highlight = require("user.lsp.highlight")
+local utils = require("konrad.utils")
+local keymaps = require("konrad.lsp.keymaps")
+local highlight = require("konrad.lsp.highlight")
 local navic_disallowed_servers = {}
 
 local navic_ok, navic = pcall(require, "nvim-navic")
@@ -9,7 +9,7 @@ if not navic_ok then
     vim.notify("cannot load navic")
 end
 
-local icons = require("user.icons")
+local icons = require("konrad.icons")
 local diagnostic_icons = icons.diagnostics
 
 M.setup = function()

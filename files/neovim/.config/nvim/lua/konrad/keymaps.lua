@@ -26,8 +26,8 @@ keymap.set("n", "<C-k>", ":cprevious<CR>", opts)
 keymap.set("n", "<C-j>", ":cnext<CR>", opts)
 keymap.set("n", "<leader>k", ":lprevious<CR>", opts)
 keymap.set("n", "<leader>j", ":lnext<CR>", opts)
-keymap.set("n", "<C-q>", function() require("user.utils").ToggleQFList(1) end, opts)
-keymap.set("n", "<leader>q", function() require("user.utils").ToggleQFList(0) end, opts)
+keymap.set("n", "<C-q>", function() require("konrad.utils").ToggleQFList(1) end, opts)
+keymap.set("n", "<leader>q", function() require("konrad.utils").ToggleQFList(0) end, opts)
 
 -- ctrl c as esc in insert mode? why not
 keymap.set("i", "<C-c>", "<esc>", opts)

@@ -4,7 +4,7 @@ if not null_ls_ok then
     vim.notify("cannot load null-ls")
     return
 end
-local handlers = require("user.lsp.handlers")
+local handlers = require("konrad.lsp.handlers")
 
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics

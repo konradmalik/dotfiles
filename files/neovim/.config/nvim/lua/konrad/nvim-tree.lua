@@ -4,7 +4,7 @@ if not nvim_tree_ok then
     return
 end
 
-local icons = require("user.icons")
+local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
 local git_icons = icons.git
 local docs_icons = icons.documents
