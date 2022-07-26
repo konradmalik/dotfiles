@@ -6,7 +6,7 @@ end
 
 
 local servers = {
-    "sumneko_lua",
+    "sumneko_lua", -- called lua-language-server now
     "gopls",
     "pyright",
     "rust_analyzer",
