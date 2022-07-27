@@ -122,6 +122,10 @@ return packer.startup(function(use)
     use({ "gruvbox-community/gruvbox" })
     use({ "dracula/vim" })
 
+    -- lua docs inside neovim's help
+    use({ "milisims/nvim-luaref" })
+    use({ "nanotee/luv-vimdocs" })
+
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
