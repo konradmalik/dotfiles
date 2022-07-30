@@ -46,7 +46,7 @@ opt.cursorline = true -- highlight the current line
 opt.ruler = false
 opt.laststatus = 3 -- global statusline
 
-opt.shortmess:append "c"
+opt.shortmess:append "c" -- Don't show the dumb matching stuff.
 opt.whichwrap:append("<,>,[,]")
 opt.iskeyword:remove("-")
 opt.iskeyword:remove("_")

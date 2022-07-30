@@ -32,6 +32,8 @@ keymap.set("n", "<leader>fo", builtin.oldfiles, opts)
 keymap.set("n", "<leader>fr", builtin.lsp_references, opts)
 keymap.set("n", "<leader>fp", builtin.lsp_implementations, opts)
 keymap.set("n", "<leader>fd", builtin.lsp_definitions, opts)
+keymap.set("n", "<leader>fT", builtin.lsp_type_definitions, opts)
+keymap.set("n", "<leader>fq", builtin.diagnostics, opts)
 -- git
 keymap.set("n", "<leader>go", builtin.git_status, opts)
 keymap.set("n", "<leader>gb", builtin.git_branches, opts)

@@ -10,7 +10,7 @@ require("konrad.plugins")
 
 require("konrad.colorscheme")
 require("konrad.comment")
-require("konrad.cmp")
+require("konrad.completion")
 require("konrad.fugitive")
 require("konrad.gitsigns")
 require("konrad.harpoon")
