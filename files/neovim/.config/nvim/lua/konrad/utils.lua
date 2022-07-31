@@ -17,6 +17,10 @@ function utils.trim_string(s)
     return s:match '^%s*(.*%S)' or ''
 end
 
+function utils.first_to_upper(str)
+    return str:gsub("^%l", string.upper)
+end
+
 -- check if array-like table has a value
 function utils.has_value(tab, val)
     for _, value in ipairs(tab) do

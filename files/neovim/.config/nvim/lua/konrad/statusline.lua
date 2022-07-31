@@ -5,13 +5,17 @@ if not status_ok then
 end
 
 local navic_ok, navic = pcall(require, "nvim-navic")
-local navic_bar       = {}
-if navic_ok then
-    navic_bar = { navic.get_location, cond = navic.is_available }
+
+local larger_than = function(n)
+    return vim.fn.winwidth(0) > n
 end
 
-local hide_in_width = function()
-    return vim.fn.winwidth(0) > 80
+local larger_than_80 = function()
+    return larger_than(80)
+end
+
+local larger_than_120 = function()
+    return larger_than(120)
 end
 
 local icons = require("konrad.icons")
@@ -20,34 +24,9 @@ local git_icons = icons.git
 local ui_icons = icons.ui
 local line_icons = icons.lines
 
-local diagnostics = {
-    "diagnostics",
-    sources = { "nvim_diagnostic" },
-    sections = { "error", "warn" },
-    symbols = { error = diag_icons.Error .. " ", warn = diag_icons.Warning .. " " },
-    colored = false,
-    update_in_insert = false,
-    always_visible = true,
-}
-
-local diff = {
-    "diff",
-    colored = false,
-    symbols = { added = git_icons.Add .. " ", modified = git_icons.Mod .. " ", removed = git_icons.Remove .. " " }, -- changes diff symbols
-    cond = hide_in_width
-}
-
 local mode = {
     "mode",
-}
-
-local filetype = {
-    "filetype",
-}
-
-local filename = {
-    "filename",
-    file_status = true,
+    fmt = string.lower,
 }
 
 local branch = {
@@ -55,20 +34,54 @@ local branch = {
     icon = git_icons.Branch,
 }
 
-local location = {
-    "location",
-    padding = 0,
+local filename = {
+    "filename",
+    file_status = true,
+    path = 1,
 }
 
--- cool function for progress
-local progress = function()
-    local current_line = vim.fn.line(".")
-    local total_lines = vim.fn.line("$")
-    local chars = ui_icons.Animations.Fill
-    local line_ratio = current_line / total_lines
-    local index = math.ceil(line_ratio * #chars)
-    return chars[index]
+local diagnostics = {
+    "diagnostics",
+    sources = { "nvim_diagnostic" },
+    sections = { "error", "warn", "info", "hint" },
+    symbols = { error = diag_icons.Error .. " ", warn = diag_icons.Warning .. " ", diag_icons.Information .. " ",
+        diag_icons.Hint .. " " },
+    colored = false,
+    update_in_insert = false,
+    always_visible = true,
+    cond = larger_than_80,
+}
+
+local navic_bar = {
+    cond = function() return false end,
+}
+if navic_ok then
+    navic_bar = {
+        navic.get_location,
+        cond = function() return navic.is_available and larger_than_120() end,
+    }
 end
+
+local diff = {
+    "diff",
+    colored = false,
+    symbols = { added = git_icons.Add .. " ", modified = git_icons.Mod .. " ", removed = git_icons.Remove .. " " }, -- changes diff symbols
+    cond = larger_than_120,
+}
+
+local encoding = {
+    "encoding",
+    cond = larger_than_120,
+}
+
+local fileformat = {
+    "fileformat",
+    cond = larger_than_120,
+}
+
+local filetype = {
+    "filetype",
+}
 
 local lsp = {
     -- Lsp server name .
@@ -93,6 +106,25 @@ local lsp = {
         return msg
     end,
     icon = ui_icons.Gears,
+    cond = larger_than_120,
+}
+
+local hostname = {
+    "hostname",
+    cond = larger_than_80,
+}
+
+local progress = function()
+    local current_line = vim.fn.line(".")
+    local total_lines = vim.fn.line("$")
+    local chars = ui_icons.Animations.Fill
+    local line_ratio = current_line / total_lines
+    local index = math.ceil(line_ratio * #chars)
+    return chars[index]
+end
+
+local location = {
+    "location",
 }
 
 lualine.setup({
@@ -102,22 +134,22 @@ lualine.setup({
         component_separators = { left = line_icons.Edge, right = line_icons.Edge },
         section_separators = { left = "", right = "" },
         disabled_filetypes = {},
-        always_divide_middle = true,
+        always_divide_middle = false,
     },
     sections = {
         lualine_a = { mode },
         lualine_b = { branch, filename },
         lualine_c = { diagnostics, navic_bar },
-        lualine_x = { diff, "encoding", "fileformat", filetype, lsp },
-        lualine_y = { "hostname" },
+        lualine_x = { diff, encoding, fileformat, filetype, lsp },
+        lualine_y = { hostname },
         lualine_z = { progress, location },
     },
     -- does not get used due to global statusline
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = { "location" },
+        lualine_c = { filename },
+        lualine_x = { location },
         lualine_y = {},
         lualine_z = {},
     },
