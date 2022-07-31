@@ -43,7 +43,6 @@ local mode = {
 
 local filetype = {
     "filetype",
-    icons_enabled = true,
 }
 
 local filename = {
@@ -53,7 +52,6 @@ local filename = {
 
 local branch = {
     "branch",
-    icons_enabled = true,
     icon = git_icons.Branch,
 }
 
@@ -72,6 +70,31 @@ local progress = function()
     return chars[index]
 end
 
+local lsp = {
+    -- Lsp server name .
+    function()
+        -- 0 is the current buffer
+        local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+        local clients = vim.lsp.buf_get_clients(0)
+        local msg = "No Active Lsp"
+        if next(clients) == nil then
+            return msg
+        end
+        for i, client in ipairs(clients) do
+            local filetypes = client.config.filetypes
+            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                if i == 1 then
+                    msg = client.name
+                else
+                    msg = string.format("%s + %s", msg, client.name)
+                end
+            end
+        end
+        return msg
+    end,
+    icon = ui_icons.Gears,
+}
+
 lualine.setup({
     options = {
         icons_enabled = true,
@@ -85,10 +108,11 @@ lualine.setup({
         lualine_a = { mode },
         lualine_b = { branch, filename },
         lualine_c = { diagnostics, navic_bar },
-        lualine_x = { diff, "encoding", "fileformat", filetype },
+        lualine_x = { diff, "encoding", "fileformat", filetype, lsp },
         lualine_y = { "hostname" },
         lualine_z = { progress, location },
     },
+    -- does not get used due to global statusline
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},

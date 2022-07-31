@@ -5,6 +5,8 @@ if not status_ok then
 end
 local icons = require("konrad.icons")
 
+local utils = require("konrad.utils")
+
 local function get_all_commits_of_this_file()
     -- git log --pretty=format:"%h %an %ad  %s" --date relative --follow
     -- git log --pretty=oneline --abbrev-commit --follow
@@ -17,9 +19,9 @@ local function get_all_commits_of_this_file()
 
     local output = {}
     for i, item in ipairs(res) do
-        local hash_id = string.sub(item, 1, 7)
-        local message = string.sub(item, 8)
-        output[i] = { hash_id = hash_id, message = message }
+        local hash_id = utils.trim_string(string.sub(item, 1, 7))
+        local text = utils.trim_string(string.sub(item, 8))
+        output[i] = { hash_id = hash_id, text = text }
     end
     return output
 end
@@ -30,7 +32,7 @@ local function diff_with()
     vim.ui.select(commits, {
         prompt = "Select commit to compare with current file",
         format_item = function(item)
-            return icons.git.Commit .. " " .. item.hash_id .. item.message
+            return string.format("%s %s %s", icons.git.Commit, item.hash_id, item.text)
         end,
     }, function(choice)
         gitsigns.diffthis(choice.hash_id)

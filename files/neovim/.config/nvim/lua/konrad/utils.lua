@@ -13,6 +13,10 @@ function utils.trim_trailing_whitespace()
     end
 end
 
+function utils.trim_string(s)
+    return s:match '^%s*(.*%S)' or ''
+end
+
 -- check if array-like table has a value
 function utils.has_value(tab, val)
     for _, value in ipairs(tab) do
