@@ -13,6 +13,30 @@ if not status_ok then
 end
 
 return packer.startup(function(use)
+
+    local local_use = function(first, second, opts)
+        opts = opts or {}
+
+        local plug_path, home
+        if second == nil then
+            plug_path = first
+            home = "konradmalik"
+        else
+            plug_path = second
+            home = first
+        end
+
+        local local_path = "~/Code/plugins/" .. plug_path
+        if vim.fn.isdirectory(vim.fn.expand(local_path)) == 1 then
+            opts[1] = local_path
+        else
+            local remote_path = string.format("%s/%s", home, plug_path)
+            opts[1] = remote_path
+        end
+
+        use(opts)
+    end
+
     -- Packer can manage itself
     use({ "wbthomason/packer.nvim" })
 
@@ -91,10 +115,13 @@ return packer.startup(function(use)
     })
 
     -- statusline
-    use({
-        "hoob3rt/lualine.nvim",
-        requires = { "kyazdani42/nvim-web-devicons" },
-    })
+    local_use(
+        "express_line.nvim",
+        nil,
+        { requires = {
+            "nvim-lua/plenary.nvim",
+            "kyazdani42/nvim-web-devicons",
+        } })
     use({
         "SmiteshP/nvim-navic",
         requires = "neovim/nvim-lspconfig"

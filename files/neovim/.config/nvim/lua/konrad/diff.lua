@@ -5,8 +5,6 @@ if not status_ok then
 end
 local icons = require("konrad.icons")
 
-local utils = require("konrad.utils")
-
 local function get_all_commits_of_this_file()
     -- git log --pretty=format:"%h %an %ad  %s" --date relative --follow
     -- git log --pretty=oneline --abbrev-commit --follow
@@ -19,8 +17,8 @@ local function get_all_commits_of_this_file()
 
     local output = {}
     for i, item in ipairs(res) do
-        local hash_id = utils.trim_string(string.sub(item, 1, 7))
-        local text = utils.trim_string(string.sub(item, 8))
+        local hash_id = vim.trim(string.sub(item, 1, 7))
+        local text = vim.trim(string.sub(item, 8))
         output[i] = { hash_id = hash_id, text = text }
     end
     return output

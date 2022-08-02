@@ -13,10 +13,6 @@ function utils.trim_trailing_whitespace()
     end
 end
 
-function utils.trim_string(s)
-    return s:match '^%s*(.*%S)' or ''
-end
-
 function utils.first_to_upper(str)
     return str:gsub("^%l", string.upper)
 end
