@@ -54,11 +54,11 @@ M.on_attach = function(client, bufnr)
         return
     end
     if not client.server_capabilities.documentSymbolProvider then
-        vim.notify(client.name .. ' does not serve as a documentSymbolProvider')
+        -- vim.notify(client.name .. ' does not serve as a documentSymbolProvider')
         return
     end
     if utils.has_value(navic_disallowed_servers, client.name) then
-        vim.notify(client.name .. ' was disabled manually in navic')
+        -- vim.notify(client.name .. ' was disabled manually in navic')
         return
     end
     navic.attach(client, bufnr)
