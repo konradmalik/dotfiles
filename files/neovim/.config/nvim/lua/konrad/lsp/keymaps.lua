@@ -23,7 +23,7 @@ local lsp_keymaps = function(client, bufnr)
     -- we have autocmd
     --keymap.set('n', '<leader>q', vim.lsp.diagnostic.set_loclist, opts)
 
-    keymap.set("n", "<leader>f", vim.lsp.buf.formatting, opts)
+    keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
     keymap.set("v", "<leader>f", vim.lsp.buf.range_formatting, opts)
 end
 

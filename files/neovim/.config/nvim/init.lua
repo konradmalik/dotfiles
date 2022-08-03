@@ -23,4 +23,3 @@ require("konrad.treesitter")
 require("konrad.which-key")
 
 require("konrad.autocommands")
-require("konrad.ftdetect")
