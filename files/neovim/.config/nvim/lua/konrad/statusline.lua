@@ -49,6 +49,7 @@ local git_changes = git.make_changes(function(_, _, results)
             git_icons.Remove, results["deleted"]
         )
     end
+    return ""
 end)
 
 local progress = function()

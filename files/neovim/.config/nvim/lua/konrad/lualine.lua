@@ -18,6 +18,13 @@ local larger_than_120 = function()
     return larger_than(120)
 end
 
+local ssh = function()
+    local ssh_connection = vim.loop.os_getenv("SSH_CONNECTION")
+    if not ssh_connection then
+        return ""
+    end
+end
+
 local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
 local git_icons = icons.git
@@ -99,7 +106,7 @@ local lsp = {
                 if i == 1 then
                     msg = client.name
                 else
-                    msg = string.format("%s + %s", msg, client.name)
+                    msg = string.format("%s+%s", msg, client.name)
                 end
             end
         end
@@ -111,7 +118,7 @@ local lsp = {
 
 local hostname = {
     "hostname",
-    cond = larger_than_80,
+    cond = larger_than_80 and ssh,
 }
 
 local progress = function()
@@ -138,11 +145,11 @@ lualine.setup({
     },
     sections = {
         lualine_a = { mode },
-        lualine_b = { branch, filename },
-        lualine_c = { diagnostics, navic_bar },
-        lualine_x = { diff, encoding, fileformat, filetype, lsp },
-        lualine_y = { hostname },
-        lualine_z = { progress, location },
+        lualine_b = { branch, diff },
+        lualine_c = { filename, navic_bar },
+        lualine_x = { encoding, fileformat, filetype },
+        lualine_y = { diagnostics, lsp },
+        lualine_z = { progress, location, hostname },
     },
     -- does not get used due to global statusline
     inactive_sections = {
