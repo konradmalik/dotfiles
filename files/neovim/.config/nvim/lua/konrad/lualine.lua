@@ -18,11 +18,15 @@ local larger_than_120 = function()
     return larger_than(120)
 end
 
-local ssh = function()
+local is_ssh = function()
     local ssh_connection = vim.loop.os_getenv("SSH_CONNECTION")
     if not ssh_connection then
         return ""
     end
+end
+
+local has_lsp = function()
+    return next(vim.lsp.buf_get_clients(0)) ~= nil
 end
 
 local icons = require("konrad.icons")
@@ -56,7 +60,7 @@ local diagnostics = {
     colored = false,
     update_in_insert = false,
     always_visible = true,
-    cond = larger_than_80,
+    cond = function() return has_lsp() and larger_than_80() end,
 }
 
 local navic_bar = {
@@ -90,35 +94,26 @@ local filetype = {
     "filetype",
 }
 
-local lsp = {
-    -- Lsp server name .
+local lsp_servers = {
     function()
-        -- 0 is the current buffer
+        local names = {}
         local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-        local clients = vim.lsp.buf_get_clients(0)
-        local msg = "No Active Lsp"
-        if next(clients) == nil then
-            return msg
-        end
-        for i, client in ipairs(clients) do
+
+        vim.lsp.for_each_buffer_client(0, function(client, _, _)
             local filetypes = client.config.filetypes
             if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                if i == 1 then
-                    msg = client.name
-                else
-                    msg = string.format("%s+%s", msg, client.name)
-                end
+                table.insert(names, client.name)
             end
-        end
-        return msg
+        end)
+        return string.format("[%s]", table.concat(names, ","))
     end,
     icon = ui_icons.Gears,
-    cond = larger_than_120,
+    cond = function() return has_lsp() and larger_than_120() end,
 }
 
 local hostname = {
     "hostname",
-    cond = larger_than_80 and ssh,
+    cond = is_ssh,
 }
 
 local progress = function()
@@ -148,7 +143,7 @@ lualine.setup({
         lualine_b = { branch, diff },
         lualine_c = { filename, navic_bar },
         lualine_x = { encoding, fileformat, filetype },
-        lualine_y = { diagnostics, lsp },
+        lualine_y = { diagnostics, lsp_servers },
         lualine_z = { progress, location, hostname },
     },
     -- does not get used due to global statusline
