@@ -152,6 +152,7 @@ return packer.startup(function(use)
     use({ "navarasu/onedark.nvim" })
     use({ "gruvbox-community/gruvbox" })
     use({ "dracula/vim" })
+    use({ "catppuccin/nvim", as = "catppuccin" })
 
     -- lua docs inside neovim's help
     use({ "milisims/nvim-luaref" })
