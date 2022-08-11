@@ -15,15 +15,15 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: k3d-pider
-  currentCluster: k3d-pider
+  currentContext: dasmfgaks
+  currentCluster: dasmfgaks
   clusters:
-    k3d-pider:
+    dasmfgaks:
       namespace:
-        active: all
+        active: pider
         lockFavorites: false
         favorites:
-        - all
+        - pider
         - default
       view:
         active: pods
