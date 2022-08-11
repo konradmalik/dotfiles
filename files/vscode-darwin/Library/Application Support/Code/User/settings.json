@@ -82,5 +82,5 @@
   "gitlens.hovers.enabled": false,
   "go.toolsManagement.autoUpdate": true,
   "security.workspace.trust.untrustedFiles": "open",
-  "workbench.colorTheme": "Dracula"
+  "workbench.colorTheme": "Catppuccin"
 }
