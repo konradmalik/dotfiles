@@ -15,15 +15,15 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: dasmfgaks
-  currentCluster: dasmfgaks
+  currentContext: plant-graph-main-k8s
+  currentCluster: plant-graph-main-k8s
   clusters:
-    dasmfgaks:
+    plant-graph-main-k8s:
       namespace:
-        active: pider
+        active: all
         lockFavorites: false
         favorites:
-        - pider
+        - all
         - default
       view:
         active: pods
