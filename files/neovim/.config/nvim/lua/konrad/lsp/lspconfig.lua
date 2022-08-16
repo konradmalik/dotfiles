@@ -9,8 +9,9 @@ local servers = {
     "sumneko_lua", -- called lua-language-server now
     "gopls",
     "pyright",
+    "omnisharp",
     "rust_analyzer",
-    "yamlls"
+    "yamlls",
 }
 
 mason_lspconfig.setup({
