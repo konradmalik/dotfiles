@@ -4,7 +4,6 @@ if not status_ok then
     return
 end
 
-
 local servers = {
     "sumneko_lua", -- called lua-language-server now
     "gopls",
@@ -23,14 +22,18 @@ local lspconfig = require("lspconfig")
 local lsp_handlers = require("konrad.lsp.handlers")
 
 for _, server in ipairs(servers) do
-    local found, server_settings = pcall(require, "konrad.lsp.settings." .. server)
+    local found, server_setup_overrides = pcall(require, "konrad.lsp.settings." .. server)
     if not found then
-        server_settings = { settings = {} }
+        server_setup_overrides = {}
     end
 
-    lspconfig[server].setup({
+    local base_table = {
         on_attach = lsp_handlers.on_attach,
         capabilities = lsp_handlers.capabilities,
-        settings = server_settings.settings,
-    })
+    }
+
+    local overrides_table = server_setup_overrides
+    local merged_table = vim.tbl_deep_extend("force", base_table, overrides_table)
+
+    lspconfig[server].setup(merged_table)
 end
