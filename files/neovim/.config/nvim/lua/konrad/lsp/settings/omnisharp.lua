@@ -18,4 +18,8 @@ return {
     -- particularly for the first few completion sessions after opening a
     -- solution.
     enable_import_completion = true,
+
+    -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+    -- true
+    analyze_open_documents_only = true,
 }
