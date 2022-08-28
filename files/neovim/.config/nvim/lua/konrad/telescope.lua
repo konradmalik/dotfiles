@@ -17,6 +17,7 @@ telescope.setup({
 telescope.load_extension("fzf")
 telescope.load_extension("file_browser")
 telescope.load_extension("ui-select")
+telescope.load_extension("frecency")
 
 
 local keymap = vim.keymap
@@ -40,3 +41,4 @@ keymap.set("n", "<leader>gb", builtin.git_branches, opts)
 keymap.set("n", "<leader>gc", builtin.git_commits, opts)
 -- extensions
 keymap.set("n", "<leader>ft", telescope.extensions.file_browser.file_browser, opts)
+keymap.set("n", "<leader>fc", telescope.extensions.frecency.frecency, opts)
