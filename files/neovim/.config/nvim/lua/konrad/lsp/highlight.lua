@@ -1,6 +1,6 @@
 local function lsp_highlight(client, bufnr)
     -- Set autocommands conditional on server_capabilities
-    if client.server_capabilities.document_highlight then
+    if client.server_capabilities.documentHighlightProvider then
         local group = vim.api.nvim_create_augroup("lsp_document_highlight", {
             clear = false
         })
