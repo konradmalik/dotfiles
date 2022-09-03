@@ -4,6 +4,8 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 
 local indent = 4
 g.modeline = false -- disable modelines for security and because we dont need them
+-- filetype.lua detection
+g.do_filetype_lua = 1
 if fn.executable("rg") then
     opt.grepprg = "rg --vimgrep --no-heading --smart-case"
     opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
@@ -27,6 +29,7 @@ opt.smartcase = true -- Don't ignore case with capitals
 opt.splitbelow = true -- Put new windows below current
 opt.splitright = true -- Put new windows right of current
 opt.termguicolors = true -- True color support (does not work for macos)
+opt.showcmd = true
 opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
 opt.wildmode = "list:longest" -- Command-line completion mode
 opt.list = true -- Show some invisible characters (tabs...)
