@@ -120,13 +120,6 @@ return packer.startup(function(use)
     })
 
     -- statusline
-    -- local_use(
-    --     "express_line.nvim",
-    --     nil,
-    --     { requires = {
-    --         "nvim-lua/plenary.nvim",
-    --         "kyazdani42/nvim-web-devicons",
-    --     } })
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -139,12 +132,18 @@ return packer.startup(function(use)
     -- Fugitive for Git
     use({ "tpope/vim-fugitive" })
 
+    --- diffview
+    use { 'sindrets/diffview.nvim',
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'kyazdani42/nvim-web-devicons', opt = true }
+        }
+    }
+
     -- Harpoon by ThePrimeagen
     use({
         "ThePrimeagen/harpoon",
-        requires = {
-            { "nvim-lua/plenary.nvim" },
-        },
+        requires = { "nvim-lua/plenary.nvim" },
     })
 
     -- which key

@@ -96,6 +96,8 @@ return {
         ChevronRight = "",
         Table = "",
         Calendar = "",
+        FoldClosed = "",
+        FoldOpen = "",
         Animations = {
             Fill = { "  ", "_ ", "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
             Dots = {

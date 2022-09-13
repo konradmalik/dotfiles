@@ -35,9 +35,6 @@ keymap.set("i", "<C-c>", "<esc>", opts)
 -- Clear highlights
 keymap.set("n", "<leader>hh", ":nohlsearch<CR>", opts)
 
--- nvim tree
-keymap.set("n", "<leader>t", ":NvimTreeToggle<cr>", opts)
-
 -- select last pasted
 keymap.set("n", "<leader>p", "`[v`]", opts)
 

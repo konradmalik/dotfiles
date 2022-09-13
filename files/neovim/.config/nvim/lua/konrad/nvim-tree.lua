@@ -4,6 +4,12 @@ if not nvim_tree_ok then
     return
 end
 
+local keymap = vim.keymap
+local opts = { noremap = true, silent = true }
+
+-- nvim tree
+keymap.set("n", "<leader>to", "<cmd>NvimTreeToggle<cr>", opts)
+
 local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
 local git_icons = icons.git
