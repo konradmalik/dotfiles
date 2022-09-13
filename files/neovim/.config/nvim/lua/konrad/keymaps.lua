@@ -40,3 +40,6 @@ keymap.set("n", "<leader>t", ":NvimTreeToggle<cr>", opts)
 
 -- select last pasted
 keymap.set("n", "<leader>p", "`[v`]", opts)
+
+-- best remap ever. replace selected by pasting and keep pasted in the register
+keymap.set("v", "<leader>p", "\"_dp", opts)
