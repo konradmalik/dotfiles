@@ -4,6 +4,9 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 
 local indent = 4
 g.modeline = false -- disable modelines for security and because we dont need them
+
+-- treesitter highlighting for lua
+g.ts_highlight_lua = true
 -- filetype.lua detection
 g.do_filetype_lua = 1
 if fn.executable("rg") then
@@ -53,4 +56,3 @@ opt.shortmess:append "c" -- Don't show the dumb matching stuff.
 opt.whichwrap:append("<,>,[,]")
 opt.iskeyword:remove("-")
 opt.iskeyword:remove("_")
-
