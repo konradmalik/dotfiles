@@ -74,6 +74,14 @@ return packer.startup(function(use)
             },
         },
     })
+    -- use mason to autoinstall null-ls tools
+    use {
+        "jayp0521/mason-null-ls.nvim",
+        after = {
+            "null-ls.nvim",
+            "mason.nvim",
+        },
+    }
     -- a nice widget to display lsp progress
     use({ "j-hui/fidget.nvim" })
     -- snippets
