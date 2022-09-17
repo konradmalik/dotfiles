@@ -89,7 +89,15 @@ return packer.startup(function(use)
 
     -- DAP
     use({ 'mfussenegger/nvim-dap' })
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use({ "rcarriga/nvim-dap-ui",
+        requires = { "mfussenegger/nvim-dap" }
+    })
+    use({ 'theHamsta/nvim-dap-virtual-text',
+        requires = {
+            "mfussenegger/nvim-dap",
+            "nvim-treesitter/nvim-treesitter",
+        }
+    })
 
     -- Fuzzy finder and much more
     use({
