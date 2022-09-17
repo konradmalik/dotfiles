@@ -16,6 +16,7 @@ require("konrad.gitsigns")
 require("konrad.diffview")
 require("konrad.harpoon")
 require("konrad.lsp")
+require("konrad.dap")
 
 require("konrad.lualine")
 require("konrad.nvim-tree")

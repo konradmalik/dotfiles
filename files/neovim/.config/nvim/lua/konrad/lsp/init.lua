@@ -2,7 +2,7 @@ require("konrad.lsp.mason")
 require("konrad.lsp.lspconfig")
 
 require("konrad.lsp.null-ls")
-require("konrad.lsp.mason-null-ls")
+require("konrad.lsp.mason-tool-installer")
 require("konrad.lsp.handlers").setup()
 
 

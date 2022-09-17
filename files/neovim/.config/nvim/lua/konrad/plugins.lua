@@ -74,19 +74,22 @@ return packer.startup(function(use)
             },
         },
     })
-    -- use mason to autoinstall null-ls tools
-    use {
-        "jayp0521/mason-null-ls.nvim",
-        after = {
-            "null-ls.nvim",
+    -- use mason to install any tools (like DAP)
+    use({
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        requires = {
             "mason.nvim",
-        },
-    }
+        }
+    })
     -- a nice widget to display lsp progress
     use({ "j-hui/fidget.nvim" })
     -- snippets
     use({ "L3MON4D3/LuaSnip" }) --snippet engine
     use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
+
+    -- DAP
+    use({ 'mfussenegger/nvim-dap' })
+    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
 
     -- Fuzzy finder and much more
     use({

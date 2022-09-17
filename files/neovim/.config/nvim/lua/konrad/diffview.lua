@@ -10,8 +10,9 @@ local opts = { noremap = true, silent = true }
 -- local actions = require("diffview.actions")
 local icons = require("konrad.icons")
 
-keymap.set("n", "<leader>do", "<cmd>DiffviewOpen<CR>", opts)
-keymap.set("n", "<leader>df", "<cmd>DiffviewToggleFiles<CR>", opts)
+keymap.set("n", "<leader>dvo", "<cmd>DiffviewOpen<CR>", opts)
+keymap.set("n", "<leader>dvc", "<cmd>DiffviewClose<CR>", opts)
+keymap.set("n", "<leader>dvf", "<cmd>DiffviewToggleFiles<CR>", opts)
 
 diffview.setup({
     enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'

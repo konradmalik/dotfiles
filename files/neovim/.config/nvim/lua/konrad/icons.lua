@@ -98,6 +98,8 @@ return {
         Calendar = "",
         FoldClosed = "",
         FoldOpen = "",
+        Expanded = "▾",
+        Collapsed = "▸",
         Animations = {
             Fill = { "  ", "_ ", "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
             Dots = {
