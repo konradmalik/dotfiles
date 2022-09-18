@@ -8,7 +8,7 @@ local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 -- nvim tree
-keymap.set("n", "<leader>to", "<cmd>NvimTreeToggle<cr>", opts)
+keymap.set("n", "<leader>tt", "<cmd>NvimTreeToggle<cr>", opts)
 
 local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
