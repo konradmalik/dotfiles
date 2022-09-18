@@ -28,6 +28,50 @@ function utils.has_value(tab, val)
     return false
 end
 
+-- interactively get user's input
+-- opts can have: prompt, default, completion and more, see :h input
+function utils.make_get_input_split(opts)
+    return function()
+        local co = coroutine.running()
+        if co then
+            return coroutine.create(function()
+                local args = {}
+                vim.ui.input(opts, function(input)
+                    args = vim.split(input or "", " ")
+                end)
+                coroutine.resume(co, args)
+            end)
+        else
+            local args = {}
+            vim.ui.input(opts, function(input)
+                args = vim.split(input or "", " ")
+            end)
+            return args
+        end
+    end
+end
+
+function utils.make_get_input(opts)
+    return function()
+        local co = coroutine.running()
+        if co then
+            return coroutine.create(function()
+                local args = ""
+                vim.ui.input(opts, function(input)
+                    args = input
+                end)
+                coroutine.resume(co, args)
+            end)
+        else
+            local args = ""
+            vim.ui.input(opts, function(input)
+                args = input
+            end)
+            return args
+        end
+    end
+end
+
 -- the_primeagen's quickfix toggler
 -- local list
 g.the_primeagen_qf_l = 0

@@ -4,6 +4,8 @@ if not dap_ok then
     return
 end
 
+local utils = require("konrad.utils")
+
 dap.adapters.delve = {
     type = 'server',
     port = '${port}',
@@ -19,6 +21,19 @@ dap.configurations.go = {
         name = "Debug",
         request = "launch",
         program = "${file}"
+    },
+    {
+        type = "delve",
+        name = "Debug (Arguments)",
+        request = "launch",
+        program = "${file}",
+        args = utils.make_get_input_split({ prompt = "Args: " }),
+    },
+    {
+        type = "delve",
+        name = "Debug Package",
+        request = "launch",
+        program = "${fileDirname}",
     },
     {
         type = "delve",

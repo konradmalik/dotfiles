@@ -7,6 +7,7 @@ end
 local tools = {
     "delve",
     "debugpy",
+    "netcoredbg",
 }
 
 mason_tool_installer.setup({
