@@ -53,6 +53,7 @@ opt.ruler = false
 opt.laststatus = 3 -- global statusline
 
 opt.shortmess:append "c" -- Don't show the dumb matching stuff.
+-- opt.shortmess:append "I" -- Disable intro message
 opt.whichwrap:append("<,>,[,]")
 opt.iskeyword:remove("-")
 opt.iskeyword:remove("_")
