@@ -6,6 +6,7 @@ end
 
 local tools = {
     "delve",
+    "debugpy",
 }
 
 mason_tool_installer.setup({
