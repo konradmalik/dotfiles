@@ -10,7 +10,7 @@ local tools = {
     "black",
     "isort",
 
-    "mypy",
+    -- "mypy", don't want that, depends on many external libraries, so best to use the one from venv of a specific project
     "shellcheck",
 }
 
