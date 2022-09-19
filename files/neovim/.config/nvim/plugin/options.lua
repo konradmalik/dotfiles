@@ -7,8 +7,6 @@ g.modeline = false -- disable modelines for security and because we dont need th
 
 -- treesitter highlighting for lua
 g.ts_highlight_lua = true
--- filetype.lua detection
-g.do_filetype_lua = 1
 if fn.executable("rg") then
     opt.grepprg = "rg --vimgrep --no-heading --smart-case"
     opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
