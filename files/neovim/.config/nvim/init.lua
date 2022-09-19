@@ -8,6 +8,5 @@ vim.g.do_filetype_lua = 1
 
 require("konrad.globals")
 require("konrad.disable_builtin")
-require("konrad.lsp")
 
 require("konrad.plugins")

@@ -16,12 +16,6 @@ local lsp_keymaps = function(client, bufnr)
     keymap.set("n", "<leader>wl", function() P(vim.lsp.buf.list_workspace_folders()) end, opts)
     keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
     keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-    keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-    keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
-    -- we have autocmd
-    --keymap.set('n', '<leader>q', vim.lsp.diagnostic.set_loclist, opts)
 
     -- keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
     keymap.set("n", "<leader>f", vim.lsp.buf.formatting, opts)
