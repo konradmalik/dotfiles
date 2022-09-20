@@ -35,6 +35,9 @@ nvim_tree.setup({
     },
     filters = {
         dotfiles = false,
+        custom = {
+            "\\.null-ls",
+        },
     },
     renderer = {
         indent_markers = {
