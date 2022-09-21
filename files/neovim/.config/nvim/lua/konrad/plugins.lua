@@ -26,7 +26,7 @@ local is_linux = not is_wsl and not is_mac
 
 local max_jobs = nil
 if is_mac then
-    max_jobs = 32
+    max_jobs = 16
 end
 
 return packer.startup({
