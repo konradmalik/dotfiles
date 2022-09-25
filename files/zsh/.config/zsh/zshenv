@@ -13,6 +13,8 @@ if [ "$(uname)" = "Darwin" ]; then
     export MANPATH="$BREW_PREFIX/opt/gnu-sed/libexec/gnuman:${MANPATH}"
     # hardcode as nvim. Can't do it interactively because it will be loaded later than this script (from brew)
     export EDITOR='nvim'
+    # default lima instance
+    export LIMA_INSTANCE=devarch
 fi
 
 # lang
