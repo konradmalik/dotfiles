@@ -1,3 +1,4 @@
+-- instead of that we use vim-illuminate as it automatically fallsback on treesitter or even regex
 local function lsp_highlight(client, bufnr)
     -- Set autocommands conditional on server_capabilities
     if client.server_capabilities.documentHighlightProvider then

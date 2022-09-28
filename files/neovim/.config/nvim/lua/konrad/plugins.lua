@@ -183,12 +183,15 @@ return packer.startup({
         use({ "tpope/vim-fugitive" })
 
         --- diffview
-        use { 'sindrets/diffview.nvim',
+        use ({ 'sindrets/diffview.nvim',
             requires = {
                 { 'nvim-lua/plenary.nvim' },
                 { 'kyazdani42/nvim-web-devicons', opt = true }
             }
-        }
+        })
+
+        -- highlight references via lsp, if not supported then treesitter, else regex
+        use({ "RRethy/vim-illuminate" })
 
         -- Harpoon by ThePrimeagen
         use({
