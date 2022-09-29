@@ -190,9 +190,6 @@ return packer.startup({
             }
         })
 
-        -- highlight references via lsp, if not supported then treesitter, else regex
-        use({ "RRethy/vim-illuminate" })
-
         -- Harpoon by ThePrimeagen
         use({
             "ThePrimeagen/harpoon",
