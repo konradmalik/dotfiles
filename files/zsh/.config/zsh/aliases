@@ -6,8 +6,8 @@ alias sudo='sudo '
 alias vim='nvim'
 alias vi='nvim'
 
-alias ts='tmux-sessionizer'
-alias tw='tmux-windowizer'
+alias txs='tmux-sessionizer'
+alias txw='tmux-windowizer'
 
 # cat on steroids
 alias cat='bat'
