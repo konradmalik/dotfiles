@@ -34,6 +34,10 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = false
 -- vim.opt.foldlevel = 99
 
+-- reference highlighting
+local treesitter_highlight = require("konrad.treesitter")
+treesitter_highlight.setup()
+
 local treesitter_context_ok, treesitter_context = pcall(require, "treesitter-context")
 if not treesitter_context_ok then
     vim.notify("cannot load treesitter-context")

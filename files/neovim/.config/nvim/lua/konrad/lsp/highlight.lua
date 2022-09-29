@@ -1,8 +1,10 @@
 local function lsp_highlight(client, bufnr)
     -- Set autocommands conditional on server_capabilities
     if client.server_capabilities.documentHighlightProvider then
-        local group = vim.api.nvim_create_augroup("lsp_document_highlight", {
-            clear = false
+        -- keep the group name the same as lsp to avoid double highlight
+        -- also clear is true because of that
+        local group = vim.api.nvim_create_augroup("konrad_document_highlight", {
+            clear = true
         })
         vim.api.nvim_clear_autocmds({
             group = group,
