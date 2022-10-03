@@ -49,6 +49,8 @@ opt.writebackup = false -- if a file is being edited by another program (or was 
 opt.cursorline = true -- highlight the current line
 opt.ruler = false
 opt.laststatus = 3 -- global statusline
+opt.ch = 0 -- hide command-line
+
 
 opt.shortmess:append "c" -- Don't show the dumb matching stuff.
 -- opt.shortmess:append "I" -- Disable intro message

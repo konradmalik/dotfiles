@@ -17,9 +17,7 @@ local lsp_keymaps = function(client, bufnr)
     keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
     keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
-    -- keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
-    keymap.set("n", "<leader>f", vim.lsp.buf.formatting, opts)
-    keymap.set("v", "<leader>f", vim.lsp.buf.range_formatting, opts)
+    keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
 end
 
 return lsp_keymaps
