@@ -11,6 +11,7 @@ if fn.executable("rg") then
     opt.grepprg = "rg --vimgrep --no-heading --smart-case"
     opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 end
+opt.mouse = "" -- disable mouse
 opt.fileencoding = "utf-8" -- the encoding written to a file
 opt.inccommand = "nosplit" -- live preview when search/replace
 opt.hlsearch = true -- :noh by default on or off
