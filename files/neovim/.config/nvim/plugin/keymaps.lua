@@ -32,9 +32,6 @@ keymap.set("n", "<leader>q", function() require("konrad.utils").ToggleQFList(0) 
 -- ctrl c as esc in insert mode? why not
 keymap.set("i", "<C-c>", "<esc>", opts)
 
--- Clear highlights
-keymap.set("n", "<leader>hh", ":nohlsearch<CR>", opts)
-
 -- select last pasted
 keymap.set("n", "<leader>p", "`[v`]", opts)
 

@@ -144,7 +144,7 @@ lualine.setup({
         lualine_c = {},
         lualine_x = { encoding, fileformat, filetype },
         lualine_y = { diagnostics, lsp_servers },
-        lualine_z = { hostname },
+        lualine_z = { progress, location, hostname },
     },
     -- does not get used due to global statusline
     inactive_sections = {
@@ -161,7 +161,7 @@ lualine.setup({
         lualine_c = { filename, navic_bar },
         lualine_x = {},
         lualine_y = {},
-        lualine_z = { progress, location },
+        lualine_z = {},
     },
     inactive_winbar = {
         lualine_a = {},
@@ -169,7 +169,7 @@ lualine.setup({
         lualine_c = { filename },
         lualine_x = {},
         lualine_y = {},
-        lualine_z = { progress, location },
+        lualine_z = {},
     },
     tabline = {},
     extensions = { "fzf" },
