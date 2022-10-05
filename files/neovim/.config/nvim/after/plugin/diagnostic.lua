@@ -30,7 +30,7 @@ vim.diagnostic.config({
 })
 
 local keymap = vim.keymap
-local opts = { noremap = true }
+local opts = { noremap = true, silent = true }
 
 keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)

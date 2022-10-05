@@ -1,9 +1,12 @@
 local keymap = vim.keymap
 
 local lsp_keymaps = function(client, bufnr)
-    local opts = { buffer = bufnr, noremap = true }
+
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
+    local opts = { buffer = bufnr, noremap = true, silent = true }
     keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     keymap.set("n", "gT", vim.lsp.buf.type_definition, opts)
@@ -17,7 +20,7 @@ local lsp_keymaps = function(client, bufnr)
     keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
     keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
-    keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
+    keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
 end
 
 return lsp_keymaps
