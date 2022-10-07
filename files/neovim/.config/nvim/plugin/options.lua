@@ -50,7 +50,7 @@ opt.writebackup = false -- if a file is being edited by another program (or was 
 opt.cursorline = true -- highlight the current line
 opt.ruler = false
 opt.laststatus = 3 -- global statusline
-opt.ch = 0 -- hide command-line
+opt.ch = 1 -- hide command-line when 0
 
 
 opt.shortmess:append "c" -- Don't show the dumb matching stuff.
