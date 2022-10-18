@@ -6,8 +6,11 @@ local M = {}
 local buf_attached = {}
 
 function M.get_references(bufnr)
-    local node_at_point = ts_utils.get_node_at_cursor()
-    if not node_at_point then
+    -- get_node_at_cursor may fail sometimes
+    -- esp. when forcing a different filetype
+    -- ex. forced Dockerfile in Earthfile on mac
+    local ok, node_at_point = pcall(ts_utils.get_node_at_cursor)
+    if not ok or not node_at_point then
         return
     end
 
