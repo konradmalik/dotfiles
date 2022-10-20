@@ -202,10 +202,7 @@ return packer.startup({
         -- lua caching to speed up the load time
         use({ 'lewis6991/impatient.nvim' })
 
-        -- themes
-        use({ "navarasu/onedark.nvim" })
-        use({ "gruvbox-community/gruvbox" })
-        use({ "dracula/vim" })
+        -- colorschemes
         use({ "catppuccin/nvim", as = "catppuccin" })
 
         -- lua docs inside neovim's help
