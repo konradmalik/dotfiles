@@ -58,7 +58,7 @@ return packer.startup({
         -- Packer can manage itself
         use({ "wbthomason/packer.nvim" })
 
-        -- Treesitter (syntax highlight)
+        -- Treesitter start
         use({
             "nvim-treesitter/nvim-treesitter",
             run = ":TSUpdate",
@@ -76,8 +76,9 @@ return packer.startup({
                 "nvim-treesitter/nvim-treesitter",
             }
         })
+        -- Treesitter end
 
-        -- completion
+        -- completion start
         use({
             "hrsh7th/nvim-cmp", -- Autocompletion plugin
             requires = {
@@ -88,9 +89,10 @@ return packer.startup({
                 "rcarriga/cmp-dap", -- DAP repl source for nvim-cmp
             },
         })
+        -- completion end
 
-        -- LSP
-        use({ "neovim/nvim-lspconfig" }) -- Collection of configurations for built-in LSP client
+        -- LSP start
+        use({ "neovim/nvim-lspconfig" })
         -- simple to use language server installer
         use({
             "williamboman/mason.nvim",
@@ -117,8 +119,9 @@ return packer.startup({
         -- snippets
         use({ "L3MON4D3/LuaSnip" }) --snippet engine
         use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
+        -- LSP end
 
-        -- DAP
+        -- DAP start
         use({ 'mfussenegger/nvim-dap' })
         use({ "rcarriga/nvim-dap-ui",
             requires = { "mfussenegger/nvim-dap" }
@@ -129,8 +132,9 @@ return packer.startup({
                 "nvim-treesitter/nvim-treesitter",
             }
         })
+        -- DAP end
 
-        -- Fuzzy finder and much more
+        -- telescope start
         use({
             "nvim-telescope/telescope.nvim",
             requires = {
@@ -145,6 +149,7 @@ return packer.startup({
             "nvim-telescope/telescope-frecency.nvim",
             requires = { "tami5/sqlite.lua" }
         }
+        -- telescope end
 
         -- search tool
         use({
@@ -154,8 +159,8 @@ return packer.startup({
             },
         })
 
-        -- misc plugins
         use({ "numToStr/Comment.nvim" })
+
         use({
             "lewis6991/gitsigns.nvim",
             requires = {
@@ -169,7 +174,7 @@ return packer.startup({
             },
         })
 
-        -- statusline
+        -- statusline stuff start
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -178,32 +183,34 @@ return packer.startup({
             "SmiteshP/nvim-navic",
             requires = "neovim/nvim-lspconfig"
         })
+        -- statusline stuff end
 
-        -- Fugitive for Git
         use({ "tpope/vim-fugitive" })
 
-        --- diffview
-        use ({ 'sindrets/diffview.nvim',
+        use({ 'sindrets/diffview.nvim',
             requires = {
                 { 'nvim-lua/plenary.nvim' },
                 { 'kyazdani42/nvim-web-devicons', opt = true }
             }
         })
 
-        -- Harpoon by ThePrimeagen
         use({
             "ThePrimeagen/harpoon",
             requires = { "nvim-lua/plenary.nvim" },
         })
 
-        -- which key
+        use({
+            'https://github.com/nat-418/boole.nvim',
+        })
+
         use({ "folke/which-key.nvim" })
 
         -- lua caching to speed up the load time
         use({ 'lewis6991/impatient.nvim' })
 
-        -- colorschemes
+        -- colorschemes start
         use({ "catppuccin/nvim", as = "catppuccin" })
+        -- colorschemes end
 
         -- lua docs inside neovim's help
         use({ "milisims/nvim-luaref" })
