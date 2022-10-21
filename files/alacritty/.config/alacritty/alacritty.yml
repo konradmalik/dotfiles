@@ -13,11 +13,11 @@ cursor:
     shape: Block
     blinking: Always
 
-fontfamily: &fontfamily "JetBrainsMono Nerd Font"
+fontfamily: &fontfamily "Hack Nerd Font"
 font:
   normal:
     family: *fontfamily
-    style: Medium
+    style: Regular
 
   bold:
     family: *fontfamily
