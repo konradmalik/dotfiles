@@ -13,7 +13,7 @@ cursor:
     shape: Block
     blinking: Always
 
-fontfamily: &fontfamily "Hack Nerd Font"
+fontfamily: &fontfamily "MesloLGL Nerd Font"
 font:
   normal:
     family: *fontfamily
