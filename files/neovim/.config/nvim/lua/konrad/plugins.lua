@@ -6,7 +6,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
         install_path })
 end
 
-local status_ok, packer = pcall(require, "packer")
+local snatus_ok, packer = pcall(require, "packer")
 if not status_ok then
     vim.notify("cannot load packer")
     return
@@ -144,7 +144,6 @@ return packer.startup({
             },
         })
         use({ "nvim-telescope/telescope-file-browser.nvim" })
-        use { 'nvim-telescope/telescope-ui-select.nvim' }
         use {
             "nvim-telescope/telescope-frecency.nvim",
             requires = { "tami5/sqlite.lua" }
@@ -204,6 +203,9 @@ return packer.startup({
         })
 
         use({ "folke/which-key.nvim" })
+
+        -- nicer select, input etc...
+        use({ 'stevearc/dressing.nvim' })
 
         -- go back to this once better/more stable
         -- use({

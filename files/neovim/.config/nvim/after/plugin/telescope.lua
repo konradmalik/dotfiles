@@ -4,19 +4,13 @@ if not telescope_ok then
     return
 end
 
-local themes = require("telescope.themes")
-
 telescope.setup({
     defaults = { file_ignore_patterns = { "node_modules", "vendor" } },
-    extensions = {
-        ["ui-select"] = { themes.get_dropdown {} },
-    },
 })
 -- To get extensions loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 telescope.load_extension("fzf")
 telescope.load_extension("file_browser")
-telescope.load_extension("ui-select")
 telescope.load_extension("frecency")
 
 local keymap = vim.keymap
