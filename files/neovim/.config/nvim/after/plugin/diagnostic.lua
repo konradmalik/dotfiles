@@ -35,5 +35,5 @@ local opts = { noremap = true, silent = true }
 keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
--- we have autocmd
---keymap.set('n', '<leader>q', vim.lsp.diagnostic.set_loclist, opts)
+keymap.set('n', '<leader>ll', vim.diagnostic.setloclist, opts)
+keymap.set('n', '<leader>lq', vim.diagnostic.setqflist, opts)
