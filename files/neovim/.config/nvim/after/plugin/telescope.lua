@@ -19,7 +19,6 @@ telescope.load_extension("file_browser")
 telescope.load_extension("ui-select")
 telescope.load_extension("frecency")
 
-
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
@@ -42,3 +41,7 @@ keymap.set("n", "<leader>gc", builtin.git_commits, opts)
 -- extensions
 keymap.set("n", "<leader>ft", telescope.extensions.file_browser.file_browser, opts)
 keymap.set("n", "<leader>fc", telescope.extensions.frecency.frecency, opts)
+local noice_ok, _ = pcall(require, "noice")
+if noice_ok then
+    keymap.set("n", "<leader>fm", function() vim.cmd("Noice telescope") end, opts)
+end

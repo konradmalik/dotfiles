@@ -114,11 +114,11 @@ return packer.startup({
                 "mason.nvim",
             }
         })
-        -- a nice widget to display lsp progress
-        use({ "j-hui/fidget.nvim" })
         -- snippets
         use({ "L3MON4D3/LuaSnip" }) --snippet engine
         use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
+        -- a nice widget to display lsp progress
+        use({ "j-hui/fidget.nvim" })
         -- LSP end
 
         -- DAP start
@@ -204,6 +204,16 @@ return packer.startup({
         })
 
         use({ "folke/which-key.nvim" })
+
+        -- go back to this once better/more stable
+        -- use({
+        --     "folke/noice.nvim",
+        --     event = "VimEnter",
+        --     requires = {
+        --         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+        --         "MunifTanjim/nui.nvim",
+        --     }
+        -- })
 
         -- lua caching to speed up the load time
         use({ 'lewis6991/impatient.nvim' })

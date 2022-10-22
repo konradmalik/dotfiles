@@ -4,7 +4,18 @@ if not status_ok then
     return
 end
 
-local navic_ok, navic = pcall(require, "nvim-navic")
+local noice_ok, noice = pcall(require, "noice")
+local recording = {
+    "",
+    cond = function() return false end,
+}
+if noice_ok then
+    recording = {
+        noice.api.statusline.mode.get,
+        cond = noice.api.statusline.mode.has,
+        color = { fg = "#ff9e64" },
+    }
+end
 
 local larger_than = function(n)
     return vim.fn.winwidth(0) > n
@@ -16,6 +27,18 @@ end
 
 local larger_than_120 = function()
     return larger_than(120)
+end
+
+local navic_ok, navic = pcall(require, "nvim-navic")
+local navic_bar = {
+    "",
+    cond = function() return false end,
+}
+if navic_ok then
+    navic_bar = {
+        navic.get_location,
+        cond = function() return navic.is_available and larger_than_120() end,
+    }
 end
 
 local is_ssh = function()
@@ -62,16 +85,6 @@ local diagnostics = {
     always_visible = true,
     cond = function() return has_lsp() and larger_than_80() end,
 }
-
-local navic_bar = {
-    cond = function() return false end,
-}
-if navic_ok then
-    navic_bar = {
-        navic.get_location,
-        cond = function() return navic.is_available and larger_than_120() end,
-    }
-end
 
 local diff = {
     "diff",
@@ -142,7 +155,7 @@ lualine.setup({
         lualine_a = { mode },
         lualine_b = { branch, diff },
         lualine_c = {},
-        lualine_x = { encoding, fileformat, filetype },
+        lualine_x = { recording, encoding, fileformat, filetype },
         lualine_y = { diagnostics, lsp_servers },
         lualine_z = { progress, location, hostname },
     },

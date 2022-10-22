@@ -15,7 +15,6 @@ opt.mouse = "" -- disable mouse
 opt.fileencoding = "utf-8" -- the encoding written to a file
 opt.inccommand = "nosplit" -- live preview when search/replace
 opt.hlsearch = true -- :noh by default on or off
-opt.lazyredraw = true -- faster scrolling
 opt.expandtab = true -- Use spaces instead of tabs
 opt.smartindent = true -- Insert indents automatically
 opt.autoindent = true -- Insert indents automatically
@@ -50,8 +49,6 @@ opt.writebackup = false -- if a file is being edited by another program (or was 
 opt.cursorline = true -- highlight the current line
 opt.ruler = false
 opt.laststatus = 3 -- global statusline
-opt.ch = 1 -- hide command-line when 0
-
 
 opt.shortmess:append "c" -- Don't show the dumb matching stuff.
 -- opt.shortmess:append "I" -- Disable intro message

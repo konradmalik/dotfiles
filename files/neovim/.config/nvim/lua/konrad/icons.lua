@@ -75,6 +75,9 @@ return {
         Close = "",
         NewFile = "",
         Search = "",
+        SearchBig = "",
+        Up = "",
+        Down = "",
         Lightbulb = "",
         Project = "",
         Dashboard = "",
@@ -415,4 +418,7 @@ return {
         Tag = "",
         Watch = "",
     },
+    languages = {
+        Lua = "",
+    }
 }
