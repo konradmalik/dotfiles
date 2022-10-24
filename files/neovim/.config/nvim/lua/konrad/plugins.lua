@@ -6,7 +6,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
         install_path })
 end
 
-local snatus_ok, packer = pcall(require, "packer")
+local status_ok, packer = pcall(require, "packer")
 if not status_ok then
     vim.notify("cannot load packer")
     return
