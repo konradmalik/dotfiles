@@ -166,10 +166,13 @@ return packer.startup({
                 "nvim-lua/plenary.nvim",
             },
         })
+
         use({
-            "kyazdani42/nvim-tree.lua",
+            "nvim-neo-tree/neo-tree.nvim",
             requires = {
-                "kyazdani42/nvim-web-devicons", -- optional, for file icon
+                "nvim-lua/plenary.nvim",
+                "MunifTanjim/nui.nvim",
+                "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
             },
         })
 
