@@ -31,6 +31,9 @@ vim.fn.sign_define("DiagnosticSignHint",
     { text = diag_icons.Hint, texthl = "DiagnosticSignHint" })
 
 neo_tree.setup({
+    sources = {
+        "filesystem",
+    },
     close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
     enable_git_status = true,
     enable_diagnostics = true,
@@ -41,7 +44,6 @@ neo_tree.setup({
             with_markers = true,
             indent_marker = lines_icons.Edge,
             last_indent_marker = lines_icons.Corner,
-            highlight = "NeoTreeIndentMarker",
             -- expander config, needed for nesting files
             with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
             expander_collapsed = ui_icons.FoldClosed,
@@ -53,16 +55,13 @@ neo_tree.setup({
             folder_open = docs_icons.OpenFolder,
             folder_empty = docs_icons.EmptyFolder,
             default = "*",
-            highlight = "NeoTreeFileIcon"
         },
         modified = {
             symbol = ui_icons.Square,
-            highlight = "NeoTreeModified",
         },
         name = {
             trailing_slash = false,
             use_git_status_colors = true,
-            highlight = "NeoTreeFileName",
         },
         git_status = {
             symbols = {
@@ -82,10 +81,6 @@ neo_tree.setup({
     },
     window = {
         width = 40,
-        mapping_options = {
-            noremap = true,
-            nowait = true,
-        },
     },
     filesystem = {
         filtered_items = {

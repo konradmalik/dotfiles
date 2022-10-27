@@ -4,4 +4,9 @@ if not which_key_ok then
     return
 end
 
-which_key.setup({})
+which_key.setup({
+    disable = {
+        buftypes = {},
+        filetypes = { "TelescopePrompt", "neo-tree" },
+    }
+})
