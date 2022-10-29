@@ -85,7 +85,6 @@ return packer.startup({
                 "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
                 "hrsh7th/cmp-buffer", -- buffer source for nvim-cmp
                 "hrsh7th/cmp-path", -- path source for nvim-cmp
-                "hrsh7th/cmp-nvim-lua", -- lua source for nvim api
                 "rcarriga/cmp-dap", -- DAP repl source for nvim-cmp
             },
         })
@@ -201,9 +200,7 @@ return packer.startup({
             requires = { "nvim-lua/plenary.nvim" },
         })
 
-        use({
-            'https://github.com/nat-418/boole.nvim',
-        })
+        use({ 'https://github.com/nat-418/boole.nvim' })
 
         use({ "folke/which-key.nvim" })
 

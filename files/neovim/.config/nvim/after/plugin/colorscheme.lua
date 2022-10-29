@@ -5,7 +5,7 @@ end
 
 vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
 
-require("catppuccin").setup()
+catppuccin.setup()
 
 -- local colorscheme = "onedark"
 -- local colorscheme = "gruvbox"
