@@ -5,6 +5,15 @@ if not mason_tool_installer_ok then
 end
 
 local tools = {
+    -- fmt
+    "prettier",
+    "shfmt",
+    "black",
+    "isort",
+    -- lint
+    "mypy",
+    "shellcheck",
+    -- dap
     "delve",
     "debugpy",
     "netcoredbg",
@@ -12,13 +21,14 @@ local tools = {
 
 mason_tool_installer.setup({
     ensure_installed = tools,
+    auto_update = false,
 })
 
 vim.api.nvim_create_autocmd('User', {
     pattern = 'MasonToolsUpdateCompleted',
     callback = function()
         vim.schedule(function()
-            print 'mason-tool-installer dap has finished'
+            vim.notify('mason-tool-installer has finished')
         end)
     end,
 })
