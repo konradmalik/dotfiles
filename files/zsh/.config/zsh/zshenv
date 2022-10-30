@@ -53,7 +53,16 @@ export DOCKER_BUILDKIT=1
 # rust binaries
 export PATH="$HOME/.cargo/bin:$PATH"
 # go binaries
-export PATH="$HOME/go/bin:$PATH"
+export GOPATH="$HOME/.go"
+export GOBIN="$GOPATH/bin"
+
+if [ ! -z "$GOBIN" ]; then
+    export PATH="$GOBIN:$PATH"
+elif [ ! -z "$GOPATH" ]; then
+    export PATH="$GOPATH/bin:$PATH"
+else
+    export PATH="$HOME/go/bin:$PATH"
+fi
 # rancher desktop binaries
 export PATH="$HOME/.rd/bin:$PATH"
 # user's binaries in PATH
