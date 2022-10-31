@@ -31,9 +31,13 @@ vim.diagnostic.config({
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
+local opts_with_desc = function(desc)
+    return vim.tbl_extend("error", opts, { desc = desc })
+end
 
-keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-keymap.set('n', '<leader>ll', vim.diagnostic.setloclist, opts)
-keymap.set('n', '<leader>lq', vim.diagnostic.setqflist, opts)
+keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts_with_desc("Open diagnostic in floating window"))
+keymap.set("n", "[d", vim.diagnostic.goto_prev, opts_with_desc("Previous diagnostic"))
+keymap.set("n", "]d", vim.diagnostic.goto_next, opts_with_desc("Next diagnostic"))
+keymap.set('n', '<leader>ll', vim.diagnostic.setloclist,
+    opts_with_desc("Send diagnostics from current buffer to location list"))
+keymap.set('n', '<leader>lq', vim.diagnostic.setqflist, opts_with_desc("Send all diagnostics to QF list"))
