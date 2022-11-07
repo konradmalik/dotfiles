@@ -172,6 +172,7 @@ return packer.startup({
                 "nvim-lua/plenary.nvim",
                 "MunifTanjim/nui.nvim",
                 "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+                { "miversen33/netman.nvim", branch = "v1.1" }, -- experimental support for remote source
             },
         })
 
