@@ -43,6 +43,9 @@ export VISUAL="$EDITOR"
 export GIT_EDITOR="$EDITOR"
 export DIFFPROG="$EDITOR -d"
 
+# FZF
+export FZF_DEFAULT_OPTS="--preview 'bat --color=always --style=numbers --line-range=:200 {}' --height=~100%"
+
 # set favorite pager
 export PAGER="less -FirSwX"
 export MANPAGER="less -FirSwX"
