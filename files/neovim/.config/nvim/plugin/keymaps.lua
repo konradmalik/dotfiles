@@ -7,6 +7,7 @@ local opts_with_desc = function(desc)
 end
 
 -- map leader
+keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 g.mapleader = " "
 
 -- Modes
