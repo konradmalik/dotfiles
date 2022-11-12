@@ -55,7 +55,7 @@ eval "$(zoxide init zsh)"
 # enable asdf
 . $HOME/.asdf/asdf.sh
 # Hook direnv into your shell.
-source ${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
 # broot
 autoload -Uz br
 

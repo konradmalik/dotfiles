@@ -44,7 +44,7 @@ export GIT_EDITOR="$EDITOR"
 export DIFFPROG="$EDITOR -d"
 
 # FZF
-export FZF_DEFAULT_OPTS="--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
+export FZF_DEFAULT_OPTS="--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all' --preview 'bat --color=always --style=numbers --line-range=:200 {}'"
 
 # set favorite pager
 export PAGER="less -FirSwX"
