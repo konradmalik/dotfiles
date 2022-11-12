@@ -64,7 +64,7 @@ disabled = true
 disabled = true
 
 [nix_shell]
-disabled = true
+disabled = false
 
 [package]
 disabled = true
