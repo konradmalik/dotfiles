@@ -53,6 +53,8 @@ export MANPAGER="less -FirSwX"
 # docker buildkit feature
 export DOCKER_BUILDKIT=1
 
+# asdf binaries
+export PATH="$HOME/.asdf/bin:$PATH"
 # rust binaries
 export PATH="$HOME/.cargo/bin:$PATH"
 # go binaries

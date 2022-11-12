@@ -52,10 +52,11 @@ zsh_add_file "vi-mode"
 # }
 # to record "cd" history, zoxide cannot be lazy
 eval "$(zoxide init zsh)"
-# enable asdf
-. $HOME/.asdf/asdf.sh
 # Hook direnv into your shell.
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+# asdf itself is disabled by default (we just have .asdf/bin in our PATH set in zshenv)
+# we want asdf only in explicitly enabled dirs by direnv
+
 # broot
 autoload -Uz br
 
