@@ -1,5 +1,7 @@
 # ~/.config/starship.toml
 
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
 command_timeout = 2000
 

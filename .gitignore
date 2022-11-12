@@ -1,5 +1,6 @@
 *.log
 *.lock
+!flake.lock
 .DS_store
 #nvim
 .netrwhist
