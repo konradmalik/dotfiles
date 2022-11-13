@@ -1,5 +1,5 @@
 # For a full list of active aliases, run `alias`.
-# to run command that is shadowed by an alias run (for example): \ls
+# to run command that is shadowed by an alias run (for example): \ls or command ls
 # allow sudo with aliases
 alias sudo='sudo '
 
@@ -35,7 +35,7 @@ alias watch='viddy'
 # csv pretty print
 alias tv='tidy-viewer'
 
-# git (use for example ga instead of git add)
+# git (use for example g add instead of git add)
 alias g='git'
 
 # directory stack movement
@@ -50,8 +50,8 @@ elif [ "$(uname)" = "Linux" ]; then
     # pbcopy and pbpaste just like in osx
     if [ "$(loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type)" = "Type=x11" ]; then
         # x11
-        alias pbcopy='xclip'
-        alias pbpaste='xclip -o'
+        alias pbcopy='xclip -selection clipboard -in'
+        alias pbpaste='xclip -selection clipboard -out'
     else
         # wayland
         alias pbcopy='wl-copy'

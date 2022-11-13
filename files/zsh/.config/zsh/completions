@@ -11,6 +11,8 @@ elif [ "$(uname)" = "Linux" ]; then
 fi
 # local user folder for custom autocompletion functions
 fpath+="${ZDOTDIR}/zfunc"
+# this requires nix-zsh-completions plugin installed in 'plugins' file here
+fpath+="${ZDOTDIR}/remote/nix-zsh-completions"
 
 # autocompletion
 autoload -Uz compinit; compinit

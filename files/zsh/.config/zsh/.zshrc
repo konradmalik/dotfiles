@@ -38,6 +38,7 @@ setopt pushdsilent         # Do not print the directory stack after pushd or pop
 # Useful Functions
 source "$ZDOTDIR/functions"
 
+zsh_add_file "plugins"
 zsh_add_file "completions"
 zsh_add_file "aliases"
 zsh_add_file "gpg-agent"
@@ -62,7 +63,3 @@ autoload -Uz br
 
 # starship prompt. Should be very close to the end of the file
 eval "$(starship init zsh)"
-
-# source zsh plugins that vary by platform
-# should be last
-zsh_add_file "plugins"

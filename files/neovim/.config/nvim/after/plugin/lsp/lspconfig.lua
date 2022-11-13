@@ -8,6 +8,7 @@ local servers = {
     "sumneko_lua", -- called lua-language-server now
     "gopls",
     "pyright",
+    "rnix",
     "omnisharp",
     "rust_analyzer",
     "yamlls",

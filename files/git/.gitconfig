@@ -30,6 +30,11 @@
 
     mainbranch = "!git remote show origin | sed -n '/HEAD branch/s/.*: //p'"
 
+    # Prune Tags - prune local Git tags that doesn't exist on remote 'origin'
+    prune-tags="!git fetch --prune origin '+refs/tags/*:refs/tags/*'"
+    # Prune Branches get remote branches and remove the local ones that as gone on the remote
+    prune-branches="!git-prune-gone-branches"
+
     # list branches sorted by last modified
     b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 

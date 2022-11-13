@@ -14,11 +14,5 @@ vscode/User/sync
 **/.vagrant
 **/.vscode
 **/.metals
-#zsh
-.zcompdump
-.zsh_sessions
-.zcompcache
-zfunc
-
 #terraform
 .terraform

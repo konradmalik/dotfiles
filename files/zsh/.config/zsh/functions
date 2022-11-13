@@ -20,7 +20,7 @@ zsh_add_plugin() {
         zsh_add_file "remote/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
         zsh_add_file "remote/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
     else
-        git clone "https://github.com/$1.git" "$ZDOTDIR/remote/$PLUGIN_NAME"
+        git clone --depth 1 "https://github.com/$1.git" "$ZDOTDIR/remote/$PLUGIN_NAME"
     fi
 }
 
@@ -42,22 +42,17 @@ zfunc_completions_helper() {
 # custom autocompletion
 # generate functions and store them for autoload by zsh
 generate_completions() {
-    # python
     zfunc_completions_helper "pip3 completion --zsh" _pip3
     zfunc_completions_helper "poetry completions zsh" _poetry
-    # rust
     zfunc_completions_helper "rustup completions zsh" _rustup
     zfunc_completions_helper "rustup completions zsh cargo" _cargo
-    # kubernetes
     zfunc_completions_helper "kubectl completion zsh" _kubectl
     zfunc_completions_helper "helm completion zsh" _helm
     zfunc_completions_helper "k3d completion zsh" _k3d
     zfunc_completions_helper "kind completion zsh" _kind
     zfunc_completions_helper "flux completion zsh" _flux
     zfunc_completions_helper "tilt completion zsh" _tilt
-    # earthly
     zfunc_completions_helper "earthly bootstrap --source zsh" _earthly
-    # gitlab
     zfunc_completions_helper "glab completion --shell zsh" _glab
     # force compinit
     rm -f "$ZDOTDIR/.zcompdump"
@@ -85,7 +80,6 @@ load_bash_completions() {
         fi
     fi
 }
-
 
 weather() {
     local param="$1"
@@ -121,8 +115,31 @@ fix_ssh_auth_sock() {
 }
 
 # magic to prune local branches that are not on remote
-git-prune-local-branches() {
-    git branch -r | awk '{print $1}' | grep -E -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
+git-prune-gone-branches() {
+    actually_delete="$1"
+    git fetch -p
+    branches=$(git branch -av | grep gone | awk '{ print $1 }')
+    echo -e "Gone branches:\n$branches"
+    if [[ "$actually_delete" == "--delete" ]] ; then echo "Deleting..." ; echo $branches | xargs -L 1 git branch -D ; else echo "use --delete to remove those branches" ; fi
+}
+
+# update asdf and all plugins
+asdf-update() {
+    asdf update && asdf plugin-update --all
+}
+
+# update nix
+nix-update() {
+    if [ "$(uname)" = "Darwin" ]; then
+        sudo --login sh -c 'nix-channel --update && nix-env -iA nixpkgs.nix && launchctl remove org.nixos.nix-daemon && launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist'
+    elif [ "$(uname)" = "Linux" ]; then
+        sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
+    fi
+}
+
+# clean nix
+nix-clean() {
+    nix-collect-garbage -d && nix store gc
 }
 
 # update all cargo-installed binaries
@@ -136,11 +153,14 @@ if [ "$(uname)" = "Darwin" ]; then
         brew update \
         && brew upgrade \
         && brew upgrade --cask \
+        && nix-update \
         && cargo-update-binaries \
+        && asdf-update \
         && generate_completions
     }
     mac-clean() {
-        brew cleanup
+        brew cleanup \
+        && nix-clean
     }
 elif [ "$(uname)" = "Linux" ]; then
     if [ -f "/etc/arch-release" ]; then
@@ -152,25 +172,32 @@ elif [ "$(uname)" = "Linux" ]; then
                 --nodiffmenu \
                 --noeditmenu \
                 --noupgrademenu \
+            && nix-update \
             && (flatpak update || true) \
             && cargo-update-binaries \
+            && asdf-update \
             && generate_completions
         }
         arch-clean() {
-            yay -Sc --noconfirm
+            yay -Sc --noconfirm \
+            && nix-clean
         }
     elif [ -f "/etc/debian_version" ]; then
         ubuntu-upgrade() {
             sudo apt update \
             && sudo apt upgrade -y \
             && sudo snap refresh \
+            && nix-update \
             && (flatpak update || true) \
             && cargo-update-binaries \
+            && asdf-update \
             && generate_completions
         }
         ubuntu-clean() {
             sudo apt autoremove -y \
-            && sudo apt clean
+            && sudo apt clean \
+            && $HOME/.local/bin/remove-old-snaps.sh \
+            && nix-clean
         }
 	fi
 fi
