@@ -24,11 +24,11 @@ mason_tool_installer.setup({
     auto_update = false,
 })
 
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'MasonToolsUpdateCompleted',
-    callback = function()
-        vim.schedule(function()
-            vim.notify('mason-tool-installer has finished')
-        end)
-    end,
-})
+-- vim.api.nvim_create_autocmd('User', {
+--     pattern = 'MasonToolsUpdateCompleted',
+--     callback = function()
+--         vim.schedule(function()
+--             vim.notify('mason-tool-installer has finished')
+--         end)
+--     end,
+-- })
