@@ -196,7 +196,7 @@ elif [ "$(uname)" = "Linux" ]; then
         ubuntu-clean() {
             sudo apt autoremove -y \
             && sudo apt clean \
-            && $HOME/.local/bin/remove-old-snaps.sh \
+            && sudo $HOME/.local/bin/remove-old-snaps.sh \
             && nix-clean
         }
 	fi
