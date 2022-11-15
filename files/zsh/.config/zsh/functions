@@ -130,11 +130,14 @@ asdf-update() {
 
 # update nix
 nix-update() {
+    # global nix
     if [ "$(uname)" = "Darwin" ]; then
         sudo --login sh -c 'nix-channel --update && nix-env -iA nixpkgs.nix && launchctl remove org.nixos.nix-daemon && launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist'
     elif [ "$(uname)" = "Linux" ]; then
         sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
     fi
+    # current profile
+    nix profile upgrade '.*'
 }
 
 # clean nix
