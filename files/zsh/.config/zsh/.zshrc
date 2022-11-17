@@ -1,8 +1,5 @@
 # Sourced on every interactive shell
 
-# keybinds
-source "$ZDOTDIR/keybinds"
-
 # beeping is annoying
 unsetopt beep
 # alacritty icon jumping
@@ -42,6 +39,7 @@ zsh_add_file "plugins"
 zsh_add_file "completions"
 zsh_add_file "aliases"
 zsh_add_file "gpg-agent"
+zsh_add_file "keybinds"
 
 # other programs inits (lazy load where possible)
 # keep this as an example for the future
@@ -53,7 +51,7 @@ zsh_add_file "gpg-agent"
 # to record "cd" history, zoxide cannot be lazy
 eval "$(zoxide init zsh)"
 # Hook direnv into your shell.
-source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+eval "$(direnv hook zsh)"
 # asdf itself is disabled by default (we just have .asdf/bin in our PATH set in zshenv)
 # we want asdf only in explicitly enabled dirs by direnv
 
