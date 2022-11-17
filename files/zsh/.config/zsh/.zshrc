@@ -42,7 +42,6 @@ zsh_add_file "plugins"
 zsh_add_file "completions"
 zsh_add_file "aliases"
 zsh_add_file "gpg-agent"
-zsh_add_file "vi-mode"
 
 # other programs inits (lazy load where possible)
 # keep this as an example for the future

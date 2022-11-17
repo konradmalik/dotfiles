@@ -41,3 +41,9 @@ elif [ "$(uname)" = "Linux" ]; then
         source "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 	fi
 fi
+
+# vi-mode implementations
+# needs to be after zsh-autosuggestions ans zsh-syntax-highlighting
+# to avoid conflicts
+#zsh_add_file "vi-mode"
+zsh_add_plugin "softmoth/zsh-vim-mode"
