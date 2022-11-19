@@ -91,8 +91,8 @@ weather() {
 }
 
 timezsh() {
-  local shell=${1-$SHELL}
-  for i in $(seq 1 10); do time $shell -i -c exit; done
+    local shell=${1-$SHELL}
+    for i in $(seq 1 10); do time $shell -i -c exit; done
 }
 
 # fix for tmux ssh socket
@@ -130,19 +130,24 @@ asdf-update() {
 
 # update nix
 nix-update() {
-    # global nix
+    # system-wide
     if [ "$(uname)" = "Darwin" ]; then
         sudo --login sh -c 'nix-channel --update && nix-env -iA nixpkgs.nix && launchctl remove org.nixos.nix-daemon && launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist'
     elif [ "$(uname)" = "Linux" ]; then
         sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
     fi
-    # current profile
+    # current user's profile (flakes enabled)
     nix profile upgrade '.*'
 }
 
 # clean nix
 nix-clean() {
-    nix-collect-garbage -d && nix store gc
+    # system-wide
+    sudo --login sh -c 'nix-env --delete-generations 14d'
+    # current user's profile (flakes enabled)
+    nix profile wipe-history --older-than 14d
+    # nix store garbage collection (I think this works globally once old generations are deleted for any person)
+    nix store gc
 }
 
 # update all cargo-installed binaries
