@@ -42,6 +42,8 @@ elif [ "$(uname)" = "Linux" ]; then
 	fi
 fi
 
+## Reduce latency when pressing <Esc>
+export KEYTIMEOUT=1
 # vi-mode implementations
 # needs to be after zsh-autosuggestions ans zsh-syntax-highlighting
 # to avoid conflicts
