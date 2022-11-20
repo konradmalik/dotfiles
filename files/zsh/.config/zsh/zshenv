@@ -23,8 +23,12 @@ export LC_CTYPE="$LANG"
 
 # XDG structure
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+if [ "$(uname)" = "Darwin" ]; then
+    export XDG_RUNTIME_DIR="$TMPDIR"
+fi
 
 # editors and stuff
 if [ -z "$EDITOR" ]; then

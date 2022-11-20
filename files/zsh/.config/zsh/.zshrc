@@ -38,6 +38,7 @@ source "$ZDOTDIR/functions"
 zsh_add_file "plugins"
 zsh_add_file "completions"
 zsh_add_file "aliases"
+zsh_add_file "ssh-agent"
 zsh_add_file "gpg-agent"
 zsh_add_file "keybinds"
 
