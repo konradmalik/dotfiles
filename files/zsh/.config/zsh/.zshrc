@@ -35,6 +35,7 @@ setopt pushdsilent         # Do not print the directory stack after pushd or pop
 # Useful Functions
 source "$ZDOTDIR/functions"
 
+zsh_add_file "vi-mode"
 zsh_add_file "plugins"
 zsh_add_file "completions"
 zsh_add_file "aliases"
