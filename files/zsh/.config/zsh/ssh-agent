@@ -1,5 +1,5 @@
 # Register SSH_AUTH_SOCK only if not in SSH
-if [ "$SESSION_TYPE"  = 'local' ]; then
+if [ -z "$SESSION_TYPE" ] || [ "$SESSION_TYPE"  = 'local' ]; then
     if ! pgrep -u "$USER" ssh-agent > /dev/null; then
         ssh-agent -t 24h > "$XDG_RUNTIME_DIR/ssh-agent.env"
     fi

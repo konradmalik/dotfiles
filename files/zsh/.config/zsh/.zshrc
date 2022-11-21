@@ -1,4 +1,4 @@
-# Sourced on every interactive shell
+# Sourced on every interactive shell, last
 
 # beeping is annoying
 unsetopt beep

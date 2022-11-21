@@ -1,16 +1,10 @@
-# for GPG agent
-function _gpg-agent_update-tty_preexec {
-  gpg-connect-agent updatestartuptty /bye &> /dev/null
-}
-
 # GPG agent
 export GPG_TTY=$TTY
-autoload -U add-zsh-hook
-add-zsh-hook preexec _gpg-agent_update-tty_preexec
+gpg-connect-agent updatestartuptty /bye &> /dev/null
 
 # ssh support
 # Register SSH_AUTH_SOCK via gpg agent only if not in SSH
-if [ "$SESSION_TYPE"  = 'local' ]; then
+if [ -z "$SESSION_TYPE" ] || [ "$SESSION_TYPE"  = 'local' ]; then
     # If enable-ssh-support is set, fix ssh agent integration
     if [[ $(gpgconf --list-options gpg-agent | awk -F: '$1=="enable-ssh-support" {print $10}') = 1 ]]; then
         unset SSH_AGENT_PID

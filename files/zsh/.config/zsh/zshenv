@@ -1,4 +1,4 @@
-# sourced every time
+# sourced every time, very first
 
 # platform dependent
 if [ "$(uname)" = "Darwin" ]; then
