@@ -3,7 +3,7 @@ local g = vim.g
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 local opts_with_desc = function(desc)
-    return vim.tbl_extend("error", opts, { desc = desc })
+    return vim.tbl_extend("error", opts, { desc = "[konrad] " .. desc })
 end
 
 -- map leader

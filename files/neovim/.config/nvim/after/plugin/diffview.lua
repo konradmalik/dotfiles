@@ -6,13 +6,16 @@ end
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
+local opts_with_desc = function(desc)
+    return vim.tbl_extend("error", opts, { desc = "[Diffview] " .. desc })
+end
 
 -- local actions = require("diffview.actions")
 local icons = require("konrad.icons")
 
-keymap.set("n", "<leader>dvo", "<cmd>DiffviewOpen<CR>", opts)
-keymap.set("n", "<leader>dvc", "<cmd>DiffviewClose<CR>", opts)
-keymap.set("n", "<leader>dvf", "<cmd>DiffviewToggleFiles<CR>", opts)
+keymap.set("n", "<leader>dvo", "<cmd>DiffviewOpen<CR>", opts_with_desc("Open"))
+keymap.set("n", "<leader>dvc", "<cmd>DiffviewClose<CR>", opts_with_desc("Close"))
+keymap.set("n", "<leader>dvf", "<cmd>DiffviewToggleFiles<CR>", opts_with_desc("Toggle"))
 
 diffview.setup({
     enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'

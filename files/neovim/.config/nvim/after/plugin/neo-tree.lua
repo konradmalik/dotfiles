@@ -6,9 +6,12 @@ end
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
+local opts_with_desc = function(desc)
+    return vim.tbl_extend("error", opts, { desc = "[NeoTree] " .. desc })
+end
 
 -- nvim tree
-keymap.set("n", "<leader>tt", "<cmd>Neotree focus filesystem left toggle<cr>", opts)
+keymap.set("n", "<leader>tt", "<cmd>Neotree focus filesystem left toggle<cr>", opts_with_desc("Toggle"))
 
 local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
