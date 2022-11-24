@@ -143,10 +143,6 @@ return packer.startup({
             },
         })
         use({ "nvim-telescope/telescope-file-browser.nvim" })
-        use {
-            "nvim-telescope/telescope-frecency.nvim",
-            requires = { "tami5/sqlite.lua" }
-        }
         -- telescope end
 
         -- search tool
