@@ -1,1 +1,1 @@
-bindkey -s '^f' 'tmux-sessionizer^M'
+bindkey -s '^f' '^utmux-sessionizer^M'
