@@ -22,6 +22,8 @@ autoload -Uz bashcompinit; bashcompinit
 zstyle ':completion::complete:*' use-cache 1
 # autocompletion menu
 zstyle ':completion:*' menu select
+# shift-tab to go back in completions
+bindkey '^[[Z' reverse-menu-complete
 # autocomplete with sudo
 zstyle ':completion::complete:*' gain-privileges 1
 # case insensitive and partial
@@ -31,26 +33,41 @@ zstyle ':completion:*' completer _extensions _complete _approximate
 # display completer while waiting
 zstyle ":completion:*" show-completer true
 
-# bash completion
-# i know no other way around that
-if command -v pipx &>/dev/null; then
-    if [ "$(uname)" = "Darwin" ]; then
-        source "$BREW_PREFIX/etc/bash_completion.d/pipx"
-    elif [ "$(uname)" = "Linux" ]; then
-        eval "$(register-python-argcomplete pipx)"
-    fi
-fi
-if command -v az &>/dev/null; then
-    if [ "$(uname)" = "Darwin" ]; then
-        source "$BREW_PREFIX/etc/bash_completion.d/az"
-    elif [ "$(uname)" = "Linux" ]; then
-        if [ -f "/etc/arch-release" ]; then
-            source "/usr/share/bash-completion/completions/az"
-        elif [ -f "/etc/debian_version" ]; then
-            source "/etc/bash_completion.d/azure-cli"
+# workaround around ( :) ) bash completion
+# caveat - tab needs to be pressed twice but whatever
+# at least this does not need to be loaded on each shell
+function _lazycomplete_az {
+    if command -v az &>/dev/null; then
+        compdef -d az
+        unfunction _lazycomplete_az
+        if [ "$(uname)" = "Darwin" ]; then
+            source "$BREW_PREFIX/etc/bash_completion.d/az"
+        elif [ "$(uname)" = "Linux" ]; then
+            if [ -f "/etc/arch-release" ]; then
+                source "/usr/share/bash-completion/completions/az"
+            elif [ -f "/etc/debian_version" ]; then
+                source "/etc/bash_completion.d/azure-cli"
+            fi
         fi
+        # TODO how to call that? complete -p has some hints?
+        #_python_argcomplete az "$@"
     fi
-fi
+}
+compdef _lazycomplete_az az
+
+function _lazycomplete_pipx {
+    if command -v pipx &>/dev/null; then
+        compdef -d pipx
+        unfunction _lazycomplete_pipx
+        if [ "$(uname)" = "Darwin" ]; then
+            source "$BREW_PREFIX/etc/bash_completion.d/pipx"
+        elif [ "$(uname)" = "Linux" ]; then
+            eval "$(register-python-argcomplete pipx)"
+        fi
+        #_python_argcomplete pipx "$@"
+    fi
+}
+compdef _lazycomplete_pipx pipx
 
 # lazy load zsh completion
 # unfortunately not all commands work well with that
