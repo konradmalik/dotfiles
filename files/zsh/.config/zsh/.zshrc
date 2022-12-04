@@ -43,17 +43,11 @@ zsh_add_file "keybinds"
 zsh_add_file "plugins"
 zsh_add_file "completions"
 
-# other programs inits (lazy load where possible)
-# keep this as an example for the future
-# pyenv() {
-#     unfunction "$0"
-#     eval "$(pyenv init -)"
-#     $0 "$@"
-# }
 # to record "cd" history, zoxide cannot be lazy
 eval "$(zoxide init zsh)"
 # Hook direnv into your shell.
 eval "$(direnv hook zsh)"
+
 # asdf itself is disabled by default (we just have .asdf/bin in our PATH set in zshenv)
 # we want asdf only in explicitly enabled dirs by direnv
 

@@ -18,16 +18,79 @@ fpath+="${ZDOTDIR}/remote/nix-zsh-completions"
 autoload -Uz compinit; compinit
 # bash-complatible autocompletion
 autoload -Uz bashcompinit; bashcompinit
-# specific bash-completions need to be called here
-load_bash_completions
 # use cache
 zstyle ':completion::complete:*' use-cache 1
 # autocompletion menu
 zstyle ':completion:*' menu select
 # autocomplete with sudo
 zstyle ':completion::complete:*' gain-privileges 1
-# case insensitive https://superuser.com/questions/1092033/how-can-i-make-zsh-tab-completion-fix-capitalization-errors-for-directories-and
-# case-insensitive matching only if there are no case-sensitive matches add '', e.g.
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+# case insensitive and partial
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# Defining the Completers
+zstyle ':completion:*' completer _extensions _complete _approximate
 # display completer while waiting
 zstyle ":completion:*" show-completer true
+
+# bash completion
+# i know no other way around that
+if command -v pipx &>/dev/null; then
+    if [ "$(uname)" = "Darwin" ]; then
+        source "$BREW_PREFIX/etc/bash_completion.d/pipx"
+    elif [ "$(uname)" = "Linux" ]; then
+        eval "$(register-python-argcomplete pipx)"
+    fi
+fi
+if command -v az &>/dev/null; then
+    if [ "$(uname)" = "Darwin" ]; then
+        source "$BREW_PREFIX/etc/bash_completion.d/az"
+    elif [ "$(uname)" = "Linux" ]; then
+        if [ -f "/etc/arch-release" ]; then
+            source "/usr/share/bash-completion/completions/az"
+        elif [ -f "/etc/debian_version" ]; then
+            source "/etc/bash_completion.d/azure-cli"
+        fi
+    fi
+fi
+
+# lazy load zsh completion
+# unfortunately not all commands work well with that
+completers=(
+    kubectl "kubectl completion zsh" _kubectl
+    helm "helm completion zsh" _helm
+    k3d "k3d completion zsh" _k3d
+    kind "kind completion zsh" _kind
+    flux "flux completion zsh" _flux
+    tilt "tilt completion zsh" _tilt
+)
+# arrays in zsh start with 1 :')
+for ((i=1; i<${#completers[@]}; i+=3)); do
+    local cmd="${completers[i]}"
+    local completer="${completers[i+1]}"
+    local ccmd="${completers[i+2]}"
+
+    eval "
+        function _lazycomplete_$cmd {
+            if command -v $cmd &>/dev/null; then
+                compdef -d $cmd
+                unfunction _lazycomplete_$cmd
+                source <(eval $completer)
+                _$ccmd "$@"
+            fi
+        }
+        compdef _lazycomplete_$cmd $cmd
+    "
+done
+
+# generate functions and store them in files for autoload by zsh
+# some completions need to be handled like that
+generate_completions() {
+    zfunc_completions_helper "poetry completions zsh" _poetry
+    zfunc_completions_helper "rustup completions zsh rustup" _rustup
+    zfunc_completions_helper "rustup completions zsh cargo" _cargo
+    zfunc_completions_helper "earthly bootstrap --source zsh" _earthly
+    zfunc_completions_helper "glab completion --shell zsh" _glab
+
+    # force compinit
+    rm -f "$ZDOTDIR/.zcompdump"
+    echo "completions generated; you may need to restart your shell"
+}

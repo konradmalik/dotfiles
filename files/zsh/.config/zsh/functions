@@ -39,48 +39,6 @@ zfunc_completions_helper() {
     fi
 }
 
-# custom autocompletion
-# generate functions and store them for autoload by zsh
-generate_completions() {
-    zfunc_completions_helper "pip3 completion --zsh" _pip3
-    zfunc_completions_helper "poetry completions zsh" _poetry
-    zfunc_completions_helper "rustup completions zsh" _rustup
-    zfunc_completions_helper "rustup completions zsh cargo" _cargo
-    zfunc_completions_helper "kubectl completion zsh" _kubectl
-    zfunc_completions_helper "helm completion zsh" _helm
-    zfunc_completions_helper "k3d completion zsh" _k3d
-    zfunc_completions_helper "kind completion zsh" _kind
-    zfunc_completions_helper "flux completion zsh" _flux
-    zfunc_completions_helper "tilt completion zsh" _tilt
-    zfunc_completions_helper "earthly bootstrap --source zsh" _earthly
-    zfunc_completions_helper "glab completion --shell zsh" _glab
-    # force compinit
-    rm -f "$ZDOTDIR/.zcompdump"
-    echo "completions generated; you may need to restart your shell"
-}
-
-load_bash_completions() {
-    # specific bash-completions need to be called here
-    if command -v pipx &>/dev/null; then
-        if [ "$(uname)" = "Darwin" ]; then
-            source "$BREW_PREFIX/etc/bash_completion.d/pipx"
-        elif [ "$(uname)" = "Linux" ]; then
-            eval "$(register-python-argcomplete pipx)"
-        fi
-    fi
-    if command -v az &>/dev/null; then
-        if [ "$(uname)" = "Darwin" ]; then
-            source "$BREW_PREFIX/etc/bash_completion.d/az"
-        elif [ "$(uname)" = "Linux" ]; then
-            if [ -f "/etc/arch-release" ]; then
-                source "/usr/share/bash-completion/completions/az"
-            elif [ -f "/etc/debian_version" ]; then
-                source "/etc/bash_completion.d/azure-cli"
-            fi
-        fi
-    fi
-}
-
 weather() {
     local param="$1"
     if [ -z "$param" ]; then
