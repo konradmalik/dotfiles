@@ -105,3 +105,37 @@ generate_completions() {
     rm -f "$ZDOTDIR/.zcompdump"
     echo "completions generated; you may need to restart your shell"
 }
+
+# fix for bad 'nix' completion (just the raw nix command)
+function _nix() {
+    local ifs_bk="$IFS"
+    local input=("${(Q)words[@]}")
+    IFS=$'\n'$'\t'
+    local res=($(NIX_GET_COMPLETIONS=$((CURRENT - 1)) "$input[@]"))
+    IFS="$ifs_bk"
+    local tpe="$res[1]"
+    local suggestions=(${res:1})
+    if [[ "$tpe" == filenames ]]; then
+        compadd -fa suggestions
+    else
+        compadd -a suggestions
+    fi
+}
+
+# nix-zsh-completions end
+# dotnet completion function
+function _dotnet_zsh_complete()
+{
+  local completions=("$(dotnet complete "$words")")
+
+  # If the completion list is empty, just continue with filename selection
+  if [ -z "$completions" ]
+  then
+    _arguments '*::arguments: _normal'
+    return
+  fi
+
+  # This is not a variable assigment, don't remove spaces!
+  _values = "${(ps:\n:)completions}"
+}
+compdef _dotnet_zsh_complete dotnet
