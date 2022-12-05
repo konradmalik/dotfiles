@@ -113,8 +113,7 @@ if [ "$(uname)" = "Darwin" ]; then
         && brew upgrade --cask \
         && nix-update \
         && cargo-update-binaries \
-        && asdf-update \
-        && generate_completions
+        && asdf-update
     }
     mac-clean() {
         brew cleanup \
@@ -133,8 +132,7 @@ elif [ "$(uname)" = "Linux" ]; then
             && nix-update \
             && (flatpak update || true) \
             && cargo-update-binaries \
-            && asdf-update \
-            && generate_completions
+            && asdf-update
         }
         arch-clean() {
             yay -Sc --noconfirm \
@@ -148,8 +146,7 @@ elif [ "$(uname)" = "Linux" ]; then
             && nix-update \
             && (flatpak update || true) \
             && cargo-update-binaries \
-            && asdf-update \
-            && generate_completions
+            && asdf-update
         }
         ubuntu-clean() {
             sudo apt autoremove -y \

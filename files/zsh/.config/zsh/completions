@@ -16,7 +16,7 @@ fpath+="${ZDOTDIR}/remote/nix-zsh-completions"
 
 # autocompletion
 autoload -Uz compinit; compinit
-# bash-complatible autocompletion
+# bash-compatible mode
 autoload -Uz bashcompinit; bashcompinit
 # use cache
 zstyle ':completion::complete:*' use-cache 1
@@ -33,51 +33,10 @@ zstyle ':completion:*' completer _extensions _complete _approximate
 # display completer while waiting
 zstyle ":completion:*" show-completer true
 
-# workaround around ( :) ) bash completion
-# caveat - tab needs to be pressed twice but whatever
-# at least this does not need to be loaded on each shell
-function _lazycomplete_az {
-    if command -v az &>/dev/null; then
-        compdef -d az
-        unfunction _lazycomplete_az
-        if [ "$(uname)" = "Darwin" ]; then
-            source "$BREW_PREFIX/etc/bash_completion.d/az"
-        elif [ "$(uname)" = "Linux" ]; then
-            if [ -f "/etc/arch-release" ]; then
-                source "/usr/share/bash-completion/completions/az"
-            elif [ -f "/etc/debian_version" ]; then
-                source "/etc/bash_completion.d/azure-cli"
-            fi
-        fi
-        # TODO how to call that? complete -p has some hints?
-        #_python_argcomplete az "$@"
-    fi
-}
-compdef _lazycomplete_az az
-
-function _lazycomplete_pipx {
-    if command -v pipx &>/dev/null; then
-        compdef -d pipx
-        unfunction _lazycomplete_pipx
-        if [ "$(uname)" = "Darwin" ]; then
-            source "$BREW_PREFIX/etc/bash_completion.d/pipx"
-        elif [ "$(uname)" = "Linux" ]; then
-            eval "$(register-python-argcomplete pipx)"
-        fi
-        #_python_argcomplete pipx "$@"
-    fi
-}
-compdef _lazycomplete_pipx pipx
-
-# lazy load zsh completion
-# unfortunately not all commands work well with that
+# bash completion made lazy
 completers=(
-    kubectl "kubectl completion zsh" _kubectl
-    helm "helm completion zsh" _helm
-    k3d "k3d completion zsh" _k3d
-    kind "kind completion zsh" _kind
-    flux "flux completion zsh" _flux
-    tilt "tilt completion zsh" _tilt
+    pipx "register-python-argcomplete pix" _python_argcomplete
+    az "register-python-argcomplete az" _python_argcomplete
 )
 # arrays in zsh start with 1 :')
 for ((i=1; i<${#completers[@]}; i+=3)); do
@@ -86,12 +45,51 @@ for ((i=1; i<${#completers[@]}; i+=3)); do
     local ccmd="${completers[i+2]}"
 
     eval "
+        _lazycomplete_$cmd() {
+            if command -v $cmd &>/dev/null; then
+                unset -f _lazycomplete_$cmd
+                source <($completer)
+                $ccmd \"\$@\"
+            fi
+        }
+        complete -F _lazycomplete_$cmd $cmd
+    "
+done
+
+# lazy load zsh completion
+completers=(
+    kubectl "kubectl completion zsh"
+    helm "helm completion zsh"
+    k3d "k3d completion zsh"
+    kind "kind completion zsh"
+    flux "flux completion zsh"
+    tilt "tilt completion zsh"
+    poetry "poetry completions zsh"
+    rustup "rustup completions zsh rustup"
+    cargo "rustup completions zsh cargo"
+)
+for ((i=1; i<${#completers[@]}; i+=2)); do
+    local cmd="${completers[i]}"
+    local completer="${completers[i+1]}"
+
+    eval "
         function _lazycomplete_$cmd {
             if command -v $cmd &>/dev/null; then
-                compdef -d $cmd
                 unfunction _lazycomplete_$cmd
-                source <(eval $completer)
-                _$ccmd "$@"
+                # if a dedicated completions file is already handled by package manager
+                # do nothing
+                if [ ! -f $ZSH_VENDOR_COMPLETIONS/_$cmd ]; then
+                    compdef -d $cmd
+                    source <($completer)
+                    # find the completion function we just sourced, some names are non-deterministic
+                    local ccmd=\$(print -l \${(ok)functions[(I)_*]} | grep \"$cmd\" | grep --invert-match \"^__\" | grep --invert-match \"debug\" | head -n 1)
+                    # just in case, some generator commands expect to pass this manually, like tilt
+                    # and some generate the command badly, like poetry. This is a mess
+                    compdef \$ccmd $cmd
+                    \$ccmd \"\$@\"
+                else
+                    # it is already provided by package manager
+                fi
             fi
         }
         compdef _lazycomplete_$cmd $cmd
@@ -99,12 +97,8 @@ for ((i=1; i<${#completers[@]}; i+=3)); do
 done
 
 # generate functions and store them in files for autoload by zsh
-# some completions need to be handled like that
+# (not using this right now but keep for reference, may come in handy)
 generate_completions() {
-    zfunc_completions_helper "poetry completions zsh" _poetry
-    zfunc_completions_helper "rustup completions zsh rustup" _rustup
-    zfunc_completions_helper "rustup completions zsh cargo" _cargo
-    zfunc_completions_helper "earthly bootstrap --source zsh" _earthly
     zfunc_completions_helper "glab completion --shell zsh" _glab
 
     # force compinit
