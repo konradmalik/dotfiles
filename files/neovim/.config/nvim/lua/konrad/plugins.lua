@@ -86,6 +86,7 @@ return packer.startup({
                 "hrsh7th/cmp-buffer", -- buffer source for nvim-cmp
                 "hrsh7th/cmp-path", -- path source for nvim-cmp
                 "rcarriga/cmp-dap", -- DAP repl source for nvim-cmp
+                "saadparwaiz1/cmp_luasnip", -- luasnip completion source for nvim-cmp
             },
         })
         -- completion end
