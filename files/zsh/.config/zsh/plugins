@@ -1,6 +1,10 @@
 # nix-zsh-completions start
 zsh_add_plugin "spwhitt/nix-zsh-completions"
 
+# fzf config
+export FZF_DEFAULT_COMMAND="fd --type f"
+export FZF_DEFAULT_OPTS="--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all' --preview 'bat --color=always --style=numbers --line-range=:200 {}'"
+
 # source zsh plugins that vary by platform
 if [ "$(uname)" = "Darwin" ]; then
     source ~/.fzf.zsh
