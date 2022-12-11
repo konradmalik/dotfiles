@@ -4,9 +4,11 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/release-22.11;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    nixpkgs-darwin.url = github:NixOS/nixpkgs/nixpkgs-22.11-darwin;
+
     darwin = {
       url = github:lnl7/nix-darwin;
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     home-manager = {
       url = github:nix-community/home-manager/release-22.11;
@@ -14,22 +16,30 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, darwin, home-manager }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-darwin, darwin, home-manager }:
     {
       darwinConfigurations = {
-        "konrad@mbp13" = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
-          modules = [
-            ./nix/hosts/mbp13
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.konrad = import ./nix/home/konrad/mbp13.nix;
-              # user home-manager.extraSpecialArgs to pass arguments to home.nix
-            }
-          ];
-        };
+        "konrad@mbp13" =
+          let
+            system = "x86_64-darwin";
+            nixpkgs = nixpkgs-darwin;
+          in
+          darwin.lib.darwinSystem {
+            inherit system;
+            inputs = {
+              inherit nixpkgs darwin;
+            };
+            modules = [
+              ./nix/hosts/mbp13
+              home-manager.darwinModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.konrad = import ./nix/home/konrad/mbp13.nix;
+                # user home-manager.extraSpecialArgs to pass arguments to home.nix
+              }
+            ];
+          };
       };
 
       homeConfigurations = {
