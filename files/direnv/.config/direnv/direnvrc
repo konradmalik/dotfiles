@@ -1,3 +1,1 @@
-# Uncomment the following line to make direnv silent by default.
-# export DIRENV_LOG_FORMAT=""
-source $HOME/.nix-profile/share/nix-direnv/direnvrc
+/nix/store/dxp4y7w8lh5k5zx353zhfggl89lnm5ky-home-manager-files/.config/direnv/direnvrc
