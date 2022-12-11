@@ -1,7 +1,9 @@
 *.log
 *.lock
-!flake.lock
 .DS_store
+#nix
+!flake.lock
+result
 #nvim
 .netrwhist
 **/packer_compiled.vim

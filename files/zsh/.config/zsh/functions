@@ -79,26 +79,30 @@ asdf-update() {
 
 # update nix
 nix-update() {
-    # current user's home (flakes enabled)
-    home-manager switch --flake "git+file:///home/konrad/Code/dotfiles?dir=files%2fnix%2f.config%2fnixpkgs#$(whoami)@$(hostname)"
-    # system-wide
     if [ "$(uname)" = "Darwin" ]; then
-        sudo --login sh -c 'nix-channel --update && nix-env -iA nixpkgs.nix && launchctl remove org.nixos.nix-daemon && launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist'
+        darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"
     elif [ "$(uname)" = "Linux" ]; then
+        # current user's home (flakes enabled)
+        home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+        # system-wide
         sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
     fi
 }
 
 # clean nix
 nix-clean() {
-    # home
-    home-manager expire-generations '-14 days'
+    if [ "$(uname)" = "Darwin" ]; then
+        darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+    elif [ "$(uname)" = "Linux" ]; then
+        # home
+        home-manager expire-generations '-14 days'
+    fi
     # current user's profile (flakes enabled)
     nix profile wipe-history --older-than 14d
-    # system-wide
-    sudo --login sh -c 'nix-env --delete-generations 14d'
-    # nix store garbage collection (I think this works globally once old generations are deleted for any person)
+    # nix store garbage collection
     nix store gc
+    # system-wide (goes into users as well)
+    sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
 }
 
 # update all cargo-installed binaries
