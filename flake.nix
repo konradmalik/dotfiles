@@ -48,9 +48,6 @@
           modules = [
             ./nix/home/konrad/m3800.nix
           ];
-
-          # Optionally use extraSpecialArgs
-          # to pass through arguments to home.nix
         };
       };
     };
