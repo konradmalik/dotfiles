@@ -59,6 +59,11 @@ in
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
+    git = {
+      enable = true;
+      package = pkgs.unstable.git;
+    };
+
     direnv = {
       enable = true;
       nix-direnv = {
@@ -70,16 +75,6 @@ in
       enable = true;
       package = pkgs.unstable.tmux;
       sensibleOnTop = false;
-#       keyMode = "vi";
-#       terminal = "xterm-256color";
-#       escapeTime = 0;
-# # increase scrollback buffer size
-# set-option -g history-limit 50000
-# # tmux messages are displayed for 4 seconds
-# set-option -g display-time 4000
-# # upgrade color
-# set-option -g default-terminal "xterm-256color" # enable 256
-# set-option -as terminal-features ",xterm*:RGB"
       extraConfig = lib.strings.concatStringsSep "\n" [
         (builtins.readFile "${publicDotfiles}/tmux/.config/konrad.conf")
         (builtins.readFile "${publicDotfiles}/tmux/.config/catppuccin.conf")
