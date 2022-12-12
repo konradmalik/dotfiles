@@ -3,8 +3,9 @@
 
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/release-22.11;
-    nixpkgs-unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
     nixpkgs-darwin.url = github:NixOS/nixpkgs/nixpkgs-22.11-darwin;
+    nixpkgs-unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    nixpkgs-trunk.url = github:nixos/nixpkgs;
 
     darwin = {
       url = github:lnl7/nix-darwin;
@@ -16,18 +17,41 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-darwin, darwin, home-manager }:
+  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, nixpkgs-trunk, darwin, home-manager }:
+    let
+      unstable-overlay = final: prev: {
+        unstable = import nixpkgs-unstable {
+          system = final.system;
+          config = final.config;
+        };
+      };
+      trunk-overlay =
+        final: prev: {
+          trunk = import nixpkgs-trunk {
+            system = final.system;
+            config = final.config;
+          };
+        };
+    in
     {
       darwinConfigurations = {
         "konrad@mbp13" =
           let
             system = "x86_64-darwin";
-            nixpkgs = nixpkgs-darwin;
+            pkgs = import nixpkgs-darwin {
+              inherit system;
+              config = {
+                allowUnfree = true;
+              };
+              overlays = [
+                unstable-overlay
+              ];
+            };
           in
           darwin.lib.darwinSystem {
-            inherit system;
+            inherit system pkgs;
             inputs = {
-              inherit nixpkgs darwin;
+              inherit darwin;
             };
             modules = [
               ./nix/hosts/mbp13
@@ -43,12 +67,25 @@
       };
 
       homeConfigurations = {
-        "konrad@m3800" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./nix/home/konrad/m3800.nix
-          ];
-        };
+        "konrad@m3800" =
+          let
+            system = "x86_64-linux";
+            pkgs = import nixpkgs {
+              inherit system;
+              config = {
+                allowUnfree = true;
+              };
+              overlays = [
+                unstable-overlay
+              ];
+            };
+          in
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [
+              ./nix/home/konrad/m3800.nix
+            ];
+          };
       };
     };
 }

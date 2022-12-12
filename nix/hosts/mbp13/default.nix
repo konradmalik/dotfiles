@@ -1,6 +1,8 @@
 { config, pkgs, ... }: {
   # packages installed in system profile
-  environment.systemPackages = [ ];
+  environment.systemPackages = [
+    pkgs.unstable.slack
+  ];
 
   networking.hostName = "mbp13";
 
@@ -8,10 +10,11 @@
   nix.package = pkgs.nix;
   services.nix-daemon.enable = true;
 
-  programs = { };
+  programs = {
+    # needed to Create /etc/zshrc that loads the nix-darwin environment.
+    zsh.enable = true;
+  };
 
-  # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;
 
   users.users.konrad = {
     name = "konrad";
