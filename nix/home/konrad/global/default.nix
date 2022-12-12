@@ -68,9 +68,21 @@ in
 
     tmux = {
       enable = true;
+      package = pkgs.unstable.tmux;
+      sensibleOnTop = false;
+#       keyMode = "vi";
+#       terminal = "xterm-256color";
+#       escapeTime = 0;
+# # increase scrollback buffer size
+# set-option -g history-limit 50000
+# # tmux messages are displayed for 4 seconds
+# set-option -g display-time 4000
+# # upgrade color
+# set-option -g default-terminal "xterm-256color" # enable 256
+# set-option -as terminal-features ",xterm*:RGB"
       extraConfig = lib.strings.concatStringsSep "\n" [
-      (builtins.readFile "${publicDotfiles}/tmux/.config/konrad.conf")
-      (builtins.readFile "${publicDotfiles}/tmux/.config/catppuccin.conf")
+        (builtins.readFile "${publicDotfiles}/tmux/.config/konrad.conf")
+        (builtins.readFile "${publicDotfiles}/tmux/.config/catppuccin.conf")
       ];
       plugins = [
         tmuxSuspend
