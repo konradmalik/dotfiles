@@ -11,8 +11,6 @@
         "discord"
         "drawio"
         "firefox"
-        "font-hack-nerd-font"
-        "font-meslo-lg-nerd-font"
         "gimp"
         "grammarly"
         "keepingyouawake"

@@ -1,5 +1,9 @@
 { config, lib, pkgs, dotfiles, ... }:
 {
+  fonts.fontconfig.enable = true;
+  home.packages = [
+    (pkgs.unstable.nerdfonts.override { fonts = [ "Hack" "Meslo" ]; })
+  ];
   programs.alacritty = {
     enable = true;
     package = pkgs.unstable.alacritty;
