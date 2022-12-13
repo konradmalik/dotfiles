@@ -4,6 +4,34 @@
     pkgs.unstable.slack
   ];
 
+  homebrew = {
+    casks =
+      [
+        "calibre"
+        "discord"
+        "drawio"
+        "firefox"
+        "font-hack-nerd-font"
+        "font-meslo-lg-nerd-font"
+        "gimp"
+        "grammarly"
+        "keepingyouawake"
+        "microsoft-teams"
+        "netnewswire"
+        "obsidian"
+        "signal"
+        "spotify"
+        "telegram"
+        "vlc"
+      ];
+
+    masApps = {
+      Bitwarden = 1352778147;
+      "GoodNotes 5" = 1444383602;
+      Tailscale = 1475387142;
+    };
+  };
+
   networking.hostName = "mbp13";
 
   # Auto upgrade nix package and the daemon service.
