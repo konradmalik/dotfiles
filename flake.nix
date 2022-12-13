@@ -32,21 +32,52 @@
             config = final.config;
           };
         };
+      yaml-overlay = final: prev:
+        let
+          fromYAML = yaml: builtins.fromJSON (
+            builtins.readFile (
+              final.runCommand "from-yaml"
+                {
+                  inherit yaml;
+                  allowSubstitutes = false;
+                  preferLocalBuild = true;
+                }
+                ''
+                  ${final.remarshal}/bin/remarshal  \
+                    -if yaml \
+                    -i <(echo "$yaml") \
+                    -of json \
+                    -o $out
+                ''
+            )
+          );
+
+          readYAML = path: fromYAML (builtins.readFile path);
+        in
+        {
+          lib = prev.lib // {
+            inherit fromYAML readYAML;
+          };
+        };
+
+
+      mkNixpkgs = source: system:
+        import source {
+          inherit system;
+          config = {
+            allowUnfree = true;
+          };
+          overlays = [ unstable-overlay trunk-overlay yaml-overlay ];
+        };
+
+      dotfiles = ./files;
     in
     {
       darwinConfigurations = {
         "konrad@mbp13" =
           let
             system = "x86_64-darwin";
-            pkgs = import nixpkgs-darwin {
-              inherit system;
-              config = {
-                allowUnfree = true;
-              };
-              overlays = [
-                unstable-overlay
-              ];
-            };
+            pkgs = mkNixpkgs nixpkgs-darwin system;
           in
           darwin.lib.darwinSystem {
             inherit system pkgs;
@@ -60,7 +91,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.konrad = import ./nix/home/konrad/mbp13.nix;
-                # user home-manager.extraSpecialArgs to pass arguments to home.nix
+                home-manager.extraSpecialArgs = { inherit dotfiles; };
               }
             ];
           };
@@ -70,21 +101,14 @@
         "konrad@m3800" =
           let
             system = "x86_64-linux";
-            pkgs = import nixpkgs {
-              inherit system;
-              config = {
-                allowUnfree = true;
-              };
-              overlays = [
-                unstable-overlay
-              ];
-            };
+            pkgs = mkNixpkgs nixpkgs system;
           in
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
               ./nix/home/konrad/m3800.nix
             ];
+            extraSpecialArgs = { inherit dotfiles; };
           };
       };
     };

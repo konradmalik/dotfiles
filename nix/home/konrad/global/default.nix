@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, dotfiles, ... }:
 
 let
   asdf = pkgs.unstable.asdf-vm;
@@ -29,16 +29,9 @@ let
           sha256 = "sha256-hlhBKC6UzkpUrCanJehs2FxK5SoYBoiGiioXdx6trC4=";
         };
     };
-
-  publicDotfiles = ./../../../../files;
 in
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
   home = {
-    username = lib.mkDefault "konrad";
-    homeDirectory = lib.mkDefault "/home/${config.home.username}";
-
     packages = [
       pkgs.unstable.bat
       asdf
@@ -67,47 +60,39 @@ in
   programs.home-manager.enable = true;
 
   # git
-  programs = {
-    git = {
-      enable = true;
-      package = pkgs.unstable.git;
-    };
+  programs.git = {
+    enable = true;
+    package = pkgs.unstable.git;
     # extraConfig won't do anything here because I link the config file below.
     # I may transition fully to home-manager someday...
   };
-  xdg.configFile."git/config".source = "${publicDotfiles}/git/config";
+  xdg.configFile."git/config".source = "${dotfiles}/git/config";
 
-  # direnv
-  programs = {
-    direnv = {
+  programs.direnv = {
+    enable = true;
+    nix-direnv = {
       enable = true;
-      nix-direnv = {
-        enable = true;
-      };
-      stdlib = ''
-        # enable asdf support
-        use_asdf() {
-          source_env "$(${asdf}/bin/asdf direnv envrc "$@")"
-        }
-      '';
     };
+    stdlib = ''
+      # enable asdf support
+      use_asdf() {
+        source_env "$(${asdf}/bin/asdf direnv envrc "$@")"
+      }
+    '';
   };
 
-  # tmux
-  programs = {
-    tmux = {
-      enable = true;
-      package = pkgs.unstable.tmux;
-      sensibleOnTop = false;
-      extraConfig = lib.strings.concatStringsSep "\n" [
-        (builtins.readFile "${publicDotfiles}/tmux/konrad.conf")
-        (builtins.readFile "${publicDotfiles}/tmux/catppuccin.conf")
-      ];
-      plugins = [
-        tmuxSuspend
-        tmuxModeIndicator
-      ];
-    };
+  programs.tmux = {
+    enable = true;
+    package = pkgs.unstable.tmux;
+    sensibleOnTop = false;
+    extraConfig = lib.strings.concatStringsSep "\n" [
+      (builtins.readFile "${dotfiles}/tmux/konrad.conf")
+      (builtins.readFile "${dotfiles}/tmux/catppuccin.conf")
+    ];
+    plugins = [
+      tmuxSuspend
+      tmuxModeIndicator
+    ];
   };
 }
 

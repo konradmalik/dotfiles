@@ -46,7 +46,10 @@ for index ({1..9}) alias "$index"="cd +${index}"; unset index
 if [ "$(uname)" = "Darwin" ]; then
     alias touchbar-restart='sudo pkill TouchBarServer'
     alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+    alias darwin-rebuild-switch='darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"'
 elif [ "$(uname)" = "Linux" ]; then
+    # nix
+    alias home-manager-switch='home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"'
     # pbcopy and pbpaste just like in osx
     if [ "$(loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type)" = "Type=x11" ]; then
         # x11

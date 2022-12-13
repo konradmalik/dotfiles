@@ -74,7 +74,9 @@ fix_ssh_auth_sock() {
 
 # update asdf and all plugins
 asdf-update() {
-    asdf update && asdf plugin-update --all
+    # actually we manage asdf via nix...
+    #asdf update
+    asdf plugin-update --all
 }
 
 # update nix
