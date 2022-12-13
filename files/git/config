@@ -75,9 +75,6 @@
 [help]
     autocorrect = 10
 
-[include]
-    path = ~/.gitconfig.Platform
-
 [init]
     defaultBranch = main
 

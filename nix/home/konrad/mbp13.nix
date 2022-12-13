@@ -1,10 +1,10 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [ ./global ];
   home = {
-    username = lib.mkDefault "konrad";
-    homeDirectory = lib.mkDefault "/Users/${config.home.username}";
+    username = "konrad";
+    homeDirectory = "/Users/${config.home.username}";
   };
 }
 

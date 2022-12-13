@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 let
+  asdf = pkgs.unstable.asdf-vm;
+  # additional git packages
+  gitPackages = with pkgs.unstable; [ delta git-extras ];
   # custom tmux plugins
   tmuxSuspend = pkgs.tmuxPlugins.mkTmuxPlugin
     {
@@ -36,6 +39,11 @@ in
     username = lib.mkDefault "konrad";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
 
+    packages = [
+      pkgs.unstable.bat
+      asdf
+    ] ++ gitPackages;
+
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards
@@ -55,29 +63,45 @@ in
     stateHome = "${config.home.homeDirectory}/.local/state";
   };
 
-  programs = {
-    # Let Home Manager install and manage itself.
-    home-manager.enable = true;
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
+  # git
+  programs = {
     git = {
       enable = true;
       package = pkgs.unstable.git;
     };
+    # extraConfig won't do anything here because I link the config file below.
+    # I may transition fully to home-manager someday...
+  };
+  xdg.configFile."git/config".source = "${publicDotfiles}/git/config";
 
+  # direnv
+  programs = {
     direnv = {
       enable = true;
       nix-direnv = {
         enable = true;
       };
+      stdlib = ''
+        # enable asdf support
+        use_asdf() {
+          source_env "$(${asdf}/bin/asdf direnv envrc "$@")"
+        }
+      '';
     };
+  };
 
+  # tmux
+  programs = {
     tmux = {
       enable = true;
       package = pkgs.unstable.tmux;
       sensibleOnTop = false;
       extraConfig = lib.strings.concatStringsSep "\n" [
-        (builtins.readFile "${publicDotfiles}/tmux/.config/konrad.conf")
-        (builtins.readFile "${publicDotfiles}/tmux/.config/catppuccin.conf")
+        (builtins.readFile "${publicDotfiles}/tmux/konrad.conf")
+        (builtins.readFile "${publicDotfiles}/tmux/catppuccin.conf")
       ];
       plugins = [
         tmuxSuspend
