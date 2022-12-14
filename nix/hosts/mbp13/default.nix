@@ -61,6 +61,7 @@
   users.users.konrad = {
     name = "konrad";
     home = "/Users/konrad";
+    shell = pkgs.zsh;
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
