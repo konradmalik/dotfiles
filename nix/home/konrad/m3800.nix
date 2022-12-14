@@ -2,6 +2,7 @@
 {
   imports = [
     ./global
+    ./global/linux.nix
     # cannot use it, missing dependencies for non-nixos hosts
     #./global/gui.nix
   ];

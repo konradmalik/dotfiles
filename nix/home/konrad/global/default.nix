@@ -3,7 +3,7 @@
 let
   asdf = pkgs.unstable.asdf-vm;
   # additional git packages
-  gitPackages = with pkgs.unstable; [ delta git-extras ];
+  gitPackages = with pkgs; [ delta git-extras ];
   # custom tmux plugins
   tmuxSuspend = pkgs.tmuxPlugins.mkTmuxPlugin
     {
@@ -32,10 +32,51 @@ let
 in
 {
   home = {
-    packages = [
-      pkgs.unstable.bat
+    packages = with pkgs;[
+      moreutils
+      unzip
+      wget
+      curl
+      tree
+      tldr
+      bottom
+      nq
+
+      fzf
+      bat
+      ripgrep
+      ripgrep-all
+      fd
+      sd
+      sad
+
+      hyperfine
+      viddy
+      watchexec
+
+      jq
+      jo
+      jc
+      dsq
+
+      du-dust
+      zoxide
+      procs
+      exa
+
+      up
+      croc
+      bitwarden-cli
+      glow
+
+      azure-cli
+      awscli
+    ] ++ [
       asdf
     ] ++ gitPackages;
+
+    file.".gdbinit".source = "${dotfiles}/gdb/.gdbinit";
+    file.".inputrc".source = "${dotfiles}/inputrc/.inputrc";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -56,13 +97,32 @@ in
     stateHome = "${config.home.homeDirectory}/.local/state";
   };
 
+  # dotfiles
+  xdg.configFile."glow/glow.yml".source = "${dotfiles}/glow/glow.yml";
+  # k9s is installed on per project basis, but config can be global
+  xdg.configFile."k9s/skin.yml".source = "${dotfiles}/k9s/skin.yml";
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # git
+  programs.gpg = {
+    enable = true;
+  };
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 86400;
+    maxCacheTtl = 86400;
+    enableScDaemon = false;
+    grabKeyboardAndMouse = true;
+    extraConfig = ''
+      # timeout pinentry (s)
+      pinentry-timeout 30
+    '';
+  };
+
   programs.git = {
     enable = true;
-    package = pkgs.unstable.git;
+    package = pkgs.git;
     # extraConfig won't do anything here because I link the config file below.
     # I may transition fully to home-manager someday...
   };
@@ -83,7 +143,7 @@ in
 
   programs.tmux = {
     enable = true;
-    package = pkgs.unstable.tmux;
+    package = pkgs.tmux;
     sensibleOnTop = false;
     extraConfig = lib.strings.concatStringsSep "\n" [
       (builtins.readFile "${dotfiles}/tmux/konrad.conf")

@@ -1,12 +1,13 @@
-{ config, lib, pkgs, dotfiles, ... }:
+{ pkgs, dotfiles, ... }:
 {
   fonts.fontconfig.enable = true;
-  home.packages = [
-    (pkgs.unstable.nerdfonts.override { fonts = [ "Hack" "Meslo" ]; })
+  home.packages = with pkgs;[
+    (nerdfonts.override { fonts = [ "Hack" "Meslo" ]; })
+    zathura
   ];
   programs.alacritty = {
     enable = true;
-    package = pkgs.unstable.alacritty;
+    package = pkgs.alacritty;
     settings =
       pkgs.lib.readYAML "${dotfiles}/alacritty/alacritty.yml"
       // pkgs.lib.readYAML "${dotfiles}/alacritty/catppuccin.yml";
