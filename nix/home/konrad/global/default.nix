@@ -58,6 +58,7 @@ in
       jo
       jc
       dsq
+      tidy-viewer
 
       du-dust
       zoxide
