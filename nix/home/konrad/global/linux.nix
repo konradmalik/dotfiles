@@ -4,6 +4,19 @@
     sshfs
   ];
 
+  services.gpg-agent = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultCacheTtl = 86400;
+    maxCacheTtl = 86400;
+    enableScDaemon = false;
+    grabKeyboardAndMouse = true;
+    extraConfig = ''
+      # timeout pinentry (s)
+      pinentry-timeout 30
+    '';
+  };
+
   programs.zsh.shellAliases = {
     home-manager-switch = ''home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"'';
     # pbcopy and pbpaste just like in osx

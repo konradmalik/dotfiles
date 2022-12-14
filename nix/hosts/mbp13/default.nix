@@ -1,13 +1,23 @@
 { config, pkgs, ... }: {
   # packages installed in system profile
   environment = {
-    systemPackages = [
-      pkgs.unstable.lima
-      pkgs.unstable.slack
+    systemPackages = with pkgs; [
+      lima
+      slack
     ];
     pathsToLink = [ "/share/zsh" ];
   };
 
+  nix = {
+    settings = {
+      auto-optimise-store = true;
+      min-free = 107374182400; # 100GB
+      max-free = 214748364800; # 200GB
+      experimental-features = "nix-command flakes";
+      keep-derivations = true;
+      keep-outputs = true;
+    };
+  };
 
   homebrew = {
     casks =
@@ -44,6 +54,7 @@
   programs = {
     # needed to Create /etc/zshrc that loads the nix-darwin environment.
     zsh.enable = true;
+    gnupg.agent.enable = true;
   };
 
 

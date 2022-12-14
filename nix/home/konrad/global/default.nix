@@ -1,7 +1,7 @@
 { config, lib, pkgs, dotfiles, ... }:
 
 let
-  asdf = pkgs.unstable.asdf-vm;
+  asdf = pkgs.asdf-vm;
   # additional git packages
   gitPackages = with pkgs; [ delta git-extras git-crypt git-lfs ];
   # custom tmux plugins
@@ -128,18 +128,6 @@ in
 
   programs.gpg = {
     enable = true;
-  };
-  services.gpg-agent = {
-    enable = true;
-    enableZshIntegration = true;
-    defaultCacheTtl = 86400;
-    maxCacheTtl = 86400;
-    enableScDaemon = false;
-    grabKeyboardAndMouse = true;
-    extraConfig = ''
-      # timeout pinentry (s)
-      pinentry-timeout 30
-    '';
   };
 
   programs.git = {
