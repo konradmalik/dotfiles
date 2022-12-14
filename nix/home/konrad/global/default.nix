@@ -3,7 +3,7 @@
 let
   asdf = pkgs.unstable.asdf-vm;
   # additional git packages
-  gitPackages = with pkgs; [ delta git-extras ];
+  gitPackages = with pkgs; [ delta git-extras git-crypt git-lfs ];
   # custom tmux plugins
   tmuxSuspend = pkgs.tmuxPlugins.mkTmuxPlugin
     {
@@ -32,6 +32,21 @@ let
 in
 {
   home = {
+    sessionVariables = {
+      LANG = "en_US.UTF-8";
+      LC_CTYPE = "en_US.UTF-8";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      GIT_EDITOR = "nvim";
+      DIFFPROG = "nvim -d";
+      PAGER = "less -FirSwX";
+      MANPAGER = "sh -c 'col -bx | ${pkgs.bat}/bin/bat -l man -p'";
+    };
+
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
+
     packages = with pkgs;[
       moreutils
       unzip
@@ -42,7 +57,6 @@ in
       bottom
       nq
 
-      fzf
       bat
       ripgrep
       ripgrep-all
@@ -61,7 +75,6 @@ in
       tidy-viewer
 
       du-dust
-      zoxide
       procs
       exa
 
@@ -72,6 +85,8 @@ in
 
       azure-cli
       awscli
+
+      dive
     ] ++ [
       asdf
     ] ++ gitPackages;
@@ -116,6 +131,7 @@ in
   };
   services.gpg-agent = {
     enable = true;
+    enableZshIntegration = true;
     defaultCacheTtl = 86400;
     maxCacheTtl = 86400;
     enableScDaemon = false;
@@ -161,10 +177,16 @@ in
     ];
   };
 
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+
   programs.starship = {
     enable = true;
     # enable once we move zsh here
-    enableZshIntegration = false;
+    enableZshIntegration = true;
     settings = {
       add_newline = false;
       command_timeout = 2000;
@@ -205,5 +227,260 @@ in
       zig.disabled = true;
     };
   };
-}
 
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    defaultCommand = "fd --type f";
+    defaultOptions = [
+      "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
+      "--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
+    ];
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    enableSyntaxHighlighting = true;
+    autocd = true;
+    dotDir = ".config/zsh";
+    defaultKeymap = "viins";
+    profileExtra = ''
+      # sourced on login shell, after zshenv.
+      # Once in linux, on every new terminal in macos
+
+      if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SSH_CONNECTION" ]; then
+        export SESSION_TYPE=remote/ssh
+      else
+        export SESSION_TYPE=local
+      fi
+    '';
+    shellAliases = {
+      # For a full list of active aliases, run `alias`.
+      # to run command that is shadowed by an alias run (for example): \ls or command ls
+      # allow sudo with aliases
+      sudo = "sudo ";
+      vim = "nvim";
+      vi = "nvim";
+      # prime
+      txs = "tmux-sessionizer";
+      txw = "tmux-windowizer";
+      # cat on steroids
+      cat = "bat";
+      # colorize stuff
+      ls = "exa --icons";
+      l = "ls -l";
+      la = "ls -a";
+      lla = "ls -la";
+      lt = "ls --tree";
+      grep = "grep --color=auto";
+      ip = "ip --color";
+      # faster navigation
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      # safety measures
+      rm = "rm -i";
+      mv = "mv -i";
+      # modern watch
+      watch = "viddy";
+      # csv pretty print
+      tv = "tidy-viewer";
+      # git (use for example g add instead of git add)
+      g = "git";
+    };
+    history = {
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
+      expireDuplicatesFirst = true;
+      extended = false;
+      ignoreDups = true;
+      ignoreSpace = true;
+      share = true;
+      save = 100000;
+      size = 100000;
+    };
+    initExtraFirst = ''
+      # beeping is annoying
+      unsetopt beep
+      # alacritty icon jumping
+      # https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878
+      printf "\e[?1042l"
+
+      # enable directories stack
+      setopt autopushd           # Push the current directory visited on the stack.
+      setopt pushdignoredups    # Do not store duplicates in the stack.
+      setopt pushdsilent         # Do not print the directory stack after pushd or popd.
+    '';
+    initExtra = ''
+      ## Reduce latency when pressing <Esc>
+      export KEYTIMEOUT=1
+
+      # force vi mode for zle (zsh line editor)
+      # (already done via viins)
+      # bindkey -v
+
+      # fix backspace issues according to https://superuser.com/questions/476532/how-can-i-make-zshs-vi-mode-behave-more-like-bashs-vi-mode/533685#533685
+      bindkey "^?" backward-delete-char
+
+      # Enable to edit command line in $EDITOR
+      autoload -Uz edit-command-line
+      zle -N edit-command-line
+      bindkey -M vicmd '^v' edit-command-line
+
+
+      # tmux baby
+      bindkey -s '^f' '^utmux-sessionizer^M'
+
+      #### Functions
+      weather() {
+          local param="$1"
+          if [ -z "$param" ]; then
+              curl "wttr.in/?F"
+          else
+              curl "wttr.in/''${param}?F"
+          fi
+      }
+
+      timezsh() {
+          local shell=''${1-''$SHELL}
+          for i in $(seq 1 10); do time $shell -i -c exit; done
+      }
+
+      # fix for tmux ssh socket
+      fix_ssh_auth_sock() {
+          # (On) reverses globbing order
+          # https://unix.stackexchange.com/a/27400
+          for tsock in /tmp/ssh*/agent*(On); do
+              if [ -O "$tsock" ]; then
+                  sock=$tsock
+                  break
+              fi
+          done
+          if [ -n "$sock" ]; then
+              export SSH_AUTH_SOCK="$sock"
+              echo "New socket: $sock"
+          else
+              echo "Could not find appropriate socket :("
+              unset SSH_AUTH_SOCK
+          fi
+      }
+
+      # update asdf and all plugins
+      asdf-update() {
+          # actually we manage asdf via nix...
+          #asdf update
+          asdf plugin-update --all
+      }
+
+      # update nix
+      nix-update() {
+          if [ "$(uname)" = "Darwin" ]; then
+              darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+          elif [ "$(uname)" = "Linux" ]; then
+              # current user's home (flakes enabled)
+              home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+              # system-wide
+              sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
+          fi
+      }
+
+      # clean nix
+      nix-clean() {
+          if [ "$(uname)" = "Darwin" ]; then
+              darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+          elif [ "$(uname)" = "Linux" ]; then
+              # home
+              home-manager expire-generations '-14 days'
+          fi
+          # current user's profile (flakes enabled)
+          nix profile wipe-history --older-than 14d
+          # nix store garbage collection
+          nix store gc
+          # system-wide (goes into users as well)
+          sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
+      }
+
+      # update functions
+      if [ "$(uname)" = "Darwin" ]; then
+          mac-upgrade() {
+              brew update \
+              && brew upgrade \
+              && brew upgrade --cask \
+              && nix-update \
+              && asdf-update
+          }
+          mac-clean() {
+              brew cleanup \
+              && nix-clean
+          }
+      elif [ "$(uname)" = "Linux" ]; then
+          if [ -f "/etc/arch-release" ]; then
+              arch-upgrade() {
+                  yay -Syu --sudoloop \
+                      --removemake \
+                      --devel \
+                      --nocleanmenu \
+                      --nodiffmenu \
+                      --noeditmenu \
+                      --noupgrademenu \
+                  && nix-update \
+                  && (flatpak update || true) \
+                  && asdf-update
+              }
+              arch-clean() {
+                  yay -Sc --noconfirm \
+                  && nix-clean
+              }
+          elif [ -f "/etc/debian_version" ]; then
+              ubuntu-upgrade() {
+                  sudo apt update \
+                  && sudo apt upgrade -y \
+                  && sudo snap refresh \
+                  && nix-update \
+                  && (flatpak update || true) \
+                  && asdf-update
+              }
+              ubuntu-clean() {
+                  sudo apt autoremove -y \
+                  && sudo apt clean \
+                  && sudo $HOME/.local/bin/remove-old-snaps.sh \
+                  && nix-clean
+              }
+        fi
+      fi
+
+      # TODO how to do it 'nix way'?
+      # Register SSH_AUTH_SOCK only if not in SSH
+      if [ -z "$SESSION_TYPE" ] || [ "$SESSION_TYPE"  = 'local' ]; then
+        if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+            ssh-agent -t 24h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+        fi
+        if [[ ! -e "$SSH_AUTH_SOCK" ]]; then
+            source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+        fi
+      fi
+    '';
+    completionInit = ''
+      autoload -U compinit && compinit
+      # autocompletion
+      autoload -Uz compinit && compinit
+      # bash-compatible mode
+      autoload -Uz bashcompinit && bashcompinit
+      # use cache
+      zstyle ':completion::complete:*' use-cache 1
+      # autocompletion menu
+      zstyle ':completion:*' menu select
+      # shift-tab to go back in completions
+      bindkey '^[[Z' reverse-menu-complete
+      # autocomplete with sudo
+      zstyle ':completion::complete:*' gain-privileges 1
+      # case insensitive and partial
+      zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+      # Defining the Completers
+      zstyle ':completion:*' completer _extensions _complete _approximate
+      # display completer while waiting
+      zstyle ":completion:*" show-completer true
+    '';
+  };
+}

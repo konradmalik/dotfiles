@@ -1,8 +1,13 @@
 { config, pkgs, ... }: {
   # packages installed in system profile
-  environment.systemPackages = [
-    pkgs.unstable.slack
-  ];
+  environment = {
+    systemPackages = [
+      pkgs.unstable.lima
+      pkgs.unstable.slack
+    ];
+    pathsToLink = [ "/share/zsh" ];
+  };
+
 
   homebrew = {
     casks =
