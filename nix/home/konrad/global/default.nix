@@ -399,7 +399,8 @@ in
               && asdf-update
           }
           mac-clean() {
-              brew cleanup \
+              brew autoremove \
+              && brew cleanup \
               && nix-clean
           }
       elif [ "$(uname)" = "Linux" ]; then
