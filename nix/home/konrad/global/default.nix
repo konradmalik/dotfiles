@@ -77,6 +77,11 @@ in
 
     file.".gdbinit".source = "${dotfiles}/gdb/.gdbinit";
     file.".inputrc".source = "${dotfiles}/inputrc/.inputrc";
+    file.".earthly/config.yml".source = "${dotfiles}/earthly/config.yml";
+    file.".local/bin" = {
+      source = "${dotfiles}/bin";
+      recursive = true;
+    };
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -153,6 +158,51 @@ in
       tmuxSuspend
       tmuxModeIndicator
     ];
+  };
+
+  programs.starship = {
+    enable = true;
+    # enable once we move zsh here
+    enableZshIntegration = false;
+    settings = {
+      add_newline = false;
+      command_timeout = 2000;
+
+      aws.disabled = true;
+      battery.disabled = true;
+      cmd_duration. disabled = true;
+      crystal.disabled = true;
+      dart.disabled = true;
+      docker_context. disabled = true;
+      dotnet.disabled = true;
+      elixir.disabled = true;
+      elm.disabled = true;
+      env_var.disabled = true;
+      erlang.disabled = true;
+      gcloud.disabled = true;
+      golang.disabled = false;
+      line_break.disabled = false;
+      java.disabled = false;
+      julia.disabled = true;
+      kubernetes.disabled = false;
+      lua.disabled = false;
+      memory_usage.disabled = true;
+      nim.disabled = true;
+      nix_shell.disabled = false;
+      package.disabled = true;
+      ocaml.disabled = true;
+      openstack.disabled = true;
+      perl.disabled = true;
+      php.disabled = true;
+      purescript.disabled = true;
+      python.disabled = false;
+      ruby.disabled = true;
+      rust.disabled = false;
+      shlvl.disabled = true;
+      singularity.disabled = true;
+      swift.disabled = true;
+      zig.disabled = true;
+    };
   };
 }
 
