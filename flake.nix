@@ -5,7 +5,6 @@
     nixpkgs.url = github:NixOS/nixpkgs/release-22.11;
     nixpkgs-darwin.url = github:NixOS/nixpkgs/nixpkgs-22.11-darwin;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
-    nixpkgs-trunk.url = github:nixos/nixpkgs;
 
     darwin = {
       url = github:lnl7/nix-darwin;
@@ -15,14 +14,17 @@
       url = github:nix-community/home-manager/release-22.11;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    klucznik = {
+      url = github:konradmalik/klucznik;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     dotfiles-private = {
       url = git+ssh://git@github.com/konradmalik/dotfiles-private;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, nixpkgs-trunk, darwin, home-manager, dotfiles-private }:
+  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, darwin, home-manager, klucznik, dotfiles-private }:
     let
       unstable-overlay = final: prev: {
         unstable = import nixpkgs-unstable {
@@ -30,13 +32,14 @@
           config = final.config;
         };
       };
-      trunk-overlay =
-        final: prev: {
-          trunk = import nixpkgs-trunk {
-            system = final.system;
-            config = final.config;
-          };
-        };
+      klucznik-overlay = final: prev: {
+        klucznik = klucznik.packages.${prev.system}.klucznik;
+      };
+      dotfiles-private-overlay = final: prev: {
+        dotfiles-private = dotfiles-private.packages.${prev.system}.default;
+      };
+      dotfiles = ./files;
+
       yaml-overlay = final: prev:
         let
           fromYAML = yaml: builtins.fromJSON (
@@ -65,17 +68,14 @@
           };
         };
 
-
       mkNixpkgs = source: system:
         import source {
           inherit system;
           config = {
             allowUnfree = true;
           };
-          overlays = [ unstable-overlay trunk-overlay yaml-overlay ];
+          overlays = [ unstable-overlay yaml-overlay dotfiles-private-overlay ];
         };
-
-      dotfiles = ./files;
     in
     {
       darwinConfigurations = {

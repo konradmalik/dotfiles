@@ -99,8 +99,7 @@ in
       source = "${dotfiles}/bin";
       recursive = true;
     };
-    # this seems harder that it should be, i must be missing something
-    file.".ssh/config.d".source = "${dotfiles-private.packages."${pkgs.system}".default}/ssh";
+    file.".ssh/config.d".source = "${pkgs.dotfiles-private}/ssh";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
