@@ -282,9 +282,17 @@ in
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    enableBashIntegration = true;
     settings = {
       add_newline = false;
       command_timeout = 2000;
+
+      shell = {
+        disabled = false;
+        zsh_indicator = "";
+        bash_indicator = "bsh ";
+        format = "[$indicator]($style)";
+      };
 
       aws.disabled = true;
       battery.disabled = true;
@@ -380,6 +388,11 @@ in
         hostname = "100.70.57.115";
       };
     };
+  };
+
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
   };
 
   programs.zsh = {
