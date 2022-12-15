@@ -15,9 +15,14 @@
       url = github:nix-community/home-manager/release-22.11;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dotfiles-private = {
+      url = git+ssh://git@github.com/konradmalik/dotfiles-private;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, nixpkgs-trunk, darwin, home-manager }:
+  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, nixpkgs-trunk, darwin, home-manager, dotfiles-private }:
     let
       unstable-overlay = final: prev: {
         unstable = import nixpkgs-unstable {
@@ -91,7 +96,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.konrad = import ./nix/home/konrad/mbp13.nix;
-                home-manager.extraSpecialArgs = { inherit dotfiles; };
+                home-manager.extraSpecialArgs = { inherit dotfiles dotfiles-private; };
               }
             ];
           };
@@ -108,7 +113,7 @@
             modules = [
               ./nix/home/konrad/m3800.nix
             ];
-            extraSpecialArgs = { inherit dotfiles; };
+            extraSpecialArgs = { inherit dotfiles dotfiles-private; };
           };
       };
     };

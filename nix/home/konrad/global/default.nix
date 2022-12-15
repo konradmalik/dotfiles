@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dotfiles, ... }:
+{ config, lib, pkgs, dotfiles, dotfiles-private, ... }:
 
 let
   # additional git packages
@@ -97,12 +97,8 @@ in
       source = "${dotfiles}/bin";
       recursive = true;
     };
-    # because this is a submodule, we need to reference files directly
-    # how to do better?
-    file.".ssh/config.d" = {
-      source = "${config.home.homeDirectory}/Code/dotfiles/private/files/ssh";
-      recursive = false;
-    };
+    # this seems harder that it should be, i must be missing something
+    file.".ssh/config.d".source = "${dotfiles-private.packages."${pkgs.system}".default}/ssh";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

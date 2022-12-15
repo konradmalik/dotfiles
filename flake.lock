@@ -20,6 +20,42 @@
         "type": "github"
       }
     },
+    "dotfiles-private": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1671099556,
+        "narHash": "sha256-a90lN1S7sagJlcG5ebQVYFCYu4Jcojocef8h17uribQ=",
+        "ref": "refs/heads/main",
+        "rev": "c772c81bbcb8580ed1ca067d1afe3b64d71751a2",
+        "revCount": 74,
+        "type": "git",
+        "url": "ssh://git@github.com/konradmalik/dotfiles-private"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/konradmalik/dotfiles-private"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -108,6 +144,7 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
+        "dotfiles-private": "dotfiles-private",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-darwin": "nixpkgs-darwin",
