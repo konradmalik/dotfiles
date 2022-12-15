@@ -4,6 +4,9 @@
     systemPackages = with pkgs; [
       lima
       slack
+      # only to provide tmux-256color terminfo
+      # until macos ships with newer ncurses
+      ncurses
     ];
     pathsToLink = [ "/share/zsh" ];
   };

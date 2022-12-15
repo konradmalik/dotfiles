@@ -262,10 +262,11 @@ in
   programs.tmux = {
     enable = true;
     sensibleOnTop = true;
-    # italics work with tmux-256color but that terminfo does not work with macos.
-    # Macos does not have that terminfo. Could be solved with 'tic'
-    # but not clear how to do it with nix. for now we use universal screen-256color
-    terminal = "screen-256color";
+    # tmux-256color is the proper one to enable italics
+    # just ensure you have that terminfo, newer ncurses provide it
+    # Macos does not have it but we fix that by installing ncurses through nix-darwin
+    # screen-256color works properly everywhere but does not have italics
+    terminal = "tmux-256color";
     keyMode = "vi";
     escapeTime = 0;
     baseIndex = 1;
