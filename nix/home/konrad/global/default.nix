@@ -77,6 +77,8 @@ in
       procs
       exa
 
+      neovim
+
       up
       croc
       bitwarden-cli
@@ -123,6 +125,12 @@ in
   xdg.configFile."glow/glow.yml".source = "${dotfiles}/glow/glow.yml";
   # k9s is installed on per project basis, but config can be global
   xdg.configFile."k9s/skin.yml".source = "${dotfiles}/k9s/skin.yml";
+  # neovim stuff
+  xdg.configFile."nvim" = {
+    source = "${dotfiles}/neovim";
+    recursive = true;
+  };
+
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
