@@ -2,7 +2,7 @@
 
 let
   # additional git packages
-  gitPackages = with pkgs; [ delta git-extras git-crypt git-lfs ];
+  gitPackages = with pkgs; [ git-extras git-crypt ];
   # custom tmux plugins
   tmuxSuspend = pkgs.tmuxPlugins.mkTmuxPlugin
     {
@@ -144,10 +144,107 @@ in
   programs.git = {
     enable = true;
     package = pkgs.git;
-    # extraConfig won't do anything here because I link the config file below.
-    # I may transition fully to home-manager someday...
+    lfs.enable = true;
+    delta = {
+      enable = true;
+      options = {
+        features = "side-by-side";
+        syntax-theme = "Dracula";
+        line-numbers = true;
+        navigate = true;
+        hyperlinks = false;
+        dark = true;
+      };
+    };
+    userName = "Konrad Malik";
+    userEmail = "konrad.malik@gmail.com";
+    signing = {
+      key = "F75F59DD45C0D9016CCC3287DE3F236F1516A431";
+      signByDefault = true;
+    };
+    aliases = {
+      graph = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
+      root = "rev-parse --show-toplevel";
+      unstage = "reset HEAD --";
+      last = "log --name-status HEAD^..HEAD";
+      conflicts = "diff --name-only --diff-filter=U";
+      whatadded = "log --diff-filter=A";
+
+      a = "add";
+      ap = "add -p";
+      c = "commit --verbose";
+      ca = "commit -a --verbose";
+      cm = "commit -m";
+      cam = "commit -a -m";
+      m = "commit --amend --verbose";
+
+      f = "fetch";
+
+      d = "diff";
+      ds = "diff --stat";
+      dc = "diff --cached";
+      dl = "diff HEAD^..HEAD";
+
+      p = "push";
+      pl = "pull";
+
+      s = "status -s";
+      co = "checkout";
+      cob = "checkout -b";
+
+      mainbranch = "!git remote show origin | sed -n '/HEAD branch/s/.*: //p'";
+
+      # list branches sorted by last modified
+      b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'";
+      # list aliases
+      la = "--list-cmds=alias";
+      # gitignore.io
+      gitignore = "!curl -sL https://www.toptal.com/developers/gitignore/api/$@";
+    };
+    extraConfig = {
+      color = {
+        ui = true;
+      };
+
+      core = {
+        autocrlf = "input";
+        fsmonitor = true;
+      };
+
+      fetch = {
+        prune = true;
+      };
+
+      help = {
+        autocorrect = 10;
+      };
+
+      init = {
+        defaultBranch = "main";
+      };
+
+      merge = {
+        conflictstyle = "diff3";
+      };
+
+      mergetool = {
+        keepBackup = false;
+      };
+
+      push = {
+        default = "tracking";
+        autoSetupRemote = true;
+      };
+
+      pull = {
+        rebase = "merges";
+      };
+
+      worktree = {
+        guessRemote = true;
+      };
+    };
   };
-  xdg.configFile."git/config".source = "${dotfiles}/git/config";
 
   programs.direnv = {
     enable = true;
