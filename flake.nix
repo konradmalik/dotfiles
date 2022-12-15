@@ -71,7 +71,6 @@
         };
 
       dotfiles = ./files;
-      private-submodule = ./private;
     in
     {
       darwinConfigurations = {
@@ -92,7 +91,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.konrad = import ./nix/home/konrad/mbp13.nix;
-                home-manager.extraSpecialArgs = { inherit dotfiles private-submodule; };
+                home-manager.extraSpecialArgs = { inherit dotfiles; };
               }
             ];
           };
@@ -109,7 +108,7 @@
             modules = [
               ./nix/home/konrad/m3800.nix
             ];
-            extraSpecialArgs = { inherit dotfiles private-submodule; };
+            extraSpecialArgs = { inherit dotfiles; };
           };
       };
     };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dotfiles, private-submodule, ... }:
+{ config, lib, pkgs, dotfiles, ... }:
 
 let
   # additional git packages
@@ -97,9 +97,11 @@ in
       source = "${dotfiles}/bin";
       recursive = true;
     };
+    # because this is a submodule, we need to reference files directly
+    # how to do better?
     file.".ssh/config.d" = {
-      source = "${private-submodule}/files/ssh";
-      recursive = true;
+      source = "${config.home.homeDirectory}/Code/dotfiles/private/files/ssh";
+      recursive = false;
     };
 
     # This value determines the Home Manager release that your
@@ -178,7 +180,6 @@ in
 
   programs.starship = {
     enable = true;
-    # enable once we move zsh here
     enableZshIntegration = true;
     settings = {
       add_newline = false;
