@@ -53,10 +53,8 @@ in
       curl
       tree
       tldr
-      bottom
       nq
 
-      bat
       ripgrep
       ripgrep-all
       fd
@@ -67,7 +65,6 @@ in
       viddy
       watchexec
 
-      jq
       jo
       jc
       dsq
@@ -75,9 +72,6 @@ in
 
       du-dust
       procs
-      exa
-
-      neovim
 
       up
       croc
@@ -122,22 +116,57 @@ in
 
   # dotfiles
   xdg.configFile."glow/glow.yml".source = "${dotfiles}/glow/glow.yml";
-  # k9s is installed on per project basis, but config can be global
-  xdg.configFile."k9s/skin.yml".source = "${dotfiles}/k9s/skin.yml";
-  # neovim stuff
-  xdg.configFile."nvim" = {
-    source = "${dotfiles}/neovim";
-    recursive = true;
-  };
-
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  programs.gpg = {
+  programs.bash = {
     enable = true;
-    # let's stick to old standards for now
-    homedir = "${config.home.homeDirectory}/.gnupg";
+    enableCompletion = true;
+  };
+
+
+  programs.bat = {
+    enable = true;
+  };
+
+  programs.bottom = {
+    enable = true;
+    settings = {
+      flags = {
+        temperature_type = "c";
+      };
+    };
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv = {
+      enable = true;
+    };
+    stdlib = ''
+      # enable asdf support
+      use_asdf() {
+        source_env "$(${pkgs.asdf-vm}/bin/asdf direnv envrc "$@")"
+      }
+    '';
+  };
+
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    tmux.enableShellIntegration = true;
+    defaultCommand = "fd --type f";
+    defaultOptions = [
+      "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
+      "--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
+    ];
   };
 
   programs.git = {
@@ -245,45 +274,73 @@ in
     };
   };
 
-  programs.direnv = {
+  programs.gpg = {
     enable = true;
-    nix-direnv = {
-      enable = true;
+    # let's stick to old standards for now
+    homedir = "${config.home.homeDirectory}/.gnupg";
+  };
+
+  programs.jq = {
+    enable = true;
+  };
+
+  programs.k9s = {
+    enable = true;
+    skin = pkgs.lib.readYAML "${dotfiles}/k9s/skin.yml";
+  };
+
+  programs.neovim.enable = true;
+  xdg.configFile."nvim" = {
+    source = "${dotfiles}/neovim";
+    recursive = true;
+  };
+
+  programs.ssh = {
+    enable = true;
+    compression = true;
+    controlMaster = "auto";
+    controlPath = "/tmp/%r@%h:%p";
+    controlPersist = "1m";
+    serverAliveCountMax = 6;
+    serverAliveInterval = 15;
+
+    includes = [ "config.d/*" ];
+    matchBlocks = {
+      git = {
+        host = "github.com gitlab.com bitbucket.org";
+        user = "git";
+        identityFile = "${config.home.homeDirectory}/.ssh/private";
+      };
+      aur = {
+        host = "aur.archlinux.org";
+        user = "aur";
+        identityFile = "${config.home.homeDirectory}/.ssh/aur";
+      };
+      tailscale = {
+        host = "vaio xps12 rpi4-1 rpi4-2 m3800 mbp13";
+        user = "konrad";
+        forwardAgent = true;
+        identityFile = "${config.home.homeDirectory}/.ssh/private";
+      };
+      vaio = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.68.248.43";
+      };
+      xps12 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.120.134.20";
+      };
+      rpi4-1 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.124.27.100";
+      };
+      rpi4-2 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.127.1.93";
+      };
+      m3800 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.67.218.5";
+      };
+      mbp13 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.70.57.115";
+      };
     };
-    stdlib = ''
-      # enable asdf support
-      use_asdf() {
-        source_env "$(${pkgs.asdf-vm}/bin/asdf direnv envrc "$@")"
-      }
-    '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    sensibleOnTop = true;
-    # tmux-256color is the proper one to enable italics
-    # just ensure you have that terminfo, newer ncurses provide it
-    # Macos does not have it but we fix that by installing ncurses through nix-darwin
-    # screen-256color works properly everywhere but does not have italics
-    terminal = "tmux-256color";
-    keyMode = "vi";
-    escapeTime = 0;
-    baseIndex = 1;
-    historyLimit = 50000;
-    extraConfig = lib.strings.concatStringsSep "\n" [
-      (builtins.readFile "${dotfiles}/tmux/konrad.conf")
-      (builtins.readFile "${dotfiles}/tmux/catppuccin.conf")
-    ];
-    plugins = [
-      tmuxSuspend
-      tmuxModeIndicator
-    ];
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
   };
 
   programs.starship = {
@@ -338,69 +395,36 @@ in
     };
   };
 
-  programs.fzf = {
+  programs.tmux = {
     enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    tmux.enableShellIntegration = true;
-    defaultCommand = "fd --type f";
-    defaultOptions = [
-      "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
-      "--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
+    sensibleOnTop = true;
+    # tmux-256color is the proper one to enable italics
+    # just ensure you have that terminfo, newer ncurses provide it
+    # Macos does not have it but we fix that by installing ncurses through nix-darwin
+    # screen-256color works properly everywhere but does not have italics
+    terminal = "tmux-256color";
+    keyMode = "vi";
+    escapeTime = 0;
+    baseIndex = 1;
+    historyLimit = 50000;
+    extraConfig = lib.strings.concatStringsSep "\n" [
+      (builtins.readFile "${dotfiles}/tmux/konrad.conf")
+      (builtins.readFile "${dotfiles}/tmux/catppuccin.conf")
+    ];
+    plugins = [
+      tmuxSuspend
+      tmuxModeIndicator
     ];
   };
 
-  programs.ssh = {
+  programs.zathura = {
     enable = true;
-    compression = true;
-    controlMaster = "auto";
-    controlPath = "/tmp/%r@%h:%p";
-    controlPersist = "1m";
-    serverAliveCountMax = 6;
-    serverAliveInterval = 15;
-
-    includes = [ "config.d/*" ];
-    matchBlocks = {
-      git = {
-        host = "github.com gitlab.com bitbucket.org";
-        user = "git";
-        identityFile = "${config.home.homeDirectory}/.ssh/private";
-      };
-      aur = {
-        host = "aur.archlinux.org";
-        user = "aur";
-        identityFile = "${config.home.homeDirectory}/.ssh/aur";
-      };
-      tailscale = {
-        host = "vaio xps12 rpi4-1 rpi4-2 m3800 mbp13";
-        user = "konrad";
-        forwardAgent = true;
-        identityFile = "${config.home.homeDirectory}/.ssh/private";
-      };
-      vaio = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.68.248.43";
-      };
-      xps12 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.120.134.20";
-      };
-      rpi4-1 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.124.27.100";
-      };
-      rpi4-2 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.127.1.93";
-      };
-      m3800 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.67.218.5";
-      };
-      mbp13 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.70.57.115";
-      };
-    };
   };
 
-  programs.bash = {
+  programs.zoxide = {
     enable = true;
-    enableCompletion = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
   };
 
   programs.zsh = {
@@ -434,11 +458,6 @@ in
       # cat on steroids
       cat = "bat";
       # colorize stuff
-      ls = "exa --icons";
-      l = "ls -l";
-      la = "ls -a";
-      lla = "ls -la";
-      lt = "ls --tree";
       grep = "grep --color=auto";
       ip = "ip --color";
       # faster navigation
