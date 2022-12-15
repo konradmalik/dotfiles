@@ -261,8 +261,15 @@ in
 
   programs.tmux = {
     enable = true;
-    package = pkgs.tmux;
-    sensibleOnTop = false;
+    sensibleOnTop = true;
+    # italics work with tmux-256color but that terminfo does not work with macos.
+    # Macos does not have that terminfo. Could be solved with 'tic'
+    # but not clear how to do it with nix. for now we use universal screen-256color
+    terminal = "screen-256color";
+    keyMode = "vi";
+    escapeTime = 0;
+    baseIndex = 1;
+    historyLimit = 50000;
     extraConfig = lib.strings.concatStringsSep "\n" [
       (builtins.readFile "${dotfiles}/tmux/konrad.conf")
       (builtins.readFile "${dotfiles}/tmux/catppuccin.conf")
@@ -335,6 +342,7 @@ in
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
+    tmux.enableShellIntegration = true;
     defaultCommand = "fd --type f";
     defaultOptions = [
       "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
