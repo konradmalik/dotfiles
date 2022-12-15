@@ -1,7 +1,6 @@
-{ config, lib, pkgs, dotfiles, ... }:
+{ config, lib, pkgs, dotfiles, private-submodule, ... }:
 
 let
-  asdf = pkgs.asdf-vm;
   # additional git packages
   gitPackages = with pkgs; [ delta git-extras git-crypt git-lfs ];
   # custom tmux plugins
@@ -87,8 +86,8 @@ in
       awscli
 
       dive
-    ] ++ [
-      asdf
+
+      asdf-vm
     ] ++ gitPackages;
 
     file.".gdbinit".source = "${dotfiles}/gdb/.gdbinit";
@@ -96,6 +95,10 @@ in
     file.".earthly/config.yml".source = "${dotfiles}/earthly/config.yml";
     file.".local/bin" = {
       source = "${dotfiles}/bin";
+      recursive = true;
+    };
+    file.".ssh/config.d" = {
+      source = "${private-submodule}/files/ssh";
       recursive = true;
     };
 
@@ -148,7 +151,7 @@ in
     stdlib = ''
       # enable asdf support
       use_asdf() {
-        source_env "$(${asdf}/bin/asdf direnv envrc "$@")"
+        source_env "$(${pkgs.asdf-vm}/bin/asdf direnv envrc "$@")"
       }
     '';
   };
@@ -227,6 +230,54 @@ in
       "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
       "--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
     ];
+  };
+
+  programs.ssh = {
+    enable = true;
+    compression = true;
+    controlMaster = "auto";
+    controlPath = "/tmp/%r@%h:%p";
+    controlPersist = "1m";
+    serverAliveCountMax = 6;
+    serverAliveInterval = 15;
+
+    includes = [ "config.d/*" ];
+    matchBlocks = {
+      git = {
+        host = "github.com gitlab.com bitbucket.org";
+        user = "git";
+        identityFile = "${config.home.homeDirectory}/.ssh/private";
+      };
+      aur = {
+        host = "aur.archlinux.org";
+        user = "aur";
+        identityFile = "${config.home.homeDirectory}/.ssh/aur";
+      };
+      tailscale = {
+        host = "vaio xps12 rpi4-1 rpi4-2 m3800 mbp13";
+        user = "konrad";
+        forwardAgent = true;
+        identityFile = "${config.home.homeDirectory}/.ssh/private";
+      };
+      vaio = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.68.248.43";
+      };
+      xps12 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.120.134.20";
+      };
+      rpi4-1 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.124.27.100";
+      };
+      rpi4-2 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.127.1.93";
+      };
+      m3800 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.67.218.5";
+      };
+      mbp13 = lib.hm.dag.entryAfter [ "tailscale" ] {
+        hostname = "100.70.57.115";
+      };
+    };
   };
 
   programs.zsh = {
