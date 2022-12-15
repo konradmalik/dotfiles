@@ -128,6 +128,8 @@ in
 
   programs.gpg = {
     enable = true;
+    # let's stick to old standards for now
+    homedir = "${config.home.homeDirectory}/.gnupg";
   };
 
   programs.git = {
