@@ -68,7 +68,25 @@
     shell = pkgs.zsh;
   };
 
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
+  system = {
+    # Used for backwards compatibility, please read the changelog before changing.
+    # $ darwin-rebuild changelog
+    stateVersion = 4;
+
+    defaults = {
+      dock = {
+        tilesize = 64;
+        show-recents = true;
+      };
+      finder = {
+        ShowStatusBar = true;
+        ShowPathbar = true;
+        QuitMenuItem = true;
+      };
+    };
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToControl = true;
+    };
+  };
 }
