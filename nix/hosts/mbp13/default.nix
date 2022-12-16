@@ -4,6 +4,7 @@
     systemPackages = with pkgs; [
       lima
       slack
+      darwin-zsh-completions
       # only to provide tmux-256color terminfo
       # until macos ships with newer ncurses
       ncurses
