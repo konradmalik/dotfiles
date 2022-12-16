@@ -83,6 +83,9 @@
         ShowPathbar = true;
         QuitMenuItem = true;
       };
+      trackpad = {
+        Clicking = true;
+      };
     };
     keyboard = {
       enableKeyMapping = true;
