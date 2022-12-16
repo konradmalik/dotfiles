@@ -10,6 +10,16 @@
       ncurses
     ];
     pathsToLink = [ "/share/zsh" ];
+    etc = {
+      "ssh/sshd_config.d/99-nix.conf".text = ''
+        PermitRootLogin no
+        PasswordAuthentication no
+        ChallengeResponseAuthentication no
+        # TODO this won't work, see: https://github.com/NixOS/nixpkgs/issues/94653
+        AuthorizedKeysCommand /usr/local/bin/ssh-key-dir %u
+        AuthorizedKeysCommandUser root
+      '';
+    };
   };
 
   nix = {
