@@ -61,7 +61,8 @@ return packer.startup({
         -- Treesitter start
         use({
             "nvim-treesitter/nvim-treesitter",
-            run = ":TSUpdate",
+            -- parsers are installed with nix instead to avoid linking errors
+            -- run = ":TSUpdate",
         })
         use({
             'nvim-treesitter/nvim-treesitter-context',

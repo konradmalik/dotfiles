@@ -33,16 +33,16 @@ vim.fn.sign_define("DiagnosticSignInfo",
 vim.fn.sign_define("DiagnosticSignHint",
     { text = diag_icons.Hint, texthl = "DiagnosticSignHint" })
 
-local netman_ok, _ = pcall(require, "netman")
-if not netman_ok then
-    vim.notify("cannot load netman")
-    return
-end
+-- local netman_ok, _ = pcall(require, "netman")
+-- if not netman_ok then
+--     vim.notify("cannot load netman")
+--     return
+-- end
 
 neo_tree.setup({
     sources = {
         "filesystem",
-        "netman.ui.neo-tree",
+        -- "netman.ui.neo-tree",
     },
     close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
     enable_git_status = true,

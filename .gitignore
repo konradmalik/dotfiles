@@ -1,3 +1,4 @@
+.direnv
 *.log
 *.lock
 .DS_store

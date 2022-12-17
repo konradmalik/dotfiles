@@ -5,6 +5,7 @@
     nixpkgs.url = github:NixOS/nixpkgs/release-22.11;
     nixpkgs-darwin.url = github:NixOS/nixpkgs/nixpkgs-22.11-darwin;
     nixpkgs-unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    flake-utils.url = github:numtide/flake-utils;
 
     darwin = {
       url = github:lnl7/nix-darwin;
@@ -24,7 +25,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, darwin, home-manager, klucznik, dotfiles-private }:
+  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, flake-utils, darwin, home-manager, klucznik, dotfiles-private }:
     let
       unstable-overlay = final: prev: {
         unstable = import nixpkgs-unstable {
@@ -147,5 +148,16 @@
             extraSpecialArgs = { inherit dotfiles dotfiles-private; };
           };
       };
-    };
+    } //
+
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+      in
+      {
+        devShells.default = pkgs.callPackage ./shell.nix { };
+      }
+    );
 }

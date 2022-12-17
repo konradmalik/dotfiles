@@ -1,33 +1,146 @@
 { config, lib, pkgs, dotfiles, dotfiles-private, ... }:
 
 let
-  # additional git packages
-  gitPackages = with pkgs; [ git-extras git-crypt ];
-  # custom tmux plugins
-  tmuxSuspend = pkgs.tmuxPlugins.mkTmuxPlugin
-    {
-      pluginName = "tmux-suspend";
-      version = "main";
-      src = pkgs.fetchFromGitHub
-        {
-          owner = "MunifTanjim";
-          repo = "tmux-suspend";
-          rev = "f7d59c0482d949013851722bb7de53c0158936db";
-          sha256 = "sha256-+1fKkwDmr5iqro0XeL8gkjOGGB/YHBD25NG+w3iW+0g=";
+  neovim = pkgs.neovim.override {
+    viAlias = true;
+    vimAlias = true;
+    withPython3 = true;
+    withNodeJs = true;
+    configure = {
+      packages = with pkgs.vimPlugins; {
+
+        dependencies = {
+          start = [
+            plenary-nvim
+            nui-nvim
+            nvim-web-devicons
+          ];
         };
-    };
-  tmuxModeIndicator = pkgs.tmuxPlugins.mkTmuxPlugin
-    {
-      pluginName = "tmux-mode-indicator";
-      version = "main";
-      src = pkgs.fetchFromGitHub
-        {
-          owner = "MunifTanjim";
-          repo = "tmux-mode-indicator";
-          rev = "11520829210a34dc9c7e5be9dead152eaf3a4423";
-          sha256 = "sha256-hlhBKC6UzkpUrCanJehs2FxK5SoYBoiGiioXdx6trC4=";
+
+        treesitter = {
+          start = [
+            nvim-treesitter.withAllGrammars
+            nvim-treesitter-context
+          ];
+          opt = [
+            playground
+          ];
         };
+
+        completion = {
+          start = [
+            nvim-cmp
+            cmp-buffer
+            cmp-nvim-lsp
+            cmp-path
+            cmp-dap
+            cmp_luasnip
+          ];
+        };
+
+        lsp = {
+          start = [
+            nvim-lspconfig
+            null-ls-nvim
+            luasnip
+            friendly-snippets
+            fidget-nvim
+          ];
+        };
+
+        dap = {
+          start = [
+            nvim-dap
+            nvim-dap-ui
+            nvim-dap-virtual-text
+          ];
+        };
+
+        telescope = {
+          start = [
+            telescope-nvim
+            telescope-fzf-native-nvim
+            telescope-file-browser-nvim
+          ];
+        };
+
+        statusline = {
+          start = [
+            lualine-nvim
+            nvim-navic
+          ];
+        };
+
+        misc = {
+          start = [
+            (pkgs.vimUtils.buildVimPluginFrom2Nix {
+              pname = "boole";
+              version = "2022-11-15";
+              src = pkgs.fetchFromGitHub {
+                owner = "nat-418";
+                repo = "boole.nvim";
+                rev = "d059fd7da634aaaabddbb280709f92effd9f2dba";
+                sha256 = "sha256-86+hAli8l7Htzx3SgFqE4aOoMKceMAf2M1fzUcl262g=";
+              };
+              meta.homepage = "https://github.com/nat-418/boole.nvim";
+            })
+            comment-nvim
+            diffview-nvim
+            gitsigns-nvim
+            harpoon
+            impatient-nvim
+            (pkgs.vimUtils.buildVimPluginFrom2Nix {
+              pname = "nvim-luaref";
+              version = "2022-01-17";
+              src = pkgs.fetchFromGitHub {
+                owner = "milisims";
+                repo = "nvim-luaref";
+                rev = "9cd3ed50d5752ffd56d88dd9e395ddd3dc2c7127";
+                sha256 = "sha256-nmsKg1Ah67fhGzevTFMlncwLX9gN0JkR7Woi0T5On34=";
+              };
+              meta.homepage = "https://github.com/milisims/nvim-luaref";
+            })
+            (pkgs.vimUtils.buildVimPluginFrom2Nix {
+              pname = "luv-vimdocs";
+              version = "2022-05-08";
+              src = pkgs.fetchFromGitHub {
+                owner = "nanotee";
+                repo = "luv-vimdocs";
+                rev = "4b37ef2755906e7f8b9a066b718d502684b55274";
+                sha256 = "sha256-4WOmEvxH0ECuiViLx1KdCtKq7p5cvlwCW9eV7J5Pblo=";
+              };
+              meta.homepage = "https://github.com/nanotee/luv-vimdocs";
+            })
+            nvim-spectre
+            which-key-nvim
+          ];
+          opt = [
+            vim-fugitive
+          ];
+        };
+
+        ui = {
+          start = [
+            catppuccin-nvim
+            dressing-nvim
+            (pkgs.vimUtils.buildVimPluginFrom2Nix {
+              pname = "neo-tree-nvim";
+              version = "2022-12-17";
+              src = pkgs.fetchFromGitHub {
+                owner = "nvim-neo-tree";
+                repo = "neo-tree.nvim";
+                rev = "73a90f6a736b51168ed05d89ed8872f75b98471c";
+                sha256 = "sha256-/WLOKFdngvHPgeJc7xGnWx8yUjr2KSnrbOgP3nzS+jY=";
+              };
+              meta.homepage = "https://github.com/nvim-neo-tree/neo-tree.nvim";
+            })
+            # go back to this once better/more stable
+            # noice-nvim
+          ];
+        };
+      };
     };
+  };
 in
 {
   home = {
@@ -55,16 +168,26 @@ in
       tldr
       nq
 
+      git-extras
+      git-crypt
+
+      bat
       ripgrep
       ripgrep-all
       fd
       sd
       sad
 
+      neovim
+      nodePackages.prettier
+      shfmt
+      shellcheck
+
       hyperfine
       viddy
       watchexec
 
+      jq
       jo
       jc
       dsq
@@ -84,7 +207,7 @@ in
       dive
 
       asdf-vm
-    ] ++ gitPackages;
+    ];
 
     file.".gdbinit".source = "${dotfiles}/gdb/.gdbinit";
     file.".inputrc".source = "${dotfiles}/inputrc/.inputrc";
@@ -116,6 +239,10 @@ in
 
   # dotfiles
   xdg.configFile."glow/glow.yml".source = "${dotfiles}/glow/glow.yml";
+  xdg.configFile."nvim" = {
+    source = "${dotfiles}/neovim";
+    recursive = true;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -125,10 +252,6 @@ in
     enableCompletion = true;
   };
 
-
-  programs.bat = {
-    enable = true;
-  };
 
   programs.bottom = {
     enable = true;
@@ -162,10 +285,10 @@ in
     enableZshIntegration = true;
     enableBashIntegration = true;
     tmux.enableShellIntegration = true;
-    defaultCommand = "fd --type f";
+    defaultCommand = "${pkgs.fd}/bin/fd --type f";
     defaultOptions = [
       "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
-      "--preview 'bat --color=always --style=numbers --line-range=:200 {}'"
+      "--preview '${pkgs.bat}/bin/bat --color=always --style=numbers --line-range=:200 {}'"
     ];
   };
 
@@ -280,19 +403,9 @@ in
     homedir = "${config.home.homeDirectory}/.gnupg";
   };
 
-  programs.jq = {
-    enable = true;
-  };
-
   programs.k9s = {
     enable = true;
     skin = pkgs.lib.readYAML "${dotfiles}/k9s/skin.yml";
-  };
-
-  programs.neovim.enable = true;
-  xdg.configFile."nvim" = {
-    source = "${dotfiles}/neovim";
-    recursive = true;
   };
 
   programs.ssh = {
@@ -412,13 +525,31 @@ in
       (builtins.readFile "${dotfiles}/tmux/catppuccin.conf")
     ];
     plugins = [
-      tmuxSuspend
-      tmuxModeIndicator
+      (pkgs.tmuxPlugins.mkTmuxPlugin
+        {
+          pluginName = "tmux-suspend";
+          version = "main";
+          src = pkgs.fetchFromGitHub
+            {
+              owner = "MunifTanjim";
+              repo = "tmux-suspend";
+              rev = "f7d59c0482d949013851722bb7de53c0158936db";
+              sha256 = "sha256-+1fKkwDmr5iqro0XeL8gkjOGGB/YHBD25NG+w3iW+0g=";
+            };
+        })
+      (pkgs.tmuxPlugins.mkTmuxPlugin
+        {
+          pluginName = "tmux-mode-indicator";
+          version = "main";
+          src = pkgs.fetchFromGitHub
+            {
+              owner = "MunifTanjim";
+              repo = "tmux-mode-indicator";
+              rev = "11520829210a34dc9c7e5be9dead152eaf3a4423";
+              sha256 = "sha256-hlhBKC6UzkpUrCanJehs2FxK5SoYBoiGiioXdx6trC4=";
+            };
+        })
     ];
-  };
-
-  programs.zathura = {
-    enable = true;
   };
 
   programs.zoxide = {
@@ -450,8 +581,6 @@ in
       # to run command that is shadowed by an alias run (for example): \ls or command ls
       # allow sudo with aliases
       sudo = "sudo ";
-      vim = "nvim";
-      vi = "nvim";
       # prime
       txs = "tmux-sessionizer";
       txw = "tmux-windowizer";
@@ -510,7 +639,6 @@ in
       autoload -Uz edit-command-line
       zle -N edit-command-line
       bindkey -M vicmd '^v' edit-command-line
-
 
       # tmux baby
       bindkey -s '^f' '^utmux-sessionizer^M'

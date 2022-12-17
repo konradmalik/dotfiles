@@ -1,26 +1,18 @@
-local status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not status_ok then
-    vim.notify("mason-lspconfig cannot be initialized!")
-    return
-end
-
-local servers = {
-    "sumneko_lua", -- called lua-language-server now
-    "gopls",
-    "pyright",
-    "rnix",
-    "omnisharp",
-    "rust_analyzer",
-    "yamlls",
-}
-
-mason_lspconfig.setup({
-    ensure_installed = servers,
-    automatic_installation = true,
-})
-
 local lspconfig = require("lspconfig")
 local lsp_handlers = require("konrad.lsp.handlers")
+
+local servers = {
+    -- always available
+    -- none
+    -- per project
+    "sumneko_lua", -- called lua-language-server now
+    "rnix",
+    "yamlls",
+    "gopls",
+    "pyright",
+    "omnisharp",
+    "rust_analyzer",
+}
 
 for _, server in ipairs(servers) do
     local found, server_setup_overrides = pcall(require, "konrad.lsp.settings." .. server)

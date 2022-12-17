@@ -12,16 +12,20 @@ local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
     sources = {
+        -- always available
         formatting.prettier,
-        formatting.terraform_fmt,
         formatting.shfmt,
-        formatting.black,
-        formatting.isort,
 
-        diagnostics.mypy,
         diagnostics.shellcheck,
 
         code_actions.gitsigns,
+
+        -- per project
+        formatting.black,
+        formatting.isort,
+        formatting.terraform_fmt,
+
+        diagnostics.mypy,
     },
     -- required to properly register keymaps etc.
     on_attach = handlers.on_attach,
