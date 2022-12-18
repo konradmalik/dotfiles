@@ -27,9 +27,3 @@ font:
   bold_italic:
     family: *fontfamily
     style: Bold Italic
-
-# colors
-import:
-  - ~/.config/alacritty/catppuccin.yml
-  # symlink for ex. macos.yml and other if needing a machine-specific conf like font size
-  - ~/.config/alacritty/local.yml

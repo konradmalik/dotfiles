@@ -99,4 +99,3 @@ k9s:
       bgColor: *background
       indicator:
         fgColor: *blue
-
