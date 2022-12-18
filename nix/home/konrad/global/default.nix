@@ -218,6 +218,15 @@ in
       recursive = true;
     };
     file.".ssh/config.d".source = "${pkgs.dotfiles-private}/ssh";
+    activation = {
+      authorized_keys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ -n "$VERBOSE_ARG" ]; then
+            echo "path to copy from '${dotfiles}/ssh/authorized_keys'"
+        fi
+        $DRY_RUN_CMD cp ${dotfiles}/ssh/authorized_keys ${config.home.homeDirectory}/.ssh/authorized_keys
+        $DRY_RUN_CMD chmod 600 ${config.home.homeDirectory}/.ssh/authorized_keys
+      '';
+    };
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage

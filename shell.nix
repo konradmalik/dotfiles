@@ -12,5 +12,7 @@ mkShell {
     nixpkgs-fmt
     # lua (neovim)
     sumneko-lua-language-server
+    # yaml
+    nodePackages.yaml-language-server
   ];
 }
