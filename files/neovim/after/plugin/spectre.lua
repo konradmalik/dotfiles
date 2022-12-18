@@ -30,4 +30,4 @@ keymap.set("n", "<leader>sw", function() spectre.open_visual({ select_word = tru
 -- has to be as string, needs to happen at the exact same time!
 keymap.set("v", "<leader>s", "<ESC><CMD>lua require('spectre').open_visual()<CR>",
     opts_with_desc("Open Selected Word"))
-keymap.set("n", "<leader>sb", spectre.open_file_search, opts, "Spectre Open File Search")
+keymap.set("n", "<leader>sb", spectre.open_file_search, opts_with_desc("Spectre Open File Search"))
