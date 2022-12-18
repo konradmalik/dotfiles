@@ -21,9 +21,7 @@ let
           start = [
             nvim-treesitter.withAllGrammars
             nvim-treesitter-context
-          ];
-          opt = [
-            playground
+            nvim-treesitter-textobjects
           ];
         };
 
@@ -88,6 +86,7 @@ let
             gitsigns-nvim
             harpoon
             impatient-nvim
+            indent-blankline-nvim
             (pkgs.vimUtils.buildVimPluginFrom2Nix {
               pname = "nvim-luaref";
               version = "2022-01-17";
@@ -112,6 +111,7 @@ let
             })
             nvim-spectre
             vim-fugitive
+            vim-sleuth
             which-key-nvim
           ];
         };

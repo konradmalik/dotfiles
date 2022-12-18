@@ -2,9 +2,6 @@ local fn = vim.fn -- call Vim functions
 local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 
-local indent = 4
-g.modeline = false -- disable modelines for security and because we dont need them
-
 -- treesitter highlighting for lua
 g.ts_highlight_lua = true
 if fn.executable("rg") then
@@ -18,9 +15,6 @@ opt.hlsearch = true -- :noh by default on or off
 opt.expandtab = true -- Use spaces instead of tabs
 opt.smartindent = true -- Insert indents automatically
 opt.autoindent = true -- Insert indents automatically
-opt.shiftwidth = indent -- Size of an indent
-opt.tabstop = indent -- Number of spaces tabs count for
-opt.softtabstop = indent -- Number of spaces tabs count for
 opt.ignorecase = true -- Ignore case
 opt.joinspaces = false -- No double spaces with join after a dot
 opt.shiftround = true -- Round indent
@@ -37,7 +31,7 @@ opt.list = true -- Show some invisible characters (tabs...)
 opt.number = true -- Print line number
 opt.relativenumber = true -- Relative line numbers
 opt.wrap = false -- no line wrapping
-opt.updatetime = 300 -- faster completion (4000ms default)
+opt.updatetime = 250 -- faster completion (4000ms default)
 opt.swapfile = false -- creates a swapfile
 opt.backup = false -- creates a backup file
 opt.undofile = true
@@ -49,6 +43,10 @@ opt.writebackup = false -- if a file is being edited by another program (or was 
 opt.cursorline = true -- highlight the current line
 opt.ruler = false
 opt.laststatus = 3 -- global statusline
+opt.signcolumn = 'yes'
+
+-- Set completeopt to have a better completion experience
+opt.completeopt = 'menuone,noselect'
 
 opt.shortmess:append "c" -- Don't show the dumb matching stuff.
 -- opt.shortmess:append "I" -- Disable intro message

@@ -9,6 +9,7 @@ end
 -- map leader
 keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 g.mapleader = " "
+g.maplocalleader = " "
 
 -- Modes
 --   normal_mode = "n",

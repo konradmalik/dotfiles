@@ -103,6 +103,7 @@ return {
         FoldOpen = "",
         Expanded = "▾",
         Collapsed = "▸",
+        Guide = "┊",
         Animations = {
             Fill = { "  ", "_ ", "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
             Dots = {
