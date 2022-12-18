@@ -122,7 +122,7 @@
               inherit darwin;
             };
             modules = [
-              ./nix/hosts/mbp13
+              ./nix/hosts/mbp13.nix
               home-manager.darwinModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;

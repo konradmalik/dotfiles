@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   # packages installed in system profile
   environment = {
     systemPackages = with pkgs; [
@@ -60,7 +61,6 @@
   };
 
   networking = {
-    hostName = "mbp13";
     # get via `networksetup -listallnetworkservices`
     knownNetworkServices = [
       "Wi-Fi"
@@ -78,13 +78,6 @@
     gnupg.agent.enable = true;
   };
 
-
-  users.users.konrad = {
-    name = "konrad";
-    home = "/Users/konrad";
-    shell = pkgs.zsh;
-  };
-
   system = {
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog
@@ -92,7 +85,7 @@
 
     defaults = {
       dock = {
-        tilesize = 64;
+        tilesize = 48;
         show-recents = true;
       };
       finder = {
