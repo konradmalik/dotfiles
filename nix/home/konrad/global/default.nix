@@ -1,153 +1,14 @@
 { config, lib, pkgs, dotfiles, dotfiles-private, ... }:
 
-let
-  neovim = pkgs.neovim.override {
-    viAlias = true;
-    vimAlias = true;
-    withPython3 = true;
-    withNodeJs = true;
-    configure = {
-      packages = with pkgs.vimPlugins; {
-
-        dependencies = {
-          start = [
-            plenary-nvim
-            nui-nvim
-            nvim-web-devicons
-          ];
-        };
-
-        treesitter = {
-          start = [
-            nvim-treesitter.withAllGrammars
-            nvim-treesitter-context
-            nvim-treesitter-textobjects
-          ];
-        };
-
-        completion = {
-          start = [
-            nvim-cmp
-            cmp-buffer
-            cmp-nvim-lsp
-            cmp-path
-            cmp_luasnip
-            cmp-dap
-          ];
-        };
-
-        lsp = {
-          start = [
-            nvim-lspconfig
-            null-ls-nvim
-            luasnip
-            friendly-snippets
-            fidget-nvim
-          ];
-        };
-
-        dap = {
-          opt = [
-            nvim-dap
-            nvim-dap-ui
-            nvim-dap-virtual-text
-          ];
-        };
-
-        telescope = {
-          start = [
-            telescope-nvim
-            telescope-fzf-native-nvim
-          ];
-        };
-
-        statusline = {
-          start = [
-            lualine-nvim
-            nvim-navic
-          ];
-        };
-
-        misc = {
-          start = [
-            (pkgs.vimUtils.buildVimPluginFrom2Nix {
-              pname = "boole";
-              version = "2022-11-15";
-              src = pkgs.fetchFromGitHub {
-                owner = "nat-418";
-                repo = "boole.nvim";
-                rev = "d059fd7da634aaaabddbb280709f92effd9f2dba";
-                sha256 = "sha256-86+hAli8l7Htzx3SgFqE4aOoMKceMAf2M1fzUcl262g=";
-              };
-              meta.homepage = "https://github.com/nat-418/boole.nvim";
-            })
-            comment-nvim
-            diffview-nvim
-            gitsigns-nvim
-            harpoon
-            impatient-nvim
-            indent-blankline-nvim
-            (pkgs.vimUtils.buildVimPluginFrom2Nix {
-              pname = "nvim-luaref";
-              version = "2022-01-17";
-              src = pkgs.fetchFromGitHub {
-                owner = "milisims";
-                repo = "nvim-luaref";
-                rev = "9cd3ed50d5752ffd56d88dd9e395ddd3dc2c7127";
-                sha256 = "sha256-nmsKg1Ah67fhGzevTFMlncwLX9gN0JkR7Woi0T5On34=";
-              };
-              meta.homepage = "https://github.com/milisims/nvim-luaref";
-            })
-            (pkgs.vimUtils.buildVimPluginFrom2Nix {
-              pname = "luv-vimdocs";
-              version = "2022-05-08";
-              src = pkgs.fetchFromGitHub {
-                owner = "nanotee";
-                repo = "luv-vimdocs";
-                rev = "4b37ef2755906e7f8b9a066b718d502684b55274";
-                sha256 = "sha256-4WOmEvxH0ECuiViLx1KdCtKq7p5cvlwCW9eV7J5Pblo=";
-              };
-              meta.homepage = "https://github.com/nanotee/luv-vimdocs";
-            })
-            nvim-spectre
-            vim-fugitive
-            vim-sleuth
-            which-key-nvim
-          ];
-        };
-
-        ui = {
-          start = [
-            catppuccin-nvim
-            dressing-nvim
-            (pkgs.vimUtils.buildVimPluginFrom2Nix {
-              pname = "neo-tree-nvim";
-              version = "2022-12-17";
-              src = pkgs.fetchFromGitHub {
-                owner = "nvim-neo-tree";
-                repo = "neo-tree.nvim";
-                rev = "73a90f6a736b51168ed05d89ed8872f75b98471c";
-                sha256 = "sha256-/WLOKFdngvHPgeJc7xGnWx8yUjr2KSnrbOgP3nzS+jY=";
-              };
-              meta.homepage = "https://github.com/nvim-neo-tree/neo-tree.nvim";
-            })
-            # go back to this once better/more stable
-            # noice-nvim
-          ];
-        };
-      };
-    };
-  };
-in
 {
+  imports = [
+    ./programs/neovim.nix
+  ];
+
   home = {
     sessionVariables = {
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-      GIT_EDITOR = "nvim";
-      DIFFPROG = "nvim -d";
       PAGER = "less -FirSwX";
       MANPAGER = "sh -c 'col -bx | ${pkgs.bat}/bin/bat -l man -p'";
       GOPATH = "${config.home.homeDirectory}/.go";
@@ -178,11 +39,6 @@ in
       fd
       sd
       sad
-
-      neovim
-      nodePackages.prettier
-      shfmt
-      shellcheck
 
       hyperfine
       viddy
@@ -249,10 +105,6 @@ in
 
   # dotfiles
   xdg.configFile."glow/glow.yml".source = "${dotfiles}/glow/glow.yml";
-  xdg.configFile."nvim" = {
-    source = "${dotfiles}/neovim";
-    recursive = true;
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
