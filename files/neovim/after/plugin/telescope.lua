@@ -10,7 +10,6 @@ telescope.setup({
 -- To get extensions loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 telescope.load_extension("fzf")
-telescope.load_extension("file_browser")
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
@@ -35,7 +34,6 @@ keymap.set("n", "<leader>go", builtin.git_status, opts_with_desc("Git status"))
 keymap.set("n", "<leader>gb", builtin.git_branches, opts_with_desc("Git branches"))
 keymap.set("n", "<leader>gc", builtin.git_commits, opts_with_desc("Git commits"))
 -- extensions
-keymap.set("n", "<leader>ft", telescope.extensions.file_browser.file_browser, opts_with_desc("File Browser"))
 local noice_ok, _ = pcall(require, "noice")
 if noice_ok then
     keymap.set("n", "<leader>fm", function() vim.cmd("Noice telescope") end, opts_with_desc("Noice"))

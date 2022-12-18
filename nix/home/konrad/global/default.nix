@@ -33,8 +33,8 @@ let
             cmp-buffer
             cmp-nvim-lsp
             cmp-path
-            cmp-dap
             cmp_luasnip
+            cmp-dap
           ];
         };
 
@@ -49,7 +49,7 @@ let
         };
 
         dap = {
-          start = [
+          opt = [
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
@@ -60,7 +60,6 @@ let
           start = [
             telescope-nvim
             telescope-fzf-native-nvim
-            telescope-file-browser-nvim
           ];
         };
 
@@ -112,10 +111,8 @@ let
               meta.homepage = "https://github.com/nanotee/luv-vimdocs";
             })
             nvim-spectre
-            which-key-nvim
-          ];
-          opt = [
             vim-fugitive
+            which-key-nvim
           ];
         };
 
@@ -153,9 +150,13 @@ in
       DIFFPROG = "nvim -d";
       PAGER = "less -FirSwX";
       MANPAGER = "sh -c 'col -bx | ${pkgs.bat}/bin/bat -l man -p'";
+      GOPATH = "${config.home.homeDirectory}/.go";
+      GOBIN = "${config.home.homeDirectory}/.go/bin";
     };
 
     sessionPath = [
+      "$GOBIN"
+      "$HOME/.cargo/bin"
       "$HOME/.local/bin"
     ];
 
