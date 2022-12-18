@@ -61,6 +61,10 @@
 
   networking = {
     hostName = "mbp13";
+    # get via `networksetup -listallnetworkservices`
+    knownNetworkServices = [
+      "Wi-Fi"
+    ];
     dns = [ "1.1.1.1" "1.0.0.1" ];
   };
 
