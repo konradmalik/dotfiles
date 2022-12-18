@@ -91,7 +91,6 @@
       finder = {
         ShowStatusBar = true;
         ShowPathbar = true;
-        QuitMenuItem = true;
       };
       trackpad = {
         Clicking = true;
