@@ -3,6 +3,7 @@
 {
   imports = [
     ./programs/neovim.nix
+    ./programs/tmux.nix
   ];
 
   home = {
@@ -146,7 +147,6 @@
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
-    tmux.enableShellIntegration = true;
     defaultCommand = "${pkgs.fd}/bin/fd --type f";
     defaultOptions = [
       "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
@@ -368,50 +368,6 @@
       swift.disabled = true;
       zig.disabled = true;
     };
-  };
-
-  programs.tmux = {
-    enable = true;
-    sensibleOnTop = true;
-    # tmux-256color is the proper one to enable italics
-    # just ensure you have that terminfo, newer ncurses provide it
-    # Macos does not have it but we fix that by installing ncurses through nix-darwin
-    # screen-256color works properly everywhere but does not have italics
-    terminal = "tmux-256color";
-    keyMode = "vi";
-    escapeTime = 0;
-    baseIndex = 1;
-    historyLimit = 50000;
-    extraConfig = lib.strings.concatStringsSep "\n" [
-      (builtins.readFile "${dotfiles}/tmux/konrad.conf")
-      (builtins.readFile "${dotfiles}/tmux/catppuccin.conf")
-    ];
-    plugins = [
-      (pkgs.tmuxPlugins.mkTmuxPlugin
-        {
-          pluginName = "tmux-suspend";
-          version = "main";
-          src = pkgs.fetchFromGitHub
-            {
-              owner = "MunifTanjim";
-              repo = "tmux-suspend";
-              rev = "f7d59c0482d949013851722bb7de53c0158936db";
-              sha256 = "sha256-+1fKkwDmr5iqro0XeL8gkjOGGB/YHBD25NG+w3iW+0g=";
-            };
-        })
-      (pkgs.tmuxPlugins.mkTmuxPlugin
-        {
-          pluginName = "tmux-mode-indicator";
-          version = "main";
-          src = pkgs.fetchFromGitHub
-            {
-              owner = "MunifTanjim";
-              repo = "tmux-mode-indicator";
-              rev = "11520829210a34dc9c7e5be9dead152eaf3a4423";
-              sha256 = "sha256-hlhBKC6UzkpUrCanJehs2FxK5SoYBoiGiioXdx6trC4=";
-            };
-        })
-    ];
   };
 
   programs.zoxide = {
