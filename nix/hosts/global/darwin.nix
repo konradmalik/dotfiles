@@ -23,7 +23,10 @@
     };
   };
 
+  # Auto upgrade nix package and the daemon service.
   nix = {
+    # gets propagated to home-manager
+    package = pkgs.nix;
     settings = {
       auto-optimise-store = true;
       min-free = 107374182400; # 100GB
@@ -33,6 +36,7 @@
       keep-outputs = true;
     };
   };
+  services.nix-daemon.enable = true;
 
   homebrew = {
     casks =
@@ -67,10 +71,6 @@
     ];
     dns = [ "1.1.1.1" "1.0.0.1" ];
   };
-
-  # Auto upgrade nix package and the daemon service.
-  nix.package = pkgs.nix;
-  services.nix-daemon.enable = true;
 
   programs = {
     # needed to Create /etc/zshrc that loads the nix-darwin environment.

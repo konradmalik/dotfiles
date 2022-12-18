@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./global/default.nix
+    ./global/darwin.nix
   ];
 
   networking.hostName = "mbp13";

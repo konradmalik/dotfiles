@@ -106,6 +106,18 @@
   # dotfiles
   xdg.configFile."glow/glow.yml".source = "${dotfiles}/glow/glow.yml";
 
+  nix = {
+    # package version should be set by something higher up
+    settings = {
+      auto-optimise-store = true;
+      min-free = 107374182400; # 100GB
+      max-free = 214748364800; # 200GB
+      experimental-features = "nix-command flakes";
+      keep-derivations = true;
+      keep-outputs = true;
+    };
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
