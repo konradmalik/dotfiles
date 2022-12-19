@@ -3,9 +3,10 @@
   # packages installed in system profile
   environment = {
     systemPackages = with pkgs; [
+      darwin-zsh-completions
+      gnused
       lima
       slack
-      darwin-zsh-completions
       # only to provide tmux-256color terminfo
       # until macos ships with newer ncurses
       ncurses
