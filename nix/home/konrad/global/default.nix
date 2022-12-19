@@ -175,6 +175,9 @@
     controlPersist = "1m";
     serverAliveCountMax = 6;
     serverAliveInterval = 15;
+    extraConfig = ''
+      AddKeysToAgent yes
+    '';
 
     includes = [ "config.d/*" ];
     matchBlocks = {
