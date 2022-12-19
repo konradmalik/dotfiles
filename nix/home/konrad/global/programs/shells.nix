@@ -140,17 +140,6 @@ let
             }
       fi
     fi
-
-    # TODO how to do it 'nix way'?
-    # Register SSH_AUTH_SOCK only if not in SSH
-    if [ -z "$SESSION_TYPE" ] || [ "$SESSION_TYPE"  = 'local' ]; then
-      if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-          ssh-agent -t 24h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-      fi
-      if [[ ! -e "$SSH_AUTH_SOCK" ]]; then
-          source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-      fi
-    fi
   '';
   zshCompletionInit = ''
     autoload -U compinit && compinit

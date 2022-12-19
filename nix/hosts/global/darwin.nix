@@ -4,6 +4,7 @@
   environment = {
     systemPackages = with pkgs; [
       darwin-zsh-completions
+      # required by neovim, but also useful
       gnused
       lima
       slack
@@ -76,7 +77,10 @@
   programs = {
     # needed to Create /etc/zshrc that loads the nix-darwin environment.
     zsh.enable = true;
-    gnupg.agent.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
   };
 
   system = {

@@ -18,7 +18,9 @@
     file.".gnupg/gpg-agent.conf".text = ''
       ## 1-day timeout
       default-cache-ttl 86400
+      default-cache-ttl-ssh 86400
       max-cache-ttl 86400
+      max-cache-ttl-ssh 86400
       # disable smartcard - we don't use it
       disable-scdaemon
       # grab mouse and keyboard
