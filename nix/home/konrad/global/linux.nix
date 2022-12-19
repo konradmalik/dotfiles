@@ -7,7 +7,6 @@
   nix = {
     # TODO once we move to nixos, move it higher
     package = pkgs.nix;
-    system-features = [ "kvm" ];
   };
 
   services.gpg-agent = {
