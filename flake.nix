@@ -2,25 +2,25 @@
   description = "NixOS systems and tools by konradmalik";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/release-22.11;
-    nixpkgs-darwin.url = github:NixOS/nixpkgs/nixpkgs-22.11-darwin;
-    nixpkgs-unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
-    flake-utils.url = github:numtide/flake-utils;
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
 
     darwin = {
-      url = github:lnl7/nix-darwin;
+      url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     home-manager = {
-      url = github:nix-community/home-manager/release-22.11;
+      url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     klucznik = {
-      url = github:konradmalik/klucznik;
+      url = "github:konradmalik/klucznik";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dotfiles-private = {
-      url = git+ssh://git@github.com/konradmalik/dotfiles-private;
+      url = "git+ssh://git@github.com/konradmalik/dotfiles-private";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
