@@ -1,0 +1,17 @@
+on: [push, pull_request]
+
+name: Ubuntu build test
+jobs:
+  tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: cachix/install-nix-action@v18
+
+      - name: Flake checks
+        run: nix flake check
+
+      - name: Flake build m3800
+        run: |
+          nix build --no-link --override-input dotfiles-private path:./private .#homeConfigurations.konrad@m3800.activationPackage

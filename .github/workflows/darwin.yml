@@ -1,0 +1,17 @@
+on: [push, pull_request]
+
+name: Nix-darwin build test
+jobs:
+  tests:
+    runs-on: macos-12
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: cachix/install-nix-action@v18
+
+      - name: Flake checks
+        run: nix flake check
+
+      - name: Flake build mbp13
+        run: |
+          nix build --no-link --override-input dotfiles-private path:./private .#darwinConfigurations.konrad@mbp13.system
