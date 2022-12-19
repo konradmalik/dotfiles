@@ -125,7 +125,6 @@ let
             indent-blankline-nvim
             nvim-luaref
             luv-vimdocs
-            nvim-spectre
             vim-fugitive
             vim-sleuth
             which-key-nvim

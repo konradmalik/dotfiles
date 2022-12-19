@@ -4,8 +4,6 @@
   environment = {
     systemPackages = with pkgs; [
       darwin-zsh-completions
-      # required by neovim, but also useful
-      gnused
       lima
       slack
       # only to provide tmux-256color terminfo

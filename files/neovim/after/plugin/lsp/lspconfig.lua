@@ -6,7 +6,7 @@ local servers = {
     -- none
     -- per project
     "sumneko_lua", -- called lua-language-server now
-    "rnix",
+    "nil_ls",
     "yamlls",
     "gopls",
     "pyright",

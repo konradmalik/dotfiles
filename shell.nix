@@ -8,7 +8,7 @@ with pkgs;
 mkShell {
   nativeBuildInputs = [
     # nix
-    rnix-lsp
+    nil
     nixpkgs-fmt
     # lua (neovim)
     sumneko-lua-language-server
