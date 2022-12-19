@@ -65,13 +65,6 @@ let
         fi
     }
 
-    # update asdf and all plugins
-    asdf-update() {
-        # actually we manage asdf via nix...
-        #asdf update
-        asdf plugin-update --all
-    }
-
     # update nix
     nix-update() {
         if [ "$(uname)" = "Darwin" ]; then
@@ -86,9 +79,7 @@ let
 
     # clean nix
     nix-clean() {
-        if [ "$(uname)" = "Darwin" ]; then
-            darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"
-        elif [ "$(uname)" = "Linux" ]; then
+        if [ "$(uname)" = "Linux" ]; then
             # home
             home-manager expire-generations '-14 days'
         fi
@@ -265,6 +256,8 @@ in
     shellAliases = {
       # For a full list of active aliases, run `alias`.
       # to run command that is shadowed by an alias run (for example): \ls or command ls
+      # asdf itself is managed via nix
+      asdf-update = "asdf plugin-update --all";
       # allow sudo with aliases
       sudo = "sudo ";
       # prime
