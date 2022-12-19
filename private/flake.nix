@@ -25,7 +25,7 @@
             src = ./.;
             installPhase = ''
               mkdir -p $out/ssh
-              touch > $out/ssh/empty
+              touch $out/ssh/empty
             '';
           };
         };

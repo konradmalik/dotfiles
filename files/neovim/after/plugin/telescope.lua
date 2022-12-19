@@ -19,20 +19,21 @@ end
 
 local builtin = require('telescope.builtin')
 
-keymap.set("n", "<leader>ff", builtin.find_files, opts_with_desc("Find Files"))
-keymap.set("n", "<leader>fg", builtin.live_grep, opts_with_desc("Live Grep"))
-keymap.set("n", "<leader>fb", builtin.buffers, opts_with_desc("Buffers"))
-keymap.set("n", "<leader>fh", builtin.help_tags, opts_with_desc("Help Tags"))
-keymap.set("n", "<leader>fo", builtin.oldfiles, opts_with_desc("Old Files"))
-keymap.set("n", "<leader>fr", builtin.lsp_references, opts_with_desc("LSP References"))
-keymap.set("n", "<leader>fp", builtin.lsp_implementations, opts_with_desc("LSP Implementations"))
-keymap.set("n", "<leader>fd", builtin.lsp_definitions, opts_with_desc("LSP Definitions"))
-keymap.set("n", "<leader>fT", builtin.lsp_type_definitions, opts_with_desc("LSP Type Definitions"))
+keymap.set("n", "<leader>ff", builtin.find_files, opts_with_desc("[F]ind [F]iles"))
+keymap.set("n", "<leader>fi", builtin.git_files, opts_with_desc("Find (G[i]t) Files"))
+keymap.set("n", "<leader>fg", builtin.live_grep, opts_with_desc("Live [G]rep"))
+keymap.set("n", "<leader>fb", builtin.buffers, opts_with_desc("[B]uffers"))
+keymap.set("n", "<leader>fh", builtin.help_tags, opts_with_desc("[H]elp Tags"))
+keymap.set("n", "<leader>fo", builtin.oldfiles, opts_with_desc("[O]ld Files"))
+keymap.set("n", "<leader>fr", builtin.lsp_references, opts_with_desc("LSP [R]eferences"))
+keymap.set("n", "<leader>fp", builtin.lsp_implementations, opts_with_desc("LSP Im[p]lementations"))
+keymap.set("n", "<leader>fd", builtin.lsp_definitions, opts_with_desc("LSP [D]efinitions"))
+keymap.set("n", "<leader>fT", builtin.lsp_type_definitions, opts_with_desc("LSP [T]ype Definitions"))
 keymap.set("n", "<leader>fq", builtin.diagnostics, opts_with_desc("Diagnostics"))
 -- git
 keymap.set("n", "<leader>go", builtin.git_status, opts_with_desc("Git status"))
-keymap.set("n", "<leader>gb", builtin.git_branches, opts_with_desc("Git branches"))
-keymap.set("n", "<leader>gc", builtin.git_commits, opts_with_desc("Git commits"))
+keymap.set("n", "<leader>gb", builtin.git_branches, opts_with_desc("Git [b]ranches"))
+keymap.set("n", "<leader>gc", builtin.git_commits, opts_with_desc("Git [c]ommits"))
 -- extensions
 local noice_ok, _ = pcall(require, "noice")
 if noice_ok then
