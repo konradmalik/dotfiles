@@ -4,7 +4,7 @@ local opt = vim.opt -- global/buffer/windows-scoped options
 
 -- treesitter highlighting for lua
 g.ts_highlight_lua = true
-if fn.executable("rg") then
+if fn.executable("rg") == 1 then
     opt.grepprg = "rg --vimgrep --no-heading --smart-case"
     opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 end

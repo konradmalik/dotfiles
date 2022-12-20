@@ -1,6 +1,6 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#omnisharp
 
-local omnisharp_dll_path = function()
+local function nix_omnisharp_dll_path()
     local binpath = vim.fn.exepath("OmniSharp")
     local omnipath = binpath:sub(1, -(string.len("bin/OmniSharp") + 1))
     local dllpath = omnipath .. "lib/omnisharp-roslyn/OmniSharp.dll"
@@ -32,9 +32,9 @@ local config = {
     analyze_open_documents_only = true,
 }
 
-if vim.fn.executable("dotnet") and vim.fn.executable("OmniSharp") then
+if vim.fn.executable("dotnet") == 1 and vim.fn.executable("OmniSharp") == 1 then
     -- use dotnet in the current PATH, and use dll found from OmniSharp in the current path
-    config["cmd"] = { "dotnet", omnisharp_dll_path() }
+    config["cmd"] = { "dotnet", nix_omnisharp_dll_path() }
 end
 
 return config
