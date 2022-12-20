@@ -46,103 +46,6 @@ let
     };
     meta.homepage = "https://github.com/nanotee/luv-vimdocs";
   };
-
-  neovim = pkgs.neovim.override {
-    viAlias = true;
-    vimAlias = true;
-    withPython3 = true;
-    withNodeJs = true;
-    configure = {
-      packages = with pkgs.vimPlugins; {
-
-        dependencies = {
-          start = [
-            plenary-nvim
-            nui-nvim
-            nvim-web-devicons
-          ];
-        };
-
-        treesitter = {
-          start = [
-            nvim-treesitter.withAllGrammars
-            nvim-treesitter-context
-            nvim-treesitter-textobjects
-          ];
-        };
-
-        completion = {
-          start = [
-            nvim-cmp
-            cmp-buffer
-            cmp-nvim-lsp
-            cmp-path
-            cmp_luasnip
-            cmp-dap
-          ];
-        };
-
-        lsp = {
-          start = [
-            nvim-lspconfig
-            null-ls-nvim
-            luasnip
-            friendly-snippets
-            fidget-nvim
-          ];
-        };
-
-        dap = {
-          opt = [
-            nvim-dap
-            nvim-dap-ui
-            nvim-dap-virtual-text
-          ];
-        };
-
-        telescope = {
-          start = [
-            telescope-nvim
-            telescope-fzf-native-nvim
-          ];
-        };
-
-        statusline = {
-          start = [
-            lualine-nvim
-            nvim-navic
-          ];
-        };
-
-        misc = {
-          start = [
-            boole
-            comment-nvim
-            diffview-nvim
-            gitsigns-nvim
-            harpoon
-            impatient-nvim
-            indent-blankline-nvim
-            nvim-luaref
-            luv-vimdocs
-            vim-fugitive
-            vim-sleuth
-            which-key-nvim
-          ];
-        };
-
-        ui = {
-          start = [
-            catppuccin-nvim
-            dressing-nvim
-            neo-tree-nvim
-            # go back to this once better/more stable
-            # noice-nvim
-          ];
-        };
-      };
-    };
-  };
 in
 {
   home = {
@@ -152,12 +55,72 @@ in
       GIT_EDITOR = "nvim";
       DIFFPROG = "nvim -d";
     };
+  };
 
-    packages = [
-      neovim
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    withPython3 = false;
+    withNodeJs = false;
+    withRuby = false;
+    extraPackages = [
       pkgs.nodePackages.prettier
       pkgs.shfmt
       pkgs.shellcheck
+    ];
+    plugins = with pkgs.vimPlugins; [
+      # dependencies
+      plenary-nvim
+      nui-nvim
+      nvim-web-devicons
+      # treesitter
+      nvim-treesitter.withAllGrammars
+      nvim-treesitter-context
+      nvim-treesitter-textobjects
+      # completion
+      nvim-cmp
+      cmp-buffer
+      cmp-nvim-lsp
+      cmp-path
+      cmp_luasnip
+      cmp-dap
+      # lsp
+      nvim-lspconfig
+      null-ls-nvim
+      luasnip
+      friendly-snippets
+      fidget-nvim
+      # dap
+      nvim-dap
+      nvim-dap-ui
+      nvim-dap-virtual-text
+      # telescope
+      telescope-nvim
+      telescope-fzf-native-nvim
+      # statusline
+      lualine-nvim
+      nvim-navic
+      # misc
+      boole
+      comment-nvim
+      diffview-nvim
+      gitsigns-nvim
+      harpoon
+      impatient-nvim
+      indent-blankline-nvim
+      nvim-luaref
+      luv-vimdocs
+      vim-fugitive
+      vim-sleuth
+      which-key-nvim
+      # ui
+      catppuccin-nvim
+      dressing-nvim
+      neo-tree-nvim
+      # go back to this once better/more stable
+      # noice-nvim
     ];
   };
 
