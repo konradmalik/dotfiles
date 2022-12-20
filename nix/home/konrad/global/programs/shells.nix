@@ -1,6 +1,6 @@
 { config, lib, pkgs, dotfiles, ... }:
 let
-  zshInitExtraFirst = ''
+  zshInitExtra = ''
     # beeping is annoying
     unsetopt beep
     # alacritty icon jumping
@@ -11,8 +11,10 @@ let
     setopt autopushd           # Push the current directory visited on the stack.
     setopt pushdignoredups    # Do not store duplicates in the stack.
     setopt pushdsilent         # Do not print the directory stack after pushd or popd.
-  '';
-  zshInitExtra = ''
+
+    # tmux baby
+    bindkey -s '^F' '^utmux-sessionizer^M'
+
     ## Reduce latency when pressing <Esc>
     export KEYTIMEOUT=1
 
@@ -27,9 +29,6 @@ let
     autoload -Uz edit-command-line
     zle -N edit-command-line
     bindkey -M vicmd '^v' edit-command-line
-
-    # tmux baby
-    bindkey -s '^f' '^utmux-sessionizer^M'
 
     #### Functions
     weather() {
@@ -90,56 +89,6 @@ let
         # system-wide (goes into users as well)
         sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
     }
-
-    # update functions
-    if [ "$(uname)" = "Darwin" ]; then
-        mac-upgrade() {
-            brew update \
-            && brew upgrade \
-            && brew upgrade --cask \
-            && nix-update \
-            && asdf-update
-        }
-        mac-clean() {
-            brew autoremove \
-            && brew cleanup \
-            && nix-clean
-        }
-    elif [ "$(uname)" = "Linux" ]; then
-        if [ -f "/etc/arch-release" ]; then
-            arch-upgrade() {
-                yay -Syu --sudoloop \
-                    --removemake \
-                    --devel \
-                    --nocleanmenu \
-                    --nodiffmenu \
-                    --noeditmenu \
-                    --noupgrademenu \
-                && nix-update \
-                && (flatpak update || true) \
-                && asdf-update
-            }
-            arch-clean() {
-                yay -Sc --noconfirm \
-                && nix-clean
-            }
-        elif [ -f "/etc/debian_version" ]; then
-            ubuntu-upgrade() {
-                sudo apt update \
-                && sudo apt upgrade -y \
-                && sudo snap refresh \
-                && nix-update \
-                && (flatpak update || true) \
-                && asdf-update
-            }
-            ubuntu-clean() {
-                sudo apt autoremove -y \
-                && sudo apt clean \
-                && sudo $HOME/.local/bin/remove-old-snaps.sh \
-                && nix-clean
-            }
-      fi
-    fi
   '';
   zshCompletionInit = ''
     autoload -U compinit && compinit
@@ -280,8 +229,8 @@ in
       save = 100000;
       size = 100000;
     };
-    initExtraFirst = zshInitExtraFirst;
     initExtra = zshInitExtra;
     completionInit = zshCompletionInit;
+    # use initExtraFirst for overrides in other modules
   };
 }

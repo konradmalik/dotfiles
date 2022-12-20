@@ -24,6 +24,7 @@ null_ls.setup({
         formatting.black,
         formatting.isort,
         formatting.terraform_fmt,
+        formatting.nixpkgs_fmt,
 
         diagnostics.mypy,
     },

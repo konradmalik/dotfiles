@@ -32,9 +32,31 @@
     '';
   };
 
-  programs.zsh.shellAliases = {
-    touchbar-restart = "sudo pkill TouchBarServer";
-    tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
-    darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"'';
+  programs.zsh = {
+    shellAliases = {
+      touchbar-restart = "sudo pkill TouchBarServer";
+      tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+      darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"'';
+    };
+    # initExtraFirst is not used in the global file, so we can override here
+    initExtraFirst = ''
+      # gpg agent is started via nix-darwin but GPG_TTY needs to be reset every new interactive shell
+      GPG_TTY="$(tty)"
+      export GPG_TTY
+
+      # update functions
+      mac-upgrade() {
+          brew update \
+          && brew upgrade \
+          && brew upgrade --cask \
+          && nix-update \
+          && asdf-update
+      }
+      mac-clean() {
+          brew autoremove \
+          && brew cleanup \
+          && nix-clean
+      }
+    '';
   };
 }
