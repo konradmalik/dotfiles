@@ -16,9 +16,7 @@ if not cmp_dap_ok then
     return
 end
 
--- init luasnip
 require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_snipmate").lazy_load()
 
 local kind_icons = require("konrad.icons").kind
 
