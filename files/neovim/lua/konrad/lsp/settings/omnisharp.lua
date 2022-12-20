@@ -7,7 +7,10 @@ local function nix_omnisharp_dll_path()
     return dllpath
 end
 
-local config = {
+return {
+    -- use dotnet in the current PATH, and use dll found from OmniSharp in the current path
+    cmd = { "dotnet", nix_omnisharp_dll_path() },
+
     -- Enables support for reading code style, naming convention and analyzer
     -- settings from .editorconfig.
     enable_editorconfig_support = true,
@@ -31,10 +34,3 @@ local config = {
     -- true
     analyze_open_documents_only = true,
 }
-
-if vim.fn.executable("dotnet") == 1 and vim.fn.executable("OmniSharp") == 1 then
-    -- use dotnet in the current PATH, and use dll found from OmniSharp in the current path
-    config["cmd"] = { "dotnet", nix_omnisharp_dll_path() }
-end
-
-return config

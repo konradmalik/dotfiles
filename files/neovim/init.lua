@@ -3,5 +3,3 @@ require("konrad.impatient")
 
 require("konrad.globals")
 require("konrad.disable_builtin")
-
-require("konrad.plugins")

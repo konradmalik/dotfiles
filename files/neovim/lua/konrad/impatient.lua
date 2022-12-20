@@ -4,4 +4,5 @@ if not impatient_ok then
     return
 end
 
-impatient.enable_profile()
+-- enable profiling, only if needed
+-- impatient.enable_profile()
