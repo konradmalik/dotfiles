@@ -55,6 +55,12 @@ in
       GIT_EDITOR = "nvim";
       DIFFPROG = "nvim -d";
     };
+
+    packages = with pkgs;[
+      #makes sense to keep those globally
+      nodePackages.prettier
+      shfmt
+    ];
   };
 
   programs.neovim = {
@@ -66,8 +72,7 @@ in
     withNodeJs = false;
     withRuby = false;
     extraPackages = [
-      pkgs.nodePackages.prettier
-      pkgs.shfmt
+      # this won't be useful globally, so neovim only is fine
       pkgs.shellcheck
     ];
     plugins = with pkgs.vimPlugins; [
