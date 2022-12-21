@@ -35,7 +35,7 @@ keymap.set("n", "<leader>go", builtin.git_status, opts_with_desc("Git status"))
 keymap.set("n", "<leader>gb", builtin.git_branches, opts_with_desc("Git [b]ranches"))
 keymap.set("n", "<leader>gc", builtin.git_commits, opts_with_desc("Git [c]ommits"))
 -- extensions
-local noice_ok, _ = pcall(require, "noice")
-if noice_ok then
-    keymap.set("n", "<leader>fm", function() vim.cmd("Noice telescope") end, opts_with_desc("Noice"))
-end
+-- local noice_ok, _ = pcall(require, "noice")
+-- if noice_ok then
+--     keymap.set("n", "<leader>fm", function() vim.cmd("Noice telescope") end, opts_with_desc("Noice"))
+-- end

@@ -25,7 +25,7 @@ let
     # fix backspace issues according to https://superuser.com/questions/476532/how-can-i-make-zshs-vi-mode-behave-more-like-bashs-vi-mode/533685#533685
     bindkey "^?" backward-delete-char
 
-    # Enable to edit command line in $EDITOR
+    # Enable to edit command line in $VISUAL
     autoload -Uz edit-command-line
     zle -N edit-command-line
     bindkey -M vicmd '^v' edit-command-line

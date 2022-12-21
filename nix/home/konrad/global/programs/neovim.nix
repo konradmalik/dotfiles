@@ -50,10 +50,12 @@ in
 {
   home = {
     sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-      GIT_EDITOR = "nvim";
-      DIFFPROG = "nvim -d";
+      # The EDITOR editor should be able to work without use of "advanced"
+      # terminal functionality (like old ed or ex mode of vi).
+      # It was used on teletype terminals.
+      EDITOR = "nvim -e -u NONE";
+      VISUAL = "nvim -u NONE";
+      GIT_EDITOR = "nvim -u NONE";
     };
 
     packages = with pkgs;[
@@ -117,7 +119,6 @@ in
       indent-blankline-nvim
       nvim-luaref
       luv-vimdocs
-      vim-fugitive
       vim-sleuth
       which-key-nvim
       # ui
