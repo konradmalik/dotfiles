@@ -3,7 +3,6 @@ if not status_ok then
     vim.notify("gitsigns cannot be initialized!")
     return
 end
-local diff = require("konrad.diff")
 
 gitsigns.setup({
     signs = {
@@ -33,5 +32,3 @@ keymap.set("n", "<leader>gr", gitsigns.reset_hunk, opts_with_desc("Reset Hunk"))
 keymap.set("n", "<leader>gR", gitsigns.reset_buffer, opts_with_desc("Reset Buffer"))
 keymap.set("n", "<leader>gs", gitsigns.stage_hunk, opts_with_desc("Stage Hunk"))
 keymap.set("n", "<leader>gu", gitsigns.undo_stage_hunk, opts_with_desc("Undo Stage Hunk"))
--- custom
-keymap.set("n", "<leader>gd", diff, opts_with_desc("Diff"))
