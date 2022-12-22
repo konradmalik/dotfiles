@@ -1,8 +1,5 @@
-local neo_tree_ok, neo_tree = pcall(require, "neo-tree")
-if not neo_tree_ok then
-    vim.notify("cannot load neo-tree")
-    return
-end
+-- Unless you are still migrating, remove the deprecated commands from v1.x
+vim.g.neo_tree_remove_legacy_commands = 1
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
@@ -10,8 +7,13 @@ local opts_with_desc = function(desc)
     return vim.tbl_extend("error", opts, { desc = "[NeoTree] " .. desc })
 end
 
--- nvim tree
 keymap.set("n", "<leader>tt", "<cmd>Neotree focus filesystem left toggle<cr>", opts_with_desc("Toggle"))
+
+local neo_tree_ok, neo_tree = pcall(require, "neo-tree")
+if not neo_tree_ok then
+    vim.notify("cannot load neo-tree")
+    return
+end
 
 local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
@@ -19,10 +21,6 @@ local git_icons = icons.git
 local docs_icons = icons.documents
 local lines_icons = icons.lines
 local ui_icons = icons.ui
-
-
--- Unless you are still migrating, remove the deprecated commands from v1.x
-vim.g.neo_tree_remove_legacy_commands = 1
 
 vim.fn.sign_define("DiagnosticSignError",
     { text = diag_icons.Error, texthl = "DiagnosticSignError" })

@@ -92,7 +92,6 @@ in
       cmp-nvim-lsp
       cmp-path
       cmp_luasnip
-      cmp-dap
       # lsp
       nvim-lspconfig
       null-ls-nvim
@@ -100,9 +99,18 @@ in
       friendly-snippets
       fidget-nvim
       # dap
-      nvim-dap
-      nvim-dap-ui
-      nvim-dap-virtual-text
+      {
+        plugin = nvim-dap;
+        optional = true;
+      }
+      {
+        plugin = nvim-dap-ui;
+        optional = true;
+      }
+      {
+        plugin = nvim-dap-virtual-text;
+        optional = true;
+      }
       # telescope
       telescope-nvim
       telescope-fzf-native-nvim
