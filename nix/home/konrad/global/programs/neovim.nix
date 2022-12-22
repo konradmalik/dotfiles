@@ -13,17 +13,6 @@ let
     };
     meta.homepage = "https://github.com/nat-418/boole.nvim";
   };
-  neo-tree-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "neo-tree-nvim";
-    version = "2022-12-17";
-    src = pkgs.fetchFromGitHub {
-      owner = "nvim-neo-tree";
-      repo = "neo-tree.nvim";
-      rev = "73a90f6a736b51168ed05d89ed8872f75b98471c";
-      sha256 = "sha256-/WLOKFdngvHPgeJc7xGnWx8yUjr2KSnrbOgP3nzS+jY=";
-    };
-    meta.homepage = "https://github.com/nvim-neo-tree/neo-tree.nvim";
-  };
   nvim-luaref = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "nvim-luaref";
     version = "2022-01-17";
@@ -34,17 +23,6 @@ let
       sha256 = "sha256-nmsKg1Ah67fhGzevTFMlncwLX9gN0JkR7Woi0T5On34=";
     };
     meta.homepage = "https://github.com/milisims/nvim-luaref";
-  };
-  luv-vimdocs = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "luv-vimdocs";
-    version = "2022-05-08";
-    src = pkgs.fetchFromGitHub {
-      owner = "nanotee";
-      repo = "luv-vimdocs";
-      rev = "4b37ef2755906e7f8b9a066b718d502684b55274";
-      sha256 = "sha256-4WOmEvxH0ECuiViLx1KdCtKq7p5cvlwCW9eV7J5Pblo=";
-    };
-    meta.homepage = "https://github.com/nanotee/luv-vimdocs";
   };
 in
 {
@@ -87,17 +65,51 @@ in
       nvim-treesitter-context
       nvim-treesitter-textobjects
       # completion
-      nvim-cmp
-      cmp-buffer
-      cmp-nvim-lsp
-      cmp-path
-      cmp_luasnip
+      {
+        plugin = nvim-cmp;
+        optional = false;
+      }
+      {
+        plugin = cmp-buffer;
+        optional = false;
+      }
+      {
+        plugin = cmp-nvim-lsp;
+        optional = false;
+      }
+      {
+        plugin = cmp-path;
+        optional = false;
+      }
+      {
+        plugin = cmp_luasnip;
+        optional = false;
+      }
       # lsp
-      nvim-lspconfig
-      null-ls-nvim
-      luasnip
-      friendly-snippets
-      fidget-nvim
+      {
+        plugin = nvim-lspconfig;
+        optional = false;
+      }
+      {
+        plugin = neodev-nvim;
+        optional = false;
+      }
+      {
+        plugin = null-ls-nvim;
+        optional = false;
+      }
+      {
+        plugin = luasnip;
+        optional = false;
+      }
+      {
+        plugin = friendly-snippets;
+        optional = false;
+      }
+      {
+        plugin = fidget-nvim;
+        optional = false;
+      }
       # dap
       {
         plugin = nvim-dap;
@@ -112,29 +124,41 @@ in
         optional = true;
       }
       # telescope
-      telescope-nvim
-      telescope-fzf-native-nvim
+      {
+        plugin = telescope-nvim;
+        optional = false;
+      }
+      {
+        plugin = telescope-fzf-native-nvim;
+        optional = false;
+      }
       # statusline
       lualine-nvim
       nvim-navic
       # misc
       boole
       comment-nvim
-      diffview-nvim
+      {
+        plugin = diffview-nvim;
+        optional = false;
+      }
       gitsigns-nvim
-      harpoon
+      {
+        plugin = harpoon;
+        optional = false;
+      }
       impatient-nvim
       indent-blankline-nvim
       nvim-luaref
-      luv-vimdocs
       vim-sleuth
       which-key-nvim
       # ui
       catppuccin-nvim
       dressing-nvim
-      neo-tree-nvim
-      # go back to this once better/more stable
-      # noice-nvim
+      {
+        plugin = neo-tree-nvim;
+        optional = false;
+      }
     ];
   };
 

@@ -1,22 +1,16 @@
 -- https://github.com/sumneko/lua-language-server
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
+local neodev_ok, neodev = pcall(require, "neodev")
+if not neodev_ok then
+    vim.notify("cannot load neodev")
+    return false
+end
+neodev.setup({
+    -- add any options here, or leave empty to use the default settings
+})
 
 return {
     settings = {
         Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = runtime_path,
-            },
-            diagnostics = {
-                globals = { 'vim' },
-            },
-            workspace = { library = vim.api.nvim_get_runtime_file('', true) },
-            -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = { enable = false },
         }
     }

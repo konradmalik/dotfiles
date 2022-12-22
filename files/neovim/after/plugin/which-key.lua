@@ -7,6 +7,6 @@ end
 which_key.setup({
     disable = {
         buftypes = {},
-        filetypes = { "TelescopePrompt", "neo-tree" },
+        filetypes = { "TelescopePrompt" },
     }
 })

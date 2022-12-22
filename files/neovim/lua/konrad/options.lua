@@ -8,7 +8,7 @@ if fn.executable("rg") == 1 then
     opt.grepprg = "rg --vimgrep --no-heading --smart-case"
     opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 end
-opt.mouse = "" -- disable mouse
+opt.mouse = "a"
 
 opt.hlsearch = false -- :noh by default on or off
 opt.incsearch = true;
