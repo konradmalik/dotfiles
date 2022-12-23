@@ -191,31 +191,29 @@ in
         export SESSION_TYPE=local
       fi
     '';
-    shellAliases = {
-      # For a full list of active aliases, run `alias`.
-      # to run command that is shadowed by an alias run (for example): \ls or command ls
+    shellGlobalAliases = {
       # asdf itself is managed via nix
       asdf-update = "asdf plugin-update --all";
-      # allow sudo with aliases
-      sudo = "sudo ";
-      # prime
-      txs = "tmux-sessionizer";
-      txw = "tmux-windowizer";
       # cat on steroids
       cat = "bat";
       # colorize stuff
       grep = "grep --color=auto";
       ip = "ip --color";
-      # faster navigation
-      ".." = "cd ..";
-      "..." = "cd ../..";
       # safety measures
       rm = "rm -i";
       mv = "mv -i";
       # modern watch
       watch = "viddy";
-      # csv pretty print
-      tv = "tidy-viewer";
+    };
+    shellAliases = {
+      # For a full list of active aliases, run `alias`.
+      # to run command that is shadowed by an alias run (for example): \ls or command ls
+      # prime
+      txs = "tmux-sessionizer";
+      txw = "tmux-windowizer";
+      # faster navigation
+      ".." = "cd ..";
+      "..." = "cd ../..";
       # git (use for example g add instead of git add)
       g = "git";
     };
