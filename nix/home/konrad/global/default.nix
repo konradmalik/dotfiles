@@ -47,6 +47,7 @@
       jq
       jo
       jc
+      xsv
       dsq
 
       du-dust
