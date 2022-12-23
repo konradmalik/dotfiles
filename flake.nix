@@ -111,7 +111,7 @@
     in
     {
       darwinConfigurations = {
-        "konrad@mbp13" =
+        mbp13 =
           let
             system = "x86_64-darwin";
             pkgs = mkNixpkgs { source = nixpkgs-darwin; optionalOverlays = [ darwin-zsh-completions-overlay ]; inherit system; };
@@ -134,8 +134,29 @@
           };
       };
 
+      nixosConfigurations = {
+        m3800 =
+          let
+            system = "x86_64-linux";
+            pkgs = mkNixpkgs { source = nixpkgs; inherit system; };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            modules = [
+              ./nix/hosts/m3800.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.konrad = import ./nix/home/konrad/m3800.nix;
+                home-manager.extraSpecialArgs = { inherit dotfiles dotfiles-private; };
+              }
+            ];
+          };
+      };
+
       homeConfigurations = {
-        "konrad@m3800" =
+        "konrad@generic" =
           let
             system = "x86_64-linux";
             pkgs = mkNixpkgs { source = nixpkgs; inherit system; };
@@ -143,7 +164,7 @@
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
-              ./nix/home/konrad/m3800.nix
+              ./nix/home/konrad/generic.nix
             ];
             extraSpecialArgs = { inherit dotfiles dotfiles-private; };
           };

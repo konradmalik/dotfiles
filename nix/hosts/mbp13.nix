@@ -4,6 +4,11 @@
     ./global/darwin.nix
   ];
 
+  nix = {
+    min-free = 107374182400; # 100GB
+    max-free = 214748364800; # 200GB
+  };
+
   networking.hostName = "mbp13";
 
   users.users.konrad = {

@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 {
+  imports = [
+    ./nix.nix
+  ];
+  services.nix-daemon.enable = true;
   # packages installed in system profile
   environment = {
     systemPackages = with pkgs; [
@@ -22,21 +26,6 @@
       '';
     };
   };
-
-  # Auto upgrade nix package and the daemon service.
-  nix = {
-    # gets propagated to home-manager
-    package = pkgs.nix;
-    settings = {
-      auto-optimise-store = true;
-      min-free = 107374182400; # 100GB
-      max-free = 214748364800; # 200GB
-      experimental-features = "nix-command flakes";
-      keep-derivations = true;
-      keep-outputs = true;
-    };
-  };
-  services.nix-daemon.enable = true;
 
   homebrew = {
     casks =
@@ -75,6 +64,7 @@
   programs = {
     # needed to Create /etc/zshrc that loads the nix-darwin environment.
     zsh.enable = true;
+    # as of now, no way to enable gpg-agent through home-manager for darwin
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
