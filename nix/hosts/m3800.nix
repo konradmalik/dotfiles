@@ -82,6 +82,8 @@
         slack
         spotify
         teams
+        wl-clipboard
+        wl-clipboard-x11
       ];
     };
   };
