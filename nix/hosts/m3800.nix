@@ -4,10 +4,10 @@
     [
       ./../hardware/m3800.nix
       ./global/nixos.nix
+      ./layers/nixos-de.nix
+      ./layers/konrad-gui.nix
     ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
   nix = {
     settings = {
       min-free = 53374182400; # ~50GB
@@ -29,32 +29,18 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  ##### disable nvidia, very nice battery life.
-  hardware.nvidiaOptimus.disable = lib.mkDefault true;
-  boot.blacklistedKernelModules = lib.mkDefault [ "nouveau" "nvidia" ];
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
-  #hardware.opengl.enable = true;
-  #hardware.nvidia.prime = {
-  #  offload.enable = true;
-  #  nvidiaBusId = "PCI:0:2:0";
-  #  intelBusId = "PCI:2:0:0";
-  #};
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  # disable builtin gnome-keyring
-  #services.gnome3.gnome-keyring.enable = lib.mkForce false;
-
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
+  ##### disable nvidia
+  hardware.nvidiaOptimus.disable = true;
+  boot.blacklistedKernelModules = [ "nouveau" "nvidia" ];
+  # or run it on-demand
+  # services.xserver.videoDrivers = [ "nvidia" ];
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  # hardware.opengl.enable = true;
+  # hardware.nvidia.prime = {
+  #   offload.enable = true;
+  #   nvidiaBusId = "PCI:0:2:0";
+  #   intelBusId = "PCI:2:0:0";
+  # };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -67,24 +53,13 @@
     pulse.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     users.konrad = {
-      packages = with pkgs; [
-        bitwarden
-        caffeine-ng
-        firefox
-        gnome.gnome-tweaks
-        gnomeExtensions.appindicator
-        slack
-        spotify
-        teams
-        wl-clipboard
-        wl-clipboard-x11
-      ];
+      shell = pkgs.zsh;
+      isNormalUser = true;
+      description = "Konrad";
+      extraGroups = [ "networkmanager" "wheel" "docker" ];
     };
   };
 }

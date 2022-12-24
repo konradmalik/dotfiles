@@ -114,7 +114,11 @@
         mbp13 =
           let
             system = "x86_64-darwin";
-            pkgs = mkNixpkgs { source = nixpkgs-darwin; optionalOverlays = [ darwin-zsh-completions-overlay ]; inherit system; };
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs-darwin;
+              optionalOverlays = [ darwin-zsh-completions-overlay ];
+            };
           in
           darwin.lib.darwinSystem {
             inherit system pkgs;
@@ -138,7 +142,10 @@
         m3800 =
           let
             system = "x86_64-linux";
-            pkgs = mkNixpkgs { source = nixpkgs; inherit system; };
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
           in
           nixpkgs.lib.nixosSystem {
             inherit system pkgs;
@@ -159,7 +166,10 @@
         "konrad@generic" =
           let
             system = "x86_64-linux";
-            pkgs = mkNixpkgs { source = nixpkgs; inherit system; };
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
           in
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;

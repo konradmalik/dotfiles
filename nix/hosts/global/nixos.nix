@@ -1,9 +1,8 @@
 { config, pkgs, lib, ... }:
 {
-  imports =
-    [
-      ./nix.nix
-    ];
+  imports = [
+    ./programs/nix.nix
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -47,25 +46,17 @@
   programs = {
     zsh.enable = true;
   };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     mutableUsers = true;
-    users.konrad = {
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      description = "Konrad";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
-      packages = with pkgs; [
-        git
-        sshfs
-      ];
-    };
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     busybox
+    git
     vim
   ];
 
@@ -92,5 +83,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
 }

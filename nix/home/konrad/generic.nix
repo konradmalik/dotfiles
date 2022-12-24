@@ -1,9 +1,8 @@
 { config, ... }:
 {
   imports = [
-    ./global
     ./global/nonnixos.nix
-    ./global/gui.nix
+    ./layers/gui.nix
   ];
 
   home = {

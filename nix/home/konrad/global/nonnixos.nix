@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./shared.nix
     ./programs/gpg-agent-systemd.nix
   ];
 

@@ -2,9 +2,8 @@
 
 {
   imports = [
-    ./global
     ./global/darwin.nix
-    ./global/gui.nix
+    ./layers/gui.nix
   ];
 
   home = {
@@ -14,4 +13,3 @@
 
   programs.alacritty.settings.font.size = 16.0;
 }
-
