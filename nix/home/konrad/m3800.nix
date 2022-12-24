@@ -15,7 +15,7 @@
   home = {
     username = "konrad";
     homeDirectory = "/home/${config.home.username}";
-    # Prevent clobbering SSH_AUTH_SOCK
+    # Prevent clobbering SSH_AUTH_SOCK by gnome
     sessionVariables.GSM_SKIP_SSH_AGENT_WORKAROUND = "1";
   };
 

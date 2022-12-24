@@ -36,7 +36,7 @@
     shellAliases = {
       touchbar-restart = "sudo pkill TouchBarServer";
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
-      darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"'';
+      darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"'';
     };
     # initExtraFirst is not used in the global file, so we can override here
     initExtraFirst = ''

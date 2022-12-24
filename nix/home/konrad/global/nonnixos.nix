@@ -3,6 +3,16 @@
   imports = [
     ./programs/gpg-agent-systemd.nix
   ];
+
+  nix = {
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = "nix-command flakes";
+      keep-derivations = true;
+      keep-outputs = true;
+    };
+  };
+
   programs.zsh = {
     shellAliases = {
       home-manager-switch = ''home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"'';

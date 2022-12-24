@@ -12,6 +12,10 @@ jobs:
       - name: Flake checks
         run: nix flake check
 
-      - name: Flake build m3800
+      - name: Flake build generic
         run: |
-          nix build --no-link --override-input dotfiles-private path:./private .#homeConfigurations.konrad@m3800.activationPackage
+          nix build --no-link --override-input dotfiles-private path:./private .#homeConfigurations.konrad@generic.activationPackage
+
+      - name: Flake build nixos m3800
+        run: |
+          nix build --no-link --override-input dotfiles-private path:./private  .#nixosConfigurations.m3800.config.system.build.toplevel
