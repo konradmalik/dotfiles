@@ -11,4 +11,4 @@ jobs:
 
       - name: Flake build mbp13
         run: |
-          nix build --no-link --override-input dotfiles-private path:./private .#darwinConfigurations.konrad@mbp13.system
+          nix build --no-link --override-input dotfiles-private path:./private .#darwinConfigurations.mbp13.system
