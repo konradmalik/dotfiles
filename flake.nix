@@ -163,7 +163,7 @@
       };
 
       homeConfigurations = {
-        "konrad@generic" =
+        "konrad@linux" =
           let
             system = "x86_64-linux";
             pkgs = mkNixpkgs {
@@ -174,7 +174,7 @@
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
-              ./nix/home/konrad/generic.nix
+              ./nix/home/konrad/linux.nix
             ];
             extraSpecialArgs = { inherit dotfiles dotfiles-private; };
           };

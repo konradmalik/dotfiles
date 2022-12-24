@@ -22,8 +22,27 @@
       pbpaste = "wl-paste";
       open = "xdg-open";
     };
-    # initExtraFirst is not used in the global file, so we can override here
     initExtraFirst = ''
+      # update nix
+      nix-update() {
+          # current user's home (flakes enabled)
+          home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+          # system-wide
+          sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
+      }
+
+      # clean nix
+      nix-clean() {
+          # home
+          home-manager expire-generations '-14 days'
+          # current user's profile (flakes enabled)
+          nix profile wipe-history --older-than 14d
+          # nix store garbage collection
+          nix store gc
+          # system-wide (goes into users as well)
+          sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
+      }
+
       if [ -f "/etc/arch-release" ]; then
           arch-upgrade() {
               yay -Syu --sudoloop \
@@ -35,7 +54,7 @@
                   --noupgrademenu \
               && nix-update \
               && (flatpak update || true) \
-              && asdf-update
+              && asdf plugin-update --all
           }
           arch-clean() {
               yay -Sc --noconfirm \
@@ -48,7 +67,7 @@
               && sudo snap refresh \
               && nix-update \
               && (flatpak update || true) \
-              && asdf-update
+              && asdf plugin-update --all
           }
           ubuntu-clean() {
               sudo apt autoremove -y \

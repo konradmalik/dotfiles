@@ -24,12 +24,21 @@
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
       darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"'';
     };
-    # initExtraFirst is not used in the global file, so we can override here
     initExtraFirst = ''
-      # gpg agent is started via nix-darwin but GPG_TTY needs to be reset every new interactive shell
-      GPG_TTY="$(tty)"
-      export GPG_TTY
-      gpg-connect-agent updatestartuptty /bye >/dev/null
+      # update nix
+      nix-update() {
+          darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"
+      }
+
+      # clean nix
+      nix-clean() {
+          # current user's profile (flakes enabled)
+          nix profile wipe-history --older-than 14d
+          # nix store garbage collection
+          nix store gc
+          # system-wide (goes into users as well)
+          sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
+      }
 
       # update functions
       mac-upgrade() {
@@ -37,7 +46,7 @@
           && brew upgrade \
           && brew upgrade --cask \
           && nix-update \
-          && asdf-update
+          && asdf plugin-update --all
       }
       mac-clean() {
           brew autoremove \

@@ -20,4 +20,14 @@
       pinentry-program ${pkgs.pinentry.override {enabledFlavors=["tty"];}}/bin/pinentry
     '';
   };
+  programs.zsh = {
+    # initExtraFirst is not used in the global file, so we can override here
+    initExtraFirst = ''
+      # gpg agent is started via nix-darwin but GPG_TTY needs to be reset every new interactive shell
+      GPG_TTY="$(tty)"
+      export GPG_TTY
+      gpg-connect-agent updatestartuptty /bye >/dev/null
+    '';
+  };
+
 }

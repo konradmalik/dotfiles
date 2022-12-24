@@ -49,4 +49,28 @@ in
   };
 
   programs.fzf.tmux.enableShellIntegration = true;
+
+  programs.zsh.initExtra = ''
+    # tmux baby
+    bindkey -s '^F' '^utmux-sessionizer^M'
+
+    # fix for tmux ssh socket
+    fix_ssh_auth_sock() {
+        # (On) reverses globbing order
+        # https://unix.stackexchange.com/a/27400
+        for tsock in /tmp/ssh*/agent*(On); do
+            if [ -O "$tsock" ]; then
+                sock=$tsock
+                break
+            fi
+        done
+        if [ -n "$sock" ]; then
+            export SSH_AUTH_SOCK="$sock"
+            echo "New socket: $sock"
+        else
+            echo "Could not find appropriate socket :("
+            unset SSH_AUTH_SOCK
+        fi
+    }
+  '';
 }

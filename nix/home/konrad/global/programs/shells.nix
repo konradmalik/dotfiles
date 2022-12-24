@@ -12,9 +12,6 @@ let
     setopt pushdignoredups    # Do not store duplicates in the stack.
     setopt pushdsilent         # Do not print the directory stack after pushd or popd.
 
-    # tmux baby
-    bindkey -s '^F' '^utmux-sessionizer^M'
-
     ## Reduce latency when pressing <Esc>
     export KEYTIMEOUT=1
 
@@ -43,51 +40,6 @@ let
     timezsh() {
         local shell=''${1-''$SHELL}
         for i in $(seq 1 10); do time $shell -i -c exit; done
-    }
-
-    # fix for tmux ssh socket
-    fix_ssh_auth_sock() {
-        # (On) reverses globbing order
-        # https://unix.stackexchange.com/a/27400
-        for tsock in /tmp/ssh*/agent*(On); do
-            if [ -O "$tsock" ]; then
-                sock=$tsock
-                break
-            fi
-        done
-        if [ -n "$sock" ]; then
-            export SSH_AUTH_SOCK="$sock"
-            echo "New socket: $sock"
-        else
-            echo "Could not find appropriate socket :("
-            unset SSH_AUTH_SOCK
-        fi
-    }
-
-    # update nix
-    nix-update() {
-        if [ "$(uname)" = "Darwin" ]; then
-            darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(whoami)@$(hostname)"
-        elif [ "$(uname)" = "Linux" ]; then
-            # current user's home (flakes enabled)
-            home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"
-            # system-wide
-            sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
-        fi
-    }
-
-    # clean nix
-    nix-clean() {
-        if [ "$(uname)" = "Linux" ]; then
-            # home
-            home-manager expire-generations '-14 days'
-        fi
-        # current user's profile (flakes enabled)
-        nix profile wipe-history --older-than 14d
-        # nix store garbage collection
-        nix store gc
-        # system-wide (goes into users as well)
-        sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
     }
   '';
   zshCompletionInit = ''
@@ -192,8 +144,6 @@ in
       fi
     '';
     shellGlobalAliases = {
-      # asdf itself is managed via nix
-      asdf-update = "asdf plugin-update --all";
       # cat on steroids
       cat = "bat";
       # colorize stuff
@@ -229,6 +179,5 @@ in
     };
     initExtra = zshInitExtra;
     completionInit = zshCompletionInit;
-    # use initExtraFirst for overrides in other modules
   };
 }
