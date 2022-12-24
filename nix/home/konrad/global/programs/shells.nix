@@ -143,19 +143,19 @@ in
         export SESSION_TYPE=local
       fi
     '';
-    shellGlobalAliases = {
+    shellAliases = {
       # cat on steroids
       cat = "bat";
+      # git (use for example g add instead of git add)
+      g = "git";
       # colorize stuff
       grep = "grep --color=auto";
       ip = "ip --color";
       # safety measures
-      rm = "rm -i";
       mv = "mv -i";
+      rm = "rm -i";
       # modern watch
       watch = "viddy";
-    };
-    shellAliases = {
       # For a full list of active aliases, run `alias`.
       # to run command that is shadowed by an alias run (for example): \ls or command ls
       # prime
@@ -164,8 +164,6 @@ in
       # faster navigation
       ".." = "cd ..";
       "..." = "cd ../..";
-      # git (use for example g add instead of git add)
-      g = "git";
     };
     history = {
       path = "${config.xdg.dataHome}/zsh/zsh_history";
