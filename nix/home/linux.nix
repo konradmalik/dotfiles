@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, username,... }:
 {
   imports = [
     ./global/nonnixos.nix
@@ -6,7 +6,7 @@
   ];
 
   home = {
-    username = "konrad";
+    username = "${username}";
     homeDirectory = "/home/${config.home.username}";
   };
 

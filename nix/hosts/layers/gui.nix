@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
-  users.users.konrad.packages = with pkgs; [
+  users.users.${username}.packages = with pkgs; [
     bitwarden
     caffeine-ng
     discord

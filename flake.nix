@@ -114,6 +114,7 @@
         mbp13 =
           let
             system = "x86_64-darwin";
+            username = "konrad";
             pkgs = mkNixpkgs {
               inherit system;
               source = nixpkgs-darwin;
@@ -122,26 +123,24 @@
           in
           darwin.lib.darwinSystem {
             inherit system pkgs;
-            inputs = {
-              inherit darwin;
-            };
+            specialArgs = { inherit username; };
             modules = [
               ./nix/hosts/mbp13.nix
               home-manager.darwinModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.konrad = import ./nix/home/konrad/mbp13.nix;
-                home-manager.extraSpecialArgs = { inherit dotfiles dotfiles-private; };
+                home-manager.users.${username} = import ./nix/home/mbp13.nix;
+                home-manager.extraSpecialArgs = { inherit dotfiles dotfiles-private username; };
               }
             ];
           };
       };
-
       nixosConfigurations = {
         m3800 =
           let
             system = "x86_64-linux";
+            username = "konrad";
             pkgs = mkNixpkgs {
               inherit system;
               source = nixpkgs;
@@ -149,14 +148,15 @@
           in
           nixpkgs.lib.nixosSystem {
             inherit system pkgs;
+            specialArgs = { inherit username; };
             modules = [
               ./nix/hosts/m3800.nix
               home-manager.nixosModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.konrad = import ./nix/home/konrad/m3800.nix;
-                home-manager.extraSpecialArgs = { inherit dotfiles dotfiles-private; };
+                home-manager.users.${username} = import ./nix/home/m3800.nix;
+                home-manager.extraSpecialArgs = { inherit dotfiles dotfiles-private username; };
               }
             ];
           };
@@ -166,6 +166,7 @@
         "konrad@linux" =
           let
             system = "x86_64-linux";
+            username = "konrad";
             pkgs = mkNixpkgs {
               inherit system;
               source = nixpkgs;
@@ -173,14 +174,12 @@
           in
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
-            modules = [
-              ./nix/home/konrad/linux.nix
-            ];
-            extraSpecialArgs = { inherit dotfiles dotfiles-private; };
+            modules = [ ./nix/home/linux.nix ];
+            extraSpecialArgs = { inherit dotfiles dotfiles-private username; };
           };
       };
-    } //
-
+    }
+    //
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {

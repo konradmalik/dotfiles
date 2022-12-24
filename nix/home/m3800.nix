@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, username, ... }:
 {
   imports = [
     ./global/nixos.nix
@@ -14,7 +14,7 @@
   home.sessionVariables.GSM_SKIP_SSH_AGENT_WORKAROUND = "1";
 
   home = {
-    username = "konrad";
+    username = "${username}";
     homeDirectory = "/home/${config.home.username}";
   };
 

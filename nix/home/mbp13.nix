@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, username, ... }:
 
 {
   imports = [
@@ -7,7 +7,7 @@
   ];
 
   home = {
-    username = "konrad";
+    username = "${username}";
     homeDirectory = "/Users/${config.home.username}";
   };
 

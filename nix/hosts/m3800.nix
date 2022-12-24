@@ -1,11 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, username, ... }:
 {
   imports =
     [
       ./../hardware/m3800.nix
       ./global/nixos.nix
       ./layers/nixos-de.nix
-      ./layers/konrad-gui.nix
+      ./layers/gui.nix
     ];
 
   nix = {
@@ -54,12 +54,10 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users = {
-    users.konrad = {
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      description = "Konrad";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
-    };
+  users. users.${username} = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    description = "${username}";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 }
