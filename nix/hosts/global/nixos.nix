@@ -40,6 +40,10 @@
   # Enable CUPS to print documents.
   services.printing.enable = false;
 
+  virtualisation.docker = {
+    enable = true;
+  };
+
   programs = {
     zsh.enable = true;
   };
@@ -50,7 +54,7 @@
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Konrad";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" ];
       packages = with pkgs; [
         git
         sshfs
