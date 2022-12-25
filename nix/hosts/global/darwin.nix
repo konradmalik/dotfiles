@@ -10,6 +10,7 @@
   environment = {
     systemPackages = with pkgs; [
       darwin-zsh-completions
+      docker-client
       lima
       slack
       # only to provide tmux-256color terminfo
