@@ -20,5 +20,6 @@
     caffeine-ng
     gnome.gnome-tweaks
     gnomeExtensions.appindicator
+    gnomeExtensions.dash-to-dock
   ];
 }
