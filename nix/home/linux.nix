@@ -1,8 +1,8 @@
 { config, username,... }:
 {
   imports = [
-    ./global/nonnixos.nix
-    ./layers/gui.nix
+    ./presets/nonnixos.nix
+    ./modules/gui.nix
   ];
 
   home = {

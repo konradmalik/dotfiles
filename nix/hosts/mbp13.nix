@@ -1,7 +1,7 @@
 { config, pkgs, username, ... }:
 {
   imports = [
-    ./global/darwin.nix
+    ./presets/darwin.nix
   ];
 
   nix = {

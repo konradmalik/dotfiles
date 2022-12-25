@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ./global/darwin.nix
-    ./layers/gui.nix
+    ./presets/darwin.nix
+    ./modules/gui.nix
   ];
 
   home = {

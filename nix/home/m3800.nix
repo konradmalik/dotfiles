@@ -1,8 +1,8 @@
 { config, pkgs, lib, username, ... }:
 {
   imports = [
-    ./global/nixos.nix
-    ./layers/gui.nix
+    ./presets/nixos.nix
+    ./modules/gui.nix
   ];
 
   # Disable gnome-keyring ssh-agent

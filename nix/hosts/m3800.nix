@@ -3,9 +3,9 @@
   imports =
     [
       ./../hardware/m3800.nix
-      ./global/nixos.nix
-      ./layers/nixos-de.nix
-      ./layers/gui.nix
+      ./presets/nixos.nix
+      ./modules/nixos-de.nix
+      ./modules/nixos-gui.nix
     ];
 
   nix = {
