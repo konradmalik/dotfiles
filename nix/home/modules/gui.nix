@@ -1,4 +1,4 @@
-{ pkgs, dotfiles, ... }:
+{ pkgs, ... }:
 {
   fonts.fontconfig.enable = true;
 
@@ -11,8 +11,8 @@
     enable = true;
     package = pkgs.alacritty;
     settings =
-      pkgs.lib.readYAML "${dotfiles}/alacritty/alacritty.yml"
-      // pkgs.lib.readYAML "${dotfiles}/alacritty/catppuccin.yml";
+      pkgs.yaml-utils.readYAML "${pkgs.dotfiles}/alacritty/alacritty.yml"
+      // pkgs.yaml-utils.readYAML "${pkgs.dotfiles}/alacritty/catppuccin.yml";
   };
 }
 

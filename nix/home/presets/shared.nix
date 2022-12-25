@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dotfiles, dotfiles-private, username, ... }:
+{ config, lib, pkgs, username, ... }:
 
 {
   imports = [
@@ -66,20 +66,20 @@
       asdf-vm
     ];
 
-    file.".gdbinit".source = "${dotfiles}/gdb/.gdbinit";
-    file.".inputrc".source = "${dotfiles}/inputrc/.inputrc";
-    file.".earthly/config.yml".source = "${dotfiles}/earthly/config.yml";
+    file.".gdbinit".source = "${pkgs.dotfiles}/gdb/.gdbinit";
+    file.".inputrc".source = "${pkgs.dotfiles}/inputrc/.inputrc";
+    file.".earthly/config.yml".source = "${pkgs.dotfiles}/earthly/config.yml";
     file.".local/bin" = {
-      source = "${dotfiles}/bin";
+      source = "${pkgs.dotfiles}/bin";
       recursive = true;
     };
     file.".ssh/config.d".source = "${pkgs.dotfiles-private}/ssh";
     activation = {
       authorized_keys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         if [ -n "$VERBOSE_ARG" ]; then
-            echo "path to copy from '${dotfiles}/ssh/authorized_keys'"
+            echo "path to copy from '${pkgs.dotfiles}/ssh/authorized_keys'"
         fi
-        $DRY_RUN_CMD cp ${dotfiles}/ssh/authorized_keys ${config.home.homeDirectory}/.ssh/authorized_keys
+        $DRY_RUN_CMD cp ${pkgs.dotfiles}/ssh/authorized_keys ${config.home.homeDirectory}/.ssh/authorized_keys
         $DRY_RUN_CMD chmod 600 ${config.home.homeDirectory}/.ssh/authorized_keys
       '';
     };
@@ -104,7 +104,7 @@
   };
 
   # dotfiles
-  xdg.configFile."glow/glow.yml".source = "${dotfiles}/glow/glow.yml";
+  xdg.configFile."glow/glow.yml".source = "${pkgs.dotfiles}/glow/glow.yml";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -152,7 +152,7 @@
 
   programs.k9s = {
     enable = true;
-    skin = pkgs.lib.readYAML "${dotfiles}/k9s/skin.yml";
+    skin = pkgs.yaml-utils.readYAML "${pkgs.dotfiles}/k9s/skin.yml";
   };
 
   programs.ssh = {

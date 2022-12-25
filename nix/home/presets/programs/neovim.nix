@@ -1,4 +1,4 @@
-{ pkgs, dotfiles, ... }:
+{ pkgs, ... }:
 
 let
   # nixified plugins
@@ -163,7 +163,7 @@ in
   };
 
   xdg.configFile."nvim" = {
-    source = "${dotfiles}/neovim";
+    source = "${pkgs.dotfiles}/neovim";
     recursive = true;
   };
 }

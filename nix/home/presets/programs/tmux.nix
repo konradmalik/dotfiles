@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dotfiles, dotfiles-private, ... }:
+{ config, lib, pkgs, ... }:
 let
   tmux-suspend = pkgs.tmuxPlugins.mkTmuxPlugin
     {
@@ -39,8 +39,8 @@ in
     baseIndex = 1;
     historyLimit = 50000;
     extraConfig = lib.strings.concatStringsSep "\n" [
-      (builtins.readFile "${dotfiles}/tmux/konrad.conf")
-      (builtins.readFile "${dotfiles}/tmux/catppuccin.conf")
+      (builtins.readFile "${pkgs.dotfiles}/tmux/konrad.conf")
+      (builtins.readFile "${pkgs.dotfiles}/tmux/catppuccin.conf")
     ];
     plugins = [
       tmux-suspend
