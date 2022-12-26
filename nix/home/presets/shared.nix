@@ -109,8 +109,6 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  programs.command-not-found.enable = true;
-
   programs.bottom = {
     enable = true;
     settings = {
