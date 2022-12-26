@@ -25,11 +25,6 @@
       darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"'';
     };
     initExtraFirst = ''
-      # update nix
-      nix-update() {
-          darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"
-      }
-
       # clean nix
       nix-clean() {
           # current user's profile (flakes enabled)
@@ -45,7 +40,6 @@
           brew update \
           && brew upgrade \
           && brew upgrade --cask \
-          && nix-update \
           && asdf plugin-update --all
       }
       mac-clean() {
