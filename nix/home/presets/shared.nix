@@ -109,6 +109,8 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.command-not-found.enable = true;
+
   programs.bottom = {
     enable = true;
     settings = {
@@ -198,7 +200,7 @@
         hostname = "100.127.1.93";
       };
       m3800 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.67.218.5";
+        hostname = "100.108.89.62";
       };
       mbp13 = lib.hm.dag.entryAfter [ "tailscale" ] {
         hostname = "100.70.57.115";
