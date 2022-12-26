@@ -11,6 +11,38 @@ Use something like this:
 
 This can be added to `nix build`, `nix flake check` and more.
 
+## commands
+
+### NixOS:
+
+Build and enable config locally:
+
+```bash
+sudo nixos-rebuild --flake "git+file:///home/konrad/Code/dotfiles#$(hostname)" switch
+```
+
+Build Install ISO for m3800:
+
+```bash
+nix build .#m3800iso
+```
+
+### nix-darwin:
+
+Build and enable config locally:
+
+```bash
+darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"
+```
+
+### linux (non-NixOS; home-manager):
+
+Build and enable config locally:
+
+```bash
+home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+```
+
 ## presets and modules
 
 - `presets` are ready to use templates `nixos.nix`, `darwin.nix` etc.

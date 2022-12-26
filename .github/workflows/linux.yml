@@ -19,3 +19,7 @@ jobs:
       - name: Flake build nixos m3800
         run: |
           nix build --no-link --override-input dotfiles-private path:./private  .#nixosConfigurations.m3800.config.system.build.toplevel
+
+      - name: Flake build nixos m3800 Install ISO
+        run: |
+          nix build --no-link --override-input dotfiles-private path:./private  .#m3800iso

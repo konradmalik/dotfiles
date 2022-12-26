@@ -15,6 +15,10 @@
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     klucznik = {
       url = "github:konradmalik/klucznik";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,7 +29,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, flake-utils, darwin, home-manager, klucznik, dotfiles-private }:
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-darwin
+    , nixpkgs-unstable
+    , flake-utils
+    , darwin
+    , home-manager
+    , nixos-generators
+    , klucznik
+    , dotfiles-private
+    }:
     let
       overlays = [
         (final: prev: {
@@ -48,6 +63,30 @@
           };
           overlays = overlays
             ++ extraOverlays;
+        };
+
+      m3800Config =
+        let
+          system = "x86_64-linux";
+          username = "konrad";
+          pkgs = mkNixpkgs {
+            inherit system;
+            source = nixpkgs;
+          };
+        in
+        {
+          inherit system pkgs;
+          specialArgs = { inherit username; };
+          modules = [
+            ./nix/hosts/m3800.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./nix/home/m3800.nix;
+              home-manager.extraSpecialArgs = { inherit username; };
+            }
+          ];
         };
     in
     {
@@ -77,29 +116,7 @@
           };
       };
       nixosConfigurations = {
-        m3800 =
-          let
-            system = "x86_64-linux";
-            username = "konrad";
-            pkgs = mkNixpkgs {
-              inherit system;
-              source = nixpkgs;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit system pkgs;
-            specialArgs = { inherit username; };
-            modules = [
-              ./nix/hosts/m3800.nix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} = import ./nix/home/m3800.nix;
-                home-manager.extraSpecialArgs = { inherit username; };
-              }
-            ];
-          };
+        m3800 = nixpkgs.lib.nixosSystem m3800Config;
       };
 
       homeConfigurations = {
@@ -118,16 +135,21 @@
             extraSpecialArgs = { inherit username; };
           };
       };
+
+      packages.x86_64-linux =
+        {
+          m3800iso = nixos-generators.nixosGenerate (m3800Config // { format = "iso"; });
+        };
     }
     //
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-      in
-      {
-        devShells.default = pkgs.callPackage ./shell.nix { };
-      }
+    let
+      pkgs = import nixpkgs {
+        inherit system;
+      };
+    in
+    {
+      devShells.default = pkgs.callPackage ./shell.nix { };
+    }
     );
 }

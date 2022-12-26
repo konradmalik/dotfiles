@@ -24,7 +24,7 @@
     userName = "Konrad Malik";
     userEmail = "konrad.malik@gmail.com";
     signing = {
-      key = "F75F59DD45C0D9016CCC3287DE3F236F1516A431";
+      key = "~/.ssh/private";
       signByDefault = true;
     };
     aliases = {
@@ -74,6 +74,10 @@
       core = {
         autocrlf = "input";
         fsmonitor = true;
+      };
+
+      gpg = {
+        format = "ssh";
       };
 
       fetch = {
