@@ -11,8 +11,7 @@
 
     optimise = {
       automatic = true;
-      dates = "daily";
+      dates = [ "daily" ];
     };
   };
-  services.nix-daemon.enable = true;
 }
