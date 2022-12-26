@@ -12,6 +12,8 @@
     settings = {
       min-free = 53374182400; # ~50GB
       max-free = 107374182400; # 100GB
+      cores = 2;
+      max-jobs = 8;
     };
   };
 
@@ -51,13 +53,5 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users. users.${username} = {
-    shell = pkgs.zsh;
-    isNormalUser = true;
-    description = "${username}";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 }

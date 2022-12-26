@@ -1,10 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 {
   imports = [
-    ./programs/nix.nix
+    ./programs/nix-darwin.nix
   ];
-
-  services.nix-daemon.enable = true;
 
   # packages installed in system profile
   environment = {
@@ -17,7 +15,7 @@
       # until macos ships with newer ncurses
       ncurses
     ];
-    pathsToLink = [ "/share/zsh" ];
+    pathsToLink = [ "/share" "/bin" "/Applications" ];
     etc = {
       "ssh/sshd_config.d/99-nix.conf".text = ''
         PermitRootLogin no
@@ -73,6 +71,12 @@
       enable = true;
       enableSSHSupport = true;
     };
+  };
+
+  users.users.${username} = {
+    name = "${username}";
+    home = "/Users/${username}";
+    shell = pkgs.zsh;
   };
 
   system = {

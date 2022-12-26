@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, username, ... }:
 {
   imports = [
-    ./programs/nix.nix
+    ./programs/nix-nixos.nix
   ];
 
   # Allow unfree packages
@@ -47,18 +47,35 @@
     zsh.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     mutableUsers = true;
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+    users.${username} = {
+      shell = pkgs.zsh;
+      isNormalUser = true;
+      description = "${username}";
+      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      # Warning:
+      # If you are using NixOps then don't use this option since it will replace the key required for deployment via ssh.
+      openssh.authorizedKeys.keys =
+        let
+          authorizedKeysFile = builtins.readFile "${pkgs.dotfiles}/ssh/authorized_keys";
+          authorizedKeysFileLines = lib.splitString "\n" authorizedKeysFile;
+          onlyKeys = lib.filter (line: line != "" && !(lib.hasPrefix "#" line)) authorizedKeysFileLines;
+        in
+        onlyKeys;
+    };
   };
 
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    busybox
-    git
-    vim
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      busybox
+      git
+      vim
+    ];
+    pathsToLink = [ "/share" "/bin" ];
+  };
 
   services.openssh = {
     enable = true;

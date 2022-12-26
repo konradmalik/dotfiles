@@ -1,4 +1,4 @@
-{ config, username,... }:
+{ config, username, ... }:
 {
   imports = [
     ./presets/nonnixos.nix
