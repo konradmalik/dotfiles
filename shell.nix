@@ -6,6 +6,7 @@ in
 { pkgs ? lockedNixpkgs }:
 with pkgs;
 mkShell {
+  name = "dotfiles-shell";
   nativeBuildInputs = [
     # nix
     nil
