@@ -15,6 +15,10 @@ jobs:
       - name: Flake checks
         run: nix flake check --override-input dotfiles-private path:./private
 
+      - name: Shell build linux
+        run: |
+          nix build --no-link --override-input dotfiles-private path:./private .#devShells.x86_64-linux.default
+
       - name: Flake build generic linux
         run: |
           nix build --no-link --override-input dotfiles-private path:./private .#homeConfigurations.konrad@linux.activationPackage

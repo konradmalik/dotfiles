@@ -12,6 +12,10 @@ jobs:
           name: konradmalik
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
+      - name: Shell build darwin
+        run: |
+          nix build --no-link --override-input dotfiles-private path:./private .#devShells.x86_64-darwin.default
+
       - name: Flake build mbp13
         run: |
           nix build --no-link --override-input dotfiles-private path:./private .#darwinConfigurations.mbp13.system
