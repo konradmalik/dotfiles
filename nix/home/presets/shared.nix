@@ -129,6 +129,12 @@
         source_env "$(${pkgs.asdf-vm}/bin/asdf direnv envrc "$@")"
       }
     '';
+    config = {
+      global = {
+        strict_env = true;
+        warn_timeout = "2m";
+      };
+    };
   };
 
   programs.exa = {
