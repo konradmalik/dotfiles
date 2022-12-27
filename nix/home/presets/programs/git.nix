@@ -78,6 +78,9 @@
 
       gpg = {
         format = "ssh";
+        ssh = {
+          allowedSignersFile = "${pkgs.dotfiles}/ssh/allowed_signers";
+        };
       };
 
       fetch = {
