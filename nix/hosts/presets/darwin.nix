@@ -69,7 +69,7 @@
     # but see home-manager comment, we can disable this in the future
     gnupg.agent = {
       enable = true;
-      enableSSHSupport = true;
+      enableSSHSupport = false;
     };
   };
 

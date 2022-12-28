@@ -7,9 +7,7 @@
     file.".gnupg/gpg-agent.conf".text = ''
       ## 1-day timeout
       default-cache-ttl 86400
-      default-cache-ttl-ssh 86400
       max-cache-ttl 86400
-      max-cache-ttl-ssh 86400
       # disable smartcard - we don't use it
       disable-scdaemon
       # grab mouse and keyboard
@@ -17,17 +15,14 @@
       # timeout pinentry (s)
       pinentry-timeout 30
       # use tty
-      pinentry-program ${pkgs.pinentry.override {enabledFlavors=["tty"];}}/bin/pinentry
+      pinentry-program ${pkgs.pinentry.curses}/bin/pinentry
     '';
   };
   programs.zsh = {
-    # initExtraFirst is not used in the global file, so we can override here
     initExtraFirst = ''
       # gpg agent is started via nix-darwin but GPG_TTY needs to be reset every new interactive shell
       GPG_TTY="$(tty)"
       export GPG_TTY
-      gpg-connect-agent updatestartuptty /bye >/dev/null
     '';
   };
-
 }

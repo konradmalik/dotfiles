@@ -12,12 +12,8 @@ let
     setopt pushdignoredups    # Do not store duplicates in the stack.
     setopt pushdsilent         # Do not print the directory stack after pushd or popd.
 
-    ## Reduce latency when pressing <Esc>
+    ## Reduce latency when pressing <Esc> (helps with vi mode)
     export KEYTIMEOUT=1
-
-    # force vi mode for zle (zsh line editor)
-    # (already done via viins)
-    # bindkey -v
 
     # fix backspace issues according to https://superuser.com/questions/476532/how-can-i-make-zshs-vi-mode-behave-more-like-bashs-vi-mode/533685#533685
     bindkey "^?" backward-delete-char
