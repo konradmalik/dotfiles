@@ -11,6 +11,8 @@ mkShell {
     # nix
     nil
     nixpkgs-fmt
+    # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
+    nixos-rebuild
     # lua (neovim)
     sumneko-lua-language-server
     # yaml

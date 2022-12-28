@@ -27,6 +27,14 @@ Build Install ISO for m3800:
 nix build .#m3800iso
 ```
 
+Builder and enable config on remote:
+
+```bash
+# TODO not tested
+# home-manager may be problematic: https://discourse.nixos.org/t/home-manager-flake-not-respecting-build-host-during-nixos-rebuild/16787
+HOSTNAME=m3800 nixos-rebuild --flake "git+file:///home/konrad/Code/dotfiles#$HOSTNAME" --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
+```
+
 ### nix-darwin:
 
 Build and enable config locally:
