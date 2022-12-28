@@ -10,19 +10,19 @@ jobs:
       - uses: cachix/cachix-action@v12
         with:
           name: konradmalik
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Flake checks
-        run: nix flake check --override-input dotfiles-private path:./private
+        run: nix flake check
 
       - name: Shell build linux
         run: |
-          nix build --no-link --override-input dotfiles-private path:./private .#devShells.x86_64-linux.default
+          nix build --no-link .#devShells.x86_64-linux.default
 
       - name: Flake build generic linux
         run: |
-          nix build --no-link --override-input dotfiles-private path:./private .#homeConfigurations.konrad@linux.activationPackage
+          nix build --no-link .#homeConfigurations.konrad@linux.activationPackage
 
       - name: Flake build nixos m3800
         run: |
-          nix build --no-link --override-input dotfiles-private path:./private  .#nixosConfigurations.m3800.config.system.build.toplevel
+          nix build --no-link .#nixosConfigurations.m3800.config.system.build.toplevel

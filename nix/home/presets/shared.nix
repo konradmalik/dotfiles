@@ -73,7 +73,6 @@
       source = "${pkgs.dotfiles}/bin";
       recursive = true;
     };
-    file.".ssh/config.d".source = "${pkgs.dotfiles-private}/ssh";
     activation = {
       authorized_keys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         if [ -n "$VERBOSE_ARG" ]; then

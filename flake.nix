@@ -23,10 +23,6 @@
       url = "github:konradmalik/klucznik";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dotfiles-private = {
-      url = "git+ssh://git@github.com/konradmalik/dotfiles-private";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -39,7 +35,6 @@
     , home-manager
     , nixos-generators
     , klucznik
-    , dotfiles-private
     }:
     let
       overlays = [
@@ -49,7 +44,6 @@
             config = final.config;
           };
           dotfiles = ./files;
-          dotfiles-private = dotfiles-private.packages.${prev.system}.default;
           klucznik = klucznik.packages.${prev.system}.klucznik;
         })
         (import ./nix/overlays)
