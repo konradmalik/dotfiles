@@ -12,6 +12,17 @@
     libinput.enable = true;
   };
 
+  # Enable sound with pipewire.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
   # disable builtin gnome-keyring
   #services.gnome3.gnome-keyring.enable = lib.mkForce false;
   # instead we disable it in home-manager

@@ -37,17 +37,14 @@
     , klucznik
     }:
     let
-      overlays = [
-        (final: prev: {
-          unstable = import nixpkgs-unstable {
-            system = final.system;
-            config = final.config;
-          };
-          dotfiles = ./files;
-          klucznik = klucznik.packages.${prev.system}.klucznik;
-        })
-        (import ./nix/overlays)
-      ];
+      overlay = final: prev: {
+        unstable = import nixpkgs-unstable {
+          system = final.system;
+          config = final.config;
+        };
+        dotfiles = ./files;
+        klucznik = klucznik.packages.${prev.system}.klucznik;
+      } // (import ./nix/overlays/default.nix) final prev;
 
       mkNixpkgs = { source, system, extraOverlays ? [ ] }:
         import source {
@@ -55,8 +52,7 @@
           config = {
             allowUnfree = true;
           };
-          overlays = overlays
-            ++ extraOverlays;
+          overlays = [ overlay ] ++ extraOverlays;
         };
 
       m3800Config =
@@ -134,6 +130,7 @@
         {
           m3800iso = nixos-generators.nixosGenerate (m3800Config // { format = "iso"; });
         };
+      overlays.default = overlay;
     }
     //
     flake-utils.lib.eachDefaultSystem (system:
