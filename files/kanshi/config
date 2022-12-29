@@ -1,0 +1,8 @@
+profile {
+	output eDP-1 resolution 3840x2160@59.997Hz position 0,0 scale 2.0
+}
+
+profile {
+	output LVDS-1 enable scale 2
+}
+

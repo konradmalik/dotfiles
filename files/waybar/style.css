@@ -1,0 +1,214 @@
+@import "catppuccin-macchiato.css";
+
+* {
+  font-family: "Hack Nerd Font";
+}
+
+window#waybar {
+  background-color: @base;
+  color: @subtext2;
+}
+
+button {
+  background-color: @base;
+  color: @subtext2;
+  border: solid;
+}
+
+button:hover {
+  background: inherit;
+  background-color: transparent;
+  color: @overlay0;
+}
+
+#workspaces button {
+  background-color: transparent;
+  color: @subtext2;
+}
+
+#workspaces button:hover {
+  color: @overlay0;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  color: @blue;
+  border: solid;
+}
+
+#workspaces button.urgent {
+  color: @red;
+}
+
+#workspaces button.urgent:hover {
+}
+
+/* #workspaces button.hidden {} */
+
+/* -------------------------------------------------------------------------------- */
+
+#window,
+#tray,
+#cpu,
+#memory,
+#backlight,
+#pulseaudio,
+#network,
+#bluetooth,
+#battery,
+#clock {
+    background-color: transparent;
+    padding: 0 4px;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @red;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#idle_inhibitor.activated {
+  color: @text;
+}
+
+#idle_inhibitor.deactivated {
+  color: @overlay0;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#cpu {
+  color: @sapphire;
+}
+#cpu:hover {
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#memory {
+  color: @green;
+}
+#memory:hover {
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#backlight {
+  color: @sky;
+}
+#backlight:hover {
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#pulseaudio {
+  color: @mauve;
+}
+#pulseaudio:hover {
+}
+
+#pulseaudio.bluetooth {
+  color: @blue;
+}
+#pulseaudio.bluetooth:hover {
+}
+
+#pulseaudio.muted {
+  color: @red;
+}
+#pulseaudio.muted:hover {
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#network.disabled,
+#network.disconnected {
+  color: @red;
+}
+#network.disabled:hover,
+#network.disconnected:hover {
+}
+
+#network.ethernet,
+#network.wifi {
+  color: @blue;
+}
+#network.ethernet:hover,
+#network.wifi:hover {
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#bluetooth.disabled,
+#bluetooth.off {
+  color: @red;
+}
+#bluetooth.disabled:hover,
+#bluetooth.off:hover {
+}
+
+#bluetooth.on,
+#bluetooth.connected {
+  color: @blue;
+}
+#bluetooth.on:hover,
+#bluetooth.connected:hover {
+}
+
+/* #bluetooth.discoverable {} */
+/* #bluetooth.discovering {} */
+/* #bluetooth.pairable {} */
+
+/* -------------------------------------------------------------------------------- */
+
+#battery.full {
+  color: @green;
+}
+
+#battery.full:hover {
+}
+
+#battery.good {
+  color: @peach;
+}
+
+#battery.good:hover {
+}
+
+#battery.warning {
+  color: @yellow;
+}
+
+#battery.warning:hover {
+}
+
+#battery.critical {
+  color: @red;
+}
+
+#battery.critical:hover {
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#clock {
+  color: @text;
+}

@@ -32,5 +32,7 @@
     gnome.gnome-tweaks
     gnomeExtensions.appindicator
     gnomeExtensions.dash-to-dock
+    wl-clipboard
+    wl-clipboard-x11
   ];
 }

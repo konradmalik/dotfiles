@@ -17,28 +17,6 @@ let
       systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
     '';
   };
-
-  # currently, there is some friction between sway and gtk:
-  # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
-  # the suggested way to set gtk settings is with gsettings
-  # for gsettings to work, we need to tell it where the schemas are
-  # using the XDG_DATA_DIR environment variable
-  # run at the end of sway config
-  configure-gtk = pkgs.writeTextFile {
-    name = "configure-gtk";
-    destination = "/bin/configure-gtk";
-    executable = true;
-    text =
-      let
-        schema = pkgs.gsettings-desktop-schemas;
-        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-      in
-      ''
-        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-        gnome_schema=org.gnome.desktop.interface
-        gsettings set $gnome_schema gtk-theme 'Dracula'
-      '';
-  };
 in
 {
   # Enable sound with pipewire.
@@ -66,32 +44,32 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  # TODO
-  # → swaylock via ‹modules.desktop.utils.swaylock›
-  # → mako via ‹modules.desktop.services.mako›
-  # → waybar via ‹modules.desktop.services.waybar›
-
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       dbus-sway-environment
-      configure-gtk
       pulseaudio # for pactl volume control
       xdg-utils # for openning default programms when clicking links
       glib # gsettings
-      dracula-theme # gtk theme
-      gnome3.adwaita-icon-theme # default gnome cursors
+      gnome.adwaita-icon-theme # default gnome cursors
+      catppuccin-gtk
       swaylock
       swayidle
       grim # screenshot functionality
       slurp # screenshot functionality
-      bemenu # wayland clone of dmenu
+      wofi # wayland clone of rofi
       mako # notification system developed by swaywm maintainer
       waybar
       xwayland
+      pavucontrol
+      libnotify # notify-send
+      wl-clipboard
+      wl-clipboard-x11
+      bashmount
+      ranger
+      gnome.eog
     ];
-
   };
 
   # Brightness and volume
@@ -103,7 +81,11 @@ in
     description = "kanshi daemon";
     serviceConfig = {
       Type = "simple";
-      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
+      ExecStart = ''${pkgs.kanshi}/bin/kanshi'';
     };
   };
+
+  services.blueman.enable = true;
+
+  programs.ssh.startAgent = true;
 }

@@ -1,0 +1,68 @@
+@import "catppuccin-macchiato.css";
+
+#window {
+	border-radius: 0;
+}
+
+#outer-box {
+	background-color: @base;
+}
+
+#input {
+	margin: 10px 8px 4px;
+	font-weight: bold;
+	background-color: @surface0;
+	/* border-radius: 25px; */
+	border-radius: 0;
+	border-color: @mantle;
+	border-style: solid;
+	border-width: 0 2px 2px 0;
+}
+
+#inner-box {
+	margin: 6px;
+}
+
+#img {
+	padding: 0 10px 0 5px;
+}
+
+* {
+	font-family: Iosevka Nerd Font;
+	color: @text;
+	/* font-size: 16px; */
+}
+
+#entry {
+	border-radius: 0;
+}
+
+* {
+	outline-width: 0;
+}
+
+#entry:selected {
+	background-color: transparent;
+}
+
+#text:selected {
+	font-weight: bold;
+	color: @teal;
+}
+
+arrow {
+	color: @lavender;
+}
+
+list {
+	background-color: transparent;
+}
+
+row {
+	margin: 4px 4px 0;
+	padding: 5px 20px;
+}
+
+box > .drun-generic-name {
+	font-style: italic;
+}

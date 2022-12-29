@@ -2,6 +2,7 @@
 {
   imports = [
     ./presets/nixos.nix
+    ./modules/sway.nix
     ./modules/desktop.nix
   ];
 
