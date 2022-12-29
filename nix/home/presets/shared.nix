@@ -135,7 +135,7 @@
       };
       whitelist = {
         prefix = [
-          "$HOME/Code/github.com/konradmalik"
+          "${config.home.homeDirectory}/Code/github.com/konradmalik"
         ];
       };
     };
