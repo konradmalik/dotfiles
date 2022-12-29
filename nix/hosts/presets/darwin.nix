@@ -45,6 +45,7 @@
         "spotify"
         "telegram"
         "vlc"
+        "zoom"
       ];
 
     masApps = {

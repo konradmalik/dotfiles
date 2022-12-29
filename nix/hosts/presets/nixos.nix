@@ -4,11 +4,12 @@
     ./programs/nix-nixos.nix
   ];
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Be careful updating this.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # lts
+  boot.kernelPackages = pkgs.linuxPackages;
+  # newest
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

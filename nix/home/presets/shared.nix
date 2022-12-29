@@ -52,6 +52,7 @@
 
       du-dust
       procs
+      duf
 
       up
       croc
