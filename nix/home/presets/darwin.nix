@@ -22,7 +22,7 @@
     shellAliases = {
       touchbar-restart = "sudo pkill TouchBarServer";
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
-      darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"'';
+      darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)"'';
     };
     initExtraFirst = ''
       # clean nix

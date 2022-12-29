@@ -17,7 +17,7 @@
 
   programs.zsh = {
     shellAliases = {
-      home-manager-switch = ''home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"'';
+      home-manager-switch = ''home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"'';
       pbcopy = "wl-copy";
       pbpaste = "wl-paste";
       open = "xdg-open";
@@ -26,7 +26,7 @@
       # update nix
       nix-update() {
           # current user's home (flakes enabled)
-          home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+          home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"
           # system-wide
           sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
       }

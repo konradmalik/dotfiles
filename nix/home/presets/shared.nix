@@ -133,6 +133,11 @@
         strict_env = true;
         warn_timeout = "2m";
       };
+      whitelist = {
+        prefix = [
+          "$HOME/Code/github.com/konradmalik"
+        ];
+      };
     };
   };
 

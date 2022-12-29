@@ -9,7 +9,7 @@ Nix ftw.
 Build and enable config locally:
 
 ```bash
-sudo nixos-rebuild --flake "git+file:///home/konrad/Code/dotfiles#$(hostname)" switch
+sudo nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)" switch
 ```
 
 Build Install ISO for m3800:
@@ -23,7 +23,7 @@ Builder and enable config on remote:
 ```bash
 # TODO not tested
 # home-manager may be problematic: https://discourse.nixos.org/t/home-manager-flake-not-respecting-build-host-during-nixos-rebuild/16787
-HOSTNAME=m3800 nixos-rebuild --flake "git+file:///home/konrad/Code/dotfiles#$HOSTNAME" --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
+HOSTNAME=m3800 nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$HOSTNAME" --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
 ```
 
 ### nix-darwin:
@@ -31,7 +31,7 @@ HOSTNAME=m3800 nixos-rebuild --flake "git+file:///home/konrad/Code/dotfiles#$HOS
 Build and enable config locally:
 
 ```bash
-darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname)"
+darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)"
 ```
 
 ### linux (non-NixOS; home-manager):
@@ -39,7 +39,7 @@ darwin-rebuild switch --flake "git+file:///Users/konrad/Code/dotfiles#$(hostname
 Build and enable config locally:
 
 ```bash
-home-manager switch --flake "git+file:///home/konrad/Code/dotfiles#$(whoami)@$(hostname)"
+home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"
 ```
 
 ## presets and modules
