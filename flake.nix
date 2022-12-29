@@ -130,6 +130,24 @@
         {
           m3800iso = nixos-generators.nixosGenerate (m3800Config // { format = "iso"; });
         };
+      packages.x86_64-darwin =
+        let
+          pkgs = import nixpkgs {
+            system = "x86_64-darwin";
+          };
+        in
+        {
+          darwin-zsh-completions = pkgs.callPackage ./nix/packages/darwin-zsh-completions.nix { };
+        };
+      packages.aarch64-darwin =
+        let
+          pkgs = import nixpkgs {
+            system = "x86_64-darwin";
+          };
+        in
+        {
+          darwin-zsh-completions = pkgs.callPackage ./nix/packages/darwin-zsh-completions.nix { };
+        };
       overlays.default = overlay;
     }
     //

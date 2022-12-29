@@ -4,8 +4,8 @@
     [
       ./../hardware/m3800.nix
       ./presets/nixos.nix
-      ./modules/nixos-de.nix
-      ./modules/nixos-gui.nix
+      ./modules/nixos-gnome.nix
+      ./modules/nixos-desktop-apps.nix
     ];
 
   nix = {
