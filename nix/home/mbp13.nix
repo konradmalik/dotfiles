@@ -3,7 +3,7 @@
 {
   imports = [
     ./presets/darwin.nix
-    ./modules/gui.nix
+    ./modules/desktop.nix
   ];
 
   home = {

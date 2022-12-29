@@ -4,7 +4,7 @@
     [
       ./../hardware/m3800.nix
       ./presets/nixos.nix
-      ./modules/nixos-gnome.nix
+      ./modules/nixos-sway.nix
       ./modules/nixos-desktop-apps.nix
     ];
 

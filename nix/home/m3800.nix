@@ -2,7 +2,7 @@
 {
   imports = [
     ./presets/nixos.nix
-    ./modules/gui.nix
+    ./modules/desktop.nix
   ];
 
   home = {
