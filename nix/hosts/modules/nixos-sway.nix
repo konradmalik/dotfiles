@@ -54,15 +54,16 @@ in
       glib # gsettings
       gnome.adwaita-icon-theme # default gnome cursors
       catppuccin-gtk
+      papirus-icon-theme
       swaylock
       swayidle
       grim # screenshot functionality
       slurp # screenshot functionality
       wofi # wayland clone of rofi
       mako # notification system developed by swaywm maintainer
-      waybar
-      xwayland
-      pavucontrol
+      waybar # status bar
+      networkmanagerapplet # nm-connection-edit
+      pavucontrol # audio gui
       libnotify # notify-send
       wl-clipboard
       wl-clipboard-x11

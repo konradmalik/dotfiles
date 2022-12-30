@@ -1,67 +1,75 @@
-@import "catppuccin-macchiato.css";
+/*
+*
+* Catppuccin Macchiato palette
+*
+*/
+@define-color base   #24273a;
+@define-color mantle #1e2030;
+@define-color crust  #181926;
 
-* {
-  font-family: Hack Nerd Font;
-  color: @text;
-}
+@define-color text     #cad3f5;
+@define-color subtext0 #a5adcb;
+@define-color subtext1 #b8c0e0;
 
-#window {
-  border-radius: 0;
-}
+@define-color surface0 #363a4f;
+@define-color surface1 #494d64;
+@define-color surface2 #5b6078;
 
-#outer-box {
+@define-color overlay0 #6e738d;
+@define-color overlay1 #8087a2;
+@define-color overlay2 #939ab7;
+
+@define-color blue      #8aadf4;
+@define-color lavender  #b7bdf8;
+@define-color sapphire  #7dc4e4;
+@define-color sky       #91d7e3;
+@define-color teal      #8bd5ca;
+@define-color green     #a6da95;
+@define-color yellow    #eed49f;
+@define-color peach     #f5a97f;
+@define-color maroon    #ee99a0;
+@define-color red       #ed8796;
+@define-color mauve     #c6a0f6;
+@define-color pink      #f5bde6;
+@define-color flamingo  #f0c6c6;
+@define-color rosewater #f4dbd6;
+
+window {
+  margin: 0px;
+  border: 1px solid @sapphire;
   background-color: @base;
 }
 
 #input {
-  margin: 10px 8px 4px;
-  font-weight: bold;
+  margin: 5px;
+  border: none;
+  color: @text;
   background-color: @surface0;
-  /* border-radius: 25px; */
-  border-radius: 0;
-  border-color: @mantle;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
 }
 
 #inner-box {
-  margin: 6px;
+  margin: 5px;
+  border: none;
+  background-color: @base;
 }
 
-#img {
-  padding: 0 10px 0 5px;
+#outer-box {
+  margin: 5px;
+  border: none;
+  background-color: @base;
 }
 
-#entry {
-  border-radius: 0;
+#scroll {
+  margin: 0px;
+  border: none;
 }
 
-* {
-  outline-width: 0;
+#text {
+  margin: 5px;
+  border: none;
+  color: @text;
 }
 
 #entry:selected {
-  background-color: transparent;
-}
-
-#text:selected {
-  font-weight: bold;
-  color: @teal;
-}
-
-arrow {
-  color: @lavender;
-}
-
-list {
-  background-color: transparent;
-}
-
-row {
-  margin: 4px 4px 0;
-  padding: 5px 20px;
-}
-
-box > .drun-generic-name {
-  font-style: italic;
+  background-color: @surface0;
 }

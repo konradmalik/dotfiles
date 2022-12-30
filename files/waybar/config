@@ -89,7 +89,7 @@
         "tooltip-format-ethernet": "{ipaddr}/{cidr} {ifname} via {gwaddr} 爵",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "Disconnected  ",
-        "on-click": "alacritty --class nmtui --command nmtui"
+        "on-click": "nm-connection-editor"
     },
     "pulseaudio": {
         "scroll-step": 1, // %, can be a float

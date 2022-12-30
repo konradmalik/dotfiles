@@ -13,7 +13,6 @@
   # wofi
   xdg.configFile."wofi/config".source = "${pkgs.dotfiles}/wofi/config";
   xdg.configFile."wofi/style.css".source = "${pkgs.dotfiles}/wofi/style.css";
-  xdg.configFile."wofi/catppuccin-macchiato.css".source = "${pkgs.dotfiles}/wofi/catppuccin-macchiato.css";
   # night light
   services.wlsunset = {
     enable = true;

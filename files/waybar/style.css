@@ -6,12 +6,12 @@
 
 window#waybar {
   background-color: @base;
-  color: @subtext2;
+  color: @text;
 }
 
 button {
   background-color: @base;
-  color: @subtext2;
+  color: @text;
   border: solid;
 }
 
@@ -23,7 +23,7 @@ button:hover {
 
 #workspaces button {
   background-color: transparent;
-  color: @subtext2;
+  color: @text;
 }
 
 #workspaces button:hover {
@@ -32,7 +32,7 @@ button:hover {
 
 #workspaces button.focused,
 #workspaces button.active {
-  color: @blue;
+  color: @sapphire;
   border: solid;
 }
 
