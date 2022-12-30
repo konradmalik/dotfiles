@@ -40,9 +40,6 @@ button:hover {
   color: @red;
 }
 
-#workspaces button.urgent:hover {
-}
-
 /* #workspaces button.hidden {} */
 
 /* -------------------------------------------------------------------------------- */
@@ -57,8 +54,8 @@ button:hover {
 #bluetooth,
 #battery,
 #clock {
-    background-color: transparent;
-    padding: 0 4px;
+  background-color: transparent;
+  padding: 0 4px;
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -78,6 +75,7 @@ button:hover {
 #tray > .passive {
   -gtk-icon-effect: dim;
 }
+
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
   background-color: @red;
@@ -98,15 +96,11 @@ button:hover {
 #cpu {
   color: @sapphire;
 }
-#cpu:hover {
-}
 
 /* -------------------------------------------------------------------------------- */
 
 #memory {
   color: @green;
-}
-#memory:hover {
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -114,27 +108,19 @@ button:hover {
 #backlight {
   color: @sky;
 }
-#backlight:hover {
-}
 
 /* -------------------------------------------------------------------------------- */
 
 #pulseaudio {
   color: @mauve;
 }
-#pulseaudio:hover {
-}
 
 #pulseaudio.bluetooth {
   color: @blue;
 }
-#pulseaudio.bluetooth:hover {
-}
 
 #pulseaudio.muted {
   color: @red;
-}
-#pulseaudio.muted:hover {
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -143,16 +129,10 @@ button:hover {
 #network.disconnected {
   color: @red;
 }
-#network.disabled:hover,
-#network.disconnected:hover {
-}
 
 #network.ethernet,
 #network.wifi {
   color: @blue;
-}
-#network.ethernet:hover,
-#network.wifi:hover {
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -161,16 +141,10 @@ button:hover {
 #bluetooth.off {
   color: @red;
 }
-#bluetooth.disabled:hover,
-#bluetooth.off:hover {
-}
 
 #bluetooth.on,
 #bluetooth.connected {
   color: @blue;
-}
-#bluetooth.on:hover,
-#bluetooth.connected:hover {
 }
 
 /* #bluetooth.discoverable {} */
@@ -183,28 +157,16 @@ button:hover {
   color: @green;
 }
 
-#battery.full:hover {
-}
-
 #battery.good {
   color: @peach;
-}
-
-#battery.good:hover {
 }
 
 #battery.warning {
   color: @yellow;
 }
 
-#battery.warning:hover {
-}
-
 #battery.critical {
   color: @red;
-}
-
-#battery.critical:hover {
 }
 
 /* -------------------------------------------------------------------------------- */
