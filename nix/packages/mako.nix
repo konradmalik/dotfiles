@@ -1,9 +1,20 @@
 # mako from main for that history feature
 # can be removed after something newer than 1.7.1 is released
-{ lib, stdenv, fetchFromGitHub, meson, ninja, pkg-config, scdoc
-, systemd, pango, cairo, gdk-pixbuf
-, wayland, wayland-protocols
-, wrapGAppsHook }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, meson
+, ninja
+, pkg-config
+, scdoc
+, systemd
+, pango
+, cairo
+, gdk-pixbuf
+, wayland
+, wayland-protocols
+, wrapGAppsHook
+}:
 
 stdenv.mkDerivation rec {
   pname = "mako";

@@ -32,6 +32,7 @@
       tree
       tldr
       nq
+      ranger
 
       bat
       ripgrep

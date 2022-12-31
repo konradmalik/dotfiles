@@ -51,7 +51,6 @@ in
       dbus-sway-environment
       pulseaudio # for pactl volume control
       xdg-utils # for openning default programms when clicking links
-      glib # gsettings
       swaylock
       swayidle
       grim # screenshot functionality
@@ -65,7 +64,6 @@ in
       wl-clipboard
       wl-clipboard-x11
       bashmount
-      ranger
       gnome.eog
     ];
   };

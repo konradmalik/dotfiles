@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   fonts.fontconfig.enable = true;
 
@@ -7,12 +7,9 @@
     zathura
   ];
 
-  programs.alacritty = {
-    enable = true;
-    package = pkgs.alacritty;
-    settings =
-      pkgs.yaml-utils.readYAML "${pkgs.dotfiles}/alacritty/alacritty.yml"
-      // pkgs.yaml-utils.readYAML "${pkgs.dotfiles}/alacritty/catppuccin.yml";
-  };
+  xdg.configFile. "alacritty/alacritty.yml".text =
+    lib.strings.concatMapStringsSep "\n" builtins.readFile [
+      "${pkgs.dotfiles}/alacritty/alacritty.yml"
+      "${pkgs.dotfiles}/alacritty/catppuccin.yml"
+    ];
 }
-

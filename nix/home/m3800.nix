@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, lib, username, ... }:
 {
   imports = [
     ./presets/nixos.nix
@@ -11,5 +11,9 @@
     homeDirectory = "/home/${config.home.username}";
   };
 
-  programs.alacritty.settings.font.size = 13.0;
+  xdg.configFile. "alacritty/alacritty.yml".text =
+    lib.mkAfter ''
+      font:
+        size: 13.0
+    '';
 }

@@ -1,6 +1,7 @@
 { pkgs, username, ... }:
 {
   users.users.${username}.packages = with pkgs; [
+    alacritty
     bitwarden
     discord
     firefox

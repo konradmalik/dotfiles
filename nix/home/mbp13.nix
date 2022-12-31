@@ -1,4 +1,4 @@
-{ config, username, ... }:
+{ config, lib, username, ... }:
 
 {
   imports = [
@@ -11,5 +11,9 @@
     homeDirectory = "/Users/${config.home.username}";
   };
 
-  programs.alacritty.settings.font.size = 16.0;
+  xdg.configFile. "alacritty/alacritty.yml".text =
+    lib.mkAfter ''
+      font:
+        size: 16.0
+    '';
 }

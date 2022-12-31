@@ -7,6 +7,7 @@
   # packages installed in system profile
   environment = {
     systemPackages = with pkgs; [
+      alacritty
       darwin-zsh-completions
       docker-client
       lima
