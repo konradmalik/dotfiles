@@ -39,7 +39,6 @@
       [
         "alacritty"
         "backblaze"
-        "bitwarden"
         "calibre"
         "discord"
         "drawio"
@@ -61,9 +60,7 @@
       ];
 
     masApps = {
-      # for some reason this gets reinstalled every time
-      # so we use homebrew
-      #Bitwarden = 1352778147;
+      Bitwarden = 1352778147;
       "GoodNotes 5" = 1444383602;
       Pocket = 568494494;
       Tailscale = 1475387142;
