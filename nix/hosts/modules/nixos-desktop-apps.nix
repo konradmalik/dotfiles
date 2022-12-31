@@ -11,6 +11,7 @@
     spotify
     teams
     tdesktop
+    vlc
     zathura
   ];
 }
