@@ -52,9 +52,6 @@ in
       pulseaudio # for pactl volume control
       xdg-utils # for openning default programms when clicking links
       glib # gsettings
-      gnome.adwaita-icon-theme # default gnome cursors
-      catppuccin-gtk
-      papirus-icon-theme
       swaylock
       swayidle
       grim # screenshot functionality
@@ -71,17 +68,6 @@ in
       ranger
       gnome.eog
     ];
-    extraSessionCommands = ''
-      export XDG_CURRENT_DESKTOP=sway
-      # Firefox
-      export MOZ_ENABLE_WAYLAND=1
-      # Qt
-      export XDG_SESSION_TYPE=wayland
-      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-      # Fix for some Java AWT applications (e.g. Android Studio),
-      # use this if they aren't displayed properly:
-      export _JAVA_AWT_WM_NONREPARENTING=1
-    '';
   };
 
   # Brightness and volume

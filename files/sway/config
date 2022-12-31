@@ -30,17 +30,6 @@ seat * hide_cursor 5000
 
 font pango:Hack Nerd Font 11
 
-set $gnome-schema org.gnome.desktop.interface
-exec_always {
-    gsettings set $gnome-schema gtk-theme 'Catppuccin-Teal-Dark'
-    gsettings set $gnome-schema icon-theme 'Papirus-Dark'
-    gsettings set $gnome-schema cursor-theme 'Adwaita'
-    gsettings set $gnome-schema font-name 'Hack Nerd Font 11'
-    gsettings set $gnome-schema color-scheme 'prefer-dark'
-    gsettings set $gnome-schema scaling-factor uint32 0
-    gsettings set $gnome-schema text-scaling-factor 1.0
-}
-
 # app to workspace
 # swaymsg -t get_tree
 assign [app_id="Alacritty"] workspace number 1
@@ -256,5 +245,4 @@ exec dbus-sway-environment
 # rest
 exec mako
 exec systemctl --user start wlsunset.service
-# give sway a little time to startup before starting kanshi.
-exec sleep 5; systemctl --user start kanshi.service
+exec systemctl --user start kanshi.service
