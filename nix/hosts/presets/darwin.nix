@@ -7,11 +7,9 @@
   # packages installed in system profile
   environment = {
     systemPackages = with pkgs; [
-      alacritty
       darwin-zsh-completions
       docker-client
       lima
-      slack
       # only to provide tmux-256color terminfo
       # until macos ships with newer ncurses
       ncurses
@@ -30,8 +28,18 @@
   };
 
   homebrew = {
+    enable = true;
+    onActivation = {
+      cleanup = "zap";
+    };
+    taps = [
+      "homebrew/cask"
+    ];
     casks =
       [
+        "alacritty"
+        "backblaze"
+        "bitwarden"
         "calibre"
         "discord"
         "drawio"
@@ -39,10 +47,13 @@
         "gimp"
         "grammarly"
         "keepingyouawake"
+        "microsoft-office"
         "microsoft-teams"
         "netnewswire"
+        "nuclino"
         "obsidian"
         "signal"
+        "slack"
         "spotify"
         "telegram"
         "vlc"
@@ -50,9 +61,13 @@
       ];
 
     masApps = {
-      Bitwarden = 1352778147;
+      # for some reason this gets reinstalled every time
+      # so we use homebrew
+      #Bitwarden = 1352778147;
       "GoodNotes 5" = 1444383602;
+      Pocket = 568494494;
       Tailscale = 1475387142;
+      Wireguard = 1451685025;
     };
   };
 

@@ -11,5 +11,6 @@
     spotify
     teams
     tdesktop
+    zathura
   ];
 }

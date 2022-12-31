@@ -12,8 +12,5 @@
   };
 
   xdg.configFile. "alacritty/alacritty.yml".text =
-    lib.mkAfter ''
-      font:
-        size: 16.0
-    '';
+    lib.mkAfter "  size: 16.0";
 }

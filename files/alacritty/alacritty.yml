@@ -11,6 +11,7 @@ cursor:
     blinking: Always
 
 fontfamily: &fontfamily "Hack Nerd Font"
+# important for our nix configs modularity that font section is last
 font:
   normal:
     family: *fontfamily
