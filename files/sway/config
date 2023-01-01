@@ -76,9 +76,12 @@ input "type:touchpad" {
 }
 
 input "type:keyboard" {
-    xkb_layout us
-    xkb_variant ,nodeadkeys
-    xkb_options grp:alt_shift_toggle,ctrl:nocaps
+    xkb_layout us,pl
+    # left-to-right:
+    # use both shofts together to toggle keyboard layout
+    # capslock acts as another ctrl
+    # left alt allows to write special characters just like right alt
+    xkb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch
 }
 
 ### Key bindings
