@@ -6,10 +6,10 @@ in {
     enable = mkEnableOption "Enables Alacritty configuration management through home-manager";
 
     fontSize = mkOption {
-      type = types.float;
-      default = null;
+      type = types.number;
+      default = 0;
       example = "13.0";
-      description = "Font size. If null, alacritty will set it automatically.";
+      description = "Font size. If default, alacritty will set it automatically.";
     };
 
     fontFamily = mkOption rec {
@@ -36,7 +36,7 @@ in {
           "fontfamily: &fontfamily \"${cfg.fontFamily}\"")
       ] ++ baseYmls ++ [
         (strings.optionalString
-          (cfg.fontSize != null)
+          (cfg.fontSize != 0)
           "  size: ${strings.floatToString cfg.fontSize}")
       ]);
     };
