@@ -53,17 +53,11 @@ in
       xdg-utils # for openning default programms when clicking links
       swaylock
       swayidle
-      grim # screenshot functionality
-      slurp # screenshot functionality
-      wofi # wayland clone of rofi
-      mako # notification system developed by swaywm maintainer
-      waybar # status bar
       networkmanagerapplet # nm-connection-edit
       pavucontrol # audio gui
       libnotify # notify-send
       wl-clipboard
       wl-clipboard-x11
-      bashmount
       gnome.eog
     ];
   };
@@ -71,15 +65,6 @@ in
   # Brightness and volume
   users.users.${username}.extraGroups = [ "video" ];
   programs.light.enable = true;
-
-  # kanshi systemd service (output hotswap)
-  systemd.user.services.kanshi = {
-    description = "kanshi daemon";
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = ''${pkgs.kanshi}/bin/kanshi'';
-    };
-  };
 
   services.blueman.enable = true;
 

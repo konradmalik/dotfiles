@@ -244,5 +244,7 @@ include /etc/sway/config.d/*
 exec dbus-sway-environment
 # rest
 exec mako
+# services need to wait for sway
+exec sleep 5
 exec systemctl --user start wlsunset.service
 exec systemctl --user start kanshi.service

@@ -1,9 +1,18 @@
 { pkgs, lib, ... }:
 {
+  home.packages = with pkgs; [
+    bashmount
+    grim # screenshots
+    slurp # screenshots
+    mako # notification system developed by swaywm maintainer
+    waybar # status bar
+    wofi # wayland clone of rofi
+  ];
+
+  # sway
   xdg.configFile = {
     # sway
     "sway/config".source = "${pkgs.dotfiles}/sway/config";
-    # swaylock
     "swaylock/config".source = "${pkgs.dotfiles}/swaylock/config";
     # mako
     "mako/config".source = "${pkgs.dotfiles}/mako/config";

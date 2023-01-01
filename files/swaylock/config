@@ -1,2 +1,4 @@
 daemonize
 color=8aadf4
+indicator-idle-visible
+show-failed-attempts
