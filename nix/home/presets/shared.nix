@@ -106,6 +106,10 @@
 
   # dotfiles
   xdg.configFile."glow/glow.yml".source = "${pkgs.dotfiles}/glow/glow.yml";
+  xdg.configFile."ranger" = {
+    source = "${pkgs.dotfiles}/ranger";
+    recursive = true;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
