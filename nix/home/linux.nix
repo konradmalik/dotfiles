@@ -9,10 +9,4 @@
     username = "${username}";
     homeDirectory = "/home/${config.home.username}";
   };
-
-  xdg.configFile. "alacritty/alacritty.yml".text =
-    lib.mkAfter ''
-      font:
-        size: 13.0
-    '';
 }

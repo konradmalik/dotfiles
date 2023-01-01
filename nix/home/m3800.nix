@@ -11,6 +11,5 @@
     homeDirectory = "/home/${config.home.username}";
   };
 
-  xdg.configFile. "alacritty/alacritty.yml".text =
-    lib.mkAfter "  size: 13.0";
+  konrad.programs.alacritty.fontSize = 13.0;
 }
