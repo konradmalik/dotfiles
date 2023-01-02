@@ -16,6 +16,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # make tmp in ram
+  boot.tmpOnTmpfs = true;
+  boot.tmpOnTmpfsSize = "25%";
+
   # Enable networking
   networking.networkmanager = {
     enable = true;
