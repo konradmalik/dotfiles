@@ -188,18 +188,13 @@
       git = {
         host = "github.com gitlab.com bitbucket.org";
         user = "git";
-        identityFile = "${config.home.homeDirectory}/.ssh/private";
-      };
-      aur = {
-        host = "aur.archlinux.org";
-        user = "aur";
-        identityFile = "${config.home.homeDirectory}/.ssh/aur";
+        identityFile = "${config.home.homeDirectory}/.ssh/personal";
       };
       tailscale = {
         host = "vaio xps12 rpi4-1 rpi4-2 m3800 mbp13";
         user = "${username}";
         forwardAgent = true;
-        identityFile = "${config.home.homeDirectory}/.ssh/private";
+        identityFile = "${config.home.homeDirectory}/.ssh/personal";
       };
       vaio = lib.hm.dag.entryAfter [ "tailscale" ] {
         hostname = "100.68.248.43";

@@ -24,7 +24,7 @@
     userName = "Konrad Malik";
     userEmail = "konrad.malik@gmail.com";
     signing = {
-      key = "~/.ssh/private";
+      key = "~/.ssh/personal";
       signByDefault = true;
     };
     aliases = {
