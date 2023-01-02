@@ -56,7 +56,7 @@ in
       # this won't be useful globally, so neovim only is fine
       pkgs.shellcheck
     ];
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs.unstable.vimPlugins; [
       # dependencies
       plenary-nvim
       nui-nvim
