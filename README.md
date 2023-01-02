@@ -44,8 +44,9 @@ home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfil
 
 ## presets and modules
 
+- `modules` in `/nix/modules` are proper, enable-able modules which can be always imported and enabled/configured as needed. I'm slowly migrating my stuff here.
 - `presets` are ready to use templates `nixos.nix`, `darwin.nix` etc.
-- `modules` are optional layers on top of presets, eg. `gui.nix`
+- `modules` (not in `/nix/modules`) are optional layers on top of presets, eg. `desktop-apps.nix`. Those are enabled as soon as they are imported.
 
 An exemplary usage is:
 `m3800.nix` defines a home-manager config for a m3800 machine.
