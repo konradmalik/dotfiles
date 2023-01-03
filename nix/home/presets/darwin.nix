@@ -34,19 +34,6 @@
           # system-wide (goes into users as well)
           sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
       }
-
-      # update functions
-      mac-upgrade() {
-          brew update \
-          && brew upgrade \
-          && brew upgrade --cask \
-          && asdf plugin-update --all
-      }
-      mac-clean() {
-          brew autoremove \
-          && brew cleanup \
-          && nix-clean
-      }
     '';
   };
 }

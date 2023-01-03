@@ -30,6 +30,8 @@
   homebrew = {
     enable = true;
     onActivation = {
+      autoUpdate = true;
+      upgrade = true;
       cleanup = "zap";
     };
     taps = [
@@ -109,6 +111,18 @@
       };
       trackpad = {
         Clicking = true;
+      };
+      loginwindow = {
+        GuestEnabled = false;
+        DisableConsoleAccess = true;
+      };
+      NSGlobalDomain = {
+        AppleInterfaceStyle = "Dark";
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
       };
     };
     keyboard = {
