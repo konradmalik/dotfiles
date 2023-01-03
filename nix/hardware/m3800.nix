@@ -44,5 +44,14 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
-  hardware.bluetooth.enable = lib.mkDefault true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        FastConnectable = true;
+        ReconnectAttempts = 5;
+        ReconnectIntervals = "1, 2, 3";
+      };
+    };
+  };
 }

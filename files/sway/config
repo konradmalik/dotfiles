@@ -56,7 +56,6 @@ for_window [app_id="nmtui"] floating enable
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 swaylock \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep swaylock
 # This will lock your screen after 300 seconds of inactivity, then turn off
@@ -73,6 +72,14 @@ input "type:touchpad" {
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
+}
+
+input "type:touch" {
+    events disabled
+}
+
+input "type:mouse" {
+    natural_scroll enabled
 }
 
 input "type:keyboard" {
@@ -248,6 +255,4 @@ exec dbus-sway-environment
 # rest
 exec mako
 # services need to wait for sway
-exec sleep 5
-exec systemctl --user start wlsunset.service
-exec systemctl --user start kanshi.service
+exec_always sleep 5; systemctl --user restart wlsunset.service; systemctl --user restart kanshi.service
