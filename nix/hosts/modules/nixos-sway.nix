@@ -62,6 +62,9 @@ in
     ];
   };
 
+  # enable proper wayland support for some apps globally
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   # Brightness and volume
   users.users.${username}.extraGroups = [ "video" ];
   programs.light.enable = true;
@@ -70,4 +73,9 @@ in
 
   programs.ssh.startAgent = true;
 
+  services.xserver.libinput = {
+    enable = true;
+    touchpad.naturalScrolling = true;
+    mouse.naturalScrolling = true;
+  };
 }

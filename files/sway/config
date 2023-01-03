@@ -255,4 +255,4 @@ exec dbus-sway-environment
 # rest
 exec mako
 # services need to wait for sway
-exec_always sleep 5; systemctl --user restart wlsunset.service; systemctl --user restart kanshi.service
+exec sleep 5  && systemctl --user restart wlsunset.service && systemctl --user restart kanshi.service
