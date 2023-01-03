@@ -3,14 +3,14 @@
   users.users.${username}.packages = with pkgs; [
     alacritty
     bitwarden
-    discord
+    unstable.discord
     firefox
     obsidian
-    signal-desktop
-    slack
-    spotify
-    teams
-    tdesktop
+    unstable.signal-desktop
+    unstable.slack
+    unstable.spotify
+    unstable.teams
+    unstable.tdesktop
     vlc
     zathura
   ];

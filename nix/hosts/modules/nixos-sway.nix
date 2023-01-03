@@ -51,6 +51,7 @@ in
       dbus-sway-environment
       pulseaudio # for pactl volume control
       xdg-utils # for openning default programms when clicking links
+      bluez-tools # for bluetoothctl and other stuff
       swaylock
       swayidle
       networkmanagerapplet # nm-connection-edit

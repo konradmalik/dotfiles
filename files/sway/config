@@ -36,7 +36,7 @@ assign [app_id="Alacritty"] workspace number 1
 assign [app_id="firefox"] workspace number 2
 assign [class="Spotify"] workspace number 4
 for_window [class="Spotify"] move window to workspace number 4
-assign [class="Slack"] workspace number 5
+assign [app_id="Slack"] workspace number 5
 assign [class="Microsoft Teams - Preview"] workspace number 5
 assign [class="discord"] workspace number 5
 assign [class="Signal"] workspace number 5
@@ -70,7 +70,7 @@ exec swayidle -w \
 input "type:touchpad" {
     dwt enabled
     tap enabled
-    natural_scroll enabled
+    # natural_scroll enabled
     middle_emulation enabled
 }
 
@@ -78,9 +78,9 @@ input "type:touch" {
     events disabled
 }
 
-input "type:mouse" {
-    natural_scroll enabled
-}
+# input "type:mouse" {
+#     natural_scroll enabled
+# }
 
 input "type:keyboard" {
     xkb_layout us,pl

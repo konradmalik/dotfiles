@@ -46,6 +46,8 @@
   hardware.video.hidpi.enable = lib.mkDefault true;
   hardware.bluetooth = {
     enable = true;
+    package = pkgs.bluezFull;
+    powerOnBoot = true;
     settings = {
       General = {
         FastConnectable = true;
