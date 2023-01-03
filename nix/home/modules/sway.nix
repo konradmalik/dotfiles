@@ -57,8 +57,22 @@
             }
           ];
         };
-        # second profile for clamshell desktop
-        # clamshell = {};
+        clamshell = {
+          outputs = [
+            {
+              criteria = "eDP-1";
+              status = "disable";
+            }
+            {
+              criteria = "HDMI-A-1";
+              mode = "3440x1440@29.993Hz";
+              position = "0,0";
+              scale = 1.0;
+              status = "enable";
+              transform = "normal";
+            }
+          ];
+        };
       };
     };
   };
