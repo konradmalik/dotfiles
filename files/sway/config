@@ -67,20 +67,21 @@ exec swayidle -w \
 # or input <identifier>
 
 ### Input configuration
+# mouse is pointer :')
+input "type:pointer" {
+    natural_scroll enabled
+}
+
 input "type:touchpad" {
     dwt enabled
     tap enabled
-    # natural_scroll enabled
+    natural_scroll enabled
     middle_emulation enabled
 }
 
 input "type:touch" {
     events disabled
 }
-
-# input "type:mouse" {
-#     natural_scroll enabled
-# }
 
 input "type:keyboard" {
     xkb_layout us,pl
@@ -255,4 +256,4 @@ exec dbus-sway-environment
 # rest
 exec mako
 # services need to wait for sway
-exec sleep 5  && systemctl --user restart wlsunset.service && systemctl --user restart kanshi.service
+exec sleep 2  && systemctl --user restart wlsunset.service && sleep 1 && systemctl --user restart kanshi.service

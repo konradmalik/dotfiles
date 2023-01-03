@@ -73,10 +73,4 @@ in
   services.blueman.enable = true;
 
   programs.ssh.startAgent = true;
-
-  services.xserver.libinput = {
-    enable = true;
-    touchpad.naturalScrolling = true;
-    mouse.naturalScrolling = true;
-  };
 }
