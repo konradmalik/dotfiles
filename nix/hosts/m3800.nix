@@ -46,8 +46,8 @@
 
   services.onedrive.enable = true;
 
-  services.logind.extraConfig = ''
-    IdleAction=suspend
-    IdleActionSec=30min
-  '';
+  # services.logind.extraConfig = ''
+  #   IdleAction=suspend
+  #   IdleActionSec=30min
+  # '';
 }

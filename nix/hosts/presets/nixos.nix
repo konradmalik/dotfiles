@@ -20,6 +20,20 @@
   boot.tmpOnTmpfs = true;
   boot.tmpOnTmpfsSize = "25%";
 
+  # bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    package = pkgs.bluezFull;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        FastConnectable = true;
+        ReconnectAttempts = 5;
+        ReconnectIntervals = "1, 2, 3";
+      };
+    };
+  };
+
   # Enable networking
   networking.networkmanager = {
     enable = true;
