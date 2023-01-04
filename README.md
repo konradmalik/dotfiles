@@ -12,12 +12,6 @@ Build and enable config locally:
 sudo nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)" switch
 ```
 
-Build Install ISO for m3800:
-
-```bash
-nix build .#m3800iso
-```
-
 Builder and enable config on remote:
 
 ```bash

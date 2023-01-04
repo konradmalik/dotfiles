@@ -54,54 +54,6 @@
           };
           overlays = [ overlay ] ++ extraOverlays;
         };
-
-      m3800Config =
-        let
-          system = "x86_64-linux";
-          username = "konrad";
-          pkgs = mkNixpkgs {
-            inherit system;
-            source = nixpkgs;
-          };
-        in
-        {
-          inherit system pkgs;
-          specialArgs = { inherit username; };
-          modules = [
-            ./nix/hosts/m3800.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${username} = import ./nix/home/m3800.nix;
-              home-manager.extraSpecialArgs = { inherit username; };
-            }
-          ];
-        };
-
-      xps12Config =
-        let
-          system = "x86_64-linux";
-          username = "konrad";
-          pkgs = mkNixpkgs {
-            inherit system;
-            source = nixpkgs;
-          };
-        in
-        {
-          inherit system pkgs;
-          specialArgs = { inherit username; };
-          modules = [
-            ./nix/hosts/xps12.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${username} = import ./nix/home/xps12.nix;
-              home-manager.extraSpecialArgs = { inherit username; };
-            }
-          ];
-        };
     in
     {
       darwinConfigurations = {
@@ -130,8 +82,75 @@
           };
       };
       nixosConfigurations = {
-        m3800 = nixpkgs.lib.nixosSystem m3800Config;
-        xps12 = nixpkgs.lib.nixosSystem xps12Config;
+        m3800 =
+          let
+            system = "x86_64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/hosts/m3800.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} = import ./nix/home/m3800.nix;
+                home-manager.extraSpecialArgs = { inherit username; };
+              }
+            ];
+          };
+        xps12 =
+          let
+            system = "x86_64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/hosts/xps12.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} = import ./nix/home/xps12.nix;
+                home-manager.extraSpecialArgs = { inherit username; };
+              }
+            ];
+          };
+        vaio =
+          let
+            system = "x86_64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/hosts/vaio.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} = import ./nix/home/vaio.nix;
+                home-manager.extraSpecialArgs = { inherit username; };
+              }
+            ];
+          };
       };
 
       homeConfigurations = {
@@ -151,11 +170,6 @@
           };
       };
 
-      packages.x86_64-linux =
-        {
-          m3800iso = nixos-generators.nixosGenerate (m3800Config // { format = "iso"; });
-          xps12iso = nixos-generators.nixosGenerate (xps12Config // { format = "iso"; });
-        };
       overlays.default = overlay;
     }
     //

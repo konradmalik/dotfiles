@@ -7,14 +7,14 @@
 
   nix = {
     settings = {
-      min-free = 15374182400; # ~15GB
-      max-free = 647374182400; # 64GB
+      min-free = 10374182400; # ~10GB
+      max-free = 327374182400; # 32GB
       cores = 2;
       max-jobs = 8;
     };
   };
 
-  networking.hostName = "xps12";
+  networking.hostName = "vaio";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
