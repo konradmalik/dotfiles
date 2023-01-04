@@ -3,6 +3,7 @@
 {
   imports = [
     ./presets/darwin.nix
+    ./modules/ssh-egress.nix
     ./modules/desktop.nix
   ];
 
