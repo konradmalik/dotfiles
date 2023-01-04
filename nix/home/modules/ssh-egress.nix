@@ -35,7 +35,7 @@
         hostname = "100.68.248.43";
       };
       xps12 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.120.134.20";
+        hostname = "100.115.164.124";
       };
       rpi4-1 = lib.hm.dag.entryAfter [ "tailscale" ] {
         hostname = "100.124.27.100";
