@@ -8,6 +8,11 @@
       ./modules/nixos-desktop-apps.nix
     ];
 
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
   nix = {
     settings = {
       min-free = 53374182400; # ~50GB

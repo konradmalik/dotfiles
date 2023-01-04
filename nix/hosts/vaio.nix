@@ -2,8 +2,19 @@
 {
   imports =
     [
+      ./../hardware/vaio.nix
       ./presets/nixos.nix
     ];
+
+  # Use the GRUB 2 boot loader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  # Define on which hard drive you want to install Grub.
+  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+
+  # boot.loader.grub.efiSupport = true;
+  # boot.loader.grub.efiInstallAsRemovable = true;
+  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   nix = {
     settings = {
@@ -15,6 +26,7 @@
   };
 
   networking.hostName = "vaio";
+
   services.logind.lidSwitch = "ignore";
 
   i18n.extraLocaleSettings = {
