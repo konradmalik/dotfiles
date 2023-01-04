@@ -170,6 +170,26 @@
           };
       };
 
+      packages.x86_64-linux =
+        {
+          serverIso =
+            let
+              system = "x86_64-linux";
+              username = "konrad";
+              pkgs = mkNixpkgs {
+                inherit system;
+                source = nixpkgs;
+              };
+            in
+            nixos-generators.nixosGenerate {
+              inherit system pkgs;
+              specialArgs = { inherit username; };
+              format = "iso";
+              modules = [
+                ./nix/iso/server.nix
+              ];
+            };
+        };
       overlays.default = overlay;
     }
     //
@@ -181,6 +201,5 @@
     in
     {
       devShells.default = pkgs.callPackage ./shell.nix { };
-    }
-    );
+    });
 }
