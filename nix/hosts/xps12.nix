@@ -2,6 +2,7 @@
 {
   imports =
     [
+      ./../hardware/xps12.nix
       ./presets/nixos.nix
     ];
 
@@ -15,6 +16,8 @@
   };
 
   networking.hostName = "xps12";
+
+  services.logind.lidSwitch = "ignore";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";

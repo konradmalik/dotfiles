@@ -15,6 +15,7 @@
   };
 
   networking.hostName = "vaio";
+  services.logind.lidSwitch = "ignore";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
