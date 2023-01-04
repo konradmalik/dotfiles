@@ -32,7 +32,7 @@
         identityFile = "${config.home.homeDirectory}/.ssh/personal";
       };
       vaio = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.68.248.43";
+        hostname = "100.67.103.124";
       };
       xps12 = lib.hm.dag.entryAfter [ "tailscale" ] {
         hostname = "100.115.164.124";
