@@ -1,6 +1,6 @@
 { ... }:
 {
-  imports = [ ./nix-shared.nix ];
+  imports = [ ./shared.nix ];
   nix = {
     configureBuildUsers = true;
     # must be >= max-jobs

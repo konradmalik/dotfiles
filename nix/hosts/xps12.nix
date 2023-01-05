@@ -6,6 +6,10 @@
       ./presets/nixos.nix
     ];
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
   nix = {
     settings = {
       min-free = 15374182400; # ~15GB
@@ -14,11 +18,6 @@
       max-jobs = 8;
     };
   };
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "xps12";
 

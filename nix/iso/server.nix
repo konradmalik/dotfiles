@@ -1,15 +1,8 @@
 { config, pkgs, modulesPath, lib, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+    ./../hosts/presets/programs/networkmanager.nix
   ];
-
-  # Enable networking
-  networking.networkmanager = {
-    enable = true;
-    insertNameservers = [ "1.1.1.1" "1.0.0.1" ];
-  };
-  # we use networkmanager
-  networking.wireless.enable = false;
 
   # Enable tailscale. We manually authenticate when we want with
   # "sudo tailscale up". If you don't use tailscale, you should comment

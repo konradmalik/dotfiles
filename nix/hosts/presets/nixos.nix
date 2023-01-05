@@ -1,7 +1,8 @@
 { config, pkgs, lib, username, ... }:
 {
   imports = [
-    ./programs/nix-nixos.nix
+    ./programs/nix/nixos.nix
+    ./programs/networkmanager.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -27,12 +28,6 @@
         ReconnectIntervals = "1, 2, 3";
       };
     };
-  };
-
-  # Enable networking
-  networking.networkmanager = {
-    enable = true;
-    insertNameservers = [ "1.1.1.1" "1.0.0.1" ];
   };
 
   # Enable tailscale. We manually authenticate when we want with

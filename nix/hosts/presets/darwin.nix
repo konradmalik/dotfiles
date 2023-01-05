@@ -1,7 +1,7 @@
 { config, pkgs, username, ... }:
 {
   imports = [
-    ./programs/nix-darwin.nix
+    ./programs/nix/darwin.nix
   ];
 
   # packages installed in system profile
