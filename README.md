@@ -22,7 +22,17 @@ HOSTNAME=m3800 nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmal
 
 ### nix-darwin:
 
-Build and enable config locally:
+Disable gatekeeper or however it's called:
+
+```bash
+sudo spctl --master-disable
+```
+
+Go to Settings -> Security and Privacy and allow apps from "Anywhere".
+
+Then install nix following the official guidelines and installer.
+
+Then build and enable config locally:
 
 ```bash
 darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)"
