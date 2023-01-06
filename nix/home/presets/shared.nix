@@ -65,6 +65,7 @@
 
       dive
 
+      comma
       asdf-vm
     ];
 
