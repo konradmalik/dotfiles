@@ -15,10 +15,6 @@
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     klucznik = {
       url = "github:konradmalik/klucznik";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +29,6 @@
     , flake-utils
     , darwin
     , home-manager
-    , nixos-generators
     , klucznik
     }:
     let
@@ -44,6 +39,10 @@
         };
         dotfiles = ./files;
         klucznik = klucznik.packages.${prev.system}.klucznik;
+        # workaround for rpi4 kernel:
+        # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243
+        makeModulesClosure = x:
+          prev.makeModulesClosure (x // { allowMissing = true; });
       } // (import ./nix/overlays/default.nix) final prev;
 
       mkNixpkgs = { source, system, extraOverlays ? [ ] }:
@@ -53,29 +52,6 @@
             allowUnfree = true;
           };
           overlays = [ overlay ] ++ extraOverlays;
-        };
-      rpi4-2Config =
-        let
-          system = "aarch64-linux";
-          username = "konrad";
-          pkgs = mkNixpkgs {
-            inherit system;
-            source = nixpkgs;
-          };
-        in
-        {
-          inherit system pkgs;
-          specialArgs = { inherit username; };
-          modules = [
-            ./nix/hosts/rpi4-2.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${username} = import ./nix/home/rpi4-2.nix;
-              home-manager.extraSpecialArgs = { inherit username; };
-            }
-          ];
         };
     in
     {
@@ -174,7 +150,116 @@
               }
             ];
           };
-        rpi4-2 = nixpkgs.lib.nixosSystem rpi4-2Config;
+        rpi4-1 =
+          let
+            system = "aarch64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/hosts/rpi4-1.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} = import ./nix/home/rpi4-1.nix;
+                home-manager.extraSpecialArgs = { inherit username; };
+              }
+            ];
+          };
+        rpi4-2 =
+          let
+            system = "aarch64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/hosts/rpi4-2.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} = import ./nix/home/rpi4-2.nix;
+                home-manager.extraSpecialArgs = { inherit username; };
+              }
+            ];
+          };
+        rpi4-1SdCard =
+          let
+            system = "aarch64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/img/rpi4.nix
+              ./nix/hosts/rpi4-1.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} = import ./nix/home/rpi4-1.nix;
+                home-manager.extraSpecialArgs = { inherit username; };
+              }
+            ];
+          };
+        rpi4-2SdCard =
+          let
+            system = "aarch64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/img/rpi4.nix
+              ./nix/hosts/rpi4-2.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} = import ./nix/home/rpi4-2.nix;
+                home-manager.extraSpecialArgs = { inherit username; };
+              }
+            ];
+          };
+        installerIso =
+          let
+            system = "x86_64-linux";
+            username = "konrad";
+            pkgs = mkNixpkgs {
+              inherit system;
+              source = nixpkgs;
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system pkgs;
+            specialArgs = { inherit username; };
+            modules = [
+              ./nix/img/installer.nix
+            ];
+          };
       };
 
       homeConfigurations = {
@@ -194,28 +279,6 @@
           };
       };
 
-      packages.x86_64-linux =
-        {
-          serverIso =
-            let
-              system = "x86_64-linux";
-              username = "konrad";
-              pkgs = mkNixpkgs {
-                inherit system;
-                source = nixpkgs;
-              };
-            in
-            nixos-generators.nixosGenerate {
-              inherit system pkgs;
-              specialArgs = { inherit username; };
-              format = "iso";
-              modules = [
-                ./nix/iso/server.nix
-              ];
-            };
-          # installer in the name here is misleading
-          rpi4-2SdCard = nixos-generators.nixosGenerate (rpi4-2Config // { format = "sd-aarch64-installer"; });
-        };
       overlays.default = overlay;
     }
     //

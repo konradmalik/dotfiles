@@ -6,13 +6,13 @@ Nix ftw.
 
 ### NixOS:
 
-Build and enable config locally:
+#### Build and enable config locally:
 
 ```bash
 $ sudo nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)" switch
 ```
 
-Builder and enable config on remote:
+#### Builde and enable config on remote:
 
 ```bash
 # TODO not tested
@@ -20,13 +20,14 @@ Builder and enable config on remote:
 $ HOSTNAME=m3800 nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$HOSTNAME" --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
 ```
 
-Build sd-image:
+#### Build sd-image:
 
 ```bash
-$ nix build .#rpi4-2SdCard
+$ nix build .#nixosConfigurations.rpi4-2SdCard.config.system.build.sdImage
 ```
 
 Copy it somewhere and unpack:
+
 ```bash
 $ unzstd -d rpi4-2.img.zst
 ```
@@ -38,6 +39,14 @@ $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 ```
 
 Remember to use `dotfiles-private` and symlink `wpa_supplicant.conf`.
+
+#### Build minimal ISO with ssh access for root:
+
+Useful for installing any nixos-config through ssh.
+
+```bash
+$ nix build .#nixosConfigurations.installerIso.config.system.build.isoImage
+```
 
 ### nix-darwin:
 

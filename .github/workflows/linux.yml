@@ -12,6 +12,10 @@ jobs:
           name: konradmalik
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
+      - name: Flake check
+        run: |
+          nix flake check
+
       - name: Shell build linux
         run: |
           nix build --no-link .#devShells.x86_64-linux.default

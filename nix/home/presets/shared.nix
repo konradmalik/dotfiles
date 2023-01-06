@@ -67,6 +67,7 @@
       comma
       asdf-vm
     ]
+    # TODO submit fix or create overlay
     # sad won't compile due to https://github.com/NixOS/nixpkgs/issues/145726
     ++ lib.lists.optionals (pkgs.system != "aarch64-linux")
       [ sad ];

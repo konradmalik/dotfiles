@@ -1,4 +1,6 @@
 { config, pkgs, modulesPath, lib, ... }: {
+  # this could be made better as per:
+  # https://hoverbear.org/blog/nix-flake-live-media/
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     ./../hosts/presets/programs/networkmanager.nix
