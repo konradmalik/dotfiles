@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    ./presets/nixos.nix
+    ./presets/nixos-headless.nix
   ];
 
   nix = {
@@ -43,7 +43,4 @@
       };
     };
   };
-
-  # Open firewall.
-  networking.firewall.enable = false;
 }

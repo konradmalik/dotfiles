@@ -6,6 +6,9 @@
       ./presets/nixos.nix
     ];
 
+  # lts
+  boot.kernelPackages = pkgs.linuxPackages;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";

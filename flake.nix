@@ -54,6 +54,29 @@
           };
           overlays = [ overlay ] ++ extraOverlays;
         };
+      rpi4-2Config =
+        let
+          system = "aarch64-linux";
+          username = "konrad";
+          pkgs = mkNixpkgs {
+            inherit system;
+            source = nixpkgs;
+          };
+        in
+        {
+          inherit system pkgs;
+          specialArgs = { inherit username; };
+          modules = [
+            ./nix/hosts/rpi4-2.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./nix/home/rpi4-2.nix;
+              home-manager.extraSpecialArgs = { inherit username; };
+            }
+          ];
+        };
     in
     {
       darwinConfigurations = {
@@ -151,6 +174,7 @@
               }
             ];
           };
+        rpi4-2 = nixpkgs.lib.nixosSystem rpi4-2Config;
       };
 
       homeConfigurations = {
@@ -189,6 +213,8 @@
                 ./nix/iso/server.nix
               ];
             };
+          # installer in the name here is misleading
+          rpi4-2SdCard = nixos-generators.nixosGenerate (rpi4-2Config // { format = "sd-aarch64-installer"; });
         };
       overlays.default = overlay;
     }

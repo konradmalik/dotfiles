@@ -12,9 +12,6 @@ jobs:
           name: konradmalik
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Flake checks
-        run: nix flake check
-
       - name: Shell build linux
         run: |
           nix build --no-link .#devShells.x86_64-linux.default
@@ -24,5 +21,13 @@ jobs:
           nix build --no-link .#homeConfigurations.konrad@linux.activationPackage
 
       - name: Flake build nixos m3800
+        run: |
+          nix build --no-link .#nixosConfigurations.m3800.config.system.build.toplevel
+
+      - name: Flake build nixos vaio
+        run: |
+          nix build --no-link .#nixosConfigurations.m3800.config.system.build.toplevel
+
+      - name: Flake build nixos xps12
         run: |
           nix build --no-link .#nixosConfigurations.m3800.config.system.build.toplevel

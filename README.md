@@ -9,7 +9,7 @@ Nix ftw.
 Build and enable config locally:
 
 ```bash
-sudo nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)" switch
+$ sudo nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)" switch
 ```
 
 Builder and enable config on remote:
@@ -17,15 +17,34 @@ Builder and enable config on remote:
 ```bash
 # TODO not tested
 # home-manager may be problematic: https://discourse.nixos.org/t/home-manager-flake-not-respecting-build-host-during-nixos-rebuild/16787
-HOSTNAME=m3800 nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$HOSTNAME" --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
+$ HOSTNAME=m3800 nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$HOSTNAME" --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
 ```
+
+Build sd-image:
+
+```bash
+$ nix build .#rpi4-2SdCard
+```
+
+Copy it somewhere and unpack:
+```bash
+$ unzstd -d rpi4-2.img.zst
+```
+
+Flash directly to the card:
+
+```bash
+$ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
+```
+
+Remember to use `dotfiles-private` and symlink `wpa_supplicant.conf`.
 
 ### nix-darwin:
 
 Disable gatekeeper or however it's called:
 
 ```bash
-sudo spctl --master-disable
+$ sudo spctl --master-disable
 ```
 
 Go to Settings -> Security and Privacy and allow apps from "Anywhere".
@@ -35,7 +54,7 @@ Then install nix following the official guidelines and installer.
 Then build and enable config locally:
 
 ```bash
-darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)"
+$ darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)"
 ```
 
 ### linux (non-NixOS; home-manager):
@@ -43,7 +62,7 @@ darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotf
 Build and enable config locally:
 
 ```bash
-home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"
+$ home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"
 ```
 
 ## presets and modules

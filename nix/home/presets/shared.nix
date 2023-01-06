@@ -1,4 +1,4 @@
-{ config, lib, pkgs, username, ... }:
+{ config, pkgs, lib, username, ... }:
 
 {
   imports = [
@@ -39,7 +39,6 @@
       ripgrep-all
       fd
       sd
-      sad
 
       hyperfine
       viddy
@@ -67,7 +66,10 @@
 
       comma
       asdf-vm
-    ];
+    ]
+    # sad won't compile due to https://github.com/NixOS/nixpkgs/issues/145726
+    ++ lib.lists.optionals (pkgs.system != "aarch64-linux")
+      [ sad ];
 
     file.".gdbinit".source = "${pkgs.dotfiles}/gdb/.gdbinit";
     file.".inputrc".source = "${pkgs.dotfiles}/inputrc/.inputrc";

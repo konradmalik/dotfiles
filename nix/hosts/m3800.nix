@@ -8,10 +8,16 @@
       ./modules/nixos-desktop-apps.nix
     ];
 
+  # lts
+  boot.kernelPackages = pkgs.linuxPackages;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  # enable aarch64-linux emulation
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   nix = {
     settings = {

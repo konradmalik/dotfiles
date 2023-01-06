@@ -2,6 +2,8 @@
 *.log
 *.lock
 .DS_store
+*.zst
+*.img
 #nix
 !flake.lock
 result
