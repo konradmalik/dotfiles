@@ -27,7 +27,8 @@
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "forking";
-      ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sdb -i 600";
+      # never spin down all disks, but spin down sda after 300 secs
+      ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sda -i 300";
     };
   };
 
