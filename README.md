@@ -57,6 +57,22 @@ Useful for installing any nixos-config through ssh.
 $ nix build .#nixosConfigurations.installerIso.config.system.build.isoImage
 ```
 
+Flash iso to a pendrive
+
+```bash
+$ sudo dd if=installer.iso of=/dev/sdX bs=4096 conv=fsync status=progress
+```
+
+Boot, find the ip and ssh connect as root.
+
+Format, partition the drive etc.
+
+Then you can install your system from flake directly:
+
+```bash
+$ sudo nixos-install --flake github.com:konradmalik/dotfiles#m3800 --root /mnt
+```
+
 ### nix-darwin:
 
 Disable gatekeeper or however it's called:
