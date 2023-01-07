@@ -42,21 +42,6 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  ##### disable nvidia
-  hardware.nvidiaOptimus.disable = true;
-  boot.blacklistedKernelModules = [ "nouveau" "nvidia" ];
-  # or run it on-demand
-  # services.xserver.videoDrivers = [ "nvidia" ];
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
-  # hardware.opengl.enable = true;
-  # hardware.nvidia.prime = {
-  #   offload.enable = true;
-  #   nvidiaBusId = "PCI:0:2:0";
-  #   intelBusId = "PCI:2:0:0";
-  # };
-
-  services.onedrive.enable = true;
-
   # services.logind.extraConfig = ''
   #   IdleAction=suspend
   #   IdleActionSec=30min

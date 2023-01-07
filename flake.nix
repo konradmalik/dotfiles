@@ -97,6 +97,9 @@
             inherit system pkgs;
             specialArgs = { inherit username; };
             modules = [
+              nixos-hardware.nixosModules.common-cpu-intel
+              nixos-hardware.nixosModules.common-gpu-nvidia-disable
+              nixos-hardware.nixosModules.common-pc-laptop-ssd
               ./nix/hosts/m3800.nix
               home-manager.nixosModules.home-manager
               {
@@ -120,6 +123,8 @@
             inherit system pkgs;
             specialArgs = { inherit username; };
             modules = [
+              nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+              nixos-hardware.nixosModules.common-pc-ssd
               ./nix/hosts/xps12.nix
               home-manager.nixosModules.home-manager
               {
@@ -143,6 +148,8 @@
             inherit system pkgs;
             specialArgs = { inherit username; };
             modules = [
+              nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+              nixos-hardware.nixosModules.common-pc-ssd
               ./nix/hosts/vaio.nix
               home-manager.nixosModules.home-manager
               {
