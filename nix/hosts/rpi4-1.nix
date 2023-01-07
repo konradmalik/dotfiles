@@ -33,16 +33,29 @@
   };
 
   # Enable basic sound
+  # only alsa, spotifyd and shairport-sync work best with it
+  # however remember that you need to be in "audio" group to work with alsamixer and the rest
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+
+  services.spotifyd = {
+    enable = true;
+    settings = {
+      global = {
+        backend = "alsa";
+        bitrate = 320;
+        max_cache_size = 5000000000; #5 GB
+        initial_volume = "30"; #%
+        volume_normalisation = true;
+        device_name = "rpi4-1";
+        device_type = "speaker";
+      };
+    };
+  };
 
   # shairport sync requires avahi
-  services.avahi = {
+  services.shairport-sync = {
     enable = true;
-    publish = {
-      enable = true;
-      userServices = true;
-    };
+    arguments = "-a rpi4-1 -v -o alsa";
   };
 
   fileSystems = {
