@@ -38,7 +38,16 @@ Flash directly to the card:
 $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 ```
 
-Remember to use `dotfiles-private` and symlink `wpa_supplicant.conf`.
+Remember to use `dotfiles-private` and symlink `wpa_supplicant.conf`, but you can do it only after running rpi with the card inside at least once.
+Otherwise, the filesystem won't be complete, it will miss `etc` and more. NixOS will populate those dirs on first boot.
+
+So steps are:
+
+- boot rpi with the newly flashed card once
+- wait a minute or two
+- poweroff rpi and mount the card on your PC
+- copy `wpa_supplicant`
+- boot rpi with the card again and it will work
 
 #### Build minimal ISO with ssh access for root:
 

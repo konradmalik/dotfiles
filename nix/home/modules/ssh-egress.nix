@@ -38,10 +38,10 @@
         hostname = "100.115.164.124";
       };
       rpi4-1 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.124.27.100";
+        hostname = "100.99.159.110";
       };
       rpi4-2 = lib.hm.dag.entryAfter [ "tailscale" ] {
-        hostname = "100.127.1.93";
+        hostname = "100.78.182.5";
       };
       m3800 = lib.hm.dag.entryAfter [ "tailscale" ] {
         hostname = "100.108.89.62";
