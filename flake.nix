@@ -196,54 +196,6 @@
               }
             ];
           };
-        rpi4-1SdCard =
-          let
-            system = "aarch64-linux";
-            username = "konrad";
-            pkgs = mkNixpkgs {
-              inherit system;
-              source = nixpkgs;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit system pkgs;
-            specialArgs = { inherit username; };
-            modules = [
-              ./nix/img/rpi4.nix
-              ./nix/hosts/rpi4-1.nix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} = import ./nix/home/rpi4-1.nix;
-                home-manager.extraSpecialArgs = { inherit username; };
-              }
-            ];
-          };
-        rpi4-2SdCard =
-          let
-            system = "aarch64-linux";
-            username = "konrad";
-            pkgs = mkNixpkgs {
-              inherit system;
-              source = nixpkgs;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit system pkgs;
-            specialArgs = { inherit username; };
-            modules = [
-              ./nix/img/rpi4.nix
-              ./nix/hosts/rpi4-2.nix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} = import ./nix/home/rpi4-2.nix;
-                home-manager.extraSpecialArgs = { inherit username; };
-              }
-            ];
-          };
         installerIso =
           let
             system = "x86_64-linux";
@@ -257,7 +209,7 @@
             inherit system pkgs;
             specialArgs = { inherit username; };
             modules = [
-              ./nix/img/installer.nix
+              ./nix/iso/installer.nix
             ];
           };
       };

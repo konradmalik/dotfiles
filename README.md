@@ -23,7 +23,7 @@ $ HOSTNAME=m3800 nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradm
 #### Build sd-image:
 
 ```bash
-$ nix build .#nixosConfigurations.rpi4-2SdCard.config.system.build.sdImage
+$ nix build .#nixosConfigurations.rpi4-2.config.system.build.sdImage
 ```
 
 Copy it somewhere and unpack:

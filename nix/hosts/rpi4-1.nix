@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
+    ./../hardware/rpi4.nix
     ./presets/nixos-headless.nix
   ];
 
