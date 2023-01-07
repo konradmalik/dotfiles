@@ -32,15 +32,18 @@
     };
   };
 
-  services.shairport-sync = {
-    enable = true;
-    openFirewall = false;
-    arguments = "-v -o alsa";
-  };
-
   # Enable basic sound
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+
+  # shairport sync requires avahi
+  services.avahi = {
+    enable = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
 
   fileSystems = {
     "/mnt" = {
