@@ -25,10 +25,12 @@
   systemd.services.hd-idle = {
     description = "External HD spin down daemon";
     wantedBy = [ "multi-user.target" ];
+    environment.SHELL = "/bin/sh";
     serviceConfig = {
-      Type = "forking";
       # never spin down all disks, but spin down sda after 300 secs
       ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sda -i 300";
+      Restart = "always";
+      RestartSec = 12;
     };
   };
 
