@@ -1,25 +1,27 @@
 {
   description = "NixOS systems and tools by konradmalik";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+  inputs =
+    {
+      nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
+      nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+      flake-utils.url = "github:numtide/flake-utils";
+      nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    darwin = {
-      url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      darwin = {
+        url = "github:lnl7/nix-darwin";
+        inputs.nixpkgs.follows = "nixpkgs-darwin";
+      };
+      home-manager = {
+        url = "github:nix-community/home-manager/release-22.11";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      klucznik = {
+        url = "github:konradmalik/klucznik";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-22.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    klucznik = {
-      url = "github:konradmalik/klucznik";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
 
   outputs =
     { self
@@ -28,6 +30,7 @@
     , nixpkgs-unstable
     , flake-utils
     , darwin
+    , nixos-hardware
     , home-manager
     , klucznik
     }:
@@ -163,6 +166,7 @@
             inherit system pkgs;
             specialArgs = { inherit username; };
             modules = [
+              nixos-hardware.nixosModules.raspberry-pi-4
               ./nix/hosts/rpi4-1.nix
               home-manager.nixosModules.home-manager
               {
@@ -186,6 +190,7 @@
             inherit system pkgs;
             specialArgs = { inherit username; };
             modules = [
+              nixos-hardware.nixosModules.raspberry-pi-4
               ./nix/hosts/rpi4-2.nix
               home-manager.nixosModules.home-manager
               {

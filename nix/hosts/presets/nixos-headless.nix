@@ -37,7 +37,7 @@
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "${username}";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
       hashedPassword = "$y$j9T$6jfs6Dz6yj1AaYv9lQ88O.$c18jXPnra4YVXD2ylaHbzt/DHxckrHld7mR1SH2nlo0";
       # If you are using NixOps then don't use this option since it will replace the key required for deployment via ssh.
       openssh.authorizedKeys.keys =

@@ -23,7 +23,7 @@
     settings = {
       min-free = 53374182400; # ~50GB
       max-free = 107374182400; # 100GB
-      cores = 2;
+      cores = 4;
       max-jobs = 8;
     };
   };
