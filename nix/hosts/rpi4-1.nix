@@ -45,13 +45,14 @@
   services.shairport-sync = {
     enable = true;
     openFirewall = false;
-    #arguments = "";
+    arguments = "-v -o pa";
   };
 
   services.spotifyd = {
     enable = true;
     settings = {
       global = {
+        backend = "pipewire";
         bitrate = 320;
         max_cache_size = 5000000000; #5 GB
         initial_volume = "30"; #%
