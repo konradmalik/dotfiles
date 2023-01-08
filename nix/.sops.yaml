@@ -1,0 +1,23 @@
+keys:
+  # gpg
+  - &admin_konrad F75F59DD45C0D9016CCC3287DE3F236F1516A431
+  # personal ssh
+  - &admin_konrad_mbp13 age1n2saguuqjaea7szgcy45nuzg0kwh7h9c979wtnf4yt65jv3n4v6qkt37mh
+  # host ssh
+  - &host_m3800 age1s9xeq5c22a9t8escdep5zryz5ug56tsqc9j7wvaw4rkdregue3tqa6c2gz
+  - &host_mbp13 age1nyqqwhp6pecz47qmdskagyldlwm69ngu8ec7wyua99lrk28a8pkqaw0dtg
+creation_rules:
+  - path_regex: secrets/admins/[^/]+\.yaml$
+    key_groups:
+      - pgp:
+          - *admin_konrad
+        age:
+          - *admin_konrad_mbp13
+  - path_regex: secrets/ssh-egress\.yaml$
+    key_groups:
+      - pgp:
+          - *admin_konrad
+        age:
+          - *admin_konrad_mbp13
+          - *host_m3800
+          - *host_mbp13

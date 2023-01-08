@@ -17,6 +17,10 @@
         url = "github:nix-community/home-manager/release-22.11";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      sops-nix = {
+        url = "github:Mic92/sops-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
       klucznik = {
         url = "github:konradmalik/klucznik";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -29,9 +33,10 @@
     , nixpkgs-darwin
     , nixpkgs-unstable
     , flake-utils
-    , darwin
     , nixos-hardware
+    , darwin
     , home-manager
+    , sops-nix
     , klucznik
     }:
     let

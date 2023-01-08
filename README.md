@@ -99,6 +99,34 @@ Build and enable config locally:
 $ home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"
 ```
 
+### sops-nix
+
+We use `age` and `gpg`.
+
+Private age keys are needed only on machines that we use day-to-day, our main drivers, not on servers
+(assuming that secrets will be regularly edited only on daily-driver machines).
+
+Create `age` dir for sops (this is optional if you already have the needed gpg secret key, but suggested):
+
+```bash
+$ mkdir -p "$XDG_CONFIG_HOME/sops/age" \
+$ && touch "$XDG_CONFIG_HOME/sops/age/keys.txt" \
+$ && chmod 700 "$XDG_CONFIG_HOME/sops/age" \
+$ && chmod 600 "$XDG_CONFIG_HOME/sops/age/keys.txt"
+```
+
+Create `age` key from your personal ssh key:
+
+```bash
+$ ssh-to-age -private-key -i ~/.ssh/personal > "$XDG_CONFIG_HOME/sops/age/keys.txt"
+```
+
+Add this key to `.sops.yaml` and propagate reencryption to all secrets:
+
+```bash
+$ sops updatekeys secrets/**/*.yaml
+```
+
 ## presets and modules
 
 - `modules` in `/nix/modules` are proper, enable-able modules which can be always imported and enabled/configured as needed. I'm slowly migrating my stuff here.
