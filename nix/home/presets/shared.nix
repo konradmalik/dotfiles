@@ -38,6 +38,7 @@
       ripgrep
       ripgrep-all
       fd
+      sad
       sd
 
       hyperfine
@@ -66,11 +67,7 @@
 
       comma
       asdf-vm
-    ]
-    # TODO submit fix or create overlay
-    # sad won't compile due to https://github.com/NixOS/nixpkgs/issues/145726
-    ++ lib.lists.optionals (pkgs.system != "aarch64-linux")
-      [ sad ];
+    ];
 
     file.".gdbinit".source = "${pkgs.dotfiles}/gdb/.gdbinit";
     file.".inputrc".source = "${pkgs.dotfiles}/inputrc/.inputrc";
