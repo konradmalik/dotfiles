@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   # nixified plugins
@@ -8,8 +8,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "nat-418";
       repo = "boole.nvim";
-      rev = "d059fd7da634aaaabddbb280709f92effd9f2dba";
-      sha256 = "sha256-86+hAli8l7Htzx3SgFqE4aOoMKceMAf2M1fzUcl262g=";
+      rev = "23a799a60a0f56640a24d9fc20cf35ed958549ee";
+      sha256 = "sha256-9VlkS1YMa/3luqdwV/7Om+BHu96/IoVWT/zPqMq9aZg=";
     };
     meta.homepage = "https://github.com/nat-418/boole.nvim";
   };
