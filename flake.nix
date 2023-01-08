@@ -4,6 +4,7 @@
   inputs =
     {
       nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
+      nixpkgs-master.url = "github:NixOS/nixpkgs/master";
       nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
       flake-utils.url = "github:numtide/flake-utils";
@@ -30,6 +31,7 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs-master
     , nixpkgs-darwin
     , nixpkgs-unstable
     , flake-utils
@@ -42,6 +44,10 @@
     let
       overlay = final: prev: {
         unstable = import nixpkgs-unstable {
+          system = final.system;
+          config = final.config;
+        };
+        master = import nixpkgs-master {
           system = final.system;
           config = final.config;
         };
@@ -77,6 +83,7 @@
             inherit system pkgs;
             specialArgs = { inherit username; };
             modules = [
+              sops-nix.nixosModules.sops
               ./nix/hosts/mbp13.nix
               home-manager.darwinModules.home-manager
               {
@@ -179,6 +186,7 @@
             specialArgs = { inherit username; };
             modules = [
               nixos-hardware.nixosModules.raspberry-pi-4
+              sops-nix.nixosModules.sops
               ./nix/hosts/rpi4-1.nix
               home-manager.nixosModules.home-manager
               {
@@ -203,6 +211,7 @@
             specialArgs = { inherit username; };
             modules = [
               nixos-hardware.nixosModules.raspberry-pi-4
+              sops-nix.nixosModules.sops
               ./nix/hosts/rpi4-2.nix
               home-manager.nixosModules.home-manager
               {

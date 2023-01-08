@@ -2,13 +2,14 @@
   imports = [
     ./../hardware/rpi4.nix
     ./presets/nixos-headless.nix
+    ./modules/sops.nix
   ];
 
   nix = {
     settings = {
       min-free = 10374182400; # ~10GB
       max-free = 327374182400; # 32GB
-      cores = 2;
+      cores = 4;
       max-jobs = 8;
     };
   };
@@ -17,8 +18,14 @@
   networking.firewall.enable = false;
 
   networking.networkmanager.enable = false;
-  # remember to symlink wpa_supplicant.conf from dotfiles-private
   networking.wireless.enable = true;
 
   networking.hostName = "rpi4-2";
+
+  # automatically connect with wifi
+  sops.secrets.wpa_supplicant_conf = {
+    sopsFile = ./../secrets/wpa_supplicant.yaml;
+    path = "/etc/wpa_supplicant.conf";
+    mode = "0644";
+  };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, osConfig, ... }:
 
 {
   programs.git.signing = {
@@ -52,4 +52,7 @@
     };
   };
 
+  # TODO ssh_configd from osConfig.sops.secrets when
+  # https://github.com/Mic92/sops-nix/pull/168
+  # gets merged
 }

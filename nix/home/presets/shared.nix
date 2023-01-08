@@ -38,7 +38,8 @@
       ripgrep
       ripgrep-all
       fd
-      sad
+      # fix for aarch64 is only on master as of now
+      master.sad
       sd
 
       hyperfine

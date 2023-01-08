@@ -2,6 +2,7 @@
   imports = [
     ./../hardware/rpi4.nix
     ./presets/nixos-headless.nix
+    ./modules/sops.nix
   ];
 
   nix = {
@@ -13,14 +14,20 @@
     };
   };
 
+  # disable firewall
+  networking.firewall.enable = false;
+
   networking.networkmanager.enable = false;
-  # remember to symlink wpa_supplicant.conf from dotfiles-private
   networking.wireless.enable = true;
 
   networking.hostName = "rpi4-1";
 
-  # disable firewall
-  networking.firewall.enable = false;
+  # automatically connect with wifi
+  sops.secrets.wpa_supplicant_conf = {
+    sopsFile = ./../secrets/wpa_supplicant.yaml;
+    path = "/etc/wpa_supplicant.conf";
+    mode = "0644";
+  };
 
   systemd.services.hd-idle = {
     description = "External HD spin down daemon";
