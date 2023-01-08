@@ -17,5 +17,7 @@ mkShell {
     sumneko-lua-language-server
     # yaml
     nodePackages.yaml-language-server
+
+    sops
   ];
 }
