@@ -28,10 +28,8 @@ in
 {
   home = {
     sessionVariables = {
-      # The EDITOR editor should be able to work without use of "advanced"
-      # terminal functionality (like old ed or ex mode of vi).
-      # It was used on teletype terminals.
-      EDITOR = "nvim -e -u NONE";
+      # no profile makes it start faster than the speed of light
+      EDITOR = "nvim -u NONE";
       VISUAL = "nvim -u NONE";
       GIT_EDITOR = "nvim -u NONE";
     };
