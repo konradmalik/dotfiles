@@ -1,6 +1,6 @@
 keys:
-  # gpg
-  - &admin_konrad F75F59DD45C0D9016CCC3287DE3F236F1516A431
+  # main
+  - &admin_konrad age1p3uhyl5gr00kfykdmhm8tgq75ct2ajcptxqrnrf9hx2nd2w4u5rqmh36k7
   # personal ssh
   - &admin_konrad_mbp13 age1n2saguuqjaea7szgcy45nuzg0kwh7h9c979wtnf4yt65jv3n4v6qkt37mh
   - &admin_konrad_m3800 age1pcgwdcx2l2hx3j0xrsd3fakxt4qqze6n4xvyl37kkksn63ehyyxqn3utts
@@ -12,16 +12,14 @@ keys:
 creation_rules:
   - path_regex: secrets/admins/[^/]+\.yaml$
     key_groups:
-      - pgp:
+      - age:
           - *admin_konrad
-        age:
           - *admin_konrad_mbp13
           - *admin_konrad_m3800
   - path_regex: secrets/server\.yaml$
     key_groups:
-      - pgp:
+      - age:
           - *admin_konrad
-        age:
           - *admin_konrad_mbp13
           - *admin_konrad_m3800
           - *host_m3800
@@ -29,9 +27,8 @@ creation_rules:
 
   - path_regex: secrets/wpa_supplicant\.yaml$
     key_groups:
-      - pgp:
+      - age:
           - *admin_konrad
-        age:
           - *admin_konrad_mbp13
           - *admin_konrad_m3800
           - *host_rpi4-1
