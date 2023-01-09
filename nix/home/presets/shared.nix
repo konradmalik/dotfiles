@@ -46,28 +46,29 @@
       viddy
       watchexec
 
+      age
+      dsq
       jq
       jo
       jc
       xsv
-      dsq
 
       du-dust
-      procs
       duf
+      procs
 
-      up
-      croc
       bitwarden-cli
+      croc
       glow
+      up
 
-      azure-cli
       awscli
+      azure-cli
 
       dive
 
-      comma
       asdf-vm
+      comma
     ];
 
     file.".gdbinit".source = "${pkgs.dotfiles}/gdb/.gdbinit";
