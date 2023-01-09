@@ -11,21 +11,11 @@ in
 { pkgs ? lockedNixpkgs }:
 with pkgs;
 mkShell {
-  name = "dotfiles-shell";
+  name = "foo-shell";
 
   nativeBuildInputs = [
     # nix
     nil
     nixpkgs-fmt
-    # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
-    nixos-rebuild
-    # lua (neovim)
-    sumneko-lua-language-server
-    # yaml
-    nodePackages.yaml-language-server
-    # sops-nix
-    age
-    sops
-    ssh-to-age
   ];
 }

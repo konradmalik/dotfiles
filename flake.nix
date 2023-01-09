@@ -7,7 +7,6 @@
       nixpkgs-master.url = "github:NixOS/nixpkgs/master";
       nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-      flake-utils.url = "github:numtide/flake-utils";
       nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
       darwin = {
@@ -34,7 +33,6 @@
     , nixpkgs-master
     , nixpkgs-darwin
     , nixpkgs-unstable
-    , flake-utils
     , nixos-hardware
     , darwin
     , home-manager
@@ -42,6 +40,9 @@
     , klucznik
     }:
     let
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
       overlay = final: prev: {
         unstable = import nixpkgs-unstable {
           system = final.system;
@@ -69,6 +70,12 @@
         };
     in
     {
+      templates = import ./templates;
+
+      devShells = forAllSystems (system: {
+        default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
+      });
+
       darwinConfigurations = {
         mbp13 =
           let
@@ -95,6 +102,7 @@
             ];
           };
       };
+
       nixosConfigurations = {
         m3800 =
           let
@@ -122,6 +130,7 @@
               }
             ];
           };
+
         xps12 =
           let
             system = "x86_64-linux";
@@ -147,6 +156,7 @@
               }
             ];
           };
+
         vaio =
           let
             system = "x86_64-linux";
@@ -172,6 +182,7 @@
               }
             ];
           };
+
         rpi4-1 =
           let
             system = "aarch64-linux";
@@ -197,6 +208,7 @@
               }
             ];
           };
+
         rpi4-2 =
           let
             system = "aarch64-linux";
@@ -222,6 +234,7 @@
               }
             ];
           };
+
         installerIso =
           let
             system = "x86_64-linux";
@@ -256,22 +269,10 @@
             extraSpecialArgs = { inherit username; };
           };
       };
-
-      overlays.default = overlay;
-    }
-    //
-    flake-utils.lib.eachDefaultSystem (system:
-    let
-      pkgs = import nixpkgs {
-        inherit system;
-      };
-    in
-    {
-      devShells.default = pkgs.callPackage ./shell.nix { };
-    });
+    };
 
   nixConfig = {
-    extra-substituters = [
+    extra-trusted-substituters = [
       "https://konradmalik.cachix.org"
       "https://nix-community.cachix.org"
     ];
