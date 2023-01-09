@@ -25,6 +25,9 @@
 
   networking.hostName = "xps12";
 
+  networking.networkmanager.enable = false;
+  networking.wireless.enable = true;
+
   # automatically connect with wifi
   sops.secrets.wpa_supplicant_conf = {
     sopsFile = ./../secrets/wpa_supplicant.yaml;

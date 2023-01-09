@@ -70,7 +70,7 @@
         };
     in
     {
-      templates = import ./templates;
+      templates = import ./nix/templates;
 
       devShells = forAllSystems (system: {
         default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
