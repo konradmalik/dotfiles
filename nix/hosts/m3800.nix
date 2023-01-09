@@ -3,7 +3,7 @@
   imports =
     [
       ./../hardware/m3800.nix
-      ./presets/nixos.nix
+      ./presets/nixos-desktop.nix
       ./modules/nixos-sway.nix
       ./modules/nixos-desktop-apps.nix
     ];

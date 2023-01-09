@@ -33,5 +33,7 @@ creation_rules:
           - *admin_konrad
           - *admin_konrad_mbp13
           - *admin_konrad_m3800
+          - *host_xps12
+          - *host_vaio
           - *host_rpi4-1
           - *host_rpi4-2

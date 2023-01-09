@@ -3,7 +3,8 @@
   imports =
     [
       ./../hardware/xps12.nix
-      ./presets/nixos.nix
+      ./presets/nixos-server.nix
+      ./modules/sops.nix
     ];
 
   # lts
@@ -23,6 +24,13 @@
   };
 
   networking.hostName = "xps12";
+
+  # automatically connect with wifi
+  sops.secrets.wpa_supplicant_conf = {
+    sopsFile = ./../secrets/wpa_supplicant.yaml;
+    path = "/etc/wpa_supplicant.conf";
+    mode = "0644";
+  };
 
   services.logind.lidSwitch = "ignore";
 

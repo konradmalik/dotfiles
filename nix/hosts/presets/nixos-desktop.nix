@@ -1,7 +1,7 @@
 { config, pkgs, lib, username, ... }:
 {
   imports = [
-    ./nixos-headless.nix
+    ./nixos-server.nix
     ./programs/networkmanager.nix
   ];
 

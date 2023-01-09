@@ -148,6 +148,7 @@
               nixos-hardware.nixosModules.common-pc-ssd
               ./nix/hosts/xps12.nix
               home-manager.nixosModules.home-manager
+              sops-nix.nixosModules.sops
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
@@ -172,6 +173,7 @@
             modules = [
               nixos-hardware.nixosModules.common-cpu-intel-cpu-only
               nixos-hardware.nixosModules.common-pc-ssd
+              sops-nix.nixosModules.sops
               ./nix/hosts/vaio.nix
               home-manager.nixosModules.home-manager
               {

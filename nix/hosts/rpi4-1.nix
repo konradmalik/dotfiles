@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   imports = [
     ./../hardware/rpi4.nix
-    ./presets/nixos-headless.nix
+    ./presets/nixos-server.nix
     ./modules/sops.nix
   ];
 
