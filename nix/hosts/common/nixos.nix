@@ -1,4 +1,7 @@
 { config, pkgs, lib, username, inputs, outputs, ... }:
+let
+  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+in
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
@@ -47,14 +50,19 @@
     ssh.startAgent = true;
   };
 
+  sops.secrets.konrad-password = {
+    sopsFile = ./../../secrets/users/konrad/secrets.yaml;
+    neededForUsers = true;
+  };
+
   users = {
     mutableUsers = false;
     users.${username} = {
+      passwordFile = config.sops.secrets.konrad-password.path;
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "${username}";
-      extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
-      hashedPassword = "$y$j9T$6jfs6Dz6yj1AaYv9lQ88O.$c18jXPnra4YVXD2ylaHbzt/DHxckrHld7mR1SH2nlo0";
+      extraGroups = [ "wheel" "video" "audio" ] ++ ifTheyExist [ "docker" "networkmanager" ];
       # If you are using NixOps then don't use this option since it will replace the key required for deployment via ssh.
       openssh.authorizedKeys.keys =
         let
