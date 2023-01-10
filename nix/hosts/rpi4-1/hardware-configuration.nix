@@ -5,5 +5,7 @@
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
   ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+
   hardware.raspberry-pi."4".audio.enable = true;
 }
