@@ -25,15 +25,23 @@
 
   networking.hostName = "xps12";
 
-  networking.networkmanager.enable = false;
-  networking.wireless.enable = true;
-
-  # automatically connect with wifi
-  sops.secrets.wpa_supplicant_conf = {
+  sops.secrets."wireless.env" = {
     sopsFile = ./../secrets/wpa_supplicant.yaml;
-    path = "/etc/wpa_supplicant.conf";
     mode = "0644";
   };
+
+  networking.networkmanager.enable = false;
+  networking.wireless.environmentFile = config.sops.secrets."wireless.env".path;
+
+  networking.wireless = {
+    enable = true;
+    networks = {
+      "UPC7335283".psk = "@PSK_UPC7335283@";
+      "MALIK_E_DOM".psk = "@PSK_MALIK_E_DOM";
+    };
+  };
+
+  # automatically connect with wifi
 
   services.logind.lidSwitch = "ignore";
 
