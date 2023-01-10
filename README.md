@@ -4,20 +4,33 @@ Nix ftw.
 
 ## commands
 
+Note: in all commands flake location can be one of the following:
+
+```bash
+# github repo
+github:konradmalik/dotfiles
+# local current dir
+.#<target>
+# absolute local git repo
+git+file://$HOME/Code/github.com/konradmalik/dotfiles#<target>
+```
+
+I'll use the local version for brevity.
+
 ### NixOS:
 
 #### Build and enable config locally:
 
 ```bash
-$ sudo nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)" switch
+$ sudo nixos-rebuild --flake .#$(hostname) switch
 ```
 
-#### Builde and enable config on remote:
+#### Build and enable config on remote:
 
 ```bash
 # TODO not tested
 # home-manager may be problematic: https://discourse.nixos.org/t/home-manager-flake-not-respecting-build-host-during-nixos-rebuild/16787
-$ HOSTNAME=m3800 nixos-rebuild --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$HOSTNAME" --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
+$ HOSTNAME=m3800 nixos-rebuild --flake .#$HOSTNAME --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
 ```
 
 #### Build sd-image:
@@ -40,14 +53,14 @@ $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 
 The filesystem won't be complete, it will miss `etc` and more. NixOS will populate those dirs on first boot.
 
-So steps are:
+So the steps are:
 
 - boot rpi with the newly flashed card once
 - wait a minute or two
 - poweroff rpi and mount the card on your PC
 - filesystem will be complete
 
-WiFi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate key to `.sops.yaml`.
+WiFi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
 
 #### Build minimal ISO with ssh access for root:
 
@@ -67,11 +80,13 @@ Boot, find the ip and ssh connect as root.
 
 Format, partition the drive etc.
 
-Then you can install your system from flake directly:
+Then you can install the system from flake directly:
 
 ```bash
-$ sudo nixos-install --flake github.com:konradmalik/dotfiles#m3800 --root /mnt
+$ sudo nixos-install --flake github:konradmalik/dotfiles#m3800 --root /mnt
 ```
+
+Tip: `nixos-enter` is also very handy if you have a working system but need to fix something, eg. change your password.
 
 ### nix-darwin:
 
@@ -88,7 +103,7 @@ Then install nix following the official guidelines and installer.
 Then build and enable config locally:
 
 ```bash
-$ darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname)"
+$ darwin-rebuild switch --flake .#$(hostname)
 ```
 
 ### linux (non-NixOS; home-manager):
@@ -96,17 +111,14 @@ $ darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/do
 Build and enable config locally:
 
 ```bash
-$ home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"
+$ home-manager switch --flake .#$(whoami)@$(hostname)
 ```
 
 ### sops-nix
 
-We use `age` and `gpg`.
+We use `age`, it's way easier and more straightforward than `gpg`.
 
-Private age keys are needed only on machines that we use day-to-day, our main drivers, not on servers
-(assuming that secrets will be regularly edited only on daily-driver machines).
-
-Create `age` dir for sops (this is optional if you already have the needed gpg secret key, but suggested):
+Create `age` dir for sops:
 
 ```bash
 $ mkdir -p "$XDG_CONFIG_HOME/sops/age" \
@@ -124,5 +136,6 @@ $ ssh-to-age -private-key -i ~/.ssh/personal > "$XDG_CONFIG_HOME/sops/age/keys.t
 Add this key to `.sops.yaml` and propagate reencryption to all secrets:
 
 ```bash
-$ sops updatekeys secrets/**/*.yaml
+# adjust this command, glob may not work
+$ sops updatekeys secrets/*.yaml
 ```
