@@ -1,9 +1,14 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, username, ... }: {
   imports = [
-    ./../hardware/rpi4.nix
-    ./presets/nixos-server.nix
-    ./modules/sops.nix
+    ./hardware-configuration.nix
+    ./../common/nixos.nix
   ];
+
+  networking.hostName = "rpi4-1";
+
+  konrad.networking.wireless.enable = true;
+
+  networking.firewall.enable = false;
 
   nix = {
     settings = {
@@ -12,21 +17,6 @@
       cores = 4;
       max-jobs = 8;
     };
-  };
-
-  # disable firewall
-  networking.firewall.enable = false;
-
-  networking.networkmanager.enable = false;
-  networking.wireless.enable = true;
-
-  networking.hostName = "rpi4-1";
-
-  # automatically connect with wifi
-  sops.secrets.wpa_supplicant_conf = {
-    sopsFile = ./../secrets/wpa_supplicant.yaml;
-    path = "/etc/wpa_supplicant.conf";
-    mode = "0644";
   };
 
   systemd.services.hd-idle = {

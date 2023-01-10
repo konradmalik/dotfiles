@@ -1,6 +1,7 @@
 { config, lib, username, ... }:
 {
   imports = [
+    ../hosts/common/nix/shared.nix
     ./presets/nonnixos.nix
     ./modules/desktop.nix
   ];

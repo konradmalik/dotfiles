@@ -38,7 +38,7 @@ in
     escapeTime = 0;
     baseIndex = 1;
     historyLimit = 50000;
-    extraConfig = lib.strings.concatStringsSep "\n" [
+    extraConfig = lib.concatStringsSep "\n" [
       (builtins.readFile "${pkgs.dotfiles}/tmux/konrad.conf")
       (builtins.readFile "${pkgs.dotfiles}/tmux/catppuccin.conf")
     ];

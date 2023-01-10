@@ -1,9 +1,5 @@
 { pkgs, lib, ... }:
 {
-  imports = [
-    ./../../modules/alacritty.nix
-  ];
-
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs;[

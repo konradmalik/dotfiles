@@ -13,8 +13,14 @@ with pkgs;
 mkShell {
   name = "dotfiles-shell";
 
+  # Enable experimental features without having to specify the argument
+  NIX_CONFIG = "experimental-features = nix-command flakes";
+
   nativeBuildInputs = [
+    git
     # nix
+    nix
+    home-manager
     nil
     nixpkgs-fmt
     # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3

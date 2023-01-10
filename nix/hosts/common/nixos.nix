@@ -1,8 +1,12 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, inputs, outputs, ... }:
 {
   imports = [
-    ./programs/nix/nixos.nix
-  ];
+    inputs.sops-nix.nixosModules.sops
+    inputs.home-manager.nixosModules.home-manager
+
+    ./nix/nixos.nix
+    ./home-manager.nix
+  ] ++ (builtins.attrValues outputs.nixosModules);
 
   # make tmp in ram
   # boot.tmpOnTmpfs = true;
@@ -20,6 +24,17 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "pl_PL.UTF-8";
+    LC_IDENTIFICATION = "pl_PL.UTF-8";
+    LC_MEASUREMENT = "pl_PL.UTF-8";
+    LC_MONETARY = "pl_PL.UTF-8";
+    LC_NAME = "pl_PL.UTF-8";
+    LC_NUMERIC = "pl_PL.UTF-8";
+    LC_PAPER = "pl_PL.UTF-8";
+    LC_TELEPHONE = "pl_PL.UTF-8";
+    LC_TIME = "pl_PL.UTF-8";
+  };
 
   services.printing.enable = false;
 
@@ -29,6 +44,7 @@
 
   programs = {
     zsh.enable = true;
+    ssh.startAgent = true;
   };
 
   users = {
@@ -50,14 +66,18 @@
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      busybox
-      git
-      vim
-    ];
-    pathsToLink = [ "/share" "/bin" ];
-  };
+  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
+
+  environment.systemPackages = with pkgs; [
+    busybox
+    git
+    vim
+  ];
+  environment.pathsToLink = [ "/share" "/bin" ];
+
+  # for compatibility with nix-shell, nix-build, etc.
+  environment.etc.nixpkgs.source = inputs.nixpkgs;
+  nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
   services.openssh = {
     enable = true;
@@ -77,6 +97,19 @@
     # for tailscale
     checkReversePath = "loose";
     # allowedUDPPorts = [ ... ];
+  };
+
+  # shared sops config
+  sops = {
+    # This will add secrets.yml to the nix store
+    # You can avoid this by adding a string to the full path instead, i.e.
+    #sops.defaultSopsFile = ./../../secrets/secrets.yaml;
+    #defaultSopsFile = ./secrets/secrets.yaml
+    # This will automatically import SSH keys as age keys
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    # This is the actual specification of the secrets.
+    # secrets.example-key = { };
+    # secrets."myservice/my_subdir/my_secret" = { };
   };
 
   # This value determines the NixOS release from which the default

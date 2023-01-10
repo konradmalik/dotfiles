@@ -14,8 +14,8 @@ jobs:
 
       - name: Shell build darwin
         run: |
-          nix build --no-link .#devShells.x86_64-darwin.default
+          nix build --no-link --accept-flake-config .#devShells.x86_64-darwin.default
 
       - name: Flake build mbp13
         run: |
-          nix build --no-link .#darwinConfigurations.mbp13.system
+          nix build --no-link --accept-flake-config .#darwinConfigurations.mbp13.system

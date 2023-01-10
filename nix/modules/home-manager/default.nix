@@ -1,0 +1,3 @@
+{
+  alacritty = import ./alacritty.nix;
+}

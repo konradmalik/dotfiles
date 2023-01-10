@@ -1,8 +1,12 @@
 { config, pkgs, username, ... }:
 {
   imports = [
-    ./presets/darwin.nix
+    ./../common/darwin.nix
   ];
+
+  nixpkgs.system = "x86_64-darwin";
+
+  networking.hostName = "mbp13";
 
   nix = {
     settings = {
@@ -12,6 +16,4 @@
       max-jobs = 8;
     };
   };
-
-  networking.hostName = "mbp13";
 }

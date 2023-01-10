@@ -14,12 +14,12 @@ jobs:
 
       - name: Shell build linux
         run: |
-          nix build --no-link .#devShells.x86_64-linux.default
+          nix build --no-link --accept-flake-config .#devShells.x86_64-linux.default
 
       - name: Flake build generic linux
         run: |
-          nix build --no-link .#homeConfigurations.konrad@linux.activationPackage
+          nix build --no-link --accept-flake-config .#homeConfigurations.konrad@linux.activationPackage
 
       - name: Flake build nixos
         run: |
-          nix build --no-link .#nixosConfigurations.m3800.config.system.build.toplevel
+          nix build --no-link --accept-flake-config .#nixosConfigurations.m3800.config.system.build.toplevel

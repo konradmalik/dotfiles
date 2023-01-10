@@ -126,15 +126,3 @@ Add this key to `.sops.yaml` and propagate reencryption to all secrets:
 ```bash
 $ sops updatekeys secrets/**/*.yaml
 ```
-
-## presets and modules
-
-- `modules` in `/nix/modules` are proper, enable-able modules which can be always imported and enabled/configured as needed. I'm slowly migrating my stuff here.
-- `presets` are ready to use templates `nixos.nix`, `darwin.nix` etc.
-- `modules` (not in `/nix/modules`) are optional layers on top of presets, eg. `desktop-apps.nix`. Those are enabled as soon as they are imported.
-
-An exemplary usage is:
-`m3800.nix` defines a home-manager config for a m3800 machine.
-First it imports `presets/nixos.nix` because it's a NixOS machine.
-Then, it imports additional module `gui.nix` which adds personal GUI-related apps and configs
-Finally, `m3800.nix` itself defines some machine specific configs like home directory, alacritty font size etc.

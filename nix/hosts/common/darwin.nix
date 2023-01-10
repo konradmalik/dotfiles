@@ -1,7 +1,10 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   imports = [
-    ./programs/nix/darwin.nix
+    inputs.home-manager.darwinModules.home-manager
+
+    ./nix/darwin.nix
+    ./home-manager.nix
   ];
 
   # packages installed in system profile
@@ -94,6 +97,8 @@
     home = "/Users/${username}";
     shell = pkgs.zsh;
   };
+
+  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
 
   system = {
     # Used for backwards compatibility, please read the changelog before changing.

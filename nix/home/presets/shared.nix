@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, outputs, ... }:
 
 {
   imports = [
@@ -6,7 +6,10 @@
     ./programs/neovim.nix
     ./programs/shells.nix
     ./programs/tmux.nix
+
+    ./../../modules/home-manager/alacritty.nix
   ];
+  # TODO ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   home = {
     sessionVariables = {
