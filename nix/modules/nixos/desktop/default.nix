@@ -3,6 +3,8 @@ with lib;
 let cfg = config.konrad.programs.desktop;
 in
 {
+  imports = [ ./hm-sway.nix ];
+
   options.konrad.programs.desktop = {
     enable = mkEnableOption "Enables the GUI";
 
@@ -14,7 +16,7 @@ in
 
     enableHomeManagerModule = mkOption {
       type = types.bool;
-      default = builtins.hasAttr config.home-manager;
+      default = builtins.hasAttr "home-manager" config;
       description = "Whether to also enable home-manager's part of configuration";
     };
   };
@@ -40,6 +42,8 @@ in
       };
     in
     mkIf cfg.enable {
+      konrad.programs.sway.enable = cfg.enableHomeManagerModule;
+
       # xdg-desktop-portal works by exposing a series of D-Bus interfaces
       # known as portals under a well-known name
       # (org.freedesktop.portal.Desktop) and object path
