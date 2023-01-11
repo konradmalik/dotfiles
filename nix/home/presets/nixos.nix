@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   imports = [
-    ./shared.nix
-    ./programs/gpg-agent-systemd.nix
+    ./../common
+    ./../optional/gpg-agent-systemd.nix
   ];
   programs.zsh = {
     shellAliases = {

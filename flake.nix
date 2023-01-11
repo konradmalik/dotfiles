@@ -51,7 +51,6 @@
       });
       overlays = import ./nix/overlays;
       nixosModules = import ./nix/modules/nixos;
-      homeManagerModules = import ./nix/modules/home-manager;
 
       darwinConfigurations = {
         mbp13 = darwin.lib.darwinSystem {
@@ -90,9 +89,9 @@
       };
 
       homeConfigurations = {
-        "konrad@linux" = home-manager.lib.homeManagerConfiguration {
+        "konrad@generic" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./nix/home/linux.nix ];
+          modules = [ ./nix/home/generic.nix ];
           extraSpecialArgs = { inherit inputs outputs username; };
         };
       };

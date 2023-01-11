@@ -3,9 +3,11 @@
   imports = [
     inputs.home-manager.darwinModules.home-manager
 
-    ./nix/darwin.nix
-    ./home-manager.nix
+    ./../common/nix/darwin.nix
+    ./../common/home-manager.nix
   ];
+
+  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
 
   # packages installed in system profile
   environment = {
@@ -97,8 +99,6 @@
     home = "/Users/${username}";
     shell = pkgs.zsh;
   };
-
-  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
 
   system = {
     # Used for backwards compatibility, please read the changelog before changing.

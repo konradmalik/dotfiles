@@ -3,7 +3,7 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./../common/nixos.nix
+      ./../presets/nixos.nix
     ];
 
   networking.hostName = "vaio";

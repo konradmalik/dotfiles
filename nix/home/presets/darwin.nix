@@ -1,8 +1,8 @@
 { pkgs, dotfiles, ... }:
 {
   imports = [
-    ./shared.nix
-    ./programs/gpg-darwin.nix
+    ./../common
+    ./../optional/gpg-darwin.nix
   ];
 
   home = {

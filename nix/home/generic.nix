@@ -2,8 +2,7 @@
 {
   imports = [
     ../hosts/common/nix/shared.nix
-    ./presets/nonnixos.nix
-    ./modules/desktop.nix
+    ./presets/generic.nix
   ];
 
   home = {

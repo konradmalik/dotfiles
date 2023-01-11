@@ -7,20 +7,19 @@ in
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
 
-    ./nix/nixos.nix
-    ./home-manager.nix
+    ./../common/nix/nixos.nix
+    ./../common/openssh.nix
+    ./../common/tailscale.nix
+    ./../common/home-manager.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
+
+  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
 
   # make tmp in ram
   # boot.tmpOnTmpfs = true;
   # boot.tmpOnTmpfsSize = "25%";
   # clean tmp after reboot
   boot.cleanTmpDir = true;
-
-  # Enable tailscale. We manually authenticate when we want with
-  # "sudo tailscale up". If you don't use tailscale, you should comment
-  # out or delete all of this.
-  services.tailscale.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
@@ -63,18 +62,8 @@ in
       isNormalUser = true;
       description = "${username}";
       extraGroups = [ "wheel" "video" "audio" ] ++ ifTheyExist [ "docker" "networkmanager" ];
-      # If you are using NixOps then don't use this option since it will replace the key required for deployment via ssh.
-      openssh.authorizedKeys.keys =
-        let
-          authorizedKeysFile = builtins.readFile "${pkgs.dotfiles}/ssh/authorized_keys";
-          authorizedKeysFileLines = lib.splitString "\n" authorizedKeysFile;
-          onlyKeys = lib.filter (line: line != "" && !(lib.hasPrefix "#" line)) authorizedKeysFileLines;
-        in
-        onlyKeys;
     };
   };
-
-  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
 
   environment.systemPackages = with pkgs; [
     busybox
@@ -86,26 +75,6 @@ in
   # for compatibility with nix-shell, nix-build, etc.
   environment.etc.nixpkgs.source = inputs.nixpkgs;
   nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
-
-  services.openssh = {
-    enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = "no";
-    ports = [ 22 ];
-    hostKeys = [{
-      path = "/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }];
-  };
-
-  # Open ports in the firewall.
-  # but don't enable firewall by default
-  networking.firewall = {
-    allowedTCPPorts = config.services.openssh.ports;
-    # for tailscale
-    checkReversePath = "loose";
-    # allowedUDPPorts = [ ... ];
-  };
 
   # shared sops config
   sops = {

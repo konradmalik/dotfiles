@@ -1,7 +1,7 @@
 { config, pkgs, lib, username, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ./../common/nixos.nix
+    ./../presets/nixos.nix
   ];
 
   networking.hostName = "rpi4-1";

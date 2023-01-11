@@ -11,6 +11,12 @@ in
       default = true;
       description = "Whether to also enable desktop apps";
     };
+
+    enableHomeManagerModule = mkOption {
+      type = types.bool;
+      default = builtins.hasAttr config.home-manager;
+      description = "Whether to also enable home-manager's part of configuration";
+    };
   };
 
   config =
@@ -34,7 +40,6 @@ in
       };
     in
     mkIf cfg.enable {
-
       # xdg-desktop-portal works by exposing a series of D-Bus interfaces
       # known as portals under a well-known name
       # (org.freedesktop.portal.Desktop) and object path

@@ -25,6 +25,12 @@ I'll use the local version for brevity.
 $ sudo nixos-rebuild --flake .#$(hostname) switch
 ```
 
+To just build (for example for a test):
+
+```bash
+$ nix build .#nixosConfigurations.$(hostname).config.system.build.toplevel
+```
+
 #### Build and enable config on remote:
 
 ```bash
@@ -106,12 +112,26 @@ Then build and enable config locally:
 $ darwin-rebuild switch --flake .#$(hostname)
 ```
 
+To just build (for example for a test):
+
+```bash
+$ nix build .#darwinConfigurations.$(hostname).config.system.build.toplevel
+# or shortened by nix-darwin
+$ nix build .#darwinConfigurations.$(hostname).system
+```
+
 ### linux (non-NixOS; home-manager):
 
 Build and enable config locally:
 
 ```bash
 $ home-manager switch --flake .#$(whoami)@$(hostname)
+```
+
+To just build (for example for a test):
+
+```bash
+$ nix build .#homeConfigurations.$(whoami)@$(hostname).activationPackage
 ```
 
 ### sops-nix

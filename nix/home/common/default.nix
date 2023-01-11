@@ -2,14 +2,11 @@
 
 {
   imports = [
-    ./programs/git.nix
-    ./programs/neovim.nix
-    ./programs/shells.nix
-    ./programs/tmux.nix
-
-    ./../../modules/home-manager/alacritty.nix
-  ];
-  # TODO ] ++ (builtins.attrValues outputs.homeManagerModules);
+    ./git.nix
+    ./neovim.nix
+    ./shells.nix
+    ./tmux.nix
+  ] ++ (builtins.attrValues (import ./../modules));
 
   home = {
     sessionVariables = {

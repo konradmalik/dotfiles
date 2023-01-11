@@ -18,7 +18,7 @@ jobs:
 
       - name: Flake build generic linux
         run: |
-          nix build --no-link --accept-flake-config .#homeConfigurations.konrad@linux.activationPackage
+          nix build --no-link --accept-flake-config .#homeConfigurations.konrad@generic.activationPackage
 
       - name: Flake build nixos
         run: |
