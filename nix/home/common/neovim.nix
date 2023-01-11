@@ -43,7 +43,7 @@ in
 
   programs.neovim = {
     enable = true;
-    package = pkgs.unstable.neovim-unwrapped;
+    package = pkgs.neovim-unwrapped;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -54,7 +54,7 @@ in
       # this won't be useful globally, so neovim only is fine
       pkgs.shellcheck
     ];
-    plugins = with pkgs.unstable.vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       # dependencies
       plenary-nvim
       nui-nvim
