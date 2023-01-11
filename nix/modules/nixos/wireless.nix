@@ -22,6 +22,7 @@ in
       enable = true;
       networks = {
         "UPC7335283".psk = "@PSK_UPC7335283@";
+        "UPC8795410".psk = "@PSK_UPC8795410@";
         "MALIK_E_DOM".psk = "@PSK_MALIK_E_DOM";
       };
     };
