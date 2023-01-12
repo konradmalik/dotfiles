@@ -1,7 +1,7 @@
 { config, pkgs, username, ... }:
 {
   imports = [
-    ./../presets/darwin.nix
+    ./../common/presets/darwin.nix
   ];
 
   nixpkgs.system = "x86_64-darwin";

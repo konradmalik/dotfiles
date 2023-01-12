@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./presets/darwin.nix
+    ./common/presets/darwin.nix
   ];
 
   home = {

@@ -1,7 +1,7 @@
 { pkgs, dotfiles, ... }:
 {
   imports = [
-    ./../common
+    ./../global
     ./../optional/gpg-darwin.nix
   ];
 

@@ -1,7 +1,7 @@
 { config, username, ... }:
 {
   imports = [
-    ./presets/nixos.nix
+    ./common/presets/nixos.nix
   ];
 
   home = {

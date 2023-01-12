@@ -1,8 +1,8 @@
 { config, lib, username, ... }:
 {
   imports = [
-    ../hosts/common/nix/shared.nix
-    ./presets/generic.nix
+    ../hosts/common/global/nix/shared.nix
+    ./common/presets/generic.nix
   ];
 
   home = {

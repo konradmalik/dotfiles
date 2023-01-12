@@ -7,13 +7,11 @@ in
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
 
-    ./../common/nix/nixos.nix
-    ./../common/openssh.nix
-    ./../common/tailscale.nix
-    ./../common/home-manager.nix
-  ] ++ (builtins.attrValues outputs.nixosModules);
+    ./../global/nix/nixos.nix
+  ] ++ (builtins.attrValues (import ./../global))
+  ++ (builtins.attrValues outputs.nixosModules);
 
-  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
+  home-manager.users.${username} = import ./../../../home/${config.networking.hostName}.nix;
 
   # make tmp in ram
   # boot.tmpOnTmpfs = true;
@@ -50,7 +48,7 @@ in
   };
 
   sops.secrets.konrad-password = {
-    sopsFile = ./../../secrets/users/konrad/secrets.yaml;
+    sopsFile = ./../../../secrets/users/konrad/secrets.yaml;
     neededForUsers = true;
   };
 

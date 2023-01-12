@@ -4,8 +4,7 @@
     inputs.home-manager.darwinModules.home-manager
 
     ./../common/nix/darwin.nix
-    ./../common/home-manager.nix
-  ];
+  ] ++ (builtins.attrValues (import ./../global));
 
   home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
 
