@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }: {
+{ config, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./../common/presets/nixos.nix

@@ -1,14 +1,11 @@
-{ config, lib, username, ... }:
+{ config, ... }:
 
 {
   imports = [
     ./common/presets/darwin.nix
   ];
 
-  home = {
-    username = "${username}";
-    homeDirectory = "/Users/${config.home.username}";
-  };
+  home.homeDirectory = "/Users/${config.home.username}";
 
   konrad.programs.desktop.enable = true;
   konrad.programs.ssh-egress.enable = true;

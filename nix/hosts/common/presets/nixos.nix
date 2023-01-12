@@ -1,17 +1,16 @@
-{ config, pkgs, lib, username, inputs, outputs, ... }:
-let
-  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-in
+{ config, pkgs, lib, inputs, outputs, ... }:
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
 
     ./../global/nix/nixos.nix
-  ] ++ (builtins.attrValues (import ./../global))
-  ++ (builtins.attrValues outputs.nixosModules);
+    ./../global/home-manager.nix
+    ./../global/openssh.nix
+    ./../global/tailscale.nix
 
-  home-manager.users.${username} = import ./../../../home/${config.networking.hostName}.nix;
+    ./../users/konrad
+  ] ++ (builtins.attrValues (import ./../modules));
 
   # make tmp in ram
   # boot.tmpOnTmpfs = true;
@@ -42,25 +41,15 @@ in
     enable = true;
   };
 
+  # shared sops config
+  sops = {
+    defaultSopsFile = ./../secrets.yaml;
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  };
+
   programs = {
     zsh.enable = true;
     ssh.startAgent = true;
-  };
-
-  sops.secrets.konrad-password = {
-    sopsFile = ./../../../secrets/users/konrad/secrets.yaml;
-    neededForUsers = true;
-  };
-
-  users = {
-    mutableUsers = false;
-    users.${username} = {
-      passwordFile = config.sops.secrets.konrad-password.path;
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      description = "${username}";
-      extraGroups = [ "wheel" "video" "audio" ] ++ ifTheyExist [ "docker" "networkmanager" ];
-    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -74,24 +63,5 @@ in
   environment.etc.nixpkgs.source = inputs.nixpkgs;
   nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
-  # shared sops config
-  sops = {
-    # This will add secrets.yml to the nix store
-    # You can avoid this by adding a string to the full path instead, i.e.
-    #sops.defaultSopsFile = ./../../secrets/secrets.yaml;
-    #defaultSopsFile = ./secrets/secrets.yaml
-    # This will automatically import SSH keys as age keys
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    # This is the actual specification of the secrets.
-    # secrets.example-key = { };
-    # secrets."myservice/my_subdir/my_secret" = { };
-  };
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = lib.mkDefault "22.11";
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, osConfig, ... }:
+{ config, pkgs, lib, osConfig, ... }:
 with lib;
 let cfg = config.konrad.programs.ssh-egress;
 in {
@@ -34,7 +34,7 @@ in {
           };
           tailscale = {
             host = "vaio xps12 rpi4-1 rpi4-2 m3800 mbp13";
-            user = "${username}";
+            user = "${config.home.username}";
             forwardAgent = true;
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
           };

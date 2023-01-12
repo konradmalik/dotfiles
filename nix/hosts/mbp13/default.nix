@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, ... }:
 {
   imports = [
     ./../common/presets/darwin.nix

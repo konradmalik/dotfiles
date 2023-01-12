@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, username, ... }:
+{ config, ... }:
 {
   imports =
     [
@@ -8,7 +8,10 @@
 
   networking.hostName = "m3800";
 
-  konrad.programs.desktop.enable = true;
+  konrad.programs.desktop = {
+    enable = true;
+    username = "konrad";
+  };
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
   konrad.networking.networkmanager.enable = true;

@@ -1,7 +1,7 @@
 { config, pkgs, modulesPath, lib, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-    ./../hosts/presets/programs/networkmanager.nix
+    ./../../hosts/common/modules/networkmanager.nix
   ];
 
   # Enable tailscale. We manually authenticate when we want with
@@ -12,7 +12,7 @@
   users = {
     mutableUsers = false;
     users.root = {
-      hashedPassword = "$y$j9T$6jfs6Dz6yj1AaYv9lQ88O.$c18jXPnra4YVXD2ylaHbzt/DHxckrHld7mR1SH2nlo0";
+      password = "root";
       openssh.authorizedKeys.keys =
         let
           authorizedKeysFile = builtins.readFile "${pkgs.dotfiles}/ssh/authorized_keys";

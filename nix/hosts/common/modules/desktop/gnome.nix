@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, ... }:
 {
   services.xserver = {
     enable = true;
@@ -25,7 +25,7 @@
   #services.gnome3.gnome-keyring.enable = lib.mkForce false;
   # instead we disable it in home-manager
 
-  users.users.${username}.packages = with pkgs; [
+  users.users.konrad.packages = with pkgs; [
     caffeine-ng
     gnome.gnome-tweaks
     gnomeExtensions.appindicator

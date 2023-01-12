@@ -1,14 +1,20 @@
-{ config, lib, pkgs, username, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let cfg = config.konrad.programs.sway;
 in
 {
   options.konrad.programs.sway = {
     enable = mkEnableOption "Enable home-manager sway config";
+
+    username = mkOption {
+      type = types.str;
+      description = "username for which to install";
+      default = "";
+    };
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${username} = {
+    home-manager.users.${cfg.username} = {
       home.packages = with pkgs; [
         bashmount
         grim # screenshots

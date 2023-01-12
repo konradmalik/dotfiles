@@ -1,4 +1,4 @@
-{ config, lib, pkgs, username, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let cfg = config.konrad.programs.desktop;
 in
@@ -18,6 +18,11 @@ in
       type = types.bool;
       default = builtins.hasAttr "home-manager" config;
       description = "Whether to also enable home-manager's part of configuration";
+    };
+
+    username = mkOption {
+      type = types.str;
+      description = "username for which to install";
     };
   };
 
@@ -42,7 +47,10 @@ in
       };
     in
     mkIf cfg.enable {
-      konrad.programs.sway.enable = cfg.enableHomeManagerModule;
+      konrad.programs.sway = {
+        enable = cfg.enableHomeManagerModule;
+        username = cfg.username;
+      };
 
       # xdg-desktop-portal works by exposing a series of D-Bus interfaces
       # known as portals under a well-known name
@@ -82,7 +90,7 @@ in
 
       programs.light.enable = true;
 
-      users.users.${username} = {
+      users.users.${cfg.username} = {
         # Brightness and volume
         extraGroups = [ "video" ];
         # desktop apps

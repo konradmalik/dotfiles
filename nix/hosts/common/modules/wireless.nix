@@ -12,7 +12,6 @@ in
     networking.networkmanager.enable = false;
 
     sops.secrets."wireless.env" = {
-      sopsFile = ./../../secrets/wpa_supplicant.yaml;
       mode = "0644";
     };
 

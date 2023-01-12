@@ -1,13 +1,8 @@
-{ config, lib, username, ... }:
+{ config, ... }:
 {
   imports = [
     ./common/presets/nixos.nix
   ];
-
-  home = {
-    username = "${username}";
-    homeDirectory = "/home/${config.home.username}";
-  };
 
   konrad.programs.desktop.enable = true;
   konrad.programs.ssh-egress.enable = true;

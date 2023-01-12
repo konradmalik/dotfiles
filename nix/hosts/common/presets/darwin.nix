@@ -1,12 +1,13 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, lib, inputs, username, ... }:
 {
   imports = [
     inputs.home-manager.darwinModules.home-manager
 
-    ./../common/nix/darwin.nix
-  ] ++ (builtins.attrValues (import ./../global));
+    ./../global/nix/darwin.nix
+    ./../global/home-manager.nix
 
-  home-manager.users.${username} = import ./../../home/${config.networking.hostName}.nix;
+    ./../users/konrad/darwin.nix
+  ];
 
   # packages installed in system profile
   environment = {
@@ -93,16 +94,10 @@
     };
   };
 
-  users.users.${username} = {
-    name = "${username}";
-    home = "/Users/${username}";
-    shell = pkgs.zsh;
-  };
-
   system = {
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog
-    stateVersion = 4;
+    stateVersion = lib.mkDefault 4;
 
     defaults = {
       dock = {

@@ -35,10 +35,10 @@
     , sops-nix
     }@inputs:
     let
-      username = "konrad";
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       inherit (self) outputs;
+      specialArgs = { inherit inputs outputs; };
     in
     {
       packages = forAllSystems (system:
@@ -50,49 +50,46 @@
         default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
       });
       overlays = import ./nix/overlays;
-      nixosModules = import ./nix/modules/nixos;
 
       darwinConfigurations = {
         mbp13 = darwin.lib.darwinSystem {
           inputs = nixpkgs.lib.overrideExisting inputs { nixpkgs = nixpkgs-darwin; };
-          specialArgs = { inherit inputs outputs username; };
+          specialArgs = { inherit inputs outputs; };
           modules = [ ./nix/hosts/mbp13 ];
         };
       };
       nixosConfigurations = {
         m3800 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs username; };
+          inherit specialArgs;
           modules = [ ./nix/hosts/m3800 ];
         };
         xps12 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs username; };
+          inherit specialArgs;
           modules = [ ./nix/hosts/xps12 ];
         };
         vaio = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs username; };
+          inherit specialArgs;
           modules = [ ./nix/hosts/vaio ];
         };
         rpi4-1 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs username; };
+          inherit specialArgs;
           modules = [ ./nix/hosts/rpi4-1 ];
         };
         rpi4-2 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs username; };
+          inherit specialArgs;
           modules = [ ./nix/hosts/rpi4-2 ];
         };
         installerIso = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs username; };
-          modules = [
-            ./nix/iso/installer
-          ];
+          inherit specialArgs;
+          modules = [ ./nix/iso/installer ];
         };
       };
 
       homeConfigurations = {
         "konrad@generic" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./nix/home/generic.nix ];
-          extraSpecialArgs = { inherit inputs outputs username; };
+          extraSpecialArgs = specialArgs;
+          modules = [ ./nix/home/konrad/generic.nix ];
         };
       };
     };
