@@ -21,7 +21,8 @@ in
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Konrad";
-      extraGroups = [ "wheel" "video" "audio" ] ++ ifTheyExist [ "docker" "networkmanager" ];
+      # network is my own custom group for imperative wpa_supplicant config
+      extraGroups = [ "wheel" "video" "audio" ] ++ ifTheyExist [ "network" "docker" "networkmanager" ];
     };
   };
 
