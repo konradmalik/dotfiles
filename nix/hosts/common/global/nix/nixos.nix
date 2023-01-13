@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   imports = [ ./shared.nix ];
   nix = {
@@ -13,5 +13,14 @@
       automatic = true;
       dates = [ "daily" ];
     };
+
+    sshServe = {
+      enable = true;
+      keys = config.users.users.konrad.openssh.authorizedKeys.keys;
+      protocol = "ssh";
+      write = true;
+    };
+
+    settings.trusted-users = [ "nix-ssh" ];
   };
 }
