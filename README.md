@@ -8,7 +8,7 @@ Note: in all commands flake location can be one of the following:
 
 ```bash
 # github repo
-github:konradmalik/dotfiles
+github:konradmalik/dotfiles#<target>
 # local current dir
 .#<target>
 # absolute local git repo

@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, ... }:
 {
   imports = [ ./shared.nix ];
   nix = {
@@ -14,6 +14,10 @@
       };
       options = "--delete-older-than 14d";
     };
+
+    # Map registries to channels
+    # Very useful when using legacy commands
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
   services.nix-daemon.enable = true;
 }

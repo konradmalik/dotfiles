@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   imports = [ ./shared.nix ];
   nix = {
@@ -22,5 +22,9 @@
     };
 
     settings.trusted-users = [ "nix-ssh" ];
+
+    # Map registries to channels
+    # Very useful when using legacy commands
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 }
