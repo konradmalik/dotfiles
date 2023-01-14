@@ -23,6 +23,8 @@ in
         "UPC7335283".psk = "@PSK_UPC7335283@";
         "UPC8795410".psk = "@PSK_UPC8795410@";
         "MALIK_E_DOM".psk = "@PSK_MALIK_E_DOM";
+        "TP-LINK_FD1F".psk = "@PSK_TP_LINK_FD1F";
+        "Konrad's iPhone".psk = "@PSK_KONRADS_IPHONE";
       };
       # Imperative
       allowAuxiliaryImperativeNetworks = true;
