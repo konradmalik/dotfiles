@@ -59,14 +59,14 @@ $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 
 The filesystem won't be complete, it will miss `etc` and more. NixOS will populate those dirs on first boot.
 
-So the steps are:
+So if you need to modify something on the card (like read host keys or add `wpa_supplicant.conf`) then the steps are:
 
 - boot rpi with the newly flashed card once
 - wait a minute or two
 - poweroff rpi and mount the card on your PC
 - filesystem will be complete
 
-WiFi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
+In our case, WiFi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
 
 #### Build minimal ISO with ssh access for root:
 
@@ -83,6 +83,12 @@ $ sudo dd if=installer.iso of=/dev/sdX bs=4096 conv=fsync status=progress
 ```
 
 Boot, find the ip and ssh connect as root.
+
+Consider using nmap for discovery:
+
+```bash
+$ sudo nmap -p 22 --open -sV 192.168.178.0/24
+```
 
 Format, partition the drive etc.
 

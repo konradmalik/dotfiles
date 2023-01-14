@@ -1,4 +1,8 @@
 { config, lib, ... }:
+let
+  ifTheyExist = users: builtins.filter (user: builtins.hasAttr user config.users.users) users;
+  theirAuthorizedKeys = users: builtins.map (user: config.users.users.${user}.openssh.authorizedKeys.keys) users;
+in
 {
   imports = [ ./shared.nix ];
   nix = {
@@ -16,8 +20,7 @@
 
     sshServe = {
       enable = true;
-      keys = config.users.users.konrad.openssh.authorizedKeys.keys;
-      protocol = "ssh";
+      keys = lib.flatten (theirAuthorizedKeys (ifTheyExist [ "konrad" ]));
       write = true;
     };
 

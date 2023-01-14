@@ -18,6 +18,7 @@ mkShell {
 
   nativeBuildInputs = [
     git
+    nmap
     # nix
     nix
     home-manager

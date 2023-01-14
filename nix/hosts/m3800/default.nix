@@ -8,6 +8,8 @@
 
   networking.hostName = "m3800";
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   konrad.programs.desktop = {
     enable = true;
     username = "konrad";

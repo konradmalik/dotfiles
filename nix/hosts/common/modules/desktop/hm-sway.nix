@@ -16,7 +16,6 @@ in
   config = mkIf cfg.enable {
     home-manager.users.${cfg.username} = {
       home.packages = with pkgs; [
-        bashmount
         grim # screenshots
         slurp # screenshots
         mako # notification system developed by swaywm maintainer
