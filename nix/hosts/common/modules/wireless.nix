@@ -11,6 +11,11 @@ in
 
     networking.networkmanager.enable = false;
 
+    networking.nameservers = [
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
+
     sops.secrets."wireless.env" = {
       mode = "0644";
     };
@@ -35,6 +40,14 @@ in
       extraConfig = ''
         update_config=1
       '';
+    };
+
+    # since we enabled Imperative, we need to make sure /etc/wpa_supplicant.conf exists
+    system.activationScripts = {
+      wpa_supplicant_conf.text =
+        ''
+          touch -a /etc/wpa_supplicant.conf
+        '';
     };
 
     # Ensure group exists

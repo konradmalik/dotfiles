@@ -1,7 +1,11 @@
-{ config, pkgs, lib, outputs, ... }:
-
+{ config, pkgs, lib, inputs, outputs, ... }:
+let
+  inherit (inputs.nix-colors) colorSchemes;
+in
 {
   imports = [
+    inputs.nix-colors.homeManagerModule
+
     ./git.nix
     ./neovim.nix
     ./shells.nix
@@ -223,4 +227,6 @@
   programs.zoxide = {
     enable = true;
   };
+
+  colorscheme = lib.mkDefault colorSchemes.catppuccin;
 }

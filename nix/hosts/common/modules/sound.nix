@@ -8,6 +8,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment. systemPackages = with pkgs; [
+      pulseaudioFull # for pactl volume control and modules like raop (used by pipewire as well)
+    ];
+
     # Enable sound with pipewire.
     services.pipewire = {
       enable = true;

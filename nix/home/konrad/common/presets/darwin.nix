@@ -3,6 +3,7 @@
   imports = [
     ./../global
     ./../optional/gpg-darwin.nix
+    ./../optional/desktop/common/font.nix
   ];
 
   home = {

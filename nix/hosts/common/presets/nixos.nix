@@ -34,6 +34,8 @@
     ssh.startAgent = true;
   };
 
+  services.geoclue2.enable = lib.mkDefault true;
+
   environment.systemPackages = with pkgs; [
     busybox
     git

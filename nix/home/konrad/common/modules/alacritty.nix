@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }:
 with lib;
-let cfg = config.konrad.programs.alacritty;
-in {
+let
+  cfg = config.konrad.programs.alacritty;
+  # TODO move whole alacritty here and use base16
+in
+{
   options.konrad.programs.alacritty = {
     enable = mkEnableOption "Enables Alacritty configuration management through home-manager";
 
@@ -14,9 +17,16 @@ in {
 
     fontFamily = mkOption rec {
       type = types.str;
-      default = "Hack Nerd Font";
+      default = config.konrad.fontProfiles.monospace.family;
       example = default;
       description = "Font Family to use. If null, alacritty will set it automatically.";
+    };
+
+    package = lib.mkOption {
+      type = lib.types.nullOr lib.types.package;
+      default = pkgs.alacritty;
+      description = "Package for alacritty. If null, it won't be installed.";
+      example = "pkgs.alacritty";
     };
   };
 
@@ -39,5 +49,7 @@ in {
           (cfg.fontSize != 0)
           "  size: ${strings.floatToString cfg.fontSize}")
       ]);
+
+      home.packages = lib.optional (cfg.package != null) cfg.package;
     };
 }

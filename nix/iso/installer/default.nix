@@ -19,13 +19,11 @@
       onlyKeys;
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      busybox
-      git
-      vim
-    ];
-  };
+  environment. systemPackages = with pkgs; [
+    busybox
+    git
+    vim
+  ];
 
   services.openssh = {
     enable = true;

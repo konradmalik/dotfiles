@@ -1,9 +1,0 @@
-show=drun
-prompt=run
-hide_scroll=true
-allow_images=true
-gtk_dark=true
-insensitive=true
-dynamic_lines=true
-drun-display_generic=true
-no_actions=true

@@ -1,22 +1,19 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   imports =
     [
       ./hardware-configuration.nix
       ./../common/presets/nixos.nix
+      ./../common/optional/wayland-wm.nix
     ];
 
   networking.hostName = "m3800";
 
   boot.supportedFilesystems = [ "ntfs" ];
 
-  konrad.programs.desktop = {
-    enable = true;
-    username = "konrad";
-  };
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
-  konrad.networking.networkmanager.enable = true;
+  konrad.networking.wireless.enable = true;
 
   # enable aarch64-linux emulation
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -30,8 +27,8 @@
     };
   };
 
-  # services.logind.extraConfig = ''
-  #   IdleAction=suspend
-  #   IdleActionSec=30min
-  # '';
+  services.logind.extraConfig = ''
+    IdleAction=suspend
+    IdleActionSec=30min
+  '';
 }

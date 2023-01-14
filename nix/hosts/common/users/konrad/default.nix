@@ -30,5 +30,4 @@ in
     sopsFile = ./secrets.yaml;
     neededForUsers = true;
   };
-
 }

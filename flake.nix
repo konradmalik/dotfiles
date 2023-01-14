@@ -21,6 +21,12 @@
         url = "github:Mic92/sops-nix";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      nix-colors.url = "github:misterio77/nix-colors";
+      hyprland = {
+        url = "github:hyprwm/Hyprland";
+        # causes compilation problems
+        # inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs =
@@ -33,6 +39,8 @@
     , darwin
     , home-manager
     , sops-nix
+    , nix-colors
+    , hyprland
     }@inputs:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
