@@ -17,6 +17,7 @@ mkShell {
   NIX_CONFIG = "experimental-features = nix-command flakes";
 
   nativeBuildInputs = [
+    busybox
     git
     nmap
     # nix
