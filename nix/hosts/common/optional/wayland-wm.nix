@@ -1,4 +1,8 @@
 { config, pkgs, inputs, ... }:
+let
+  allHmUsers = builtins.attrNames config.home-manager.users;
+  anyHyprlandEnabled = builtins.any (user: config.home-manager.users.${user}.wayland.windowManager.hyprland.enable) allHmUsers;
+in
 {
   imports = [
     inputs.hyprland.nixosModules.default
@@ -7,9 +11,9 @@
   programs = {
     light.enable = true;
     # enable hyprland defaults without installing the package
-    # TODO enable only if hyprland in hm is enabled
+    # but enable only if hyprland in hm is enabled
     hyprland = {
-      enable = true;
+      enable = anyHyprlandEnabled;
       package = null;
     };
   };
@@ -19,9 +23,8 @@
 
   xdg.portal = {
     enable = true;
-    # usually we would like to enable this for wayland, but hyprland
-    # has it's own fork which is automatically added via hyprland module
-    # wlr.enable = true;
+    # hyprland has it's own fork which is automatically added via hyprland module
+    wlr.enable = !anyHyprlandEnabled;
     # gtk portal needed to make gtk apps happy
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
