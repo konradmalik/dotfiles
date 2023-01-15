@@ -140,7 +140,7 @@ in
     config = {
       global = {
         strict_env = true;
-        warn_timeout = "2m";
+        warn_timeout = "12h";
       };
       whitelist = {
         prefix = [

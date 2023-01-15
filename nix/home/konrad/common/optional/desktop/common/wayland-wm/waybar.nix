@@ -232,20 +232,29 @@ in
           interval = 2;
           return-type = "json";
           exec = jsonOutput "currentplayer" {
-            pre = ''player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No players found" | cut -d '.' -f1)"'';
+            pre = ''
+              player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No player active" | cut -d '.' -f1)"
+              count="$(${playerctl} -l | wc -l)"
+              if ((count > 1)); then
+                more=" +$((count - 1))"
+              else
+                more=""
+              fi
+            '';
             alt = "$player";
-            tooltip = "$player";
+            tooltip = "$player ($count available)";
+            text = "$more";
           };
-          format = "{icon}";
+          format = "{icon}{}";
           format-icons = {
-            "No players found" = "ﱘ";
-            "Celluloid" = "";
-            "spotify" = "阮";
-            "ncspot" = "阮";
+            "No player active" = " ";
+            "spotify" = " 阮";
+            "ncspot" = " 阮";
             "qutebrowser" = "爵";
-            "firefox" = "";
-            "discord" = "ﭮ";
-            "sublimemusic" = "";
+            "firefox" = " ";
+            "discord" = " ﭮ ";
+            "sublimemusic" = " ";
+            "kdeconnect" = " ";
           };
           on-click = "${playerctld} shift";
           on-click-right = "${playerctld} unshift";
