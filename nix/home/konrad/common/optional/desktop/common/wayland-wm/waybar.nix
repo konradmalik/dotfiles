@@ -39,11 +39,11 @@ in
     settings = {
       primary = {
         mode = "dock";
-        # layer = "top";
-        height = 40;
-        margin = "6";
+        layer = "top";
+        margin-top = 10;
+        margin-left = 10;
+        margin-right = 10;
         position = "top";
-        # output = builtins.map (m: m.name) (builtins.filter (m: m.isPrimary) config.konrad.monitors);
         modules-left = [
           "custom/menu"
           "idle_inhibitor"
@@ -275,7 +275,7 @@ in
     style = let inherit (config.colorscheme) colors; in /* css */ ''
       * {
         font-family: ${config.konrad.fontProfiles.regular.family}, ${config.konrad.fontProfiles.monospace.family};
-        font-size: 12pt;
+        font-size: ${toString (builtins.floor config.gtk.font.size)}pt;
         padding: 0 8px;
       }
       .modules-right {
