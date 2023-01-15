@@ -1,15 +1,15 @@
 { colorscheme, wallpaper }: ''
   general {
-    gaps_in=15
-    gaps_out=20
+    gaps_in=5
+    gaps_out=10
     border_size=2.7
     col.active_border=0xff${colorscheme.colors.base0C}
     col.inactive_border=0xff${colorscheme.colors.base02}
-    cursor_inactive_timeout=4
+    cursor_inactive_timeout=5
   }
   decoration {
-    active_opacity=0.88
-    inactive_opacity=0.68
+    active_opacity=0.9
+    inactive_opacity=0.8
     fullscreen_opacity=1.0
     rounding=5
     blur=true

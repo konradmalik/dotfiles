@@ -68,6 +68,7 @@ in
           "tray"
           "network"
           "battery"
+          "hyprland/language"
           "custom/hostname"
         ];
 
