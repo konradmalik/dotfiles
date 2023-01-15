@@ -76,35 +76,35 @@ in
         colors:
           # Default colors
           primary:
-            background: '0x${cfg.colorscheme.colors.base00}'
-            foreground: '0x${cfg.colorscheme.colors.base05}'
+            background: '0x${toLower cfg.colorscheme.colors.base00}'
+            foreground: '0x${toLower cfg.colorscheme.colors.base05}'
 
           # Colors the cursor will use if `custom_cursor_colors` is true
           cursor:
-            text: '0x${cfg.colorscheme.colors.base00}'
-            cursor: '0x${cfg.colorscheme.colors.base05}'
+            text: '0x${toLower cfg.colorscheme.colors.base00}'
+            cursor: '0x${toLower cfg.colorscheme.colors.base05}'
 
           # Normal colors
           normal:
-            black:   '0x${cfg.colorscheme.colors.base00}'
-            red:     '0x${cfg.colorscheme.colors.base08}'
-            green:   '0x${cfg.colorscheme.colors.base0B}'
-            yellow:  '0x${cfg.colorscheme.colors.base0A}'
-            blue:    '0x${cfg.colorscheme.colors.base0D}'
-            magenta: '0x${cfg.colorscheme.colors.base0E}'
-            cyan:    '0x${cfg.colorscheme.colors.base0C}'
-            white:   '0x${cfg.colorscheme.colors.base05}'
+            black:   '0x${toLower cfg.colorscheme.colors.base00}'
+            red:     '0x${toLower cfg.colorscheme.colors.base08}'
+            green:   '0x${toLower cfg.colorscheme.colors.base0B}'
+            yellow:  '0x${toLower cfg.colorscheme.colors.base0A}'
+            blue:    '0x${toLower cfg.colorscheme.colors.base0D}'
+            magenta: '0x${toLower cfg.colorscheme.colors.base0E}'
+            cyan:    '0x${toLower cfg.colorscheme.colors.base0C}'
+            white:   '0x${toLower cfg.colorscheme.colors.base05}'
 
           # Bright colors
           bright:
-            black:   '0x${cfg.colorscheme.colors.base03}'
-            red:     '0x${cfg.colorscheme.colors.base09}'
-            green:   '0x${cfg.colorscheme.colors.base01}'
-            yellow:  '0x${cfg.colorscheme.colors.base02}'
-            blue:    '0x${cfg.colorscheme.colors.base04}'
-            magenta: '0x${cfg.colorscheme.colors.base06}'
-            cyan:    '0x${cfg.colorscheme.colors.base0F}'
-            white:   '0x${cfg.colorscheme.colors.base07}'
+            black:   '0x${toLower cfg.colorscheme.colors.base03}'
+            red:     '0x${toLower cfg.colorscheme.colors.base09}'
+            green:   '0x${toLower cfg.colorscheme.colors.base01}'
+            yellow:  '0x${toLower cfg.colorscheme.colors.base02}'
+            blue:    '0x${toLower cfg.colorscheme.colors.base04}'
+            magenta: '0x${toLower cfg.colorscheme.colors.base06}'
+            cyan:    '0x${toLower cfg.colorscheme.colors.base0F}'
+            white:   '0x${toLower cfg.colorscheme.colors.base07}'
 
         draw_bold_text_with_bright_colors: false
       '';
