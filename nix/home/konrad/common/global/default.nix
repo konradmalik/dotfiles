@@ -231,7 +231,7 @@ in
 
   # colorscheme = lib.mkDefault colorSchemes.catppuccin;
   colorscheme = {
-    slug = "catppuccin";
+    slug = "catppuccin-macchiato";
     name = "Catppuccin Macchiato";
     author = "https://github.com/catppuccin/catppuccin";
     kind = "dark";

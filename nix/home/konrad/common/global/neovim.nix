@@ -153,6 +153,10 @@ in
       which-key-nvim
       # ui
       {
+        plugin = catppuccin-nvim;
+        optional = false;
+      }
+      {
         plugin = nvim-base16;
         optional = false;
       }
@@ -175,6 +179,8 @@ in
     in
     ''
       return {
+        slug = "${config.colorscheme.slug}",
+        colors = {
           base00 = '#${c.base00}',
           base01 = '#${c.base01}',
           base02 = '#${c.base02}',
@@ -191,6 +197,7 @@ in
           base0D = '#${c.base0D}',
           base0E = '#${c.base0E}',
           base0F = '#${c.base0F}',
+        },
       }
     '';
 }
