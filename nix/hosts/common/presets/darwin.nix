@@ -101,7 +101,6 @@
 
     defaults = {
       dock = {
-        tilesize = 48;
         show-recents = true;
       };
       finder = {
@@ -117,6 +116,10 @@
       };
       NSGlobalDomain = {
         AppleInterfaceStyle = "Dark";
+        "com.apple.mouse.tapBehavior" = 1;
+        "com.apple.sound.beep.feedback" = 1;
+        "com.apple.swipescrolldirection" = true;
+        "com.apple.trackpad.enableSecondaryClick" = true;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticPeriodSubstitutionEnabled = false;
