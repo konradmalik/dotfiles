@@ -1,3 +1,5 @@
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 # Dotfiles
 
 Nix ftw.
@@ -165,3 +167,7 @@ Add this key to `.sops.yaml` and propagate reencryption to all secrets:
 # adjust this command, glob may not work
 $ sops updatekeys secrets/*.yaml
 ```
+
+### Credits
+
+[Misterio77](https://github.com/Misterio77/nix-config) - big inspiration for hyprland and nix files structure.
