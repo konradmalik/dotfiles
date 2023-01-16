@@ -14,6 +14,12 @@ let
       description = "Package for ${kind} font profile";
       example = "pkgs.fira-code";
     };
+    size = lib.mkOption {
+      type = lib.types.number;
+      default = null;
+      description = "Font size for ${kind} font profile";
+      example = "12.0";
+    };
   };
   cfg = config.konrad.fontProfiles;
 in

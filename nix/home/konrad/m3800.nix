@@ -7,10 +7,7 @@
 
   konrad.fontProfiles.enable = true;
   konrad.programs.ssh-egress.enable = true;
-  konrad.programs.alacritty = {
-    enable = true;
-    fontSize = 13.0;
-  };
+  konrad.programs.alacritty.enable = true;
 
   konrad.monitors = [
     {

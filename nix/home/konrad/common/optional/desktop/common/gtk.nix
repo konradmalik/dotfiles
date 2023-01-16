@@ -20,7 +20,7 @@ rec {
       enable = true;
       font = {
         name = config.konrad.fontProfiles.regular.family;
-        size = 11;
+        size = config.konrad.fontProfiles.regular.size;
       };
       iconTheme = {
         name = "Papirus";

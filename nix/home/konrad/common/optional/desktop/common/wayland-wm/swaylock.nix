@@ -8,7 +8,7 @@ in {
       fade-in = 0.1;
 
       font = config.konrad.fontProfiles.regular.family;
-      font-size = config.gtk.font.size;
+      font-size = config.konrad.fontProfiles.regular.size;
 
       line-uses-inside = true;
       disable-caps-lock-text = true;

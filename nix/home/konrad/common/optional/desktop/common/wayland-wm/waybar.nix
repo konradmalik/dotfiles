@@ -284,7 +284,7 @@ in
     style = let inherit (config.colorscheme) colors; in /* css */ ''
       * {
         font-family: ${config.konrad.fontProfiles.regular.family}, ${config.konrad.fontProfiles.monospace.family};
-        font-size: ${toString (builtins.floor config.gtk.font.size)}pt;
+        font-size: ${toString (builtins.floor config.konrad.fontProfiles.regular.size)}pt;
         padding: 0 8px;
       }
       .modules-right {
