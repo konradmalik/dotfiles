@@ -104,7 +104,6 @@
   # Window manager controls
   bind=SUPERSHIFT,q,killactive
   bind=SUPERSHIFT,e,exit
-  bind=SUPER,s,togglesplit
   bind=SUPER,f,fullscreen,1
   bind=SUPERSHIFT,f,fullscreen,0
   bind=SUPERSHIFT,space,togglefloating

@@ -154,7 +154,10 @@ in
       '';
     in
     mkIf cfg.enable {
-      home.packages = lib.optional (cfg.package != null) cfg.package;
+      home = {
+        packages = lib.optional (cfg.package != null) cfg.package;
+        sessionVariables.TERMINAL = "alacritty";
+      };
 
       xdg.configFile."alacritty/alacritty.yml".text =
         lib.concatStringsSep "\n" ([ baseConfig ] ++ lib.optional (cfg.colorscheme != null) colorConfig);

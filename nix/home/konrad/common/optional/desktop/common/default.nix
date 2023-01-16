@@ -9,10 +9,7 @@
   xdg.mimeApps.enable = true;
 
   home = {
-    sessionVariables = {
-      BROWSER = "firefox";
-      TERMINAL = "alacritty";
-    };
+    sessionVariables.BROWSER = "firefox";
     packages = with pkgs; [
       bitwarden
       unstable.discord
