@@ -37,13 +37,35 @@ in
   programs.waybar = {
     enable = true;
     settings = {
-      primary = {
-        mode = "dock";
+      secondary = {
+        output = builtins.map (m: m.name) (builtins.filter (m: !m.isPrimary) config.konrad.monitors);
         layer = "top";
         margin-top = 10;
         margin-left = 10;
         margin-right = 10;
         position = "top";
+        modules-center = (lib.optionals config.wayland.windowManager.sway.enable [
+          "sway/workspaces"
+          "sway/mode"
+        ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
+          "wlr/workspaces"
+        ]);
+
+        "wlr/workspaces" = {
+          format = "{icon}";
+          on-scroll-up = "hyprctl dispatch workspace e+1";
+          on-scroll-down = "hyprctl dispatch workspace e-1";
+          on-click = "activate";
+        };
+      };
+
+      primary = {
+        output = builtins.map (m: m.name) (builtins.filter (m: m.isPrimary) config.konrad.monitors);
+        layer = "top";
+        position = "top";
+        margin-top = 10;
+        margin-left = 10;
+        margin-right = 10;
         modules-left = [
           "custom/menu"
           "idle_inhibitor"

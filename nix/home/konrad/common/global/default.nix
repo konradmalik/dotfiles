@@ -8,7 +8,9 @@ in
     inputs.nix-colors.homeManagerModule
 
     ./git.nix
+    ./khal.nix
     ./neovim.nix
+    ./ranger.nix
     ./shells.nix
     ./tmux.nix
   ] ++ (builtins.attrValues (import ./../modules));
@@ -34,21 +36,20 @@ in
     ];
 
     packages = with pkgs;[
+      curl
       moreutils
+      nq
+      tldr
+      tree
       unzip
       wget
-      curl
-      tree
-      tldr
-      nq
-      ranger
 
       bat
       ripgrep
       ripgrep-all
       fd
-      # fix for aarch64 is only on master as of now
-      master.sad
+      # fix for aarch64 is only on unstable as of now
+      unstable.sad
       sd
 
       hyperfine
@@ -110,11 +111,6 @@ in
 
   # dotfiles
   xdg.configFile."glow/glow.yml".source = "${pkgs.dotfiles}/glow/glow.yml";
-  xdg.configFile."ranger" = {
-    source = "${pkgs.dotfiles}/ranger";
-    recursive = true;
-  };
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 

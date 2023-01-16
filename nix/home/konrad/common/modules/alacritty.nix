@@ -124,7 +124,7 @@ in
             blue:    '#${cfg.colorscheme.colors.base0D}'
             magenta: '#${cfg.colorscheme.colors.base0F}'
             cyan:    '#${cfg.colorscheme.colors.base0C}'
-            white:   '#${cfg.colorscheme.colors.base04}'
+            white:   '#${cfg.colorscheme.colors.base05}'
 
           # Bright colors
           bright:
@@ -146,7 +146,7 @@ in
             blue:    '#${cfg.colorscheme.colors.base0D}'
             magenta: '#${cfg.colorscheme.colors.base0F}'
             cyan:    '#${cfg.colorscheme.colors.base0C}'
-            white:   '#${cfg.colorscheme.colors.base04}'
+            white:   '#${cfg.colorscheme.colors.base05}'
 
           indexed_colors:
               - { index: 16, color: "#${cfg.colorscheme.colors.base09}" }
