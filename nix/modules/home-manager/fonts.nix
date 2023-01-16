@@ -21,15 +21,14 @@ let
       example = "12.0";
     };
   };
-  cfg = config.konrad.fontProfiles;
+  cfg = config.fontProfiles;
 in
 {
-  options.konrad.fontProfiles = {
+  options.fontProfiles = {
     enable = lib.mkEnableOption "Whether to enable font profiles";
     monospace = mkFontOption "monospace";
     regular = mkFontOption "regular";
   };
-
 
   config = lib.mkIf cfg.enable {
     fonts.fontconfig.enable = true;

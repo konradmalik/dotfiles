@@ -45,6 +45,7 @@
       specialArgs = { inherit inputs outputs; };
     in
     {
+      homeManagerModules = import ./nix/modules/home-manager;
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./nix/pkgs { inherit pkgs; }

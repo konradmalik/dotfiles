@@ -17,7 +17,7 @@
     extraConfig =
       (import ./monitors.nix {
         inherit lib;
-        inherit (config.konrad) monitors;
+        inherit (config) monitors;
       }) +
       (import ./config.nix {
         inherit (config.konrad) wallpaper;

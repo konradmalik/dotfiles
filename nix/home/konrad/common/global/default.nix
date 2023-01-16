@@ -16,7 +16,8 @@ in
     ./shells.nix
     ./tealdeer.nix
     ./tmux.nix
-  ] ++ (builtins.attrValues (import ./../modules));
+  ] ++ (builtins.attrValues (import ./../modules))
+  ++ (builtins.attrValues outputs.homeManagerModules);
 
   home = {
     username = lib.mkDefault "konrad";
@@ -244,8 +245,8 @@ in
   konrad.wallpaper =
     let
       largest = f: xs: builtins.head (builtins.sort (a: b: a > b) (map f xs));
-      largestWidth = largest (x: x.width) config.konrad.monitors;
-      largestHeight = largest (x: x.height) config.konrad.monitors;
+      largestWidth = largest (x: x.width) config.monitors;
+      largestHeight = largest (x: x.height) config.monitors;
     in
     lib.mkDefault (nixWallpaperFromScheme
       {

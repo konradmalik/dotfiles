@@ -38,7 +38,7 @@ in
     enable = true;
     settings = {
       secondary = {
-        output = builtins.map (m: m.name) (builtins.filter (m: !m.isPrimary) config.konrad.monitors);
+        output = builtins.map (m: m.name) (builtins.filter (m: !m.isPrimary) config.monitors);
         layer = "top";
         margin-top = 10;
         margin-left = 10;
@@ -60,7 +60,7 @@ in
       };
 
       primary = {
-        output = builtins.map (m: m.name) (builtins.filter (m: m.isPrimary) config.konrad.monitors);
+        output = builtins.map (m: m.name) (builtins.filter (m: m.isPrimary) config.monitors);
         layer = "top";
         position = "top";
         margin-top = 10;
@@ -305,8 +305,8 @@ in
     # w x y z -> top, right, bottom, left
     style = let inherit (config.colorscheme) colors; in /* css */ ''
       * {
-        font-family: ${config.konrad.fontProfiles.regular.family}, ${config.konrad.fontProfiles.monospace.family};
-        font-size: ${toString (builtins.floor config.konrad.fontProfiles.regular.size)}pt;
+        font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
+        font-size: ${toString (builtins.floor config.fontProfiles.regular.size)}pt;
         padding: 0 8px;
       }
       .modules-right {

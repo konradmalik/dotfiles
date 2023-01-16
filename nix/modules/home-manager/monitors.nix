@@ -1,10 +1,7 @@
 { lib, config, ... }:
-
-let
-  inherit (lib) mkOption types;
-in
+with lib;
 {
-  options.konrad.monitors = mkOption {
+  options.monitors = mkOption {
     type = types.listOf (types.submodule {
       options = {
         name = mkOption {

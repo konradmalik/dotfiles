@@ -10,14 +10,14 @@ in
 
     fontSize = mkOption {
       type = types.number;
-      default = config.konrad.fontProfiles.monospace.size;
+      default = config.fontProfiles.monospace.size;
       example = "13.0";
       description = "Font size. If 0, alacritty will set it automatically.";
     };
 
     fontFamily = mkOption rec {
       type = types.str;
-      default = config.konrad.fontProfiles.monospace.family;
+      default = config.fontProfiles.monospace.family;
       example = default;
       description = "Font Family to use. If null, alacritty will set it automatically.";
     };

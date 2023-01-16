@@ -7,8 +7,8 @@ in {
       effect-blur = "20x3";
       fade-in = 0.1;
 
-      font = config.konrad.fontProfiles.regular.family;
-      font-size = config.konrad.fontProfiles.regular.size;
+      font = config.fontProfiles.regular.family;
+      font-size = config.fontProfiles.regular.size;
 
       line-uses-inside = true;
       disable-caps-lock-text = true;

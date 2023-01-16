@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: {
-  konrad.fontProfiles = {
+  fontProfiles = {
     enable = true;
     monospace = {
       family = "Hack Nerd Font";

@@ -5,11 +5,11 @@
     ./common/optional/desktop/hyprland
   ];
 
-  konrad.fontProfiles.enable = true;
+  fontProfiles.enable = true;
   konrad.programs.ssh-egress.enable = true;
   konrad.programs.alacritty.enable = true;
 
-  konrad.monitors = [
+  monitors = [
     {
       name = "eDP-1";
       enabled = false;

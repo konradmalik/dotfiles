@@ -7,7 +7,7 @@
 
   home.homeDirectory = "/Users/${config.home.username}";
 
-  konrad.fontProfiles = {
+  fontProfiles = {
     enable = true;
     monospace.size = 16.0;
   };
