@@ -14,6 +14,7 @@ in
     ./neovim.nix
     ./ranger.nix
     ./shells.nix
+    ./tealdeer.nix
     ./tmux.nix
   ] ++ (builtins.attrValues (import ./../modules));
 
@@ -40,7 +41,6 @@ in
       curl
       moreutils
       nq
-      tldr
       tree
       unzip
       wget
