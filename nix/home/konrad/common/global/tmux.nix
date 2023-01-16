@@ -111,8 +111,8 @@ let
       set -g status-right "#{?client_prefix,#[bg=$thm_base0F],#[bg=$thm_base0C]}#[fg=$thm_base01]  #[fg=$thm_base05,bg=$thm_base01] #S "
 
       # current_dir
-      setw -g window-status-current-format "#[fg=$thm_base01,bg=$thm_base0C] #I #[fg=$thm_base01,bg=$thm_base03] #W #{?window_zoomed_flag, ,}"
-      setw -g window-status-format "#[fg=$thm_base01,bg=$thm_base07] #I #[fg=$thm_base04,bg=$thm_base01] #W #{?window_zoomed_flag, ,}"
+      setw -g window-status-current-format "#[fg=$thm_base01,bg=$thm_base0C] #I #[fg=$thm_base0C,bg=$thm_base03] #W #{?window_zoomed_flag, ,}"
+      setw -g window-status-format "#[fg=$thm_base01,bg=$thm_base07] #I #[fg=$thm_base07,bg=$thm_base01] #W #{?window_zoomed_flag, ,}"
 
       # --------=== Modes
       setw -g clock-mode-colour "''${thm_base0D}"
