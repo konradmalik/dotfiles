@@ -6,6 +6,7 @@
     col.active_border=0xff${colorscheme.colors.base0C}
     col.inactive_border=0xff${colorscheme.colors.base02}
     cursor_inactive_timeout=5
+    layout=dwindle
   }
   decoration {
     active_opacity=0.9
@@ -28,8 +29,8 @@
     bezier=easein,0.11, 0, 0.5, 0
     bezier=easeout,0.5, 1, 0.89, 1
     bezier=easeinout,0.45, 0, 0.55, 1
-    animation=windowsIn,1,2,easeout,slide
-    animation=windowsOut,1,2,easein,slide
+    animation=windowsIn,1,3,easeout,popin 80%
+    animation=windowsOut,1,3,easein,popin 80%
     animation=windowsMove,1,2,easeout
     animation=fadeIn,1,2,easeout
     animation=fadeOut,1,2,easein
@@ -70,8 +71,8 @@
     workspace_swipe=true
   }
   # Startup
-  exec-once=waybar
   exec=swaybg -i ${wallpaper} --mode fill
+  exec-once=waybar
   exec-once=mako
   exec-once=swayidle -w
   # Mouse binding
