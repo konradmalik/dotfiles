@@ -7,6 +7,7 @@ in
   imports = [
     inputs.nix-colors.homeManagerModule
 
+    ./bat.nix
     ./git.nix
     ./khal.nix
     ./neovim.nix
@@ -24,7 +25,6 @@ in
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
       PAGER = "less -FirSwX";
-      MANPAGER = "sh -c 'col -bx | ${pkgs.bat}/bin/bat -l man -p'";
       GOPATH = "${config.home.homeDirectory}/.go";
       GOBIN = "${config.home.homeDirectory}/.go/bin";
     };
@@ -44,7 +44,6 @@ in
       unzip
       wget
 
-      bat
       ripgrep
       ripgrep-all
       fd
@@ -151,11 +150,14 @@ in
     enable = true;
   };
 
-  programs.fzf = {
+  programs.fzf = rec {
     enable = true;
     defaultCommand = "${pkgs.fd}/bin/fd --type f";
     defaultOptions = [
       "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
+    ];
+    fileWidgetCommand = defaultCommand;
+    fileWidgetOptions = [
       "--preview '${pkgs.bat}/bin/bat --color=always --style=numbers --line-range=:200 {}'"
     ];
   };
