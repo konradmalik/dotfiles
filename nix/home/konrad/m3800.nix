@@ -12,39 +12,26 @@
     fontSize = 13.0;
   };
 
-  # dynamic output profiles
-  services.kanshi = {
-    enable = true;
-    systemdTarget = "hyprland-session.target";
-    profiles = {
-      laptop = {
-        outputs = [
-          {
-            criteria = "eDP-1";
-            mode = "3840x2160@59.997Hz";
-            position = "0,0";
-            scale = 2.0;
-            status = "enable";
-            transform = "normal";
-          }
-        ];
-      };
-      clamshell = {
-        outputs = [
-          {
-            criteria = "eDP-1";
-            status = "disable";
-          }
-          {
-            criteria = "HDMI-A-1";
-            mode = "3440x1440@29.993Hz";
-            position = "0,0";
-            scale = 1.0;
-            status = "enable";
-            transform = "normal";
-          }
-        ];
-      };
-    };
-  };
+  konrad.monitors = [
+    {
+      name = "eDP-1";
+      enabled = false;
+      width = 3840;
+      height = 2160;
+      isPrimary = true;
+      refreshRate = 59.997;
+      scale = 2;
+      x = 0;
+    }
+    {
+      name = "HDMI-A-1";
+      enabled = true;
+      width = 3440;
+      height = 1440;
+      isPrimary = true;
+      refreshRate = 29.993;
+      scale = 1;
+      x = 0;
+    }
+  ];
 }

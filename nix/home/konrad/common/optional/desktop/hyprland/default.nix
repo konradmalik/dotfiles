@@ -15,9 +15,13 @@
     enable = true;
     systemdIntegration = true;
     extraConfig =
+      (import ./monitors.nix {
+        inherit lib;
+        inherit (config.konrad) monitors;
+      }) +
       (import ./config.nix {
-        inherit (config) colorscheme;
         inherit (config.konrad) wallpaper;
+        inherit (config) colorscheme;
       });
   };
 }
