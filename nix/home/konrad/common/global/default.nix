@@ -8,6 +8,7 @@ in
     inputs.nix-colors.homeManagerModule
 
     ./bat.nix
+    ./fzf.nix
     ./git.nix
     ./khal.nix
     ./neovim.nix
@@ -148,18 +149,6 @@ in
 
   programs.exa = {
     enable = true;
-  };
-
-  programs.fzf = rec {
-    enable = true;
-    defaultCommand = "${pkgs.fd}/bin/fd --type f";
-    defaultOptions = [
-      "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
-    ];
-    fileWidgetCommand = defaultCommand;
-    fileWidgetOptions = [
-      "--preview '${pkgs.bat}/bin/bat --color=always --style=numbers --line-range=:200 {}'"
-    ];
   };
 
   programs.gpg = {

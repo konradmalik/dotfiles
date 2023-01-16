@@ -112,9 +112,12 @@
   bind=SUPERSHIFT,minus,splitratio,-0.3333333
   bind=SUPER,equal,splitratio,0.25
   bind=SUPERSHIFT,equal,splitratio,0.3333333
+  # dwindle
+  bind=SUPER,s,pseudo
   bind=SUPER,g,togglegroup
   bind=SUPER,apostrophe,changegroupactive,f
   bind=SUPERSHIFT,apostrophe,changegroupactive,b
+  # rest
   bind=SUPER,left,movefocus,l
   bind=SUPER,right,movefocus,r
   bind=SUPER,up,movefocus,u
