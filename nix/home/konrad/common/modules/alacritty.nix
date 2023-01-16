@@ -76,37 +76,81 @@ in
         colors:
           # Default colors
           primary:
-            background: '0x${toLower cfg.colorscheme.colors.base00}'
-            foreground: '0x${toLower cfg.colorscheme.colors.base05}'
+            background: '#${cfg.colorscheme.colors.base00}'
+            foreground: '#${cfg.colorscheme.colors.base05}'
+            dim_foreground: '#${cfg.colorscheme.colors.base05}'
+            bright_foreground: '#${cfg.colorscheme.colors.base05}'
 
           # Colors the cursor will use if `custom_cursor_colors` is true
           cursor:
-            text: '0x${toLower cfg.colorscheme.colors.base00}'
-            cursor: '0x${toLower cfg.colorscheme.colors.base05}'
+            text: '#${cfg.colorscheme.colors.base00}'
+            cursor: '#${cfg.colorscheme.colors.base06}'
+          vi_mode_cursor:
+            text: '#${cfg.colorscheme.colors.base00}'
+            cursor: '#${cfg.colorscheme.colors.base07}'
+
+          # Search colors
+          search:
+              matches:
+                  foreground: '#${cfg.colorscheme.colors.base00}'
+                  background: '#${cfg.colorscheme.colors.base04}'
+              focused_match:
+                  foreground: '#${cfg.colorscheme.colors.base00}'
+                  background: '#${cfg.colorscheme.colors.base0B}'
+              footer_bar:
+                  foreground: '#${cfg.colorscheme.colors.base00}'
+                  background: '#${cfg.colorscheme.colors.base04}'
+
+          # Keyboard regex hints
+          hints:
+              start:
+                  foreground: '#${cfg.colorscheme.colors.base00}'
+                  background: '#${cfg.colorscheme.colors.base0A}'
+              end:
+                  foreground: '#${cfg.colorscheme.colors.base00}'
+                  background: '#${cfg.colorscheme.colors.base04}'
+
+          # Selection colors
+          selection:
+              text: '#${cfg.colorscheme.colors.base00}'
+              background: '#${cfg.colorscheme.colors.base06}'
 
           # Normal colors
           normal:
-            black:   '0x${toLower cfg.colorscheme.colors.base00}'
-            red:     '0x${toLower cfg.colorscheme.colors.base08}'
-            green:   '0x${toLower cfg.colorscheme.colors.base0B}'
-            yellow:  '0x${toLower cfg.colorscheme.colors.base0A}'
-            blue:    '0x${toLower cfg.colorscheme.colors.base0D}'
-            magenta: '0x${toLower cfg.colorscheme.colors.base0E}'
-            cyan:    '0x${toLower cfg.colorscheme.colors.base0C}'
-            white:   '0x${toLower cfg.colorscheme.colors.base05}'
+            black:   '#${cfg.colorscheme.colors.base03}'
+            red:     '#${cfg.colorscheme.colors.base08}'
+            green:   '#${cfg.colorscheme.colors.base0B}'
+            yellow:  '#${cfg.colorscheme.colors.base0A}'
+            blue:    '#${cfg.colorscheme.colors.base0D}'
+            magenta: '#${cfg.colorscheme.colors.base0F}'
+            cyan:    '#${cfg.colorscheme.colors.base0C}'
+            white:   '#${cfg.colorscheme.colors.base04}'
 
           # Bright colors
           bright:
-            black:   '0x${toLower cfg.colorscheme.colors.base03}'
-            red:     '0x${toLower cfg.colorscheme.colors.base09}'
-            green:   '0x${toLower cfg.colorscheme.colors.base01}'
-            yellow:  '0x${toLower cfg.colorscheme.colors.base02}'
-            blue:    '0x${toLower cfg.colorscheme.colors.base04}'
-            magenta: '0x${toLower cfg.colorscheme.colors.base06}'
-            cyan:    '0x${toLower cfg.colorscheme.colors.base0F}'
-            white:   '0x${toLower cfg.colorscheme.colors.base07}'
+            black:   '#${cfg.colorscheme.colors.base04}'
+            red:     '#${cfg.colorscheme.colors.base08}'
+            green:   '#${cfg.colorscheme.colors.base0B}'
+            yellow:  '#${cfg.colorscheme.colors.base0A}'
+            blue:    '#${cfg.colorscheme.colors.base0D}'
+            magenta: '#${cfg.colorscheme.colors.base0F}'
+            cyan:    '#${cfg.colorscheme.colors.base0C}'
+            white:   '#${cfg.colorscheme.colors.base05}'
 
-        draw_bold_text_with_bright_colors: false
+          # Dim colors
+          dim:
+            black:   '#${cfg.colorscheme.colors.base03}'
+            red:     '#${cfg.colorscheme.colors.base08}'
+            green:   '#${cfg.colorscheme.colors.base0B}'
+            yellow:  '#${cfg.colorscheme.colors.base0A}'
+            blue:    '#${cfg.colorscheme.colors.base0D}'
+            magenta: '#${cfg.colorscheme.colors.base0F}'
+            cyan:    '#${cfg.colorscheme.colors.base0C}'
+            white:   '#${cfg.colorscheme.colors.base04}'
+
+          indexed_colors:
+              - { index: 16, color: "#${cfg.colorscheme.colors.base09}" }
+              - { index: 17, color: "#${cfg.colorscheme.colors.base06}" }
       '';
     in
     mkIf cfg.enable {
