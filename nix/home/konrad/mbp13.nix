@@ -12,6 +12,7 @@
     monospace.size = 16.0;
   };
   konrad.programs.ssh-egress.enable = true;
+  konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty = {
     enable = true;
     # installed via homebrew

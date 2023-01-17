@@ -73,7 +73,6 @@ in
       duf
       procs
 
-      bitwarden-cli
       croc
       glow
       up
