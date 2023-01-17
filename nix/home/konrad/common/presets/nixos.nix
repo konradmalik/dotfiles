@@ -2,7 +2,6 @@
 {
   imports = [
     ./../global
-    ./../optional/gpg-agent-systemd.nix
   ];
   programs.zsh = {
     shellAliases = {

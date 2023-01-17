@@ -2,7 +2,6 @@
 {
   imports = [
     ./../global
-    ./../optional/gpg-agent-systemd.nix
   ];
 
   programs.zsh = {
@@ -12,7 +11,7 @@
       pbpaste = "wl-paste";
       open = "xdg-open";
     };
-    initExtraFirst = ''
+    initExtra = ''
       # update nix
       nix-update() {
           # current user's home (flakes enabled)

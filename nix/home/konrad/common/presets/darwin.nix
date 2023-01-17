@@ -2,7 +2,6 @@
 {
   imports = [
     ./../global
-    ./../optional/gpg-darwin.nix
     ./../optional/desktop/common/font.nix
   ];
 
@@ -25,7 +24,7 @@
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
       darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname -s)"'';
     };
-    initExtraFirst = ''
+    initExtra = ''
       # clean nix
       nix-clean() {
           # current user's profile (flakes enabled)
