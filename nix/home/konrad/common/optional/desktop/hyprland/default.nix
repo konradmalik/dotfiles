@@ -1,8 +1,15 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ inputs, lib, config, pkgs, osConfig, ... }: {
   imports = [
     ../common
     ../common/wayland-wm
     inputs.hyprland.homeManagerModules.default
+  ];
+
+  assertions = [
+    {
+      assertion = osConfig.programs.hyprland.enable;
+      message = "make sure to enable hyprland on the host for required dependencies like xdg-desktop portal etc.";
+    }
   ];
 
   home.packages = with pkgs; [
