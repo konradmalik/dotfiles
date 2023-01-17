@@ -24,13 +24,13 @@ I'll use the local version for brevity.
 #### Build and enable config locally:
 
 ```bash
-$ sudo nixos-rebuild --flake .#$(hostname) switch
+$ sudo nixos-rebuild --flake .#$(hostname -s) switch
 ```
 
 To just build (for example for a test):
 
 ```bash
-$ nix build .#nixosConfigurations.$(hostname).config.system.build.toplevel
+$ nix build .#nixosConfigurations.$(hostname -s).config.system.build.toplevel
 ```
 
 #### Build and enable config on remote:
@@ -117,15 +117,15 @@ Then install nix following the official guidelines and installer.
 Then build and enable config locally:
 
 ```bash
-$ darwin-rebuild switch --flake .#$(hostname)
+$ darwin-rebuild switch --flake .#$(hostname -s)
 ```
 
 To just build (for example for a test):
 
 ```bash
-$ nix build .#darwinConfigurations.$(hostname).config.system.build.toplevel
+$ nix build .#darwinConfigurations.$(hostname -s).config.system.build.toplevel
 # or shortened by nix-darwin
-$ nix build .#darwinConfigurations.$(hostname).system
+$ nix build .#darwinConfigurations.$(hostname -s).system
 ```
 
 ### linux (non-NixOS; home-manager):
@@ -133,13 +133,13 @@ $ nix build .#darwinConfigurations.$(hostname).system
 Build and enable config locally:
 
 ```bash
-$ home-manager switch --flake .#$(whoami)@$(hostname)
+$ home-manager switch --flake .#$(whoami)@$(hostname -s)
 ```
 
 To just build (for example for a test):
 
 ```bash
-$ nix build .#homeConfigurations.$(whoami)@$(hostname).activationPackage
+$ nix build .#homeConfigurations.$(whoami)@$(hostname -s).activationPackage
 ```
 
 ### sops-nix

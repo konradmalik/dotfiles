@@ -7,7 +7,7 @@
 
   programs.zsh = {
     shellAliases = {
-      home-manager-switch = ''home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname)"'';
+      home-manager-switch = ''home-manager switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(whoami)@$(hostname -s)"'';
       pbcopy = "wl-copy";
       pbpaste = "wl-paste";
       open = "xdg-open";
