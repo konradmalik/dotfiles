@@ -13,13 +13,12 @@
   environment = {
     systemPackages = with pkgs; [
       darwin-zsh-completions
-      docker-client
       lima
       # only to provide tmux-256color terminfo
       # until macos ships with newer ncurses
       ncurses
     ];
-    pathsToLink = [ "/share" "/bin" "/Applications" ];
+    pathsToLink = [ "/Applications" ];
     etc = {
       "ssh/sshd_config.d/99-nix.conf".text = ''
         PermitRootLogin no

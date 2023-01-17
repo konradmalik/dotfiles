@@ -21,9 +21,9 @@ mkShell {
     nmap
     # nix
     nix
-    home-manager
     nil
     nixpkgs-fmt
+    home-manager
     # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
     nixos-rebuild
     # lua (neovim)

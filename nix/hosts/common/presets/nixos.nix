@@ -36,11 +36,7 @@
 
   services.geoclue2.enable = lib.mkDefault true;
 
-  environment.systemPackages = with pkgs; [
-    busybox
-    git
-    vim
-  ];
+  environment.systemPackages = [ ];
   environment.pathsToLink = [ "/share" "/bin" ];
 
   system.stateVersion = lib.mkDefault "22.11";
