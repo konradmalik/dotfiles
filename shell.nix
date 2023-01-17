@@ -14,7 +14,7 @@ mkShell {
   name = "dotfiles-shell";
 
   # Enable experimental features without having to specify the argument
-  NIX_CONFIG = "experimental-features = nix-command flakes";
+  NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
 
   nativeBuildInputs = [
     git
