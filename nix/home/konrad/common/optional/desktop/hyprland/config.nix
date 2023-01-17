@@ -134,6 +134,11 @@
   bind=SUPERSHIFT,l,movewindow,r
   bind=SUPERSHIFT,k,movewindow,u
   bind=SUPERSHIFT,j,movewindow,d
+  bind=SUPERSHIFT,j,movewindow,d
+  bind=SUPER,tab,cyclenext
+  bind=SUPERSHIFT,tab,cyclenext,prev
+  bind=SUPERCONTROL,tab,swapnext
+  bind=SUPERCONTROLSHIFT,tab,swapnext,prev
   bind=SUPERCONTROL,left,focusmonitor,l
   bind=SUPERCONTROL,right,focusmonitor,r
   bind=SUPERCONTROL,up,focusmonitor,u
