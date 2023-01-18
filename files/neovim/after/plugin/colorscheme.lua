@@ -13,10 +13,13 @@ else
     vim.notify("cannot load colorscheme " .. colorscheme)
 end
 
-local base16_colorscheme_ok, base16_colorscheme = pcall(require, "base16-colorscheme")
-if not base16_colorscheme_ok then
-    vim.notify("cannot load base16-colorscheme")
+vim.api.nvim_command('packadd mini')
+local mini_base16_ok, mini_base16 = pcall(require, "mini.base16")
+if not mini_base16_ok then
+    vim.notify("cannot load mini.base16")
     return
 end
 
-base16_colorscheme.setup(nix_colors.colors)
+mini_base16.setup({
+    palette = nix_colors.colors
+})

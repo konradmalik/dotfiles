@@ -13,6 +13,17 @@ let
     };
     meta.homepage = "https://github.com/nat-418/boole.nvim";
   };
+  mini-base16 = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "mini.base16";
+    version = "2023-01-18";
+    src = pkgs.fetchFromGitHub {
+      owner = "echasnovski";
+      repo = "mini.base16";
+      rev = "e05d120edaffd1b44851020128f17da4b9819592";
+      sha256 = "sha256-OpMG/iWDknEfxFffEJojIpN46Maqm1gHXBHZ9yYVgdM=";
+    };
+    meta.homepage = "https://github.com/nat-418/boole.nvim";
+  };
   nvim-luaref = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "nvim-luaref";
     version = "2022-01-17";
@@ -157,8 +168,8 @@ in
         optional = false;
       }
       {
-        plugin = nvim-base16;
-        optional = false;
+        plugin = mini-base16;
+        optional = true;
       }
       dressing-nvim
       {
