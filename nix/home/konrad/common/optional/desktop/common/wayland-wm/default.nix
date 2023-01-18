@@ -2,6 +2,7 @@
 {
   imports = [
     ./gammastep.nix
+    ./imv.nix
     ./mako.nix
     ./swayidle.nix
     ./swaylock.nix
@@ -11,7 +12,6 @@
 
   home.packages = with pkgs; [
     grim # screenshots
-    imv # image viewer
     libnotify # notify-send
     networkmanagerapplet # nm-connection-edit
     pavucontrol # audio gui

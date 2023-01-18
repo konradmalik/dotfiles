@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
+    ./firefox.nix
     ./font.nix
     ./gtk.nix
     ./qt.nix
@@ -9,11 +10,9 @@
   xdg.mimeApps.enable = true;
 
   home = {
-    sessionVariables.BROWSER = "firefox";
     packages = with pkgs; [
       bitwarden
       unstable.discord
-      firefox
       obsidian
       unstable.signal-desktop
       unstable.slack
