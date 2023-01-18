@@ -23,6 +23,11 @@
       };
       nix-colors.url = "github:misterio77/nix-colors";
       hyprland.url = "github:hyprwm/Hyprland/v0.20.1beta";
+
+      deploy-rs = {
+        url = "github:serokell/deploy-rs";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs =
@@ -37,6 +42,7 @@
     , sops-nix
     , nix-colors
     , hyprland
+    , deploy-rs
     }@inputs:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
@@ -97,6 +103,54 @@
           modules = [ ./nix/home/konrad/generic.nix ];
         };
       };
+
+      deploy = {
+        nodes = {
+          m3800 = {
+            hostname = "m3800";
+            profiles.system = {
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.m3800;
+            };
+          };
+          mbp13 = {
+            hostname = "mbp13";
+            profiles.system = {
+              path = deploy-rs.lib.x86_64-darwin.activate.nixos self.darwinConfigurations.mbp13;
+            };
+          };
+          vaio = {
+            hostname = "vaio";
+            profiles.system = {
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.vaio;
+            };
+          };
+          xps12 = {
+            hostname = "xps12";
+            profiles.system = {
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.xps12;
+            };
+          };
+          rpi4-1 = {
+            hostname = "rpi4-1";
+            profiles.system = {
+              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.rpi4-1;
+            };
+          };
+          rpi4-2 = {
+            hostname = "rpi4-2";
+            profiles.system = {
+              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.rpi4-2;
+            };
+          };
+        };
+
+        magicRollback = true;
+        autoRollback = true;
+        remoteBuild = true;
+      };
+
+      # checks make it impossible to use deploy from macos
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 
   nixConfig = {

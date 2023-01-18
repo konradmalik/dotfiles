@@ -47,7 +47,6 @@ in
       curl
       moreutils
       nq
-      psmisc
       tree
       unzip
       wget
@@ -85,6 +84,8 @@ in
 
       asdf-vm
       comma
+    ] ++ lib.optionals pkgs.stdenv.isLinux [
+      psmisc
     ];
 
     file.".gdbinit".source = "${pkgs.dotfiles}/gdb/.gdbinit";
