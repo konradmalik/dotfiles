@@ -61,7 +61,6 @@
         "slack"
         "spotify"
         "telegram"
-        "vlc"
         "zoom"
       ];
 

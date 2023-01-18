@@ -4,6 +4,7 @@
     ./firefox.nix
     ./font.nix
     ./gtk.nix
+    ./mpv.nix
     ./qt.nix
   ];
 
@@ -19,7 +20,6 @@
       unstable.spotify
       unstable.teams
       unstable.tdesktop
-      vlc
       zathura
     ];
   };

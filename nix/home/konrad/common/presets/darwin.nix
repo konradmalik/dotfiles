@@ -2,7 +2,9 @@
 {
   imports = [
     ./../global
+    # selectively import desktop modules
     ./../optional/desktop/common/font.nix
+    ./../optional/desktop/common/mpv.nix
   ];
 
   home = {
