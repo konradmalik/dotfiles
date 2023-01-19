@@ -47,6 +47,7 @@ in
       curl
       moreutils
       nq
+      psmisc
       tree
       unzip
       wget

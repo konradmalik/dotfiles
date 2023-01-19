@@ -29,10 +29,7 @@
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   };
 
-  programs = {
-    zsh.enable = true;
-    ssh.startAgent = true;
-  };
+  programs.zsh.enable = true;
 
   services.geoclue2.enable = lib.mkDefault true;
 

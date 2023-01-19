@@ -13,6 +13,10 @@
   };
   konrad.programs.gpg-agent.enable = true;
   konrad.programs.ssh-egress.enable = true;
+  # TODO add to module if darwin
+  programs.ssh.extraConfig = ''
+    UseKeychain yes
+  '';
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty = {
     enable = true;

@@ -3,6 +3,7 @@
   imports = [
     ./firefox.nix
     ./font.nix
+    ./gnome-keyring.nix
     ./gtk.nix
     ./mpv.nix
     ./qt.nix
@@ -20,6 +21,7 @@
       unstable.spotify
       unstable.teams
       unstable.tdesktop
+      xdg-utils
       zathura
     ];
   };

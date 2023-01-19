@@ -23,7 +23,10 @@ in {
         serverAliveInterval = 15;
         extraConfig = ''
           AddKeysToAgent yes
-        '';
+        '' + lib.optionalString pkgs.stdenv.isDarwin
+          ''
+            UseKeychain yes
+          '';
 
         includes = [ "config.d/*" ];
         matchBlocks = {

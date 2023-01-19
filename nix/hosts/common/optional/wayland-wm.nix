@@ -1,7 +1,8 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 let
   allHmUsers = builtins.attrNames config.home-manager.users;
   anyHyprlandEnabled = builtins.any (user: config.home-manager.users.${user}.wayland.windowManager.hyprland.enable) allHmUsers;
+  anyGnomeKeyringEnabled = builtins.any (user: config.home-manager.users.${user}.services.gnome-keyring.enable) allHmUsers;
 in
 {
   imports = [
@@ -20,6 +21,9 @@ in
 
   # otherwise swaylock won't be able to unlock
   security.pam.services = { swaylock = { }; };
+
+  # enables necessary pam stuff thus allowing to unlock per user keyring during login
+  services.gnome.gnome-keyring.enable = anyGnomeKeyringEnabled;
 
   xdg.portal = {
     enable = true;
