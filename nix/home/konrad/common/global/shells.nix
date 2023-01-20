@@ -105,7 +105,35 @@ in
     enableCompletion = true;
     historyControl = [ "ignoredups" "ignorespace" ];
   };
-  programs.exa.enableAliases = true;
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv = {
+      enable = true;
+    };
+    stdlib = ''
+      # enable asdf support
+      use_asdf() {
+        source_env "$(${pkgs.asdf-vm}/bin/asdf direnv envrc "$@")"
+      }
+    '';
+    config = {
+      global = {
+        strict_env = true;
+        warn_timeout = "12h";
+      };
+      whitelist = {
+        prefix = [
+          "${config.home.homeDirectory}/Code/github.com/konradmalik"
+        ];
+      };
+    };
+  };
+
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
+  };
 
   programs.fzf = {
     enableZshIntegration = true;
@@ -118,6 +146,7 @@ in
   };
 
   programs.zoxide = {
+    enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
   };

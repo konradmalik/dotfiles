@@ -1,7 +1,14 @@
 { config, pkgs, lib, osConfig, ... }:
 with lib;
 let
-  cfg = config.konrad.programs.gpg-agent;
+  cfg = config.konrad.programs.gpg;
+  sharedConfig = {
+    programs.gpg = {
+      enable = true;
+      # let's stick to old standards for now
+      homedir = "${config.home.homeDirectory}/.gnupg";
+    };
+  };
   linuxConfig = {
     services.gpg-agent = {
       enable = true;
@@ -52,11 +59,12 @@ let
   };
 in
 {
-  options.konrad.programs.gpg-agent = {
-    enable = mkEnableOption "Enables gpg-agent configuration";
+  options.konrad.programs.gpg = {
+    enable = mkEnableOption "Enables gpg and gpg-agent configuration";
   };
 
   config = mkIf cfg.enable (lib.mkMerge [
+    sharedConfig
     (mkIf pkgs.stdenv.isDarwin darwinConfig)
     (mkIf pkgs.stdenv.isLinux linuxConfig)
   ]);

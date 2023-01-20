@@ -8,13 +8,18 @@ in
     inputs.nix-colors.homeManagerModule
 
     ./bat.nix
+    ./bottom.nix
     ./fzf.nix
     ./git.nix
+    ./glow.nix
     ./k9s.nix
     ./khal.nix
     ./neovim.nix
+    ./packages.nix
     ./ranger.nix
+    ./readline.nix
     ./shells.nix
+    ./ssh-ingress.nix
     ./starship.nix
     ./tealdeer.nix
     ./tmux.nix
@@ -43,68 +48,10 @@ in
       "$HOME/.local/bin"
     ];
 
-    packages = with pkgs;[
-      curl
-      moreutils
-      nq
-      tree
-      unzip
-      wget
-
-      ripgrep
-      ripgrep-all
-      fd
-      # fix for aarch64 is only on unstable as of now
-      unstable.sad
-      sd
-
-      hyperfine
-      viddy
-      watchexec
-
-      age
-      dsq
-      jq
-      jo
-      jc
-      xsv
-
-      du-dust
-      duf
-      procs
-
-      croc
-      glow
-      up
-
-      awscli
-      azure-cli
-
-      dive
-
-      asdf-vm
-      comma
-    ] ++ lib.optionals pkgs.stdenv.isLinux [
-      psmisc
-    ];
-
-    file.".gdbinit".source = "${pkgs.dotfiles}/gdb/.gdbinit";
-    file.".inputrc".source = "${pkgs.dotfiles}/inputrc/.inputrc";
     file.".earthly/config.yml".source = "${pkgs.dotfiles}/earthly/config.yml";
     file.".local/bin" = {
       source = "${pkgs.dotfiles}/bin";
       recursive = true;
-    };
-    activation = {
-      authorized_keys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        if [ -n "$VERBOSE_ARG" ]; then
-            echo "path to copy from '${pkgs.dotfiles}/ssh/authorized_keys'"
-        fi
-        $DRY_RUN_CMD mkdir -p ${config.home.homeDirectory}/.ssh
-        $DRY_RUN_CMD chmod 700 ${config.home.homeDirectory}/.ssh
-        $DRY_RUN_CMD cp ${pkgs.dotfiles}/ssh/authorized_keys ${config.home.homeDirectory}/.ssh/authorized_keys
-        $DRY_RUN_CMD chmod 600 ${config.home.homeDirectory}/.ssh/authorized_keys
-      '';
     };
   };
 
@@ -114,56 +61,6 @@ in
     cacheHome = "${config.home.homeDirectory}/.cache";
     dataHome = "${config.home.homeDirectory}/.local/share";
     stateHome = "${config.home.homeDirectory}/.local/state";
-  };
-
-  # dotfiles
-  xdg.configFile."glow/glow.yml".source = "${pkgs.dotfiles}/glow/glow.yml";
-
-  programs.bottom = {
-    enable = true;
-    settings = {
-      flags = {
-        temperature_type = "c";
-      };
-    };
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv = {
-      enable = true;
-    };
-    stdlib = ''
-      # enable asdf support
-      use_asdf() {
-        source_env "$(${pkgs.asdf-vm}/bin/asdf direnv envrc "$@")"
-      }
-    '';
-    config = {
-      global = {
-        strict_env = true;
-        warn_timeout = "12h";
-      };
-      whitelist = {
-        prefix = [
-          "${config.home.homeDirectory}/Code/github.com/konradmalik"
-        ];
-      };
-    };
-  };
-
-  programs.exa = {
-    enable = true;
-  };
-
-  programs.gpg = {
-    enable = true;
-    # let's stick to old standards for now
-    homedir = "${config.home.homeDirectory}/.gnupg";
-  };
-
-  programs.zoxide = {
-    enable = true;
   };
 
   # colorscheme = lib.mkDefault colorSchemes.catppuccin;
