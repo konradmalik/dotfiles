@@ -10,6 +10,9 @@
 
   konrad.networking.wireless.enable = true;
 
+  # enable aarch64-linux emulation
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   nix = {
     settings = {
       min-free = 10374182400; # ~10GB
