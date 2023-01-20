@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, outputs, ... }:
 {
   programs.k9s = {
     enable = true;
     skin =
       let c = config.colorscheme.colors;
-      in pkgs.yaml-utils.fromYAML
+      in outputs.lib.${pkgs.system}.default.yaml-utils.fromYAML
         ''
           foreground: &foreground "#${c.base05}"
           background: &background "#${c.base00}"

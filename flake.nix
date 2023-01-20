@@ -56,6 +56,9 @@
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./nix/pkgs { inherit pkgs; }
       );
+      lib = forAllSystems (system: {
+        default = nixpkgs.legacyPackages.${system}.callPackage ./nix/lib { };
+      });
       templates = import ./nix/templates;
       devShells = forAllSystems (system: {
         default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
