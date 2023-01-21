@@ -7,6 +7,8 @@ in
   imports = [ ./shared.nix ];
   nix = {
     gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
       dates = "daily";
       persistent = true;
     };

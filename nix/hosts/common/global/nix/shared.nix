@@ -24,14 +24,6 @@
   };
   nix = {
     package = pkgs.nix;
-    # should be >= max-jobs
-    nrBuildUsers = 16;
-
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 14d";
-    };
-
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
@@ -52,11 +44,17 @@
       ];
     };
 
-    # Map registries to channels
-    # Very useful when using legacy commands
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     # Add each flake input as a registry
     # To make nix3 commands consistent with the flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+  }
+  # below checks if this is home-manager-applied or nixos/nix-darwin-applied
+  # (those options do not exist in home-manager)
+  // lib.optionalAttrs (builtins.hasAttr "nixPath" config.nix) {
+    # should be >= max-jobs
+    nrBuildUsers = 16;
+    # Map registries to channels
+    # Very useful when using legacy commands
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 }
