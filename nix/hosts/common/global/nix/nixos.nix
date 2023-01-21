@@ -7,9 +7,7 @@ in
   imports = [ ./shared.nix ];
   nix = {
     gc = {
-      automatic = true;
       dates = "daily";
-      options = "--delete-older-than 14d";
       persistent = true;
     };
 
@@ -23,11 +21,5 @@ in
       keys = lib.flatten (theirAuthorizedKeys (ifTheyExist [ "konrad" ]));
       write = true;
     };
-
-    settings.trusted-users = [ "nix-ssh" ];
-
-    # Map registries to channels
-    # Very useful when using legacy commands
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 }
