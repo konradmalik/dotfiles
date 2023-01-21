@@ -10,7 +10,8 @@
       nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
       darwin = {
-        url = "github:lnl7/nix-darwin";
+        # url = "github:lnl7/nix-darwin";
+        url = "github:konradmalik/nix-darwin/uri-builder-fix";
         inputs.nixpkgs.follows = "nixpkgs-darwin";
       };
       home-manager = {
