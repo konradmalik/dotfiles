@@ -27,5 +27,5 @@
     ];
   };
 
-  konrad.wallpaper = "${pkgs.dotfiles}/wallpapers/bishal-mishra-SnDgEdmHJKg-unsplash.jpg";
+  konrad.wallpaper = "${pkgs.dotfiles}/wallpapers/bishal-mishra.jpg";
 }
