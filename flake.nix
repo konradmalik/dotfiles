@@ -48,22 +48,21 @@
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      pkgsFor = system: nixpkgs.legacyPackages.${system};
       inherit (self) outputs;
       specialArgs = { inherit inputs outputs; };
     in
     {
       homeManagerModules = import ./nix/modules/home-manager;
       packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./nix/pkgs { inherit pkgs; }
+        import ./nix/pkgs { pkgs = pkgsFor system; }
       );
-      lib = forAllSystems (system: {
-        default = nixpkgs.legacyPackages.${system}.callPackage ./nix/lib { };
-      });
       templates = import ./nix/templates;
-      devShells = forAllSystems (system: {
-        default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
-      });
+      devShells = forAllSystems (system:
+        let pkgs = pkgsFor system;
+        in {
+          default = pkgs.callPackage ./shell.nix { inherit pkgs deploy-rs; };
+        });
       overlays = import ./nix/overlays;
 
       darwinConfigurations = {
@@ -114,12 +113,6 @@
             hostname = "m3800";
             profiles.system = {
               path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.m3800;
-            };
-          };
-          mbp13 = {
-            hostname = "mbp13";
-            profiles.system = {
-              path = deploy-rs.lib.x86_64-darwin.activate.nixos self.darwinConfigurations.mbp13;
             };
           };
           vaio = {

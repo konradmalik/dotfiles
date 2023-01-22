@@ -4,120 +4,117 @@
     enable = true;
     skin =
       let c = config.colorscheme.colors;
-      in outputs.lib.${pkgs.system}.default.yaml-utils.fromYAML
+      in builtins.fromJSON
         ''
-          foreground: &foreground "#${c.base05}"
-          background: &background "#${c.base00}"
-          comment: &comment "#${c.base03}"
-          current_line: &current_line "#${c.base01}"
-          selection: &selection "#${c.base02}"
-          cyan: &cyan "#${c.base08}"
-          green: &green "#${c.base09}"
-          orange: &orange "#${c.base0A}"
-          blue: &blue "#${c.base0B}"
-          magenta: &magenta "#${c.base0C}"
-          red: &red "#${c.base0D}"
-          yellow: &yellow "#${c.base0E}"
-
-          k9s:
-            # General K9s styles
-            body:
-              fgColor: *foreground
-              bgColor: default
-              logoColor: *magenta
-            # Command prompt styles
-            prompt:
-              fgColor: *foreground
-              bgColor: *background
-              suggestColor: *orange
-            # ClusterInfoView styles.
-            info:
-              fgColor: *blue
-              sectionColor: *foreground
-            # Dialog styles.
-            dialog:
-              fgColor: *foreground
-              bgColor: default
-              buttonFgColor: *foreground
-              buttonBgColor: *magenta
-              buttonFocusFgColor: *yellow
-              buttonFocusBgColor: *blue
-              labelFgColor: *orange
-              fieldFgColor: *foreground
-            frame:
-              # Borders styles.
-              border:
-                fgColor: *selection
-                focusColor: *current_line
-              menu:
-                fgColor: *foreground
-                keyColor: *blue
-                # Used for favorite namespaces
-                numKeyColor: *blue
-              # CrumbView attributes for history navigation.
-              crumbs:
-                fgColor: *foreground
-                bgColor: *current_line
-                activeColor: *current_line
-              # Resource status and update styles
-              status:
-                newColor: *cyan
-                modifyColor: *magenta
-                addColor: *green
-                errorColor: *red
-                highlightcolor: *orange
-                killColor: *comment
-                completedColor: *comment
-              # Border title styles.
-              title:
-                fgColor: *foreground
-                bgColor: *current_line
-                highlightColor: *orange
-                counterColor: *magenta
-                filterColor: *blue
-            views:
-              # Charts skins...
-              charts:
-                bgColor: default
-                defaultDialColors:
-                  - *magenta
-                  - *red
-                defaultChartColors:
-                  - *magenta
-                  - *red
-              # TableView attributes.
-              table:
-                fgColor: *foreground
-                bgColor: default
-                # Header row styles.
-                header:
-                  fgColor: *foreground
-                  bgColor: default
-                  sorterColor: *cyan
-              # Xray view attributes.
-              xray:
-                fgColor: *foreground
-                bgColor: default
-                cursorColor: *current_line
-                graphicColor: *magenta
-                showIcons: false
-              # YAML info styles.
-              yaml:
-                keyColor: *blue
-                colonColor: *magenta
-                valueColor: *foreground
-              # Logs styles.
-              logs:
-                fgColor: *foreground
-                bgColor: default
-                indicator:
-                  fgColor: *foreground
-                  bgColor: *magenta
-              help:
-                fgColor: *foreground
-                bgColor: *background
-                indicator:
-                  fgColor: *red
+          {
+            "k9s": {
+              "body": {
+                "fgColor": "#${c.base05}",
+                "bgColor": "default",
+                "logoColor": "#${c.base0C}"
+              },
+              "prompt": {
+                "fgColor": "#${c.base05}",
+                "bgColor": "#${c.base00}",
+                "suggestColor": "#${c.base0A}"
+              },
+              "info": {
+                "fgColor": "#${c.base0B}",
+                "sectionColor": "#${c.base05}"
+              },
+              "dialog": {
+                "fgColor": "#${c.base05}",
+                "bgColor": "default",
+                "buttonFgColor": "#${c.base05}",
+                "buttonBgColor": "#${c.base0C}",
+                "buttonFocusFgColor": "#${c.base0E}",
+                "buttonFocusBgColor": "#${c.base0B}",
+                "labelFgColor": "#${c.base0A}",
+                "fieldFgColor": "#${c.base05}"
+              },
+              "frame": {
+                "border": {
+                  "fgColor": "#${c.base02}",
+                  "focusColor": "#${c.base01}"
+                },
+                "menu": {
+                  "fgColor": "#${c.base05}",
+                  "keyColor": "#${c.base0B}",
+                  "numKeyColor": "#${c.base0B}"
+                },
+                "crumbs": {
+                  "fgColor": "#${c.base05}",
+                  "bgColor": "#${c.base01}",
+                  "activeColor": "#${c.base01}"
+                },
+                "status": {
+                  "newColor": "#${c.base08}",
+                  "modifyColor": "#${c.base0C}",
+                  "addColor": "#${c.base09}",
+                  "errorColor": "#${c.base0D}",
+                  "highlightcolor": "#${c.base0A}",
+                  "killColor": "#${c.base03}",
+                  "completedColor": "#${c.base03}"
+                },
+                "title": {
+                  "fgColor": "#${c.base05}",
+                  "bgColor": "#${c.base01}",
+                  "highlightColor": "#${c.base0A}",
+                  "counterColor": "#${c.base0C}",
+                  "filterColor": "#${c.base0B}"
+                }
+              },
+              "views": {
+                "charts": {
+                  "bgColor": "default",
+                  "defaultDialColors": [
+                    "#${c.base0C}",
+                    "#${c.base0D}"
+                  ],
+                  "defaultChartColors": [
+                    "#${c.base0C}",
+                    "#${c.base0D}"
+                  ]
+                },
+                "table": {
+                  "fgColor": "#${c.base05}",
+                  "bgColor": "default",
+                  "header": {
+                    "fgColor": "#${c.base05}",
+                    "bgColor": "default",
+                    "sorterColor": "#${c.base08}"
+                  }
+                },
+                "xray": {
+                  "fgColor": "#${c.base05}",
+                  "bgColor": "default",
+                  "cursorColor": "#${c.base01}",
+                  "graphicColor": "#${c.base0C}",
+                  "showIcons": false
+                },
+                "yaml": {
+                  "keyColor": "#${c.base0B}",
+                  "colonColor": "#${c.base0C}",
+                  "valueColor": "#${c.base05}"
+                },
+                "logs": {
+                  "fgColor": "#${c.base05}",
+                  "bgColor": "default",
+                  "indicator": {
+                    "fgColor": "#${c.base05}",
+                    "bgColor": "#${c.base0C}"
+                  }
+                },
+                "help": {
+                  "fgColor": "#${c.base05}",
+                  "bgColor": "#${c.base00}",
+                  "indicator": {
+                    "fgColor": "#${c.base0D}"
+                  }
+                }
+              }
+            }
+          }
         '';
   };
 }
