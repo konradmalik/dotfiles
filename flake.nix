@@ -24,11 +24,6 @@
       };
       nix-colors.url = "github:misterio77/nix-colors";
       hyprland.url = "github:hyprwm/Hyprland/v0.20.1beta";
-
-      deploy-rs = {
-        url = "github:serokell/deploy-rs";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
     };
 
   outputs =
@@ -43,7 +38,6 @@
     , sops-nix
     , nix-colors
     , hyprland
-    , deploy-rs
     }@inputs:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
@@ -61,7 +55,7 @@
       devShells = forAllSystems (system:
         let pkgs = pkgsFor system;
         in {
-          default = pkgs.callPackage ./shell.nix { inherit pkgs deploy-rs; };
+          default = pkgs.callPackage ./shell.nix { inherit pkgs; };
         });
       overlays = import ./nix/overlays;
 
@@ -106,47 +100,6 @@
           modules = [ ./nix/home/konrad/generic.nix ];
         };
       };
-
-      deploy = {
-        nodes = {
-          m3800 = {
-            hostname = "m3800";
-            profiles.system = {
-              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.m3800;
-            };
-          };
-          vaio = {
-            hostname = "vaio";
-            profiles.system = {
-              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.vaio;
-            };
-          };
-          xps12 = {
-            hostname = "xps12";
-            profiles.system = {
-              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.xps12;
-            };
-          };
-          rpi4-1 = {
-            hostname = "rpi4-1";
-            profiles.system = {
-              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.rpi4-1;
-            };
-          };
-          rpi4-2 = {
-            hostname = "rpi4-2";
-            profiles.system = {
-              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.rpi4-2;
-            };
-          };
-        };
-
-        magicRollback = true;
-        autoRollback = true;
-        remoteBuild = true;
-      };
-
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 
   nixConfig = {

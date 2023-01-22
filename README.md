@@ -36,9 +36,10 @@ $ nix build .#nixosConfigurations.$(hostname -s).config.system.build.toplevel
 #### Build and enable config on remote:
 
 ```bash
-# TODO not tested
-# home-manager may be problematic: https://discourse.nixos.org/t/home-manager-flake-not-respecting-build-host-during-nixos-rebuild/16787
-$ HOSTNAME=m3800 nixos-rebuild --flake .#$HOSTNAME --target-host $HOSTNAME --build-host $HOSTNAME --use-remote-sudo switch
+# this will fail because of:
+# https://github.com/NixOS/nixpkgs/issues/118655
+# workaround is to use root ssh access, but I don't want to do that
+$ export TARGET=rpi4-1 && nixos-rebuild --flake .#$TARGET --target-host $TARGET --build-host $TARGET --use-remote-sudo boot
 ```
 
 #### Build sd-image:
