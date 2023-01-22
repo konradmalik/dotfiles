@@ -153,8 +153,7 @@
         remoteBuild = true;
       };
 
-      # checks make it impossible to use deploy from macos
-      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 
   nixConfig = {
