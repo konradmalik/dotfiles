@@ -35,11 +35,18 @@ $ nix build .#nixosConfigurations.$(hostname -s).config.system.build.toplevel
 
 #### Build and enable config on remote:
 
+> **Note:** this will fail because of [this bug](https://github.com/NixOS/nixpkgs/issues/118655).
+> Workaround is to use root ssh access, but I don't want to do that
+
 ```bash
-# this will fail because of:
-# https://github.com/NixOS/nixpkgs/issues/118655
-# workaround is to use root ssh access, but I don't want to do that
-$ export TARGET=rpi4-1 && nixos-rebuild --flake .#$TARGET --target-host $TARGET --build-host $TARGET --use-remote-sudo boot
+$ TARGET=rpi4-1 nixos-rebuild --flake .#$TARGET --target-host $TARGET --build-host $TARGET --use-remote-sudo boot
+```
+
+Instead, this will work for now. I may create a wrapper for that:
+
+```bash
+
+$ TARGET=rpi4-1 ssh $TARGET -- sudo nixos-rebuild --flake github:konradmalik/dotfiles#$TARGET boot
 ```
 
 #### Build sd-image:
