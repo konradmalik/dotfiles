@@ -13,7 +13,6 @@
   home.packages = with pkgs; [
     grim # screenshots
     libnotify # notify-send
-    networkmanagerapplet # nm-connection-edit
     pavucontrol # audio gui
     playerctl # control audio players system-wide
     slurp # screenshots

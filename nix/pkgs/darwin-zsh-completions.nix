@@ -8,7 +8,7 @@ runCommandNoCC "${pname}-${version}"
   inherit pname version;
   meta = {
     description = "zsh shell completion for nix-darwin commands";
-    platforms = [ "x86_64-darwin" "aarch64-darwin" ];
+    platforms = [ "x86_64-darwin" "aarch64-darwin" "x86_64-linux" "aarch64-linux" ];
   };
   preferLocalBuild = true;
 }

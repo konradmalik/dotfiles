@@ -4,13 +4,29 @@ name: Ubuntu build test
 jobs:
   tests:
     runs-on: ubuntu-22.04
+    env:
+      DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v18
+      # adds support for aarch64-linux in nix, very handy
+      - run: |
+          sudo apt-get update -q -y
+          sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+          mkdir -p ~/.config/nix
+          sudo bash -c "echo 'system-features = aarch64-linux arm-linux' >> /etc/nix/nix.conf"
+          sudo bash -c "echo 'extra-platforms = aarch64-linux arm-linux' >> /etc/nix/nix.conf"
+          echo "system-features = aarch64-linux arm-linux" >> ~/.config/nix/nix.conf
+          echo "extra-platforms = aarch64-linux arm-linux" >> ~/.config/nix/nix.conf
+
       - uses: cachix/cachix-action@v12
         with:
           name: konradmalik
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Flake check
+        run: |
+          nix flake check --accept-flake-config
 
       - name: Shell build linux
         run: |

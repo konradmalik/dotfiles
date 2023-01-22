@@ -2,12 +2,13 @@
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     ./../../hosts/common/global/nix/nixos.nix
-    ./../../hosts/common/modules/networkmanager.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   networking.hostName = "nix-installer-iso";
+  networking.networkmanager.enable = true;
+  networking.wireless.enable = false;
 
   users.users.root = {
     openssh.authorizedKeys.keys =
@@ -19,7 +20,7 @@
       onlyKeys;
   };
 
-  environment. systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     busybox
     git
     vim
