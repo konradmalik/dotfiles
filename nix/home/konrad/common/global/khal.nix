@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 # currently broken on macos
-lib.mkIf (!pkgs.stdenv.isDarwin) {
+lib.mkIf (!pkgs.stdenvNoCC.isDarwin) {
   home.packages = [ pkgs.khal ];
   xdg.configFile."khal/config".text = ''
     [calendars]

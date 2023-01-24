@@ -65,7 +65,7 @@ in
 
   config = mkIf cfg.enable (lib.mkMerge [
     sharedConfig
-    (mkIf pkgs.stdenv.isDarwin darwinConfig)
-    (mkIf pkgs.stdenv.isLinux linuxConfig)
+    (mkIf pkgs.stdenvNoCC.isDarwin darwinConfig)
+    (mkIf pkgs.stdenvNoCC.isLinux linuxConfig)
   ]);
 }

@@ -40,7 +40,7 @@
 
     asdf-vm
     comma
-  ] ++ lib.optionals pkgs.stdenv.isLinux [
+  ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
     psmisc
   ];
 }

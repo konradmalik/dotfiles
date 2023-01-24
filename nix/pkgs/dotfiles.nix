@@ -1,12 +1,11 @@
 { pkgs, lib, ... }:
-pkgs.stdenv.mkDerivation {
+pkgs.stdenvNoCC.mkDerivation {
   name = "dotfiles";
   meta = {
     description = "konradmalik dotfiles";
     licenses = lib.licenses.mit;
     platforms = lib.platforms.all;
   };
-  stdenv = pkgs.stdenvNoCC;
   src = ./../../files;
   preferLocalBuild = true;
   allowSubstitutes = false;

@@ -23,7 +23,7 @@ in {
         serverAliveInterval = 15;
         extraConfig = ''
           AddKeysToAgent yes
-        '' + lib.optionalString pkgs.stdenv.isDarwin
+        '' + lib.optionalString pkgs.stdenvNoCC.isDarwin
           ''
             UseKeychain yes
           '';

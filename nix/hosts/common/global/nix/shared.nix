@@ -30,8 +30,8 @@
       keep-derivations = true;
       keep-outputs = true;
       trusted-users = [ "root" ]
-        ++ lib.optional pkgs.stdenv.isLinux "@wheel"
-        ++ lib.optional pkgs.stdenv.isDarwin "@admins";
+        ++ lib.optional pkgs.stdenvNoCC.isLinux "@wheel"
+        ++ lib.optional pkgs.stdenvNoCC.isDarwin "@admins";
       substituters = [
         "https://konradmalik.cachix.org"
         "https://nix-community.cachix.org"
