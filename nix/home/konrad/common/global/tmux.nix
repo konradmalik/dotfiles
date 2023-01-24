@@ -140,9 +140,8 @@ in
 
   programs.zsh.initExtra = ''
     # tmux baby
-    txs() { ${pkgs.tmux-sessionizer}/bin/tmux-sessionizer }
-    zle -N txs
-    bindkey '^F' txs
+    rtxs() { ${pkgs.tmux-sessionizer}/bin/tmux-sessionizer }
+    bindkey -s '^F' '^urtxs^M'
 
     # fix for tmux ssh socket
     fix_ssh_auth_sock() {

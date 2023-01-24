@@ -46,6 +46,7 @@
 
     # Add each flake input as a registry
     # To make nix3 commands consistent with the flake
+    # this becomes registry.nixpkgs.flake = inputs.nixpkgs etc. for all inputs
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
   }
   # below checks if this is home-manager-applied or nixos/nix-darwin-applied

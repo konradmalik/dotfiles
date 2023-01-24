@@ -9,6 +9,11 @@ in
     mutableUsers = false;
     users.konrad = {
       # If you are using NixOps then don't use this option since it will replace the key required for deployment via ssh.
+      # TODO get keys from url:
+      # (builtins.readFile (builtins.fetchurl {
+      #   url = "https://github.com/konradmalik.keys";
+      #   sha256 = lib.fakeSha256;
+      # }))
       openssh.authorizedKeys.keys =
         let
           authorizedKeysFile = builtins.readFile "${pkgs.dotfiles}/ssh/authorized_keys";
