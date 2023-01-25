@@ -40,6 +40,10 @@
 
     asdf-vm
     comma
+
+    rfv
+    tmux-sessionizer
+    tmux-windowizer
   ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
     psmisc
   ];

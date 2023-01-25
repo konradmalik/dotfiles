@@ -48,11 +48,6 @@ in
       "$HOME/.cargo/bin"
       "$HOME/.local/bin"
     ];
-
-    file.".local/bin" = {
-      source = "${pkgs.dotfiles}/bin";
-      recursive = true;
-    };
   };
 
   xdg = {
