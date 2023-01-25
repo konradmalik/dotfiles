@@ -7,9 +7,10 @@ in
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
 
-    ./../global/nix/nixos.nix
     ./../global/home-manager.nix
     ./../global/locale.nix
+    ./../global/nix/nixos.nix
+    ./../global/oom-killer.nix
     ./../global/openssh.nix
     ./../global/tailscale.nix
 
