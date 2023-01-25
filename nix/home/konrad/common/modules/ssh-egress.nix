@@ -9,7 +9,7 @@ in {
   config = mkIf cfg.enable
     {
       programs.git.signing = {
-        key = "~/.ssh/personal";
+        key = "${config.home.homeDirectory}/.ssh/personal";
         signByDefault = true;
       };
 
@@ -63,7 +63,7 @@ in {
       };
 
       # TODO ssh_configd from osConfig.sops.secrets when
-      # https://github.com/Mic92/sops-nix/pull/168
+      # https://github.com/Mic92/sops-nix/pull/261
       # gets merged
     };
 }

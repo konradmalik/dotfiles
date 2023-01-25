@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 let
+  konradKeys = pkgs.callPackage ./../../../../home/konrad/common/global/ssh-keys.nix { };
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
@@ -8,20 +9,7 @@ in
   users = {
     mutableUsers = false;
     users.konrad = {
-      # If you are using NixOps then don't use this option since it will replace the key required for deployment via ssh.
-      # TODO get keys from url:
-      # (builtins.readFile (builtins.fetchurl {
-      #   url = "https://github.com/konradmalik.keys";
-      #   sha256 = lib.fakeSha256;
-      # }))
-      openssh.authorizedKeys.keys =
-        let
-          authorizedKeysFile = builtins.readFile "${pkgs.dotfiles}/ssh/authorized_keys";
-          authorizedKeysFileLines = lib.splitString "\n" authorizedKeysFile;
-          onlyKeys = lib.filter (line: line != "" && !(lib.hasPrefix "#" line)) authorizedKeysFileLines;
-        in
-        onlyKeys;
-
+      openssh.authorizedKeys.keys = konradKeys.sshKeys.personal;
       passwordFile = config.sops.secrets.konrad-password.path;
       shell = pkgs.zsh;
       isNormalUser = true;

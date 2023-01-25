@@ -2,6 +2,8 @@
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     ./../../hosts/common/global/nix/nixos.nix
+    ./../../modules/home-manager/ssh-keys.nix
+    ./../../home/konrad/common/global/ssh-keys.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
@@ -11,13 +13,7 @@
   networking.wireless.enable = false;
 
   users.users.root = {
-    openssh.authorizedKeys.keys =
-      let
-        authorizedKeysFile = builtins.readFile "${pkgs.dotfiles}/ssh/authorized_keys";
-        authorizedKeysFileLines = lib.splitString "\n" authorizedKeysFile;
-        onlyKeys = lib.filter (line: line != "" && !(lib.hasPrefix "#" line)) authorizedKeysFileLines;
-      in
-      onlyKeys;
+    openssh.authorizedKeys.keys = config.sshKeys.personal;
   };
 
   environment.systemPackages = with pkgs; [
