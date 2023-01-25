@@ -9,6 +9,7 @@ in
 
     ./bat.nix
     ./bottom.nix
+    ./earthly.nix
     ./fzf.nix
     ./git.nix
     ./glow.nix
@@ -48,7 +49,6 @@ in
       "$HOME/.local/bin"
     ];
 
-    file.".earthly/config.yml".source = "${pkgs.dotfiles}/earthly/config.yml";
     file.".local/bin" = {
       source = "${pkgs.dotfiles}/bin";
       recursive = true;
