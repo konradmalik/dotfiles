@@ -15,10 +15,10 @@
 
       aws.disabled = true;
       battery.disabled = true;
-      cmd_duration. disabled = true;
+      cmd_duration.disabled = true;
       crystal.disabled = true;
       dart.disabled = true;
-      docker_context. disabled = true;
+      docker_context.disabled = true;
       dotnet.disabled = true;
       elixir.disabled = true;
       elm.disabled = true;
@@ -26,17 +26,17 @@
       erlang.disabled = true;
       gcloud.disabled = true;
       golang.disabled = false;
-      line_break.disabled = false;
       java.disabled = false;
       julia.disabled = true;
       kubernetes.disabled = false;
+      line_break.disabled = false;
       lua.disabled = false;
       memory_usage.disabled = true;
       nim.disabled = true;
       nix_shell.disabled = false;
-      package.disabled = true;
       ocaml.disabled = true;
       openstack.disabled = true;
+      package.disabled = true;
       perl.disabled = true;
       php.disabled = true;
       purescript.disabled = true;

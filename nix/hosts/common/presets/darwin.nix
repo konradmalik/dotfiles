@@ -18,7 +18,7 @@
       # until macos ships with newer ncurses
       ncurses
     ];
-    pathsToLink = [ "/Applications" ];
+    pathsToLink = [ "/share" "/bin" "/Applications" ];
     etc = {
       "ssh/sshd_config.d/99-nix.conf".text = ''
         PermitRootLogin no

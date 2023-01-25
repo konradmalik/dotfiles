@@ -2,7 +2,6 @@
 with lib;
 let
   cfg = config.konrad.programs.alacritty;
-  # TODO move whole alacritty here and use base16
 in
 {
   options.konrad.programs.alacritty = {

@@ -26,17 +26,6 @@
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
       darwin-rebuild-switch = ''darwin-rebuild switch --flake "git+file://$HOME/Code/github.com/konradmalik/dotfiles#$(hostname -s)"'';
     };
-    initExtra = ''
-      # clean nix
-      nix-clean() {
-          # current user's profile (flakes enabled)
-          nix profile wipe-history --older-than 14d
-          # nix store garbage collection
-          nix store gc
-          # system-wide (goes into users as well)
-          sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
-      }
-    '';
   };
 
   targets.darwin = {

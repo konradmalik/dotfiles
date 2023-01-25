@@ -20,18 +20,6 @@
           sudo --login sh -c 'nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon'
       }
 
-      # clean nix
-      nix-clean() {
-          # home
-          home-manager expire-generations '-14 days'
-          # current user's profile (flakes enabled)
-          nix profile wipe-history --older-than 14d
-          # nix store garbage collection
-          nix store gc
-          # system-wide (goes into users as well)
-          sudo --login sh -c 'nix-collect-garbage --delete-older-than 14d'
-      }
-
       if [ -f "/etc/arch-release" ]; then
           arch-upgrade() {
               yay -Syu --sudoloop \
