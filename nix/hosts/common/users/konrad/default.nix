@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 let
-  konradKeys = pkgs.callPackage ./../../../../home/konrad/common/global/ssh-keys.nix { };
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
@@ -9,7 +8,7 @@ in
   users = {
     mutableUsers = false;
     users.konrad = {
-      openssh.authorizedKeys.keys = konradKeys.sshKeys.personal;
+      openssh.authorizedKeys.keys = config.home-manager.users.konrad.sshKeys.personal.keys;
       passwordFile = config.sops.secrets.konrad-password.path;
       shell = pkgs.zsh;
       isNormalUser = true;

@@ -13,7 +13,10 @@
 
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
-  konrad.networking.wireless.enable = true;
+  konrad.networking.wireless = {
+    enable = true;
+    interfaces = [ "wlp6s0" ];
+  };
 
   # enable aarch64-linux emulation
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  keys = config.sshKeys.personal;
+  keys = config.sshKeys.personal.keys;
 in
 {
   home.activation = {

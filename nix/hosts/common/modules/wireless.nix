@@ -5,6 +5,11 @@ in
 {
   options.konrad.networking.wireless = {
     enable = mkEnableOption "Enables wireless with wpa_supplicant via sops-nix";
+    interfaces = mkOption {
+      type = types.listOf types.str;
+      example = ''[ "wlp2s0" ]'';
+      description = "Interfaces to manage. If not specified - wpa_supplicant can fail on boot and not restart.";
+    };
   };
 
   config = mkIf cfg.enable {
