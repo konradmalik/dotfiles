@@ -4,6 +4,8 @@
 
 Nix ftw.
 
+## installation
+
 ## commands
 
 Note: in all commands flake location can be one of the following:
@@ -105,10 +107,14 @@ Format, partition the drive etc.
 Then you can install the system from flake directly:
 
 ```bash
-$ sudo nixos-install --flake github:konradmalik/dotfiles#m3800 --root /mnt
+$ sudo nixos-install --flake github:konradmalik/dotfiles#m3800 --root /mnt --no-bootloader
 ```
 
 Tip: `nixos-enter` is also very handy if you have a working system but need to fix something, eg. change your password.
+
+Tip2: I use `--no-bootloader` because I don't want grub (either way it will fail if there is systemd already defined I think,
+it will say something like '/boot/efi is not at the root'). My flake has already all the needed hardware and booloader configs for the machines I use.
+In order to install on a new machine, just generate hardware-configuration.nix on that machine and add a new entry in this flake.
 
 ### nix-darwin:
 
