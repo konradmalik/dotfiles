@@ -42,6 +42,9 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs"
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
+      min-free = lib.mkDefault (10 * 1000 * 1000 * 1000); # 10gb
+      cores = lib.mkDefault 0;
+      max-jobs = lib.mkDefault "auto";
     };
 
     # Add each flake input as a registry

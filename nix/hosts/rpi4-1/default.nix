@@ -13,15 +13,6 @@
 
   networking.firewall.enable = false;
 
-  nix = {
-    settings = {
-      min-free = 10374182400; # ~10GB
-      max-free = 327374182400; # 32GB
-      cores = 4;
-      max-jobs = 8;
-    };
-  };
-
   systemd.services.hd-idle = {
     description = "External HD spin down daemon";
     wantedBy = [ "multi-user.target" ];
