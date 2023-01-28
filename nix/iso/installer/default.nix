@@ -12,9 +12,7 @@
   networking.networkmanager.enable = true;
   networking.wireless.enable = false;
 
-  users.users.root = {
-    openssh.authorizedKeys.keys = config.sshKeys.personal.keys;
-  };
+  users.users.root.openssh.authorizedKeys.keys = config.sshKeys.personal.keys;
 
   environment.systemPackages = with pkgs; [
     busybox

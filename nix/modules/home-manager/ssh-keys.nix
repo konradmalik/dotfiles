@@ -11,6 +11,7 @@ in
     personal = {
       remotes = mkOption {
         default = [ ];
+        description = "urls and their sha256 that will be passed to fetchurl function";
         type = types.listOf (types.submodule {
           options = {
             url = mkOption {
