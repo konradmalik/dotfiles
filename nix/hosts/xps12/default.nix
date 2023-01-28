@@ -20,8 +20,9 @@
     logind.lidSwitch = "ignore";
     rtcwake = {
       enable = true;
-      on = "*-*-* 23:00:00";
-      off = "tomorrow 08:00";
+      # both UTC
+      on = "*-*-* 22:00:00";
+      off = "tomorrow 07:00";
       mode = "off";
     };
   };
