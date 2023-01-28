@@ -1,0 +1,3 @@
+{
+  rtcwake = import ./rtcwake.nix;
+}

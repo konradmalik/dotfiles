@@ -48,6 +48,7 @@
     in
     {
       homeManagerModules = import ./nix/modules/home-manager;
+      nixosModules = import ./nix/modules/nixos;
       packages = forAllSystems (system:
         import ./nix/pkgs { pkgs = pkgsFor system; }
       );

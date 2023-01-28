@@ -15,7 +15,8 @@ in
     ./../global/tailscale.nix
 
     ./../users/konrad
-  ] ++ (builtins.attrValues (import ./../modules));
+  ] ++ (builtins.attrValues (import ./../modules))
+  ++ (builtins.attrValues outputs.nixosModules);
 
   # make tmp in ram
   # boot.tmpOnTmpfs = true;
