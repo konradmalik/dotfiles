@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let
   cfg = config.services.rtcwake;
 in
@@ -24,7 +24,7 @@ in
   config = lib.mkIf cfg.enable {
     systemd.services.rtcwake = {
       description = "automatic shutdown and boot after some time";
-      script = "rtcwake --mode ${cfg.mode} --utc --local --time $(date +%s --utc -d '${cfg.on}')";
+      script = "${pkgs.util-linux}/bin/rtcwake --mode ${cfg.mode} --utc --time $(date +%s --utc -d '${cfg.on}')";
     };
     systemd.timers.rtcwake = {
       wantedBy = [ "timers.target" ];

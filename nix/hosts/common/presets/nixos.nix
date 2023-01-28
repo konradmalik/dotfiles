@@ -44,7 +44,7 @@ in
   services.geoclue2.enable = lib.mkDefault true;
 
   environment = {
-    systemPackages = [ ];
+    systemPackages = [ pkgs.nixos-label ];
     pathsToLink = [ "/share" "/bin" ];
   };
 

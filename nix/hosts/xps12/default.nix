@@ -21,8 +21,8 @@
     rtcwake = {
       enable = true;
       # both UTC
-      on = "*-*-* 22:00:00";
-      off = "tomorrow 07:00";
+      on = "tomorrow 07:00";
+      off = "*-*-* 22:00:00";
       mode = "off";
     };
   };
