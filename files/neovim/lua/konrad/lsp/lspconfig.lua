@@ -14,13 +14,14 @@ local servers = {
     -- always available
     -- none
     -- per project
-    "sumneko_lua", -- called lua-language-server now
-    "nil_ls",
-    "yamlls",
     "gopls",
-    "pyright",
+    "nil_ls",
     "omnisharp",
+    "pyright",
     "rust_analyzer",
+    "sumneko_lua", -- called lua-language-server now
+    "terraformls",
+    "yamlls",
 }
 
 for _, server in ipairs(servers) do

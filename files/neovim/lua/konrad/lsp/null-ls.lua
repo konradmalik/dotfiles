@@ -23,8 +23,8 @@ null_ls.setup({
         -- per project
         formatting.black,
         formatting.isort,
-        formatting.terraform_fmt,
         formatting.nixpkgs_fmt,
+        formatting.terraform_fmt,
 
         diagnostics.mypy,
     },
