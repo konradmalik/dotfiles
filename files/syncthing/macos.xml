@@ -7,6 +7,9 @@
         <device id="HHMMUAO-2ADZE5M-DYXO5P5-AA7GE22-XCEWHMK-ZH2WAL3-ZWQFZ3N-ELJ5BA7" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
+        <device id="27QG3IH-YTHLMAE-NBWBLPN-UJDN32N-V3BRHFI-LE35U5D-KOJ6BYC-AJVYLQO" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
         <minDiskFree unit="%">1</minDiskFree>
         <versioning>
             <cleanupIntervalS>3600</cleanupIntervalS>
@@ -49,6 +52,9 @@
             <encryptionPassword></encryptionPassword>
         </device>
         <device id="HHMMUAO-2ADZE5M-DYXO5P5-AA7GE22-XCEWHMK-ZH2WAL3-ZWQFZ3N-ELJ5BA7" introducedBy="">
+            <encryptionPassword></encryptionPassword>
+        </device>
+        <device id="27QG3IH-YTHLMAE-NBWBLPN-UJDN32N-V3BRHFI-LE35U5D-KOJ6BYC-AJVYLQO" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
         <minDiskFree unit="%">1</minDiskFree>
@@ -98,6 +104,16 @@
         <remoteGUIPort>0</remoteGUIPort>
     </device>
     <device id="HHMMUAO-2ADZE5M-DYXO5P5-AA7GE22-XCEWHMK-ZH2WAL3-ZWQFZ3N-ELJ5BA7" name="rpi4-1" compression="metadata" introducer="true" skipIntroductionRemovals="false" introducedBy="">
+        <address>dynamic</address>
+        <paused>false</paused>
+        <autoAcceptFolders>false</autoAcceptFolders>
+        <maxSendKbps>0</maxSendKbps>
+        <maxRecvKbps>0</maxRecvKbps>
+        <maxRequestKiB>0</maxRequestKiB>
+        <untrusted>false</untrusted>
+        <remoteGUIPort>0</remoteGUIPort>
+    </device>
+    <device id="27QG3IH-YTHLMAE-NBWBLPN-UJDN32N-V3BRHFI-LE35U5D-KOJ6BYC-AJVYLQO" name="xps12" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
         <address>dynamic</address>
         <paused>false</paused>
         <autoAcceptFolders>false</autoAcceptFolders>
