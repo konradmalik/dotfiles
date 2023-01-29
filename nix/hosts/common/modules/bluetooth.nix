@@ -38,7 +38,7 @@ in
       };
     };
 
-    environment. systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       bluez-tools # for bluetoothctl and other stuff
     ];
   };

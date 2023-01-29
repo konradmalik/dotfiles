@@ -25,5 +25,9 @@
       off = "*-*-* 22:00:00";
       mode = "off";
     };
+    vbetool = {
+      enable = true;
+      timeAfterBoot = "15min";
+    };
   };
 }
