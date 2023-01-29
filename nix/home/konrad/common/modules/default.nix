@@ -3,5 +3,6 @@
   bitwarden = import ./bitwarden.nix;
   gpg-agent = import ./gpg-agent.nix;
   ssh-egress = import ./ssh-egress.nix;
+  syncthing = import ./syncthing.nix;
   wallpaper = import ./wallpaper.nix;
 }

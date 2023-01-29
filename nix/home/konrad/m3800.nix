@@ -11,9 +11,10 @@
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
 
-  services.syncthing = {
+  konrad.programs.syncthing = {
     enable = true;
-    tray.enable = true;
+    install = true;
+    tray = true;
   };
 
   monitors = [

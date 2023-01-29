@@ -19,4 +19,8 @@
     # installed via homebrew
     package = null;
   };
+  konrad.programs.syncthing = {
+    enable = true;
+    install = false;
+  };
 }

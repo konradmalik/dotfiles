@@ -4,5 +4,8 @@
     ./common/presets/nixos.nix
   ];
 
-  services.syncthing.enable = true;
+  konrad.programs.syncthing = {
+    enable = true;
+    install = true;
+  };
 }
