@@ -39,7 +39,6 @@
     dive
 
     asdf-vm
-    comma
 
     rfv
     tmux-sessionizer

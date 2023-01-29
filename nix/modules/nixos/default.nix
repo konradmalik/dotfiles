@@ -1,4 +1,4 @@
 {
   rtcwake = import ./rtcwake.nix;
-  vbetool = import ./vbetool.nix;
+  offdisp = import ./offdisp.nix;
 }
