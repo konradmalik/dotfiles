@@ -2,12 +2,6 @@
 with lib;
 let
   cfg = config.konrad.programs.syncthing;
-  sharedConfig = {
-    services.syncthing = {
-      enable = cfg.install;
-      tray.enable = cfg.tray;
-    };
-  };
 in
 {
   options.konrad.programs.syncthing = {
@@ -25,13 +19,10 @@ in
       description = "whether to enable tray icon support";
     };
   };
-  config = mkIf cfg.enable (lib.mkMerge [
-    sharedConfig
-    (mkIf pkgs.stdenvNoCC.isDarwin {
-      home.file."/Library/Application Support/Syncthing/config.xml".source = config.lib.file.mkOutOfStoreSymlink ./../../../../../files/syncthing/macos.xml;
-    })
-    (mkIf pkgs.stdenvNoCC.isLinux {
-      xdg.configFile."syncthing/config.xml".source = config.lib.file.mkOutOfStoreSymlink ./../../../../../files/syncthing/linux.xml;
-    })
-  ]);
+  config = mkIf cfg.enable {
+    services.syncthing = {
+      enable = cfg.install;
+      tray.enable = cfg.tray;
+    };
+  };
 }
