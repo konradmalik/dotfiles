@@ -60,6 +60,7 @@
         "signal"
         "slack"
         "spotify"
+        "syncthing"
         "telegram"
         "zoom"
       ];

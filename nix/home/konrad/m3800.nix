@@ -11,6 +11,11 @@
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
 
+  services.syncthing = {
+    enable = true;
+    tray.enable = true;
+  };
+
   monitors = [
     {
       name = "eDP-1";
