@@ -15,7 +15,6 @@ in
 
     bidirectional = mkOption {
       type = types.bool;
-      default = false;
       description = "whether to use receiveonly or sendreceive mode";
     };
   };
@@ -32,9 +31,9 @@ in
       services = {
         syncthing = {
           enable = true;
-          user = "syncthing";
-          group = "syncthing";
-          dataDir = "${homeDirectory}/Sync";
+          user = cfg.user;
+          group = "wheel";
+          dataDir = "${homeDirectory}";
           configDir = "${config.home-manager.users.${cfg.user}.xdg.configHome}/syncthing";
           openDefaultPorts = true;
           overrideDevices = true; # overrides any devices added or deleted through the WebUI
