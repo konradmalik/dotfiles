@@ -14,7 +14,6 @@
   konrad.programs.syncthing = {
     enable = true;
     install = true;
-    tray = true;
   };
 
   monitors = [
