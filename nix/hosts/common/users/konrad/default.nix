@@ -22,4 +22,19 @@ in
     sopsFile = ./secrets.yaml;
     neededForUsers = true;
   };
+
+  # Syncthing ports
+  networking.firewall = {
+    allowedTCPPorts =
+      lib.optionals config.home-manager.users.konrad.konrad.programs.syncthing.enable
+        [
+          22000 # TCP based sync protocol traffic
+        ];
+    allowedUDPPorts =
+      lib.optionals config.home-manager.users.konrad.konrad.programs.syncthing.enable
+        [
+          22000 # QUIC based sync protocol traffic
+          21027 # for discovery broadcasts on IPv4 and multicasts on IPv6
+        ];
+  };
 }
