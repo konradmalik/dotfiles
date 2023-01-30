@@ -3,9 +3,4 @@
   imports = [
     ./common/presets/nixos.nix
   ];
-
-  konrad.programs.syncthing = {
-    enable = true;
-    install = true;
-  };
 }

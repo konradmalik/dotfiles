@@ -13,6 +13,12 @@
 
   networking.firewall.enable = false;
 
+  konrad.services.syncthing = {
+    enable = true;
+    user = "konrad";
+    bidirectional = false;
+  };
+
   systemd.services.hd-idle = {
     description = "External HD spin down daemon";
     wantedBy = [ "multi-user.target" ];

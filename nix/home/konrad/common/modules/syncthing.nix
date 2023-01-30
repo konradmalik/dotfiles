@@ -1,10 +1,10 @@
 { config, lib, pkgs, osConfig, ... }:
 with lib;
 let
-  cfg = config.konrad.programs.syncthing;
+  cfg = config.konrad.services.syncthing;
 in
 {
-  options.konrad.programs.syncthing = {
+  options.konrad.services.syncthing = {
     enable = mkEnableOption "Enables syncthing and its configuration through home-manager";
 
     install = mkOption {

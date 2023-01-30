@@ -11,7 +11,7 @@
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
 
-  konrad.programs.syncthing = {
+  konrad.services.syncthing = {
     enable = true;
     install = true;
   };

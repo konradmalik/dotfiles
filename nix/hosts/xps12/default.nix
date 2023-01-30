@@ -16,6 +16,12 @@
   # enable aarch64-linux emulation
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  konrad.services.syncthing = {
+    enable = true;
+    user = "konrad";
+    bidirectional = false;
+  };
+
   services = {
     logind.lidSwitch = "ignore";
     rtcwake = {
