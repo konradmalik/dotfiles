@@ -15,7 +15,7 @@
     packages = with pkgs; [
       bitwarden
       unstable.discord
-      obsidian
+      unstable.obsidian
       unstable.signal-desktop
       unstable.slack
       unstable.spotify
