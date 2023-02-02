@@ -4,8 +4,9 @@ let
 in
 {
   imports = [
-    inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
+    inputs.disko.nixosModules.disko
 
     ./../global/home-manager.nix
     ./../global/locale.nix

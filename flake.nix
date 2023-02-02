@@ -22,6 +22,10 @@
         url = "github:Mic92/sops-nix";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      disko = {
+        url = "github:nix-community/disko";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
       nix-colors.url = "github:misterio77/nix-colors";
       hyprland.url = "github:hyprwm/Hyprland/v0.21.0beta";
     };
@@ -36,6 +40,7 @@
     , darwin
     , home-manager
     , sops-nix
+    , disko
     , nix-colors
     , hyprland
     }@inputs:

@@ -37,6 +37,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1675366559,
+        "narHash": "sha256-sfrSv6F/u2wC7NEqycgu+DEqyFDysUPBwhKQJuU9JWI=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "c0c93e75d9949e1f1a6bfb393ecd26115ccb2a69",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -251,6 +271,7 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
+        "disko": "disko",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nix-colors": "nix-colors",

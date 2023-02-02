@@ -7,6 +7,8 @@
       inputs.nixos-hardware.nixosModules.common-pc-ssd
 
       (modulesPath + "/installer/scan/not-detected.nix")
+
+      ./disko.nix
     ];
 
   # lts
@@ -14,26 +16,11 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/83e16035-5d7f-42f7-91e0-3c48f8e426d9";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot/efi" =
-    {
-      device = "/dev/disk/by-uuid/9618-9AEB";
-      fsType = "vfat";
-    };
-
-  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
