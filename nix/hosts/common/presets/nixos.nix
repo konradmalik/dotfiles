@@ -42,7 +42,7 @@ in
 
   programs.zsh.enable = true;
 
-  services.geoclue2.enable = lib.mkDefault true;
+  services.fwupd.enable = true;
 
   environment = {
     systemPackages = [ pkgs.nixos-label ];

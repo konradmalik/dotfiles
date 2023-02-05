@@ -25,6 +25,9 @@ in
   # enables necessary pam stuff thus allowing to unlock per user keyring during login
   services.gnome.gnome-keyring.enable = anyGnomeKeyringEnabled;
 
+  # for nightlight
+  services.geoclue2.enable = lib.mkDefault true;
+
   xdg.portal = {
     enable = true;
     # hyprland has it's own fork which is automatically added via hyprland module
