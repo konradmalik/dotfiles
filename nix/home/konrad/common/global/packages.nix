@@ -34,7 +34,7 @@
     croc
     up
 
-    awscli
+    awscli2
     azure-cli
 
     dive
