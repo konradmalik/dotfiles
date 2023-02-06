@@ -1,27 +1,5 @@
 {
   disko.devices.disk = {
-    sda = {
-      device = "/dev/sda";
-      type = "disk";
-      content = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            name = "home";
-            type = "partition";
-            start = "1MiB";
-            end = "100%";
-            part-type = "primary";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/home";
-            };
-          }
-        ];
-      };
-    };
     sdb = {
       device = "/dev/sdb";
       type = "disk";
@@ -52,6 +30,28 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/";
+            };
+          }
+        ];
+      };
+    };
+    sda = {
+      device = "/dev/sda";
+      type = "disk";
+      content = {
+        type = "table";
+        format = "gpt";
+        partitions = [
+          {
+            name = "home";
+            type = "partition";
+            start = "1MiB";
+            end = "100%";
+            part-type = "primary";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/home";
             };
           }
         ];
