@@ -30,6 +30,7 @@ keymap.set("n", "<leader>fp", builtin.lsp_implementations, opts_with_desc("LSP I
 keymap.set("n", "<leader>fd", builtin.lsp_definitions, opts_with_desc("LSP [D]efinitions"))
 keymap.set("n", "<leader>fT", builtin.lsp_type_definitions, opts_with_desc("LSP [T]ype Definitions"))
 keymap.set("n", "<leader>fq", builtin.diagnostics, opts_with_desc("Diagnostics"))
+keymap.set("n", "<leader>fc", builtin.resume, opts_with_desc("Resume previous panel"))
 -- git
 keymap.set("n", "<leader>go", builtin.git_status, opts_with_desc("Git status"))
 keymap.set("n", "<leader>gb", builtin.git_branches, opts_with_desc("Git [b]ranches"))

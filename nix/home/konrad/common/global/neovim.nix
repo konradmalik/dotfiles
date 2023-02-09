@@ -9,7 +9,7 @@ let
       owner = "echasnovski";
       repo = "mini.base16";
       rev = "2a29ef2a2742c600137e656a6789514380f630bf";
-      sha256 = "sha256-OpMG/iWDknEfxFffEJojIpN46Maqm1gHXBHZ9yYVgdM=";
+      sha256 = "sha256-qPOPl0KFOMimiv9f/+/u/AK2VWE8IpCmIiafTLlELu0=";
     };
     meta.homepage = "https://github.com/echasnovski/mini.base16";
   };
