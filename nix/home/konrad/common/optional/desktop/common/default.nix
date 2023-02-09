@@ -10,6 +10,8 @@
   ];
 
   xdg.mimeApps.enable = true;
+  # silently override mimeapps
+  xdg.configFile."mimeapps.list".force = true;
 
   home = {
     packages = with pkgs; [
