@@ -2,31 +2,20 @@
 
 let
   # nixified plugins
-  boole = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "boole";
-    version = "2022-11-15";
-    src = pkgs.fetchFromGitHub {
-      owner = "nat-418";
-      repo = "boole.nvim";
-      rev = "23a799a60a0f56640a24d9fc20cf35ed958549ee";
-      sha256 = "sha256-9VlkS1YMa/3luqdwV/7Om+BHu96/IoVWT/zPqMq9aZg=";
-    };
-    meta.homepage = "https://github.com/nat-418/boole.nvim";
-  };
   mini-base16 = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "mini.base16";
-    version = "2023-01-18";
+    version = "2023-02-09";
     src = pkgs.fetchFromGitHub {
       owner = "echasnovski";
       repo = "mini.base16";
-      rev = "e05d120edaffd1b44851020128f17da4b9819592";
+      rev = "2a29ef2a2742c600137e656a6789514380f630bf";
       sha256 = "sha256-OpMG/iWDknEfxFffEJojIpN46Maqm1gHXBHZ9yYVgdM=";
     };
-    meta.homepage = "https://github.com/nat-418/boole.nvim";
+    meta.homepage = "https://github.com/echasnovski/mini.base16";
   };
   nvim-luaref = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "nvim-luaref";
-    version = "2022-01-17";
+    version = "2022-02-17";
     src = pkgs.fetchFromGitHub {
       owner = "milisims";
       repo = "nvim-luaref";
@@ -146,7 +135,7 @@ in
       lualine-nvim
       nvim-navic
       # misc
-      boole
+      boole-nvim
       comment-nvim
       {
         plugin = diffview-nvim;
