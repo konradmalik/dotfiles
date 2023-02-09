@@ -63,7 +63,7 @@ in
   # shared sops config
   sops = {
     defaultSopsFile = ./../secrets.yaml;
-    age.keyFile = "${config.xdg.configHome}/sops/age/personal.txt";
+    age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
   };
 
   # colorscheme = lib.mkDefault colorSchemes.catppuccin;
