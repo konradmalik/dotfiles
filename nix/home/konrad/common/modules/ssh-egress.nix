@@ -4,9 +4,14 @@ let cfg = config.konrad.programs.ssh-egress;
 in {
   options.konrad.programs.ssh-egress = {
     enable = mkEnableOption "Enables ssh-egress configuration through home-manager";
+    enableSecret = mkOption {
+      type = types.bool;
+      default = true;
+      description = "whether to enable secret ssh config.d (requires sops-nix and age key)";
+    };
   };
 
-  config = mkIf cfg.enable
+  config = mkIf cfg.enable (mkMerge [
     {
       programs.git.signing = {
         key = "${config.home.homeDirectory}/.ssh/personal";
@@ -23,7 +28,7 @@ in {
         serverAliveInterval = 15;
         extraConfig = ''
           AddKeysToAgent yes
-        '' + lib.optionalString pkgs.stdenvNoCC.isDarwin
+        '' + optionalString pkgs.stdenvNoCC.isDarwin
           ''
             UseKeychain yes
           '';
@@ -41,29 +46,31 @@ in {
             forwardAgent = true;
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
           };
-          vaio = lib.hm.dag.entryAfter [ "tailscale" ] {
+          vaio = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.67.103.124";
           };
-          xps12 = lib.hm.dag.entryAfter [ "tailscale" ] {
+          xps12 = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.115.164.124";
           };
-          rpi4-1 = lib.hm.dag.entryAfter [ "tailscale" ] {
+          rpi4-1 = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.99.159.110";
           };
-          rpi4-2 = lib.hm.dag.entryAfter [ "tailscale" ] {
+          rpi4-2 = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.78.182.5";
           };
-          m3800 = lib.hm.dag.entryAfter [ "tailscale" ] {
+          m3800 = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.108.89.62";
           };
-          mbp13 = lib.hm.dag.entryAfter [ "tailscale" ] {
+          mbp13 = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.70.57.115";
           };
         };
       };
-
+    }
+    (mkIf cfg.enableSecret {
       sops.secrets."ssh_configd/cerebre" = {
         path = "${config.home.homeDirectory}/.ssh/config.d/cerebre";
       };
-    };
+    })
+  ]);
 }

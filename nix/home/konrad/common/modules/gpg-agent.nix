@@ -63,7 +63,7 @@ in
     enable = mkEnableOption "Enables gpg and gpg-agent configuration";
   };
 
-  config = mkIf cfg.enable (lib.mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     sharedConfig
     (mkIf pkgs.stdenvNoCC.isDarwin darwinConfig)
     (mkIf pkgs.stdenvNoCC.isLinux linuxConfig)
