@@ -6,6 +6,7 @@ in
 {
   imports = [
     inputs.nix-colors.homeManagerModule
+    inputs.sops-nix.homeManagerModules.sops
 
     ./bat.nix
     ./bottom.nix
@@ -57,6 +58,12 @@ in
     cacheHome = "${config.home.homeDirectory}/.cache";
     dataHome = "${config.home.homeDirectory}/.local/share";
     stateHome = "${config.home.homeDirectory}/.local/state";
+  };
+
+  # shared sops config
+  sops = {
+    defaultSopsFile = ./../secrets.yaml;
+    age.keyFile = "${config.xdg.configHome}/sops/age/personal.txt";
   };
 
   # colorscheme = lib.mkDefault colorSchemes.catppuccin;

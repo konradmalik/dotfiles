@@ -62,8 +62,8 @@ in {
         };
       };
 
-      # TODO ssh_configd from osConfig.sops.secrets when
-      # https://github.com/Mic92/sops-nix/pull/261
-      # gets merged
+      sops.secrets."ssh_configd/cerebre" = {
+        path = "${config.home.homeDirectory}/.ssh/config.d/cerebre";
+      };
     };
 }

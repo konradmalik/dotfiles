@@ -158,7 +158,15 @@ $ nix build .#homeConfigurations.$(whoami)@$(hostname -s).activationPackage
 
 ### sops-nix
 
+#### system-wide (linux only)
+
 We use `age`, it's way easier and more straightforward than `gpg`.
+
+Strategy with keys:
+
+- `age` derived from host ssh key for host-wide secrets
+- `age` derived from personal ssh key for personal secrets
+- one global `age` key per person that is keps secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
 
 Create `age` dir for sops:
 
@@ -171,6 +179,10 @@ $ && chmod 600 "$XDG_CONFIG_HOME/sops/age/keys.txt"
 
 Create `age` key from your personal ssh key:
 
+> why do this when decryption keys are also derived from host ssh keys?
+>
+> 1. Redundancy, 2. Personal (user-specific) secrets, 3. Keys generated here can also be used in the home-manager module below
+
 ```bash
 $ ssh-to-age -private-key -i ~/.ssh/personal > "$XDG_CONFIG_HOME/sops/age/keys.txt"
 ```
@@ -178,9 +190,25 @@ $ ssh-to-age -private-key -i ~/.ssh/personal > "$XDG_CONFIG_HOME/sops/age/keys.t
 Add this key to `.sops.yaml` and propagate reencryption to all secrets:
 
 ```bash
-# adjust this command, glob may not work
+# adjust this command, glob may not work!
 $ sops updatekeys secrets/*.yaml
 ```
+
+#### home-manager
+
+For user-specific secrets, a home-manager modules of sops-nix is used.
+
+We similarly use `age`. The keys are reused from system-wide config (those derived from personal ssh), but we need to place the secret ones in
+separate files and point at them in the sops config, so:
+
+```bash
+$ mkdir -p "$XDG_CONFIG_HOME/sops/age" \
+$ && touch "$XDG_CONFIG_HOME/sops/age/personal.txt" \
+$ && chmod 700 "$XDG_CONFIG_HOME/sops/age" \
+$ && chmod 600 "$XDG_CONFIG_HOME/sops/age/personal.txt"
+```
+
+Then copy the appropriate key from `keys.txt` and we're done here.
 
 ### Credits
 

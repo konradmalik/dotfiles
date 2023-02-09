@@ -34,3 +34,9 @@ creation_rules:
           - *host_vaio
           - *host_rpi4-1
           - *host_rpi4-2
+  - path_regex: home/konrad/common/secrets\.yaml$
+    key_groups:
+      - age:
+          - *admin_konrad
+          - *admin_konrad_mbp13
+          - *admin_konrad_m3800
