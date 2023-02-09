@@ -1,15 +1,6 @@
 local lspconfig = require("lspconfig")
 local lsp_handlers = require("konrad.lsp.handlers")
 
-local function has_bins(...)
-    for i = 1, select("#", ...) do
-        if 0 == vim.fn.executable((select(i, ...))) then
-            return false
-        end
-    end
-    return true
-end
-
 local servers = {
     -- always available
     -- none
