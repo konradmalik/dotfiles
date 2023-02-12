@@ -9,7 +9,7 @@
 !flake.lock
 result
 *.qcow2
-keys
+/keys
 #nvim
 .netrwhist
 packer_compiled.vim

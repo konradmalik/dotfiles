@@ -59,6 +59,7 @@
           import ./nix/pkgs { pkgs = pkgsFor system; }
         ) // {
         x86_64-darwin.macosBuilder = self.inputs.nixpkgs-darwin.legacyPackages.x86_64-darwin.darwin.builder;
+        # x86_64-darwin.macosDocker = self.nixosConfigurations.macosDocker.config.system.build.vm;
       };
       templates = import ./nix/templates;
       devShells = forAllSystems (system:
@@ -100,6 +101,10 @@
           inherit specialArgs;
           modules = [ ./nix/hosts/special/installer ];
         };
+        # macosDocker = nixpkgs.lib.nixosSystem {
+        #   inherit specialArgs;
+        #   modules = [ ./nix/hosts/special/macos-docker ];
+        # };
       };
 
       homeConfigurations = {

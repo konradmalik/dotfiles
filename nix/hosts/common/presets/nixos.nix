@@ -8,6 +8,7 @@ in
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
 
+    ./../global/docker.nix
     ./../global/home-manager.nix
     ./../global/locale.nix
     ./../global/nix/nixos.nix
@@ -24,15 +25,6 @@ in
   # boot.tmpOnTmpfsSize = "25%";
   # clean tmp after reboot
   boot.cleanTmpDir = true;
-
-  virtualisation.docker = {
-    enable = true;
-    autoPrune = {
-      enable = true;
-      flags = [ "--all" ];
-      dates = "weekly";
-    };
-  };
 
   # shared sops config
   sops = {
