@@ -142,6 +142,41 @@ $ nix build .#darwinConfigurations.$(hostname -s).config.system.build.toplevel
 $ nix build .#darwinConfigurations.$(hostname -s).system
 ```
 
+#### Linux builder
+
+It is useful to have a linux builder on a MacOS machine to build linux-specific stuff.
+
+NixOS has a great support for this. We need to:
+
+- set-up a remote builder
+- configure nix.buildMachines to use it
+
+Starting with the latter, it's already done in my darwinConfiguration via nix-darwin, so let's go straight into the former.
+
+We can have either a truly remote machine (local PC, cloud VM etc. etc.) or a 'local remote builder' which is just a qemu virtual machine with
+NixOS inside. This 'local remote builder' is very handy to have either way, very easy to deploy and very lightweight
+(it mounts your existing /nix/store for example for absolutely minimal disk usage).
+
+To start local-remote builder in the current terminal, as a foregroud process:
+
+```bash
+$ nix run .#macosBuilder
+```
+
+To stop it: "type `Ctrl-a + c` to open the qemu prompt and then type `quit` followed by Enter".
+
+I think you could just quit the terminal as well.
+
+Above builder relies on the actual builder derivation being cached. So, because it runs whatever I have defined in my flake
+then any change (a local customisation for example) invalidates the cache and requires a rebuilt. To rebuild it, you
+still need to have some linux builder running which makes a chicken-and-egg problem but it can be easily solved:
+
+Try running this builder directly from upstream:
+
+```bash
+$ nix run nixpkgs#darwin.builder
+```
+
 ### linux (non-NixOS; home-manager):
 
 Build and enable config locally:

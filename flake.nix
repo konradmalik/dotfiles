@@ -54,9 +54,12 @@
     {
       homeManagerModules = import ./nix/modules/home-manager;
       nixosModules = import ./nix/modules/nixos;
-      packages = forAllSystems (system:
-        import ./nix/pkgs { pkgs = pkgsFor system; }
-      );
+      packages = forAllSystems
+        (system:
+          import ./nix/pkgs { pkgs = pkgsFor system; }
+        ) // {
+        x86_64-darwin.macosBuilder = self.inputs.nixpkgs-darwin.legacyPackages.x86_64-darwin.darwin.builder;
+      };
       templates = import ./nix/templates;
       devShells = forAllSystems (system:
         let pkgs = pkgsFor system;
@@ -95,7 +98,7 @@
         };
         installerIso = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./nix/iso/installer ];
+          modules = [ ./nix/hosts/special/installer ];
         };
       };
 

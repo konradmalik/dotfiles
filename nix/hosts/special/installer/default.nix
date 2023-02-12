@@ -1,9 +1,9 @@
 { config, pkgs, lib, modulesPath, inputs, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-    ./../../hosts/common/global/nix/nixos.nix
-    ./../../modules/home-manager/ssh-keys.nix
-    ./../../home/konrad/common/global/ssh-keys.nix
+    ./../../../hosts/common/global/nix/nixos.nix
+    ./../../../modules/home-manager/ssh-keys.nix
+    ./../../../home/konrad/common/global/ssh-keys.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

@@ -16,7 +16,6 @@
 
     sessionVariables = {
       XDG_RUNTIME_DIR = "$TMPDIR";
-      LIMA_INSTANCE = "devarch";
     };
   };
 

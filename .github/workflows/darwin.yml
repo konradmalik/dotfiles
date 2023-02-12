@@ -12,6 +12,10 @@ jobs:
           name: konradmalik
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
+      - name: Flake check
+        run: |
+          nix flake check --accept-flake-config
+
       - name: Shell build darwin
         run: |
           nix build --no-link --accept-flake-config .#devShells.x86_64-darwin.default

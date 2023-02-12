@@ -8,6 +8,8 @@
 #nix
 !flake.lock
 result
+*.qcow2
+keys
 #nvim
 .netrwhist
 packer_compiled.vim
