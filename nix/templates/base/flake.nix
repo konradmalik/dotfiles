@@ -10,7 +10,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-compat }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
