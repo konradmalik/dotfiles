@@ -37,7 +37,10 @@ in
   services.fwupd.enable = true;
 
   environment = {
-    systemPackages = [ pkgs.nixos-label ];
+    systemPackages = with pkgs;[
+      pciutils
+      nixos-label
+    ];
     pathsToLink = [ "/share" "/bin" ];
   };
 
