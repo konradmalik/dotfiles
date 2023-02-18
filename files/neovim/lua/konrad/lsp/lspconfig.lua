@@ -10,7 +10,7 @@ local servers = {
     "omnisharp",
     "pyright",
     "rust_analyzer",
-    "sumneko_lua", -- called lua-language-server now
+    "lua_ls",
     "terraformls",
     "yamlls",
 }
