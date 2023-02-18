@@ -6,7 +6,7 @@
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
       nixpkgs-master.url = "github:NixOS/nixpkgs/master";
       nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
-      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
       nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
       darwin = {
@@ -20,14 +20,18 @@
       };
       sops-nix = {
         url = "github:Mic92/sops-nix";
-        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+        inputs.nixpkgs-stable.follows = "nixpkgs";
       };
       disko = {
         url = "github:nix-community/disko";
         inputs.nixpkgs.follows = "nixpkgs";
       };
       nix-colors.url = "github:misterio77/nix-colors";
-      hyprland.url = "github:hyprwm/Hyprland/v0.21.0beta";
+      hyprland = {
+        url = "github:hyprwm/Hyprland/v0.21.0beta";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
     };
 
   outputs =

@@ -8,8 +8,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "echasnovski";
       repo = "mini.base16";
-      rev = "2a29ef2a2742c600137e656a6789514380f630bf";
-      sha256 = "sha256-qPOPl0KFOMimiv9f/+/u/AK2VWE8IpCmIiafTLlELu0=";
+      rev = "5d403d8d606adf0fb0e247f51552b490e488341e";
+      sha256 = "sha256-nLSLM6feFvEyvZOGpCQE/xrI4ZEJtTGx7W6IhY6p57k=";
     };
     meta.homepage = "https://github.com/echasnovski/mini.base16";
   };
