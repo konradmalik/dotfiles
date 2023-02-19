@@ -1,17 +1,17 @@
 { config, pkgs, lib, modulesPath, inputs, ... }:
 {
   imports = [
-    "${modulesPath}/profiles/minimal.nix"
+    "${modulesPath}/virtualisation/qemu-vm.nix"
 
     ./../../common/global/docker.nix
   ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  # nixpkgs.hostPlatform = "x86_64-linux";
 
   documentation.enable = false;
 
   networking = {
-    hostName = "macos-docker";
+    hostName = "darwin-docker";
     useDHCP = false;
     interfaces.eth0.useDHCP = true;
   };
@@ -22,20 +22,6 @@
   };
   services.getty.autologinUser = "docker";
   security.sudo.wheelNeedsPassword = false;
-
-  environment.etc = {
-    "ssh/ssh_host_ed25519_key" = {
-      mode = "0600";
-
-      source = ./keys/ssh_host_ed25519_key;
-    };
-
-    "ssh/ssh_host_ed25519_key.pub" = {
-      mode = "0644";
-
-      source = ./keys/ssh_host_ed25519_key.pub;
-    };
-  };
 
   system.stateVersion = lib.mkDefault "22.11";
 

@@ -160,7 +160,7 @@ NixOS inside. This 'local remote builder' is very handy to have either way, very
 To start local-remote builder in the current terminal, as a foregroud process:
 
 ```bash
-$ nix run .#macosBuilder
+$ nix run .#darwinBuilder
 ```
 
 To stop it: "type `Ctrl-a + c` to open the qemu prompt and then type `quit` followed by Enter".
@@ -174,7 +174,7 @@ still need to have some linux builder running which makes a chicken-and-egg prob
 Try running this builder directly from upstream:
 
 ```bash
-$ nix run nixpkgs#darwin.builder
+$ nix run nixpkgs-darwin#darwin.builder
 ```
 
 ### linux (non-NixOS; home-manager):

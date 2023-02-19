@@ -51,7 +51,6 @@
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      pkgsFor = system: nixpkgs.legacyPackages.${system};
       inherit (self) outputs;
       specialArgs = { inherit inputs outputs; };
     in
@@ -60,14 +59,17 @@
       nixosModules = import ./nix/modules/nixos;
       packages = forAllSystems
         (system:
-          import ./nix/pkgs { pkgs = pkgsFor system; }
+          import ./nix/pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
         ) // {
-        x86_64-darwin.macosBuilder = self.inputs.nixpkgs-darwin.legacyPackages.x86_64-darwin.darwin.builder;
-        # x86_64-darwin.macosDocker = self.nixosConfigurations.macosDocker.config.system.build.vm;
+        x86_64-darwin.darwinBuilder =
+          let
+            pkgs = nixpkgs-darwin.legacyPackages.x86_64-darwin;
+          in
+          pkgs.callPackage ./nix/pkgs/darwin-builder.nix { inherit inputs; };
       };
       templates = import ./nix/templates;
       devShells = forAllSystems (system:
-        let pkgs = pkgsFor system;
+        let pkgs = nixpkgs.legacyPackages.${system};
         in {
           default = pkgs.callPackage ./shell.nix { inherit pkgs; };
         });
@@ -105,10 +107,6 @@
           inherit specialArgs;
           modules = [ ./nix/hosts/special/installer ];
         };
-        # macosDocker = nixpkgs.lib.nixosSystem {
-        #   inherit specialArgs;
-        #   modules = [ ./nix/hosts/special/macos-docker ];
-        # };
       };
 
       homeConfigurations = {
