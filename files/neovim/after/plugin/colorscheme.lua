@@ -19,7 +19,6 @@ if string.find(colorscheme, "catppuccin") then
         -- required to override default cache which is repo path - fails in nix (/nix/store)
         compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
         integrations = {
-            fidget = true,
             indent_blankline = {
                 enabled = true,
             },

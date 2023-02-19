@@ -1,9 +1,9 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, ... }:
 {
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
-    permitRootLogin = "no";
+    permitRootLogin = lib.mkDefault "no";
     ports = [ 22 ];
     # disable rsa keys
     hostKeys = [{

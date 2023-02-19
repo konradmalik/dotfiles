@@ -61,11 +61,12 @@
         (system:
           import ./nix/pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
         ) // {
-        x86_64-darwin.darwinBuilder =
+        x86_64-darwin.darwin-builder =
           let
             pkgs = nixpkgs-darwin.legacyPackages.x86_64-darwin;
           in
-          pkgs.callPackage ./nix/pkgs/darwin-builder.nix { inherit inputs; };
+          pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
+        x86_64-darwin.darwin-docker = self.nixosConfigurations.darwin-docker.config.system.build.vm;
       };
       templates = import ./nix/templates;
       devShells = forAllSystems (system:
@@ -106,6 +107,10 @@
         installerIso = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./nix/hosts/special/installer ];
+        };
+        darwin-docker = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./nix/hosts/special/darwin-docker ];
         };
       };
 

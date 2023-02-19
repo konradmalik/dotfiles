@@ -1,46 +1,54 @@
 { config, pkgs, lib, modulesPath, inputs, ... }:
+let
+  # not sure why, but docker panics at cores more than 1 on macos...
+  cores = 1;
+  diskSize = 40 * 1024;
+  memorySize = 4 * 1024;
+
+  arch = "x86_64";
+  hostPkgs = inputs.nixpkgs-darwin.legacyPackages."${arch}-darwin";
+  keys = config.sshKeys.personal.keys;
+in
 {
   imports = [
     "${modulesPath}/virtualisation/qemu-vm.nix"
+    "${modulesPath}/profiles/qemu-guest.nix"
 
     ./../../common/global/docker.nix
+    ./../../common/global/openssh.nix
+    ./../../../modules/home-manager/ssh-keys.nix
+    ./../../../home/konrad/common/global/ssh-keys.nix
   ];
 
-  # nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = "${arch}-linux";
 
   documentation.enable = false;
 
   networking = {
     hostName = "darwin-docker";
-    useDHCP = false;
-    interfaces.eth0.useDHCP = true;
+    nameservers = [ "1.1.1.1" "1.0.0.1" ];
   };
 
-  users.users.docker = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
-  };
-  services.getty.autologinUser = "docker";
-  security.sudo.wheelNeedsPassword = false;
+  users.users.root.openssh.authorizedKeys.keys = keys;
+  users.extraUsers.root.password = "";
+  users.mutableUsers = false;
+  services.openssh.permitRootLogin = "yes";
+
+  services.getty.autologinUser = "root";
 
   system.stateVersion = lib.mkDefault "22.11";
 
   virtualisation = {
-    vmVariant = {
-      virtualisation = {
-        host.pkgs = inputs.nixpkgs.legacyPackages.x86_64-darwin;
-        graphics = false;
+    inherit cores diskSize memorySize;
 
-        diskSize = 20 * 1024;
+    host.pkgs = hostPkgs;
+    diskImage = "./VMs/${config.system.name}.qcow2";
 
-        memorySize = 3 * 1024;
+    graphics = false;
 
-        forwardPorts = [
-          { from = "host"; guest.port = 2375; host.port = 2375; }
-        ];
-      };
-
-      networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
-    };
+    forwardPorts = [
+      { from = "host"; guest.port = 22; host.port = 2376; }
+    ];
   };
+
 }

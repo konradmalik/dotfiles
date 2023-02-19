@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, username, ... }:
+{ config, pkgs, lib, inputs, outputs, ... }:
 {
   imports = [
     inputs.home-manager.darwinModules.home-manager
@@ -14,7 +14,6 @@
     systemPackages = with pkgs; [
       darwin-zsh-completions
       unstable.lima-bin
-      unstable.colima
       # only to provide tmux-256color terminfo
       # until macos ships with newer ncurses
       ncurses

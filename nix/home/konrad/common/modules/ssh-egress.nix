@@ -64,6 +64,14 @@ in {
           mbp13 = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.70.57.115";
           };
+        } // lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
+          darwin-docker = {
+            host = "darwin-docker";
+            hostname = "127.0.0.1";
+            port = 2376;
+            user = "root";
+            identityFile = "${config.home.homeDirectory}/.ssh/personal";
+          };
         };
       };
     }

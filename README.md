@@ -160,7 +160,13 @@ NixOS inside. This 'local remote builder' is very handy to have either way, very
 To start local-remote builder in the current terminal, as a foregroud process:
 
 ```bash
-$ nix run .#darwinBuilder
+$ nix run .#darwin-builder
+```
+
+or if it's installed as a package:
+
+```bash
+$ darwin-builder
 ```
 
 To stop it: "type `Ctrl-a + c` to open the qemu prompt and then type `quit` followed by Enter".
@@ -176,6 +182,16 @@ Try running this builder directly from upstream:
 ```bash
 $ nix run nixpkgs-darwin#darwin.builder
 ```
+
+#### Docker on darwin
+
+Works similarly to Linux builder above:
+
+```bash
+$ nix run .#darwin-docker
+```
+
+`DOCKER_HOST` is already set globally in my darwin preset (home-manager).
 
 ### linux (non-NixOS; home-manager):
 
