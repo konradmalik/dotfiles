@@ -19,4 +19,9 @@ diffview.setup({
         fold_open = icons.ui.FoldOpen,
         done = icons.ui.Check,
     },
+    view = {
+        merge_tool = {
+            layout = "diff3_mixed",
+        }
+    },
 })
