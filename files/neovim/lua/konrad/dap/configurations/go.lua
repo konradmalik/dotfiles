@@ -4,7 +4,6 @@ if not dap_ok then
     return
 end
 
-local utils = require("konrad.utils")
 
 dap.adapters.delve = {
     type = 'server',
@@ -27,7 +26,13 @@ dap.configurations.go = {
         name = "Debug (Arguments)",
         request = "launch",
         program = "${file}",
-        args = utils.make_get_input_split({ prompt = "Args: " }),
+        args = coroutine.create(function(dap_run_co)
+            vim.ui.input({
+                prompt = 'Args:',
+            }, function(input)
+                coroutine.resume(dap_run_co, input)
+            end)
+        end),
     },
     {
         type = "delve",
