@@ -57,17 +57,21 @@
     {
       homeManagerModules = import ./nix/modules/home-manager;
       nixosModules = import ./nix/modules/nixos;
-      packages = forAllSystems
-        (system:
-          import ./nix/pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
-        ) // {
-        x86_64-darwin.darwin-builder =
-          let
-            pkgs = nixpkgs-darwin.legacyPackages.x86_64-darwin;
-          in
-          pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
-        x86_64-darwin.darwin-docker = self.nixosConfigurations.darwin-docker.config.system.build.vm;
-      };
+      packages = nixpkgs.lib.recursiveUpdate
+        (forAllSystems
+          (system: import ./nix/pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
+          ))
+        {
+          x86_64-darwin =
+            {
+              darwin-builder =
+                let
+                  pkgs = nixpkgs-darwin.legacyPackages.x86_64-darwin;
+                in
+                pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
+              darwin-docker = self.nixosConfigurations.darwin-docker.config.system.build.vm;
+            };
+        };
       templates = import ./nix/templates;
       devShells = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};

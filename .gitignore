@@ -8,6 +8,7 @@
 #nix
 !flake.lock
 result
+outputs
 *.qcow2
 /keys
 #nvim
