@@ -42,7 +42,7 @@
 
     dive
 
-    asdf-vm
+    konradmalik.rtx-cli
 
     rfv
     tmux-sessionizer

@@ -4,9 +4,10 @@
   inputs =
     {
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-      nixpkgs-master.url = "github:NixOS/nixpkgs/master";
       nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+      nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+      nixpkgs-konradmalik.url = "github:konradmalik/nixpkgs/rtx";
       nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
       darwin = {
@@ -37,9 +38,10 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgs-master
     , nixpkgs-darwin
     , nixpkgs-unstable
+    , nixpkgs-master
+    , nixpkgs-konradmalik
     , nixos-hardware
     , darwin
     , home-manager

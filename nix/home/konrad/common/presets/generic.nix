@@ -30,8 +30,7 @@
                   --noeditmenu \
                   --noupgrademenu \
               && nix-update \
-              && (flatpak update || true) \
-              && asdf plugin-update --all
+              && (flatpak update || true)
           }
           arch-clean() {
               yay -Sc --noconfirm \
@@ -43,8 +42,7 @@
               && sudo apt upgrade -y \
               && sudo snap refresh \
               && nix-update \
-              && (flatpak update || true) \
-              && asdf plugin-update --all
+              && (flatpak update || true)
           }
           ubuntu-clean() {
               sudo apt autoremove -y \

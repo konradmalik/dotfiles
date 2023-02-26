@@ -59,7 +59,7 @@ let
     # display completer while waiting
     zstyle ":completion:*" show-completer true
 
-    # we need that as long as we use asdf and want autocompletion for those tools
+    # we need that as long as we use rtx and want autocompletion for those tools
     # lazy load zsh completion
     completers=(
         kubectl "kubectl completion zsh"
@@ -112,9 +112,11 @@ in
       enable = true;
     };
     stdlib = ''
-      # enable asdf support
+      use_rtx() {
+        direnv_load rtx direnv exec
+      }
       use_asdf() {
-        source_env "$(${pkgs.asdf-vm}/bin/asdf direnv envrc "$@")"
+        use_rtx
       }
     '';
     config = {
