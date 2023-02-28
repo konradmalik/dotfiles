@@ -53,6 +53,8 @@ let
     # Use m to toggle mouse mode
     unbind m
     bind-key m setw mouse
+    # enable mouse by default, useful for resizing
+    set-option -g mouse on
 
     # when nested tmux session,
     # C-a will send the prefix directly to the remote session
