@@ -193,11 +193,11 @@
     },
     "nixpkgs-konradmalik": {
       "locked": {
-        "lastModified": 1677489742,
-        "narHash": "sha256-H7WH6SAOP0AypbEyG1j16NgOrod8iyrLoUSRS4Khd+c=",
+        "lastModified": 1677579573,
+        "narHash": "sha256-/rVeh6fUNCRmuiZVxBDjteUv04qXXQt13bNTfhwpgSo=",
         "owner": "konradmalik",
         "repo": "nixpkgs",
-        "rev": "7b49b6e5029bb65a56f526ca0229b0f795976d6b",
+        "rev": "3cfba91f3a802036db857fb2bc59db6dcd1668a2",
         "type": "github"
       },
       "original": {
