@@ -8,8 +8,10 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v18
-      # adds support for aarch64-linux in nix, very handy
+      - uses: cachix/install-nix-action@v19
+        with:
+          # until https://github.com/cachix/cachix-action/issues/138
+          install_url: https://releases.nixos.org/nix/nix-2.13.3/install
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
