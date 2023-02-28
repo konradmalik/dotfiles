@@ -37,6 +37,16 @@ let
         local shell=''${1-''$SHELL}
         for i in $(seq 1 10); do time $shell -i -c exit; done
     }
+
+    flakify() {
+      if [ ! -e flake.nix ]; then
+        nix flake new -t github:konradmalik/dotfiles#nix-develop .
+      elif [ ! -e .envrc ]; then
+        echo "use flake" > .envrc
+      fi
+      direnv allow
+      ''${EDITOR:-vim} flake.nix
+    }
   '';
   zshCompletionInit = ''
     autoload -U compinit && compinit

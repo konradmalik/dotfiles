@@ -1,5 +1,5 @@
 {
-  description = "foo flake";
+  description = "Development environment for this project";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
@@ -14,16 +14,17 @@
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      mkOverlay = input: name: (final: prev: {
+        "${name}" = import input {
+          system = final.system;
+          config = final.config;
+        };
+      });
       pkgsFor = system:
         import nixpkgs {
           inherit system;
           overlays = [
-            (final: prev: {
-              unstable = import nixpkgs-unstable {
-                system = final.system;
-                config = final.config;
-              };
-            })
+            (mkOverlay nixpkgs-unstable "unstable")
           ];
         };
     in
@@ -35,9 +36,9 @@
           {
             default = pkgs.mkShell
               {
-                name = "foo-shell";
+                name = "Shell for this project";
 
-                nativeBuildInputs = [
+                packages = [
                   # nix
                   pkgs.nil
                   pkgs.nixpkgs-fmt

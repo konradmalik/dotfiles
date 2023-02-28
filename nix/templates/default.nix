@@ -1,6 +1,6 @@
 {
-  base = {
+  default = {
     description = "Plain flake for full customization";
-    path = ./base;
+    path = ./default;
   };
 }
