@@ -56,13 +56,15 @@
     # this becomes registry.nixpkgs.flake = inputs.nixpkgs etc. for all inputs
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
   }
-  # below checks if this is home-manager-applied or nixos/nix-darwin-applied
-  # (those options do not exist in home-manager)
+  # those options do not exist in plain home-manager
+  # but it will work for nixos config and for nix-darwin config
+  # this check is needed because of generic linux entry in homeConfigurations
   // lib.optionalAttrs (builtins.hasAttr "nixPath" config.nix) {
     # should be >= max-jobs
     nrBuildUsers = 16;
     # Map registries to channels
-    # Very useful when using legacy commands
+    # very useful when using legacy commands (they use NIX_PATH and this is what we are building here)
+    # also make sure that no imperative channels are in use: nix-channel --list should be empty
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 }
