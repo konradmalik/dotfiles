@@ -13,6 +13,8 @@ let
         host = { inherit pkgs; };
         diskImage = "./VMs/darwin-builder.qcow2";
       };
+
+      system.stateVersion = "22.11";
     };
 
     system = toGuest pkgs.stdenvNoCC.hostPlatform.system;
