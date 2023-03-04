@@ -1,4 +1,14 @@
 { config, pkgs, lib, inputs, outputs, ... }:
+let
+  # Add each flake input as a registry
+  # To make nix3 commands consistent with the flake
+  # this becomes registry.nixpkgs.flake = inputs.nixpkgs etc. for all inputs
+  registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+  # Map registries to channels
+  # very useful when using legacy commands (they use NIX_PATH and this is what we are building here)
+  # also make sure that no imperative channels are in use: nix-channel --list should be empty
+  nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+in
 {
   nixpkgs = {
     overlays = [
@@ -27,6 +37,7 @@
     };
   };
   nix = {
+    inherit registry;
     package = pkgs.nix;
     settings = {
       auto-optimise-store = true;
@@ -50,21 +61,13 @@
       cores = lib.mkDefault 0;
       max-jobs = lib.mkDefault "auto";
     };
-
-    # Add each flake input as a registry
-    # To make nix3 commands consistent with the flake
-    # this becomes registry.nixpkgs.flake = inputs.nixpkgs etc. for all inputs
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
   }
   # those options do not exist in plain home-manager
   # but it will work for nixos config and for nix-darwin config
   # this check is needed because of generic linux entry in homeConfigurations
   // lib.optionalAttrs (builtins.hasAttr "nixPath" config.nix) {
+    inherit nixPath;
     # should be >= max-jobs
     nrBuildUsers = 16;
-    # Map registries to channels
-    # very useful when using legacy commands (they use NIX_PATH and this is what we are building here)
-    # also make sure that no imperative channels are in use: nix-channel --list should be empty
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 }

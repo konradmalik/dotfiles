@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ../../hosts/common/global/nix/shared.nix
+    ../../hosts/common/global/nix/linux.nix
     ./common/presets/generic.nix
   ];
 

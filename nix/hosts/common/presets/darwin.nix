@@ -70,7 +70,7 @@
       Bitwarden = 1352778147;
       # get's reinstalled every single time
       # bugs in masApps, confused with iOS version
-      # GoodNotes = 1444383602;
+      GoodNotes = 1444383602;
       Pocket = 568494494;
       Tailscale = 1475387142;
       WireGuard = 1451685025;
