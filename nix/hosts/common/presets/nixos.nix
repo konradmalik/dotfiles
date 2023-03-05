@@ -39,7 +39,6 @@ in
   environment = {
     systemPackages = with pkgs;[
       pciutils
-      nixos-label
     ];
     pathsToLink = [ "/share" "/bin" ];
   };
