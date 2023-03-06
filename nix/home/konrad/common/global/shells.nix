@@ -40,9 +40,7 @@ let
 
     flakify() {
       if [ ! -e flake.nix ]; then
-        nix flake new -t github:konradmalik/dotfiles#nix-develop .
-      elif [ ! -e .envrc ]; then
-        echo "use flake" > .envrc
+        nix flake new -t github:konradmalik/dotfiles#default .
       fi
       direnv allow
       ''${EDITOR:-vim} flake.nix

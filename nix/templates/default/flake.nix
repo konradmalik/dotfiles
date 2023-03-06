@@ -38,10 +38,11 @@
               {
                 name = "Shell for this project";
 
-                packages = [
-                  # nix
-                  pkgs.nil
-                  pkgs.nixpkgs-fmt
+                packages = with pkgs; [
+                  # formatters/linters
+                  nixpkgs-fmt
+                  # language-servers
+                  nil
                 ];
               };
           });
