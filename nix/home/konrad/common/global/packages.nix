@@ -7,6 +7,7 @@
     tree
     unzip
     wget
+    zip
 
     ripgrep
     ripgrep-all
