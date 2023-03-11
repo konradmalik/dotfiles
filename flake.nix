@@ -127,6 +127,10 @@
           modules = [ ./nix/home/konrad/generic.nix ];
         };
       };
+
+      formatter = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in pkgs.nixpkgs-fmt);
     };
 
   nixConfig = {
