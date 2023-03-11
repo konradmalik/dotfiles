@@ -43,7 +43,7 @@
 
     dive
 
-    konradmalik.rtx-cli
+    konradmalik.rtx
 
     rfv
     tmux-sessionizer
