@@ -38,11 +38,6 @@
     gh
     glab
 
-    awscli2
-    azure-cli
-
-    dive
-
     konradmalik.rtx
 
     rfv
