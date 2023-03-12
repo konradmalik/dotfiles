@@ -16,22 +16,22 @@ mkShell {
   # Enable experimental features without having to specify the argument
   NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
 
-  nativeBuildInputs = [
+  packages = [
+    # linters,formatters
+    nixpkgs-fmt
+    nodePackages.yaml-language-server
+    sumneko-lua-language-server
+    # language servers
+    nil
+    # useful tools
     git
     nmap
-    # nix
-    nix
-    nil
-    nixpkgs-fmt
+    #
+    age
     home-manager
+    nix
     # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
     nixos-rebuild
-    # lua (neovim)
-    sumneko-lua-language-server
-    # yaml
-    nodePackages.yaml-language-server
-    # sops-nix
-    age
     sops
     ssh-to-age
   ];
