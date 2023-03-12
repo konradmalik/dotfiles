@@ -33,16 +33,16 @@
     procs
 
     croc
-    up
-
     gh
     glab
-
     konradmalik.rtx
+    up
 
     rfv
     tmux-sessionizer
     tmux-windowizer
+
+    unstable.nix-init
   ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
     psmisc
   ];
