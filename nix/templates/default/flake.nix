@@ -46,5 +46,8 @@
                 ];
               };
           });
+      formatter = forAllSystems (system:
+        let pkgs = pkgsFor system;
+        in pkgs.nixpkgs-fmt);
     };
 }
