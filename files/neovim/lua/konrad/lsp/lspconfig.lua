@@ -5,6 +5,7 @@ local servers = {
     -- always available
     -- none
     -- per project
+    "ansiblels",
     "gopls",
     "nil_ls",
     "omnisharp",
