@@ -9,7 +9,7 @@ in
     inputs.sops-nix.homeManagerModules.sops
 
     ./bat.nix
-    ./bottom.nix
+    ./btop.nix
     ./earthly.nix
     ./fzf.nix
     ./git.nix
