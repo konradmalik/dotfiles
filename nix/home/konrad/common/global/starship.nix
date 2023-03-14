@@ -19,7 +19,7 @@
       crystal.disabled = true;
       dart.disabled = true;
       docker_context.disabled = true;
-      dotnet.disabled = true;
+      dotnet.disabled = false;
       elixir.disabled = true;
       elm.disabled = true;
       env_var.disabled = true;

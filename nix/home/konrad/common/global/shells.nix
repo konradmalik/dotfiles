@@ -25,17 +25,17 @@ let
 
     #### Functions
     weather() {
-        local param="$1"
-        if [ -z "$param" ]; then
-            curl "wttr.in/?F"
-        else
-            curl "wttr.in/''${param}?F"
-        fi
+      local param="$1"
+      if [ -z "$param" ]; then
+          curl "wttr.in/?F"
+      else
+          curl "wttr.in/''${param}?F"
+      fi
     }
 
     timezsh() {
-        local shell=''${1-''$SHELL}
-        for i in $(seq 1 10); do time $shell -i -c exit; done
+      local shell=''${1-''$SHELL}
+      for i in $(seq 1 10); do time $shell -i -c exit; done
     }
 
     flakify() {
