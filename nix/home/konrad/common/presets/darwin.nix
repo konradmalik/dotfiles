@@ -14,7 +14,7 @@
         coreutils
         # make sure we use gnu versions of common commands
         findutils
-        gnuawk
+        gawk
         gnugrep
         gnused
       ];
