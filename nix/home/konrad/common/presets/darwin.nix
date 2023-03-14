@@ -10,8 +10,13 @@
   home = {
     packages =
       with pkgs; [
+        # make linux people at home
         coreutils
+        # make sure we use gnu versions of common commands
         findutils
+        gnuawk
+        gnugrep
+        gnused
       ];
 
     sessionVariables = {
