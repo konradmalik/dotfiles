@@ -40,7 +40,7 @@
 
                 packages = with pkgs; [
                   # formatters/linters
-                  nixpkgs-fmt
+
                   # language-servers
                   nil
                 ];
