@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+set -e
+
+active_sessions=$(tmux ls 2> /dev/null || echo "no sessions")
+export active_sessions
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(fd . --type d --min-depth 1 --max-depth 4 ~/Code | fzf)
+	selected=$(fd . --type d --min-depth 1 --max-depth 4 ~/Code | fzf --preview 'echo "Selected session: $(basename {} | tr . _)\nActive sessions:\n$active_sessions"')
 fi
 
 if [[ -z $selected ]]; then
