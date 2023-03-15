@@ -76,7 +76,7 @@
   bindm=SUPER,mouse:272,movewindow
   bindm=SUPER,mouse:273,resizewindow
   # Program bindings
-  bind=SUPER,Return,exec,$TERMINAL
+  bind=SUPER,return,exec,$TERMINAL
   bind=SUPER,w,exec,makoctl dismiss
   bind=SUPER,b,exec,$BROWSER
   bind=SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%
