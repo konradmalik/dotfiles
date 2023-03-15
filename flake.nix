@@ -9,6 +9,7 @@
       nixpkgs-master.url = "github:NixOS/nixpkgs/master";
       nixpkgs-konradmalik.url = "github:konradmalik/nixpkgs/rtx";
       nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+      flake-utils.url = "github:numtide/flake-utils";
 
       darwin = {
         # url = "github:lnl7/nix-darwin";
@@ -43,6 +44,7 @@
     , nixpkgs-master
     , nixpkgs-konradmalik
     , nixos-hardware
+    , flake-utils
     , darwin
     , home-manager
     , sops-nix
@@ -51,44 +53,42 @@
     , hyprland
     }@inputs:
     let
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       inherit (self) outputs;
       specialArgs = { inherit inputs outputs; };
     in
+    flake-utils.lib.eachDefaultSystem
+      (system:
+      let pkgs = nixpkgs.legacyPackages.${system}; in
+      {
+        devShells = {
+          default = pkgs.callPackage ./shell.nix { inherit pkgs; };
+        };
+        formatter = pkgs.nixpkgs-fmt;
+        packages = (import ./nix/pkgs { inherit pkgs; }
+        // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "darwin" system)
+          {
+            darwin-builder = pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
+          }
+        // pkgs.lib.optionalAttrs (system == "x86_64-darwin")
+          {
+            darwin-docker = self.nixosConfigurations.darwin-docker.config.system.build.vm;
+          });
+      })
+    //
     {
       homeManagerModules = import ./nix/modules/home-manager;
       nixosModules = import ./nix/modules/nixos;
-      packages = nixpkgs.lib.recursiveUpdate
-        (forAllSystems
-          (system: import ./nix/pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
-          ))
-        {
-          x86_64-darwin =
-            {
-              darwin-builder =
-                let
-                  pkgs = nixpkgs-darwin.legacyPackages.x86_64-darwin;
-                in
-                pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
-              darwin-docker = self.nixosConfigurations.darwin-docker.config.system.build.vm;
-            };
-        };
       templates = import ./nix/templates;
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in {
-          default = pkgs.callPackage ./shell.nix { inherit pkgs; };
-        });
       overlays = import ./nix/overlays;
 
       darwinConfigurations = {
         mbp13 = darwin.lib.darwinSystem {
+          inherit specialArgs;
           inputs = nixpkgs.lib.overrideExisting inputs { nixpkgs = nixpkgs-darwin; };
-          specialArgs = { inherit inputs outputs; };
           modules = [ ./nix/hosts/mbp13 ];
         };
       };
+
       nixosConfigurations = {
         m3800 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
@@ -128,9 +128,6 @@
         };
       };
 
-      formatter = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in pkgs.nixpkgs-fmt);
     };
 
   nixConfig = {

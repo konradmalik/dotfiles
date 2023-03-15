@@ -1,13 +1,14 @@
-{ config, pkgs, lib, modulesPath, inputs, ... }:
+{ config, lib, modulesPath, inputs, ... }:
 let
   # not sure why, but docker panics at cores more than 1 on macos...
   cores = 1;
   diskSize = 40 * 1024;
   memorySize = 4 * 1024;
 
-  arch = "x86_64";
-  hostPkgs = inputs.nixpkgs-darwin.legacyPackages."${arch}-darwin";
+  host = "x86_64-darwin";
+  hostPkgs = inputs.nixpkgs-darwin.legacyPackages."${host}";
   keys = config.sshKeys.personal.keys;
+  toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
 in
 {
   imports = [
@@ -20,7 +21,7 @@ in
     ./../../../home/konrad/common/global/ssh-keys.nix
   ];
 
-  nixpkgs.hostPlatform = "${arch}-linux";
+  nixpkgs.hostPlatform = toGuest host;
 
   documentation.enable = false;
 
