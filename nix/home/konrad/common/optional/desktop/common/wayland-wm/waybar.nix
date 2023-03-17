@@ -108,11 +108,11 @@ in
           on-click = calendar;
         };
         cpu = {
-          format = "   {usage}%";
+          format = "   {usage}%";
           on-click = systemMonitor;
         };
         memory = {
-          format = "  {}%";
+          format = "  {}%";
           interval = 5;
           on-click = systemMonitor;
         };
