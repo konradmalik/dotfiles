@@ -19,9 +19,9 @@ mkShell {
   packages = [
     # linters,formatters
     nixpkgs-fmt
+    # language servers
     nodePackages.yaml-language-server
     sumneko-lua-language-server
-    # language servers
     nil
     # useful tools
     git
