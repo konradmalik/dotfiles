@@ -10,7 +10,6 @@ in
 {
   imports = [
     "${modulesPath}/virtualisation/qemu-vm.nix"
-    "${modulesPath}/profiles/qemu-guest.nix"
 
     ./../../../hosts/common/global/docker.nix
     ./../../../hosts/common/global/openssh.nix
@@ -22,10 +21,7 @@ in
 
   documentation.enable = false;
 
-  networking = {
-    hostName = "darwin-docker";
-    nameservers = [ "1.1.1.1" "1.0.0.1" ];
-  };
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
   users.users.root.openssh.authorizedKeys.keys = keys;
   users.extraUsers.root.password = "";
@@ -34,7 +30,10 @@ in
 
   services.getty.autologinUser = "root";
 
-  system.stateVersion = lib.mkDefault "22.11";
+  system = {
+    name = lib.mkDefault "darwin-docker";
+    stateVersion = lib.mkDefault "22.11";
+  };
 
   virtualisation = {
     inherit cores diskSize memorySize;

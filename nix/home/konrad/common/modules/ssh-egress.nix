@@ -71,6 +71,9 @@ in {
             port = 2376;
             user = "root";
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
+            extraOptions = {
+              StrictHostKeyChecking = "no";
+            };
           };
         };
       };

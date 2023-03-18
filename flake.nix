@@ -68,13 +68,20 @@
         // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "darwin" system)
           (
             let
-              hostPkgs = pkgs;
+              hostPkgs = nixpkgs-darwin.legacyPackages.${system};
               toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
-              guestPkgs = nixpkgs.legacyPackages.${toGuest system};
             in
             {
-              darwin-builder = pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
-              darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
+              darwin-builder = import ./nix/pkgs/special/darwin-builder
+                {
+                  inherit hostPkgs;
+                  guestPkgs = nixpkgs-unstable.legacyPackages.${toGuest system};
+                };
+              darwin-docker = import ./nix/pkgs/special/darwin-docker
+                {
+                  inherit hostPkgs;
+                  guestPkgs = nixpkgs.legacyPackages.${toGuest system};
+                };
             }
           ));
       })
