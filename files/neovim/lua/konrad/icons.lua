@@ -421,5 +421,14 @@ return {
     },
     languages = {
         Lua = "",
+    },
+    characters = {
+        Eol = "↵",
+        Nbsp = "␣",
+        Nbsp2 = "○",
+        SlopeDown = "◣",
+        SlopeUp = "◢",
+        Tab = "▷",
+        Trail = "·",
     }
 }

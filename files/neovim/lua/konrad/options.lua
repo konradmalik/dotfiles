@@ -1,3 +1,5 @@
+local icons = require("konrad.icons").characters
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- Set highlight on search. Use :noh to disable until next search
@@ -7,7 +9,7 @@ vim.wo.number = true
 -- Relative line numbers
 vim.wo.relativenumber = true
 -- incrementally search
-vim.o.incsearch = true;
+vim.o.incsearch = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 -- Sync clipboard between OS and Neovim.
@@ -30,6 +32,13 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
+-- show some hidden chars
+vim.o.list = true
+vim.o.listchars = table.concat({
+    "trail:" .. icons.Trail, "tab:" .. icons.Tab .. " ",
+    "nbsp:" .. icons.Nbsp2, "extends:" .. icons.SlopeDown,
+    "precedes:" .. icons.SlopeUp
+}, ",")
 -- Lines of context when scrolling
 vim.o.scrolloff = 8
 -- Columns of context when scrolling
@@ -42,6 +51,8 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 -- True color support
 vim.o.termguicolors = true
+-- highlight the current line
+vim.o.cursorline = true
 -- use ripgrep as grep program if available
 if vim.fn.executable("rg") == 1 then
     vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
