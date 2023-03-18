@@ -2,7 +2,6 @@
 -- See `:help vim.o`
 -- Set highlight on search. Use :noh to disable until next search
 vim.o.hlsearch = true
-vim.opt.incsearch = true;
 -- Make line numbers default
 vim.wo.number = true
 -- Relative line numbers
@@ -21,8 +20,8 @@ vim.o.breakindent = true
 vim.o.swapfile = false
 -- don't create a backup file
 vim.o.backup = false
--- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-vim.o.writebackup = false
+-- when a file was modified outside of vim and not modified in vim, we can read it automatically
+vim.bo.autoread = true;
 -- Save undo history
 vim.o.undofile = true
 vim.o.undodir = "/tmp/.vim-undo"
