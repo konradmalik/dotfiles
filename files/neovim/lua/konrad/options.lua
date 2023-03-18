@@ -1,59 +1,52 @@
-local fn = vim.fn -- call Vim functions
-local g = vim.g -- global variables
-local opt = vim.opt -- global/buffer/windows-scoped options
-
--- treesitter highlighting for lua
-g.ts_highlight_lua = true
-if fn.executable("rg") == 1 then
-    opt.grepprg = "rg --vimgrep --no-heading --smart-case"
-    opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
-end
-opt.mouse = "a"
-
-opt.hlsearch = false -- :noh by default on or off
-opt.incsearch = true;
-
-opt.smartindent = true -- Insert indents automatically
-opt.autoindent = true -- Insert indents automatically
-opt.ignorecase = true -- Ignore case
-opt.joinspaces = false -- No double spaces with join after a dot
-opt.shiftround = true -- Round indent
-opt.smartcase = true -- Don't ignore case with capitals
-opt.splitbelow = true -- Put new windows below current
-opt.splitright = true -- Put new windows right of current
-opt.termguicolors = true -- True color support
-opt.showcmd = true
-opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
-opt.wildmode = "list:longest" -- Command-line completion mode
-
-opt.list = true -- Show some invisible characters (tabs...)
-opt.number = true -- Print line number
-opt.relativenumber = true -- Relative line numbers
-opt.wrap = false -- no line wrapping
-opt.updatetime = 250 -- faster completion (4000ms default)
-
-opt.swapfile = false -- creates a swapfile
-opt.backup = false -- creates a backup file
-opt.undofile = true
-opt.undodir = "/tmp/.vim-undo"
-
-opt.conceallevel = 0 -- so that `` is visible in markdown files
-opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
-opt.showtabline = 1 -- always show tabs
-opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-opt.cursorline = true -- highlight the current line
-opt.ruler = false
-opt.laststatus = 3 -- global statusline
-
-opt.signcolumn = 'yes'
-opt.scrolloff = 8 -- Lines of context
-opt.sidescrolloff = 8 -- Columns of context
-
+-- [[ Setting options ]]
+-- See `:help vim.o`
+-- Set highlight on search. Use :noh to disable until next search
+vim.o.hlsearch = true
+vim.opt.incsearch = true;
+-- Make line numbers default
+vim.wo.number = true
+-- Relative line numbers
+vim.wo.relativenumber = true
+-- incrementally search
+vim.o.incsearch = true;
+-- Enable mouse mode
+vim.o.mouse = 'a'
+-- Sync clipboard between OS and Neovim.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+vim.o.clipboard = 'unnamedplus'
+-- Enable break indent
+vim.o.breakindent = true
+-- don't create a swapfile
+vim.o.swapfile = false
+-- don't create a backup file
+vim.o.backup = false
+-- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+vim.o.writebackup = false
+-- Save undo history
+vim.o.undofile = true
+vim.o.undodir = "/tmp/.vim-undo"
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+-- Keep signcolumn on by default
+vim.wo.signcolumn = 'yes'
+-- Lines of context when scrolling
+vim.o.scrolloff = 8
+-- Columns of context when scrolling
+vim.o.sidescrolloff = 8
+-- Decrease update time
+vim.o.updatetime = 250
+vim.o.timeout = true
+vim.o.timeoutlen = 300
 -- Set completeopt to have a better completion experience
-opt.completeopt = 'menuone,noselect'
-
-opt.shortmess:append "c" -- Don't show the dumb matching stuff.
--- opt.shortmess:append "I" -- Disable intro message
-opt.whichwrap:append("<,>,[,]")
-opt.iskeyword:remove("-")
-opt.iskeyword:remove("_")
+vim.o.completeopt = 'menuone,noselect'
+-- True color support
+vim.o.termguicolors = true
+-- use ripgrep as grep program if available
+if vim.fn.executable("rg") == 1 then
+    vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
+    vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
+end
+-- global statusline
+vim.o.laststatus = 3
