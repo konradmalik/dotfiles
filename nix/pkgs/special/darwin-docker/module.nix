@@ -1,27 +1,24 @@
-{ config, lib, modulesPath, inputs, ... }:
+{ hostPkgs, guestPkgs }:
+{ config, lib, modulesPath, ... }:
 let
   # not sure why, but docker panics at cores more than 1 on macos...
   cores = 1;
   diskSize = 40 * 1024;
   memorySize = 4 * 1024;
-
-  host = "x86_64-darwin";
-  hostPkgs = inputs.nixpkgs-darwin.legacyPackages."${host}";
   keys = config.sshKeys.personal.keys;
-  toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
 in
 {
   imports = [
     "${modulesPath}/virtualisation/qemu-vm.nix"
     "${modulesPath}/profiles/qemu-guest.nix"
 
-    ./../../common/global/docker.nix
-    ./../../common/global/openssh.nix
+    ./../../../hosts/common/global/docker.nix
+    ./../../../hosts/common/global/openssh.nix
     ./../../../modules/home-manager/ssh-keys.nix
     ./../../../home/konrad/common/global/ssh-keys.nix
   ];
 
-  nixpkgs.hostPlatform = toGuest host;
+  nixpkgs.pkgs = guestPkgs;
 
   documentation.enable = false;
 
@@ -51,5 +48,4 @@ in
       { from = "host"; guest.port = 22; host.port = 2376; }
     ];
   };
-
 }

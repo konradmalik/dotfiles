@@ -66,13 +66,17 @@
         formatter = pkgs.nixpkgs-fmt;
         packages = (import ./nix/pkgs { inherit pkgs; }
         // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "darwin" system)
-          {
-            darwin-builder = pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
-          }
-        // pkgs.lib.optionalAttrs (system == "x86_64-darwin")
-          {
-            darwin-docker = self.nixosConfigurations.darwin-docker.config.system.build.vm;
-          });
+          (
+            let
+              hostPkgs = pkgs;
+              toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
+              guestPkgs = nixpkgs.legacyPackages.${toGuest system};
+            in
+            {
+              darwin-builder = pkgs.callPackage ./nix/pkgs/special/darwin-builder.nix { inherit inputs; };
+              darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
+            }
+          ));
       })
     //
     {
@@ -113,10 +117,6 @@
         installerIso = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./nix/hosts/special/installer ];
-        };
-        darwin-docker = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./nix/hosts/special/darwin-docker ];
         };
       };
 
