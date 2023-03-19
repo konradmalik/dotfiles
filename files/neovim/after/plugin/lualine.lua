@@ -36,7 +36,7 @@ local is_ssh = function()
 end
 
 local has_lsp = function()
-    return next(vim.lsp.buf_get_clients(0)) ~= nil
+    return next(vim.lsp.get_active_clients()) ~= nil
 end
 
 local icons = require("konrad.icons")

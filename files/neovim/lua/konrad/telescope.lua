@@ -18,10 +18,18 @@ local opts_with_desc = function(desc)
 end
 
 local builtin = require('telescope.builtin')
+local themes = require('telescope.themes')
 
 keymap.set("n", "<leader>ff", builtin.find_files, opts_with_desc("[F]ind [F]iles"))
 keymap.set("n", "<leader>fi", builtin.git_files, opts_with_desc("Find (G[i]t) Files"))
 keymap.set("n", "<leader>fg", builtin.live_grep, opts_with_desc("Live [G]rep"))
+keymap.set('n', '<leader>f/', function()
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    builtin.current_buffer_fuzzy_find(themes.get_dropdown {
+        winblend = 10,
+        previewer = false,
+    })
+end, { desc = '[/] Fuzzily search in current buffer' })
 keymap.set("n", "<leader>fb", builtin.buffers, opts_with_desc("[B]uffers"))
 keymap.set("n", "<leader>fh", builtin.help_tags, opts_with_desc("[H]elp Tags"))
 keymap.set("n", "<leader>fo", builtin.oldfiles, opts_with_desc("[O]ld Files"))

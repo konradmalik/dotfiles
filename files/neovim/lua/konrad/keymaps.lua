@@ -59,4 +59,4 @@ keymap.set({ "n", "v" }, "<leader>d", [["_d]], opts_with_desc("delete without re
 keymap.set("n", "Q", "<nop>", opts_with_desc("if this happens, it's pain, so disable it"))
 
 keymap.set("n", "<leader>ss", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-    opts_with_desc("[konrad] prepopulate <cmd> to replace the current word", false))
+    opts_with_desc("prepopulate <cmd> to replace the current word", false))
