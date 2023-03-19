@@ -1,7 +1,6 @@
 local M = {}
 local utils = require("konrad.utils")
 local keymaps = require("konrad.lsp.keymaps")
-local highlight = require("konrad.lsp.highlight")
 local navic_disallowed_servers = {}
 
 local navic_ok, navic = pcall(require, "nvim-navic")
@@ -13,8 +12,6 @@ end
 M.on_attach = function(client, bufnr)
     -- lsp keymaps
     keymaps(client, bufnr)
-    -- lsp highlight if available
-    highlight(client, bufnr)
     -- navigation bar (keep last due to return logic below)
     if not navic_ok then
         return

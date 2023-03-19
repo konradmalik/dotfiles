@@ -67,7 +67,6 @@ in
     plugins = with pkgs.unstable.vimPlugins; [
       # dependencies
       plenary-nvim
-      nui-nvim
       nvim-web-devicons
       # treesitter
       nvim-treesitter.withAllGrammars
