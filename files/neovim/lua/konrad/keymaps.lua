@@ -29,14 +29,11 @@ keymap.set("n", "<S-l>", "<cmd>bnext<CR>", opts_with_desc("Next buffer"))
 -- quick grep word under the cursor
 keymap.set("n", "<leader>*", "<cmd>grep <cword><CR>", opts_with_desc("Grep word under cursor"))
 
-local utils = require("konrad.utils");
 -- quickfix niceness
 keymap.set("n", "<C-k>", "<cmd>cprevious<CR>zz", opts_with_desc("Go to previous QF element"))
 keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz", opts_with_desc("Go to next QF element"))
 keymap.set("n", "<leader>k", "<cmd>lprevious<CR>zz", opts_with_desc("Go to previous LL element"))
 keymap.set("n", "<leader>j", "<cmd>lnext<CR>zz", opts_with_desc("Go to next LL element"))
-keymap.set("n", "<C-q>", function() utils.ToggleQFList(1) end, opts_with_desc("Toggle Quickfix List"))
-keymap.set("n", "<leader>q", function() utils.ToggleQFList(0) end, opts_with_desc("Toggle Local List"))
 
 keymap.set("i", "<C-c>", "<esc>", opts_with_desc("Ctrl-c as ESC in insert mode"))
 
