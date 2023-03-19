@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
 let
-  # nixified plugins
   mini-base16 = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "mini.base16";
     version = "2023-02-09";
@@ -12,6 +11,17 @@ let
       sha256 = "sha256-nLSLM6feFvEyvZOGpCQE/xrI4ZEJtTGx7W6IhY6p57k=";
     };
     meta.homepage = "https://github.com/echasnovski/mini.base16";
+  };
+  local-highlight = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "local-highlight";
+    version = "2023-03-19";
+    src = pkgs.fetchFromGitHub {
+      owner = "tzachar";
+      repo = "local-highlight.nvim";
+      rev = "846cca30d7aa54591fbfaa0e9dba81f50cd9d1ac";
+      sha256 = "sha256-B0iRKZr0o9JDhcA2kA4eIoX+DliXM+2EVJz3aZ/1hpk=";
+    };
+    meta.homepage = "https://github.com/tzachar/local-highlight.nvim";
   };
   nvim-luaref = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "nvim-luaref";
@@ -148,6 +158,7 @@ in
       }
       impatient-nvim
       indent-blankline-nvim
+      local-highlight
       nvim-luaref
       vim-sleuth
       which-key-nvim
