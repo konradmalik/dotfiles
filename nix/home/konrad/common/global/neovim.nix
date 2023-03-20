@@ -51,6 +51,12 @@ in
     ];
   };
 
+  programs.git.ignores = [
+    ".netcoredbg_hist"
+    ".null-ls*"
+    ".nvim.lua"
+  ];
+
   programs.neovim = {
     enable = true;
     package = pkgs.unstable.neovim-unwrapped;
