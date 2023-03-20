@@ -65,6 +65,12 @@
         };
         formatter = pkgs.nixpkgs-fmt;
         packages = (import ./nix/pkgs { inherit pkgs; }
+        // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "linux" system)
+          (
+            {
+              installer-iso = import ./nix/pkgs/special/installer-iso { inherit pkgs specialArgs; };
+            }
+          )
         // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "darwin" system)
           (
             let
@@ -120,10 +126,6 @@
         rpi4-2 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./nix/hosts/rpi4-2 ];
-        };
-        installerIso = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./nix/hosts/special/installer ];
         };
       };
 

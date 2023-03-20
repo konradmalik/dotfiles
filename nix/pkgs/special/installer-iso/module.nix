@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, inputs, ... }: {
+{ config, pkgs, lib, modulesPath, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     ./../../../hosts/common/global/nix/nixos.nix

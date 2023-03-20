@@ -85,7 +85,7 @@ In our case, WiFi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may 
 Useful for installing any nixos-config through ssh.
 
 ```bash
-$ nix build .#nixosConfigurations.installerIso.config.system.build.isoImage
+$ nix build .#installer-iso
 ```
 
 Flash iso to a pendrive
