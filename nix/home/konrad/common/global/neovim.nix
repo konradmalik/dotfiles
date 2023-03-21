@@ -7,13 +7,13 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "echasnovski";
       repo = "mini.base16";
-      rev = "5d403d8d606adf0fb0e247f51552b490e488341e";
-      sha256 = "sha256-nLSLM6feFvEyvZOGpCQE/xrI4ZEJtTGx7W6IhY6p57k=";
+      rev = "f5382c0c2a4907754cdf2aefb1af790101187c7f";
+      sha256 = "sha256-aLfmOnyNT54kJ/dORWkbtV5tGz9zeptFweqDR0+K3fQ=";
     };
     meta.homepage = "https://github.com/echasnovski/mini.base16";
   };
   local-highlight = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "local-highlight";
+    pname = "local-highlight.nvim";
     version = "2023-03-19";
     src = pkgs.fetchFromGitHub {
       owner = "tzachar";
