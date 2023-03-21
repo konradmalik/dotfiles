@@ -1,28 +1,15 @@
 local icons = require("konrad.icons")
-local diagnostic_icons = icons.diagnostics
-
-local signs = {
-    { name = "DiagnosticSignError", text = diagnostic_icons.Error },
-    { name = "DiagnosticSignWarn", text = diagnostic_icons.Warning },
-    { name = "DiagnosticSignHint", text = diagnostic_icons.Hint },
-    { name = "DiagnosticSignInfo", text = diagnostic_icons.Information },
-}
-
-for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-end
 
 vim.diagnostic.config({
-    virtual_text = { prefix = icons.ui.Square },
-    signs = {
-        active = signs,
+    underline = true,
+    virtual_text = {
+        prefix = icons.ui.Square,
+        source = false,
+        spacing = 4,
     },
     update_in_insert = false,
-    underline = true,
     severity_sort = true,
     float = {
-        focusable = false,
-        style = "minimal",
         source = "always",
         prefix = "", -- removes numbers
         header = "", -- removes "diagnostics" title

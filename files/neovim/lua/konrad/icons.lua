@@ -71,6 +71,7 @@ return {
         Circle = "",
         BigCircle = "",
         BigUnfilledCircle = "",
+        SmallCircle = "●",
         Square = "",
         Close = "",
         NewFile = "",
