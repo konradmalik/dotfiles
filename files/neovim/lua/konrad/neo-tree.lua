@@ -91,6 +91,7 @@ neo_tree.setup({
         width = 40,
     },
     filesystem = {
+        use_libuv_file_watcher = true,
         filtered_items = {
             visible = true, -- when true, they will just be displayed differently than normal items
             hide_dotfiles = true,
@@ -114,7 +115,6 @@ neo_tree.setup({
                 ".null-ls_*",
             },
         },
-        follow_current_file = false, -- This will find and focus the file in the active buffer every
-        -- time the current file is changed while the tree is open.
+        follow_current_file = true,
     },
 })

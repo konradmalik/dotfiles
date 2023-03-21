@@ -1,12 +1,13 @@
 local utils = {}
-local cmd = vim.cmd
-local g = vim.g
 
 function utils.first_to_upper(str)
     return str:gsub("^%l", string.upper)
 end
 
 -- check if array-like table has a value
+---@param tab any[]
+---@param val any
+---@return boolean
 function utils.has_value(tab, val)
     for _, value in ipairs(tab) do
         if value == val then
@@ -17,35 +18,8 @@ function utils.has_value(tab, val)
     return false
 end
 
--- TODO make better via the same mechanism as autoformat
--- the_primeagen's quickfix toggler
--- local list
-g.the_primeagen_qf_l = 0
--- global quick fix
-g.the_primeagen_qf_g = 0
-
-function utils.ToggleQFList(global)
-    if global == 1 then
-        if g.the_primeagen_qf_g == 1 then
-            g.the_primeagen_qf_g = 0
-            cmd("cclose")
-        else
-            g.the_primeagen_qf_g = 1
-            cmd("copen")
-        end
-    else
-        if g.the_primeagen_qf_l == 1 then
-            g.the_primeagen_qf_l = 0
-            cmd("lclose")
-        else
-            g.the_primeagen_qf_l = 1
-            if not pcall(function() vim.cmd("lopen") end) then
-                vim.notify("no location list")
-            end
-        end
-    end
-end
-
+---@param ... string[]
+---@return boolean
 function utils.has_bins(...)
     for i = 1, select("#", ...) do
         if 0 == vim.fn.executable((select(i, ...))) then
@@ -53,6 +27,19 @@ function utils.has_bins(...)
         end
     end
     return true
+end
+
+---@param name string
+---@param packadds string[]
+---@param fun function
+function utils.make_enable_command(name, packadds, fun)
+    vim.api.nvim_create_user_command(name, function()
+        for _, value in ipairs(packadds) do
+            vim.api.nvim_command('packadd ' .. value)
+        end
+        fun()
+        vim.api.nvim_del_user_command(name)
+    end, {});
 end
 
 return utils
