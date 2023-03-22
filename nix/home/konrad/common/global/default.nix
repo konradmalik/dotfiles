@@ -17,7 +17,7 @@ in
     ./glow.nix
     ./k9s.nix
     ./khal.nix
-    ./neovim.nix
+    ./neovim
     ./packages.nix
     ./ranger.nix
     ./readline.nix
