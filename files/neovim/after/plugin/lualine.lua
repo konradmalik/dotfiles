@@ -16,17 +16,27 @@ local larger_than_120 = function()
     return larger_than(120)
 end
 
+local has_lsp = function()
+    return next(vim.lsp.get_active_clients()) ~= nil
+end
+
 local navic
 local navic_bar = {
     function()
-        -- don't use function direclty as it will fail when navic is nil
-        return navic.get_location()
+        if navic == nil then
+            return ""
+        else
+            return navic.get_location()
+        end
     end,
     cond = function()
+        if not has_lsp() or not larger_than_120() then
+            return false
+        end
         if navic == nil then
             _, navic = pcall(require, "nvim-navic")
         end
-        return navic ~= nil and navic.is_available and larger_than_120()
+        return navic ~= nil and navic.is_available
     end,
 }
 
@@ -35,10 +45,6 @@ local is_ssh = function()
     if not ssh_connection then
         return ""
     end
-end
-
-local has_lsp = function()
-    return next(vim.lsp.get_active_clients()) ~= nil
 end
 
 local icons = require("konrad.icons")

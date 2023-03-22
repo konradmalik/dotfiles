@@ -63,7 +63,7 @@ processMadePlugins (with source; [
     })
   # ui
   (makePlugin catppuccin-nvim)
-  (makePlugin mini-base16)
+  (makePlugin { plugin = mini-base16; optional = true; })
   (makePlugin dressing-nvim)
   (makePlugin
     {
