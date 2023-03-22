@@ -61,6 +61,15 @@ processMadePlugins (with source; [
       plugin = lualine-nvim;
       dependencies = [ nvim-web-devicons nvim-navic ];
     })
+  # ui
+  (makePlugin catppuccin-nvim)
+  (makePlugin mini-base16)
+  (makePlugin dressing-nvim)
+  (makePlugin
+    {
+      plugin = neo-tree-nvim;
+      dependencies = [ nvim-web-devicons plenary-nvim nui-nvim ];
+    })
   # misc
   (makePlugin boole-nvim)
   (makePlugin comment-nvim)
@@ -79,15 +88,7 @@ processMadePlugins (with source; [
   (makePlugin indent-blankline-nvim)
   (makePlugin local-highlight)
   (makePlugin nvim-luaref)
+  (makePlugin SchemaStore-nvim)
   (makePlugin vim-sleuth)
   (makePlugin which-key-nvim)
-  # ui
-  (makePlugin catppuccin-nvim)
-  (makePlugin mini-base16)
-  (makePlugin dressing-nvim)
-  (makePlugin
-    {
-      plugin = neo-tree-nvim;
-      dependencies = [ nvim-web-devicons plenary-nvim nui-nvim ];
-    })
 ])

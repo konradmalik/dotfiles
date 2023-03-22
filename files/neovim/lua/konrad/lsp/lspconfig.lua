@@ -7,6 +7,7 @@ local servers = {
     -- per project
     "ansiblels",
     "gopls",
+    "jsonls",
     "nil_ls",
     "omnisharp",
     "pyright",

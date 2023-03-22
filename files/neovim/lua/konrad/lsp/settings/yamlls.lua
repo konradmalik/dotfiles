@@ -1,4 +1,10 @@
 -- https://github.com/redhat-developer/yaml-language-server
+local schemastore_ok, schemastore = pcall(require, "schemastore")
+if not schemastore_ok then
+    vim.notify("cannot load schemastore")
+    return
+end
+
 return {
     settings = {
         redhat = {
@@ -10,13 +16,17 @@ return {
             format = {
                 enable = false -- use prettier from null-ls instead
             },
-            -- remember about two '*'
-            schemas = {
-                ["https://json.schemastore.org/github-workflow.json"] = { "/.github/workflows/**" },
-                ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = { "/.gitlab-ci.yml",
-                    "/ci/*", "/gitlabci-templates/**" },
-                ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/all.json"] = { "/k8s/**" },
-            },
+            schemas = vim.list_extend(
+                {
+                    {
+                        description = 'Newest kubernetes scheima from yannh',
+                        fileMatch = { '/k8s/**' },
+                        name = 'kubernetes',
+                        url = 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/all.json',
+                    }
+                },
+                schemastore.yaml.schemas()
+            ),
         },
-    },
+    }
 }
