@@ -16,17 +16,19 @@ local larger_than_120 = function()
     return larger_than(120)
 end
 
-local navic_ok, navic = pcall(require, "nvim-navic")
+local navic
 local navic_bar = {
-    "",
-    cond = function() return false end,
+    function()
+        -- don't use function direclty as it will fail when navic is nil
+        return navic.get_location()
+    end,
+    cond = function()
+        if navic == nil then
+            _, navic = pcall(require, "nvim-navic")
+        end
+        return navic ~= nil and navic.is_available and larger_than_120()
+    end,
 }
-if navic_ok then
-    navic_bar = {
-        navic.get_location,
-        cond = function() return navic.is_available and larger_than_120() end,
-    }
-end
 
 local is_ssh = function()
     local ssh_connection = vim.loop.os_getenv("SSH_CONNECTION")

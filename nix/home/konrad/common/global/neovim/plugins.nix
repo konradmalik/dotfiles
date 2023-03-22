@@ -59,7 +59,7 @@ processMadePlugins (with source; [
   (makePlugin
     {
       plugin = lualine-nvim;
-      dependencies = [ nvim-web-devicons nvim-navic ];
+      dependencies = [ nvim-web-devicons { plugin = nvim-navic; optional = true; } ];
     })
   # ui
   (makePlugin catppuccin-nvim)
