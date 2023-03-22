@@ -36,7 +36,7 @@ local navic_bar = {
         if navic == nil then
             _, navic = pcall(require, "nvim-navic")
         end
-        return navic ~= nil and navic.is_available
+        return navic ~= nil and navic.is_available()
     end,
 }
 

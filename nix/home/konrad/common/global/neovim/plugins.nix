@@ -25,7 +25,7 @@ processMadePlugins (with source; [
   (makePlugin
     {
       plugin = nvim-cmp;
-      dependencies = [ cmp-buffer cmp-nvim-lsp cmp-path cmp_luasnip luasnip friendly-snippets ];
+      dependencies = [ cmp-buffer cmp-nvim-lsp cmp-path cmp_luasnip { plugin = luasnip; optional = true; } { plugin = friendly-snippets; optional = true; } ];
     })
   # lsp
   (makePlugin

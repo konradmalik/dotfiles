@@ -4,20 +4,23 @@ if not cmp_status_ok then
     return
 end
 
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then
-    vim.notify("cannot load luasnip")
-    return
+local luasnip
+local lazy_load_luasnip = function()
+    if luasnip == nil then
+        vim.api.nvim_command('packadd luasnip')
+        luasnip = require("luasnip")
+        vim.api.nvim_command('packadd friendly-snippets')
+        require("luasnip.loaders.from_vscode").lazy_load()
+    end
+    return luasnip
 end
-
-require("luasnip.loaders.from_vscode").lazy_load()
 
 local kind_icons = require("konrad.icons").kind
 
 cmp.setup({
     snippet = {
         expand = function(args)
-            luasnip.lsp_expand(args.body) -- For `luasnip` users.
+            lazy_load_luasnip().lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert({
