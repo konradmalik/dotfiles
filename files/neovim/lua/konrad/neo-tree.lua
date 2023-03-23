@@ -16,20 +16,10 @@ if not neo_tree_ok then
 end
 
 local icons = require("konrad.icons")
-local diag_icons = icons.diagnostics
 local git_icons = icons.git
 local docs_icons = icons.documents
 local lines_icons = icons.lines
 local ui_icons = icons.ui
-
-vim.fn.sign_define("DiagnosticSignError",
-    { text = diag_icons.Error, texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn",
-    { text = diag_icons.Warning, texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo",
-    { text = diag_icons.Information, texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint",
-    { text = diag_icons.Hint, texthl = "DiagnosticSignHint" })
 
 -- local netman_ok, _ = pcall(require, "netman")
 -- if not netman_ok then
