@@ -84,7 +84,14 @@ return function(client, bufnr)
                 end
             end,
         })
-        vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format,
+        vim.api.nvim_buf_create_user_command(bufnr, 'Format', function()
+            vim.lsp.buf.format {
+                async = false,
+                filter = function(c)
+                    return c.id == client.id
+                end,
+            }
+        end,
             { desc = 'Format current buffer with LSP' })
     end
 
