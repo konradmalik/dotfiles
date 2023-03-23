@@ -1,10 +1,10 @@
 local M = {}
-local keymaps = require("konrad.lsp.keymaps")
+local lsp = require("konrad.lsp.lsp")
 local navic = require("konrad.lsp.navic")
 
 M.on_attach = function(client, bufnr)
-    -- lsp keymaps
-    keymaps(client, bufnr)
+    -- builtin lsp
+    lsp(client, bufnr)
     -- navigation bar
     navic(client, bufnr)
 end

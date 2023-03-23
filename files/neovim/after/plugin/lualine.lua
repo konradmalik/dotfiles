@@ -23,20 +23,18 @@ end
 local navic
 local navic_bar = {
     function()
-        if navic == nil then
-            return ""
-        else
-            return navic.get_location()
-        end
+        return navic.get_location()
     end,
     cond = function()
         if not has_lsp() or not larger_than_120() then
             return false
         end
-        if navic == nil then
-            _, navic = pcall(require, "nvim-navic")
+        local ok
+        ok, navic = pcall(require, "nvim-navic")
+        if not ok then
+            return false
         end
-        return navic ~= nil and navic.is_available()
+        return navic.is_available()
     end,
 }
 
