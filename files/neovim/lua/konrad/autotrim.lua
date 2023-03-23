@@ -1,5 +1,5 @@
 local trim_is_enabled = true
-vim.api.nvim_create_user_command('PersonalTrimToggle', function()
+vim.api.nvim_create_user_command('AutoTrimToggle', function()
     trim_is_enabled = not trim_is_enabled
     print('Setting autotrim to: ' .. tostring(trim_is_enabled))
 end, {})
@@ -13,7 +13,7 @@ local trim_trailing_whitespace = function()
     end
 end
 
-local group = vim.api.nvim_create_augroup("personal-trim", { clear = true })
+local group = vim.api.nvim_create_augroup("personal-autotrim", { clear = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()

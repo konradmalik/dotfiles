@@ -28,6 +28,9 @@ end, {})
 local highlight_is_enabled = true;
 vim.api.nvim_create_user_command('DocumentHighlightToggle', function()
     highlight_is_enabled = not highlight_is_enabled
+    if not highlight_is_enabled then
+        vim.lsp.buf.clear_references()
+    end
     print('Setting document highlight to: ' .. tostring(highlight_is_enabled))
 end, {})
 

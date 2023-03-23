@@ -12,18 +12,6 @@
     meta.homepage = "https://github.com/echasnovski/mini.base16";
   };
 
-  local-highlight = vimUtils.buildVimPluginFrom2Nix {
-    pname = "local-highlight.nvim";
-    version = "2023-03-19";
-    src = fetchFromGitHub {
-      owner = "tzachar";
-      repo = "local-highlight.nvim";
-      rev = "846cca30d7aa54591fbfaa0e9dba81f50cd9d1ac";
-      sha256 = "sha256-B0iRKZr0o9JDhcA2kA4eIoX+DliXM+2EVJz3aZ/1hpk=";
-    };
-    meta.homepage = "https://github.com/tzachar/local-highlight.nvim";
-  };
-
   nvim-luaref = vimUtils.buildVimPluginFrom2Nix {
     pname = "nvim-luaref";
     version = "2022-02-17";

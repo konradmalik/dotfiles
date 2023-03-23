@@ -86,7 +86,6 @@ processMadePlugins (with source; [
   (makePlugin harpoon)
   (makePlugin impatient-nvim)
   (makePlugin indent-blankline-nvim)
-  (makePlugin local-highlight)
   (makePlugin nvim-luaref)
   (makePlugin SchemaStore-nvim)
   (makePlugin vim-sleuth)
