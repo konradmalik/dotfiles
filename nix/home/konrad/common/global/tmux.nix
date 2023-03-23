@@ -9,8 +9,6 @@ let
     set -ga terminal-overrides ",-256color:Tc,alacritty:Tc"
     # focus events enabled for terminals that support them
     set-option -g focus-events on
-    # super useful when using "grouped sessions" and multi-monitor setup
-    set-option -g aggressive-resize on
 
     # Let the window to be renamed automatically when launching a process
     set-option -g automatic-rename on
@@ -124,6 +122,7 @@ in
 {
   programs.tmux = {
     enable = true;
+    aggressiveResize = true;
     sensibleOnTop = true;
     # tmux-256color is the proper one to enable italics
     # just ensure you have that terminfo, newer ncurses provide it

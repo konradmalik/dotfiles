@@ -38,13 +38,6 @@ local navic_bar = {
     end,
 }
 
-local is_ssh = function()
-    local ssh_connection = vim.loop.os_getenv("SSH_CONNECTION")
-    if not ssh_connection then
-        return ""
-    end
-end
-
 local icons = require("konrad.icons")
 local diag_icons = icons.diagnostics
 local git_icons = icons.git
@@ -119,7 +112,6 @@ local lsp_servers = {
 
 local hostname = {
     "hostname",
-    cond = is_ssh,
 }
 
 local progress = function()
