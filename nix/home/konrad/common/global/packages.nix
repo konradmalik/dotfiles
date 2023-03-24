@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs;[
     curl
+    dnsutils
     moreutils
     nq
     tree
