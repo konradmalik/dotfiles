@@ -109,6 +109,9 @@ return {
         Guide = "┊",
         LeftHalf = "",
         RightHalf = "",
+        FilledTerminal = "",
+        Terminal = "",
+        Laptop = "",
         Animations = {
             -- keep those odd
             Fill = { "  ", "_ ", "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
@@ -443,6 +446,14 @@ return {
         Linux = "",
         Windows = "",
         Mac = "",
+    },
+    dap = {
+        StepInto = "",
+        StepOut = "",
+        StepOver = " ",
+        RunLast = "ﰇ",
+        Close = "",
+        -- more:    ﰇ  
     }
 
 }

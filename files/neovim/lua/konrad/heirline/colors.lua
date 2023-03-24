@@ -2,7 +2,7 @@ vim.cmd("packadd heirline.nvim")
 
 local utils = require("heirline.utils")
 
--- catppuccin
+-- grabs stuff from the colorscheme, so it needs to be set first
 return {
     bright_bg = utils.get_highlight("Folded").bg,
     bright_fg = utils.get_highlight("Folded").fg,

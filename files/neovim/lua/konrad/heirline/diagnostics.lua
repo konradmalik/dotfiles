@@ -20,10 +20,6 @@ return {
     end,
 
     update = { "DiagnosticChanged", "BufEnter" },
-
-    {
-        provider = "[ ",
-    },
     {
         provider = function(self)
             -- 0 is just another output, we can decide to print it or not!
@@ -45,11 +41,8 @@ return {
     },
     {
         provider = function(self)
-            return self.hints > 0 and (self.hint_icon .. self.hints .. " ")
+            return self.hints > 0 and (self.hint_icon .. self.hints)
         end,
         hl = { fg = colors.diag_hint },
-    },
-    {
-        provider = "]",
     },
 }

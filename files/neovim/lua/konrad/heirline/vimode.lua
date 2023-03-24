@@ -1,50 +1,65 @@
 local icons = require("konrad.icons")
+
 local colors = require('konrad.heirline.colors')
+local augroup = vim.api.nvim_create_augroup("ViModeHeirlineRedraw", { clear = true })
 
 return {
     init = function(self)
-        self.mode = vim.fn.mode(1)
+        -- this is a workaround needed to see minor status changes like n -> no
+        -- as they don't trigger statusline updates
         if not self.once then
-            vim.cmd("au ModeChanged *:*o redrawstatus")
+            vim.api.nvim_create_autocmd("ModeChanged", {
+                group = augroup,
+                pattern = "*",
+                callback = function()
+                    -- trigger redraw only if minor change
+                    if self.modeone == vim.fn.mode() then
+                        vim.cmd("redrawstatus")
+                    end
+                end
+            })
         end
         self.once = true
+        self.mode = vim.fn.mode(1)
+        self.modeone = self.mode:sub(1, 1) -- get only the first mode character
     end,
     static = {
         mode_names = {
-            n = "N",
-            no = "N?",
-            nov = "N?",
-            noV = "N?",
+            n         = "N",
+            no        = "N?",
+            nov       = "N?",
+            noV       = "N?",
             ["no\22"] = "N?",
-            niI = "Ni",
-            niR = "Nr",
-            niV = "Nv",
-            nt = "Nt",
-            v = "V",
-            vs = "Vs",
-            V = "V_",
-            Vs = "Vs",
-            ["\22"] = "^V",
-            ["\22s"] = "^V",
-            s = "S",
-            S = "S_",
-            ["\19"] = "^S",
-            i = "I",
-            ic = "Ic",
-            ix = "Ix",
-            R = "R",
-            Rc = "Rc",
-            Rx = "Rx",
-            Rv = "Rv",
-            Rvc = "Rv",
-            Rvx = "Rv",
-            c = "C",
-            cv = "Ex",
-            r = "...",
-            rm = "M",
-            ["r?"] = "?",
-            ["!"] = "!",
-            t = "T",
+            niI       = "Ni",
+            niR       = "Nr",
+            niV       = "Nv",
+            nt        = "Nt",
+            v         = "V",
+            vs        = "Vs",
+            V         = "V_",
+            Vs        = "Vs",
+            ["\22"]   = "^V",
+            ["\22s"]  = "^V",
+            s         = "S",
+            S         = "S_",
+            ["\19"]   = "^S",
+            i         = "I",
+            ic        = "Ic",
+            ix        = "Ix",
+            R         = "R",
+            Rc        = "Rc",
+            Rx        = "Rx",
+            Rv        = "Rv",
+            Rvc       = "Rv",
+            Rvx       = "Rv",
+            c         = "C",
+            cv        = "Ex",
+            ce        = "Ex",
+            r         = "...",
+            rm        = "M",
+            ["r?"]    = "?",
+            ["!"]     = "!",
+            t         = "T",
         },
         mode_colors = {
             n = colors.red,
@@ -67,8 +82,7 @@ return {
         return icons.misc.Vi .. " %2(" .. name .. "%)"
     end,
     hl = function(self)
-        local mode = self.mode:sub(1, 1) -- get only the first mode character
-        return { fg = self.mode_colors[mode], bold = true, }
+        return { fg = self.mode_colors[self.modeone], bold = true, }
     end,
     update = { "ModeChanged" },
 }

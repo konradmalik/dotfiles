@@ -14,7 +14,8 @@ M.FileEncoding = {
     provider = function()
         local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
         return enc:lower()
-    end
+    end,
+    hl = { fg = colors.gray },
 }
 
 M.FileFormat = {

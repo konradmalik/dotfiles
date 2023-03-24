@@ -56,21 +56,21 @@ M.FileFlags = {
         condition = function()
             return vim.bo.modified
         end,
-        provider = " " .. icons.ui.SmallCircle,
+        provider = icons.ui.SmallCircle,
         hl = { fg = colors.green },
     },
     {
         condition = function()
             return vim.bo.readonly
         end,
-        provider = " " .. icons.ui.Lock,
+        provider = icons.ui.Lock,
         hl = { fg = colors.orange },
     },
     {
         condition = function()
             return not vim.bo.modifiable
         end,
-        provider = " " .. icons.ui.FilledLock,
+        provider = icons.ui.FilledLock,
         hl = { fg = colors.red },
     },
 }

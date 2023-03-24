@@ -59,7 +59,7 @@ processMadePlugins (with source; [
   (makePlugin
     {
       plugin = heirline-nvim;
-      dependencies = [ nvim-web-devicons { plugin = nvim-navic; optional = true; } ];
+      dependencies = [ gitsigns-nvim nvim-web-devicons { plugin = nvim-navic; optional = true; } ];
     })
   # ui
   (makePlugin catppuccin-nvim)
