@@ -68,11 +68,13 @@ return {
     },
     ui = {
         Lock = "",
+        FilledLock = "",
         Circle = "",
         BigCircle = "",
         BigUnfilledCircle = "",
         SmallCircle = "●",
         Square = "",
+        CircleDot = "",
         Close = "",
         NewFile = "",
         Search = "",
@@ -105,8 +107,12 @@ return {
         Expanded = "▾",
         Collapsed = "▸",
         Guide = "┊",
+        LeftHalf = "",
+        RightHalf = "",
         Animations = {
+            -- keep those odd
             Fill = { "  ", "_ ", "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" },
+            ThinFill = { '_', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' },
             Dots = {
                 "⠋",
                 "⠙",
@@ -418,6 +424,7 @@ return {
         Robot = "ﮧ",
         Squirrel = "",
         Tag = "",
+        Vi = "",
         Watch = "",
     },
     languages = {
@@ -431,5 +438,11 @@ return {
         SlopeUp = "◢",
         Tab = "▷",
         Trail = "·",
+    },
+    oss = {
+        Linux = "",
+        Windows = "",
+        Mac = "",
     }
+
 }

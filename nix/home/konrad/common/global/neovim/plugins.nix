@@ -58,7 +58,7 @@ processMadePlugins (with source; [
   # statusline
   (makePlugin
     {
-      plugin = lualine-nvim;
+      plugin = heirline-nvim;
       dependencies = [ nvim-web-devicons { plugin = nvim-navic; optional = true; } ];
     })
   # ui

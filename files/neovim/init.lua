@@ -7,6 +7,8 @@ require("konrad.keymaps")
 
 require("konrad.diagnostic")
 require("konrad.gitsigns")
+require("konrad.colorscheme")
+require("konrad.heirline")
 require("konrad.lsp")
 require("konrad.autotrim")
 require("konrad.cmp")
