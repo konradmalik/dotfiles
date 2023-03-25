@@ -25,13 +25,12 @@ processMadePlugins (with source; [
   (makePlugin
     {
       plugin = nvim-cmp;
-      optional = true;
       dependencies = [
-        { plugin = cmp-buffer; optional = true; }
-        { plugin = cmp-nvim-lsp; optional = false; }
-        { plugin = cmp-path; optional = true; }
-        { plugin = cmp_luasnip; optional = true; }
-        { plugin = copilot-cmp; optional = true; }
+        { plugin = cmp-buffer; }
+        { plugin = cmp-nvim-lsp; }
+        { plugin = cmp-path; }
+        { plugin = cmp_luasnip; }
+        { plugin = copilot-cmp; }
         { plugin = luasnip; optional = true; }
         { plugin = friendly-snippets; optional = true; }
         { plugin = copilot-lua; optional = true; }
