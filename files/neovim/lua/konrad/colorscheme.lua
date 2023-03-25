@@ -39,7 +39,7 @@ else
     end
 end
 
-vim.api.nvim_command('packadd mini.base16')
+vim.cmd('packadd mini.base16')
 local mini_base16_ok, mini_base16 = pcall(require, "mini.base16")
 if not mini_base16_ok then
     vim.notify("cannot load mini.base16")

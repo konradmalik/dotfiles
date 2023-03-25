@@ -28,7 +28,7 @@
     vimAlias = true;
     vimdiffAlias = true;
     withPython3 = false;
-    withNodeJs = false;
+    withNodeJs = true;
     withRuby = false;
     extraPackages = [
       # this won't be useful globally, so neovim only is fine

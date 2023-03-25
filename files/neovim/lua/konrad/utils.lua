@@ -35,7 +35,7 @@ end
 function utils.make_enable_command(name, packadds, fun)
     vim.api.nvim_create_user_command(name, function()
         for _, value in ipairs(packadds) do
-            vim.api.nvim_command('packadd ' .. value)
+            vim.cmd('packadd ' .. value)
         end
         fun()
         vim.api.nvim_del_user_command(name)
