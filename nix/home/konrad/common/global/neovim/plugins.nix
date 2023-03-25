@@ -28,7 +28,7 @@ processMadePlugins (with source; [
       optional = true;
       dependencies = [
         { plugin = cmp-buffer; optional = true; }
-        { plugin = cmp-nvim-lsp; optional = true; }
+        { plugin = cmp-nvim-lsp; optional = false; }
         { plugin = cmp-path; optional = true; }
         { plugin = cmp_luasnip; optional = true; }
         { plugin = copilot-cmp; optional = true; }

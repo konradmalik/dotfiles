@@ -1,5 +1,5 @@
 local group = vim.api.nvim_create_augroup("CmpLazyLoad", { clear = true })
--- lazy load additional stuff, happens on InsertEnter
+-- lazy load additional stuff, happens on BufEnter
 require("konrad.cmp.snippets")(group)
 require("konrad.cmp.copilot")(group)
 

@@ -1,5 +1,5 @@
 return function(group)
-    vim.api.nvim_create_autocmd("InsertEnter", {
+    vim.api.nvim_create_autocmd("BufEnter", {
         group = group,
         desc = "Lazily initialize copilot",
         once = true,
