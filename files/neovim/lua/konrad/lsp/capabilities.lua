@@ -1,14 +1,3 @@
-local M = {}
-local lsp = require("konrad.lsp.lsp")
-local navic = require("konrad.lsp.navic")
-
-M.on_attach = function(client, bufnr)
-    -- builtin lsp
-    lsp(client, bufnr)
-    -- navigation bar
-    navic(client, bufnr)
-end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- cmp provides more capabilites
@@ -20,6 +9,4 @@ else
     vim.notify("cannot load cmp_nvim_lsp")
 end
 
-M.capabilities = capabilities
-
-return M
+return capabilities

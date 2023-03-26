@@ -74,7 +74,7 @@ return function(client, bufnr)
         vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, opts_with_desc("CodeLens run"))
     end
 
-    if client.server_capabilities.documentFormattingProvider then
+    if capabilities.documentFormattingProvider then
         vim.api.nvim_create_autocmd('BufWritePre', {
             desc = "AutoFormat on save",
             group = augroup,

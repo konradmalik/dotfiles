@@ -1,5 +1,6 @@
 local lspconfig = require("lspconfig")
-local lsp_handlers = require("konrad.lsp.handlers")
+local attach = require("konrad.lsp.attach")
+local capabilities = require("konrad.lsp.capabilities")
 
 local servers = {
     -- always available
@@ -24,8 +25,8 @@ for _, server in ipairs(servers) do
     end
 
     local base_table = {
-        on_attach = lsp_handlers.on_attach,
-        capabilities = lsp_handlers.capabilities,
+        on_attach = attach,
+        capabilities = capabilities,
     }
 
     local overrides_table = server_setup_overrides
