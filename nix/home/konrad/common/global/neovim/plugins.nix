@@ -40,7 +40,7 @@ processMadePlugins (with source; [
   (makePlugin
     {
       plugin = nvim-lspconfig;
-      dependencies = [ null-ls-nvim neodev-nvim fidget-nvim ];
+      dependencies = [ null-ls-nvim neodev-nvim fidget-nvim plenary-nvim ];
     })
   # dap
   (makePlugin
@@ -87,6 +87,7 @@ processMadePlugins (with source; [
       plugin = diffview-nvim;
       dependencies = [ plenary-nvim nvim-web-devicons ];
     })
+  (makePlugin exrc-nvim)
   (makePlugin
     {
       plugin = gitsigns-nvim;

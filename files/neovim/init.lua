@@ -9,7 +9,7 @@ require("konrad.diagnostic")
 require("konrad.gitsigns")
 require("konrad.colorscheme")
 require("konrad.heirline")
-require("konrad.lsp")
+require("konrad.lsp").setup()
 require("konrad.autotrim")
 require("konrad.cmp")
 require("konrad.telescope")
@@ -23,7 +23,7 @@ utils.make_enable_command(
     "DapEnable",
     { 'nvim-dap', 'nvim-dap-ui', 'nvim-dap-virtual-text' },
     function()
-        require("konrad.dap")
+        require("konrad.dap").setup()
     end,
     {
         desc = "Initialize Dap functionalities",

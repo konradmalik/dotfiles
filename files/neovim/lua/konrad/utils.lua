@@ -18,7 +18,7 @@ function utils.has_value(tab, val)
     return false
 end
 
----@param ... string|string[]
+---@param ... string
 ---@return boolean
 function utils.has_bins(...)
     for i = 1, select("#", ...) do

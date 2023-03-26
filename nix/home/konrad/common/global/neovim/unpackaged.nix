@@ -23,4 +23,16 @@
     };
     meta.homepage = "https://github.com/milisims/nvim-luaref";
   };
+
+  exrc-nvim = vimUtils.buildVimPluginFrom2Nix {
+    pname = "exrc.nvim";
+    version = "2022-12-28";
+    src = fetchFromGitHub {
+      owner = "MunifTanjim";
+      repo = "exrc.nvim";
+      rev = "0aae882db72885ade36641d677a22204c72e50f4";
+      sha256 = "sha256-+50CuiSSSObI0nhTBOUwSxKHQJbllAm/BeIoH02ViTI=";
+    };
+    meta.homepage = "https://github.com/MunifTanjim/exrc.nvim";
+  };
 }
