@@ -24,5 +24,18 @@ utils.make_enable_command(
     { 'nvim-dap', 'nvim-dap-ui', 'nvim-dap-virtual-text' },
     function()
         require("konrad.dap")
-    end
+    end,
+    {
+        desc = "Initialize Dap functionalities",
+    }
 )
+
+utils.make_enable_command(
+    "CopilotEnable",
+    { "copilot.lua", "copilot-cmp" },
+    function()
+        require("konrad.cmp.copilot")
+    end,
+    {
+        desc = "Initialize Copilot server and cmp source",
+    })

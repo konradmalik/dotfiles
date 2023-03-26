@@ -1,7 +1,5 @@
 local group = vim.api.nvim_create_augroup("CmpLazyLoad", { clear = true })
 -- lazy load additional stuff, happens on BufEnter
-require("konrad.cmp.copilot")(group)
--- placement is important, needs to happen after cmp_luasnip
 require("konrad.cmp.snippets")(group)
 
 local cmp_status_ok, cmp = pcall(require, "cmp")
@@ -12,6 +10,7 @@ end
 
 local kind_icons = require("konrad.icons").kind
 local menu_entries = {
+    -- copilot runs on demand via 'Copilot' command
     copilot = "[Copilot]",
     nvim_lsp = "[LSP]",
     luasnip = "[Snippet]",
@@ -62,11 +61,11 @@ cmp.setup({
         end,
     },
     sources = cmp.config.sources({
-        { name = "copilot", max_item_count = 5 },
-        { name = "nvim_lsp", max_item_count = 5 },
-        { name = "luasnip", max_item_count = 5 },
-        { name = "buffer", max_item_count = 10 },
-        { name = "path", max_item_count = 10 },
+        { name = "copilot" },
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
+        { name = "path" },
     }),
     window = {
         completion = cmp.config.window.bordered(),

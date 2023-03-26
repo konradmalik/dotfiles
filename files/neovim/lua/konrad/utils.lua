@@ -32,14 +32,15 @@ end
 ---@param name string
 ---@param packadds string[]
 ---@param fun function
-function utils.make_enable_command(name, packadds, fun)
+---@param opts table|nil
+function utils.make_enable_command(name, packadds, fun, opts)
     vim.api.nvim_create_user_command(name, function()
         for _, value in ipairs(packadds) do
             vim.cmd('packadd ' .. value)
         end
         fun()
         vim.api.nvim_del_user_command(name)
-    end, {});
+    end, opts or {});
 end
 
 return utils
