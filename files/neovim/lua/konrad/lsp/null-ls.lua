@@ -4,7 +4,6 @@ if not null_ls_ok then
     vim.notify("cannot load null-ls")
     return
 end
-local attach = require("konrad.lsp.attach")
 local kutils = require("konrad.utils")
 
 local formatting = null_ls.builtins.formatting
@@ -39,6 +38,4 @@ null_ls.setup({
         }),
 
     },
-    -- required to properly register keymaps etc.
-    on_attach = attach,
 })

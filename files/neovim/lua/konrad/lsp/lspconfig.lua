@@ -1,5 +1,4 @@
 local lspconfig = require("lspconfig")
-local attach = require("konrad.lsp.attach")
 local capabilities = require("konrad.lsp.capabilities")
 
 local servers = {
@@ -25,7 +24,6 @@ for _, server in ipairs(servers) do
     end
 
     local base_table = {
-        on_attach = attach,
         capabilities = capabilities,
     }
 

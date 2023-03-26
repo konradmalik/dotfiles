@@ -1,46 +1,69 @@
+local M = {}
 local telescope_ok, telescope = pcall(require, 'telescope.builtin')
 
-local _augroups = {}
-
--- @param purpose string
-local get_augroup = function(client)
-    if not _augroups[client.id] then
-        local group_name = 'personal-lsp-' .. client.name
-        local id = vim.api.nvim_create_augroup(group_name, { clear = true })
-        _augroups[client.id] = id
-    end
-
-    return _augroups[client.id]
-end
-
 local format_is_enabled = true;
-vim.api.nvim_create_user_command('AutoFormatToggle', function()
-    format_is_enabled = not format_is_enabled
-    print('Setting autoformatting to: ' .. tostring(format_is_enabled))
-end, {
+vim.api.nvim_create_user_command('AutoFormatToggle',
+    function()
+        format_is_enabled = not format_is_enabled
+        print('Setting autoformatting to: ' .. tostring(format_is_enabled))
+    end, {
     desc = "Enable/disable autoformat with lsp",
 })
 
 local codelens_is_enabled = true;
-vim.api.nvim_create_user_command('CodelensToggle', function()
-    codelens_is_enabled = not codelens_is_enabled
-    print('Setting codelens to: ' .. tostring(codelens_is_enabled))
-end, {
+vim.api.nvim_create_user_command('CodelensToggle',
+    function()
+        codelens_is_enabled = not codelens_is_enabled
+        print('Setting codelens to: ' .. tostring(codelens_is_enabled))
+    end, {
     desc = "Enable/disable codelens with lsp",
 })
 
 local highlight_is_enabled = true;
-vim.api.nvim_create_user_command('DocumentHighlightToggle', function()
-    highlight_is_enabled = not highlight_is_enabled
-    if not highlight_is_enabled then
-        vim.lsp.buf.clear_references()
-    end
-    print('Setting document highlight to: ' .. tostring(highlight_is_enabled))
-end, {
+vim.api.nvim_create_user_command('DocumentHighlightToggle',
+    function()
+        highlight_is_enabled = not highlight_is_enabled
+        if not highlight_is_enabled then
+            vim.lsp.buf.clear_references()
+        end
+        print('Setting document highlight to: ' .. tostring(highlight_is_enabled))
+    end, {
     desc = "Enable/disable highlight word under cursor with lsp",
 })
 
-return function(client, bufnr)
+-- client id to group id mapping
+local _augroups = {}
+
+---@param client table
+local get_augroup = function(client)
+    if not _augroups[client.id] then
+        local group_name = 'personal-lsp-' .. client.name
+        local group = vim.api.nvim_create_augroup(group_name, { clear = true })
+        _augroups[client.id] = group
+        return group
+    end
+    return _augroups[client.id]
+end
+
+M.get_augroup = get_augroup
+M.detach = function(client, bufnr)
+    local augroup = get_augroup(client)
+    local aucmds = vim.api.nvim_get_autocmds({
+        group = augroup,
+        buffer = bufnr,
+    })
+    for _, aucmd in ipairs(aucmds) do
+        vim.api.nvim_del_autocmd(aucmd.id)
+    end
+
+    for _, mode in ipairs({ 'n', 'i', 'v' }) do
+        local keymaps = vim.api.nvim_buf_get_keymap(bufnr, mode)
+        for _, keymap in ipairs(keymaps) do
+            vim.api.nvim_buf_del_keymap(bufnr, mode, keymap.lhs)
+        end
+    end
+end
+M.attach = function(client, bufnr)
     local capabilities = client.server_capabilities
     local augroup = get_augroup(client)
 
@@ -81,23 +104,20 @@ return function(client, bufnr)
             buffer = bufnr,
             callback = function()
                 if format_is_enabled then
-                    vim.lsp.buf.format {
+                    vim.lsp.buf.format({
                         async = false,
-                        filter = function(c)
-                            return c.id == client.id
-                        end,
-                    }
+                        id = client.id
+                    })
                 end
             end,
         })
-        vim.api.nvim_buf_create_user_command(bufnr, 'Format', function()
-            vim.lsp.buf.format {
-                async = false,
-                filter = function(c)
-                    return c.id == client.id
-                end,
-            }
-        end,
+        vim.api.nvim_buf_create_user_command(bufnr, 'Format',
+            function()
+                vim.lsp.buf.format({
+                    async = false,
+                    id = client.id
+                })
+            end,
             { desc = 'Format current buffer with LSP' })
     end
 
@@ -180,3 +200,5 @@ return function(client, bufnr)
         opts_with_desc("List Workspace Folders"))
 
 end
+
+return M
