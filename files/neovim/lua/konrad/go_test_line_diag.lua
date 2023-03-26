@@ -148,7 +148,9 @@ end
 
 vim.api.nvim_create_user_command("GoTestOnSave", function()
     attach_to_buffer(vim.api.nvim_get_current_buf(), { "go", "test", "./...", "-v", "-json" })
-end, {})
+end, {
+    desc = "Runs go test on file save and shows results in a buffer",
+})
 
 -- attach_to_buffer(80, { "go", "run", "main.go" })
 -- attach_to_buffer(16, { "go", "test", "./...", "-v", "-json" })

@@ -77,7 +77,9 @@ end
 
 vim.api.nvim_create_user_command("SqlMagic", function()
     format_dat_sql()
-end, {})
+end, {
+    desc = "Formats SQL embedded in rust code",
+})
 
 local group = vim.api.nvim_create_augroup("rust-sql-magic", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {

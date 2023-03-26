@@ -2,7 +2,9 @@ local trim_is_enabled = true
 vim.api.nvim_create_user_command('AutoTrimToggle', function()
     trim_is_enabled = not trim_is_enabled
     print('Setting autotrim to: ' .. tostring(trim_is_enabled))
-end, {})
+end, {
+    desc = "Enable/disable autotrimming whitespace on buffer save",
+})
 
 -- Deletes all trailing whitespaces in a file if it's not binary nor a diff.
 local trim_trailing_whitespace = function()

@@ -51,4 +51,6 @@ vim.api.nvim_create_user_command('DiagnosticsToggle', function()
         diagnostics_are_enabled = true
     end
     print('Setting diagnostics to: ' .. tostring(diagnostics_are_enabled))
-end, {})
+end, {
+    desc = "Enable/disable diagnostics globally",
+})

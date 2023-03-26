@@ -27,9 +27,13 @@ vim.api.nvim_create_user_command("AutoMagicStart", function()
     local pattern = vim.fn.input("Pattern: ")
     local command = vim.fn.input("Command: ")
     attach_to_buffer(tonumber(bufnr), pattern, vim.split(command, " "))
-end, {})
+end, {
+    desc = "Starts AutoMagic functionality with interactive setup",
+})
 
 vim.api.nvim_create_user_command("AutoMagicStop", function()
     print("AutoMagic stops now...")
     vim.api.nvim_create_augroup(group_name, { clear = true })
-end, {})
+end, {
+    desc = "Stops AutoMagic functionality",
+})

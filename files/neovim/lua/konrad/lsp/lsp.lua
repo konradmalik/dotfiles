@@ -17,13 +17,17 @@ local format_is_enabled = true;
 vim.api.nvim_create_user_command('AutoFormatToggle', function()
     format_is_enabled = not format_is_enabled
     print('Setting autoformatting to: ' .. tostring(format_is_enabled))
-end, {})
+end, {
+    desc = "Enable/disable autoformat with lsp",
+})
 
 local codelens_is_enabled = true;
 vim.api.nvim_create_user_command('CodelensToggle', function()
     codelens_is_enabled = not codelens_is_enabled
     print('Setting codelens to: ' .. tostring(codelens_is_enabled))
-end, {})
+end, {
+    desc = "Enable/disable codelens with lsp",
+})
 
 local highlight_is_enabled = true;
 vim.api.nvim_create_user_command('DocumentHighlightToggle', function()
@@ -32,7 +36,9 @@ vim.api.nvim_create_user_command('DocumentHighlightToggle', function()
         vim.lsp.buf.clear_references()
     end
     print('Setting document highlight to: ' .. tostring(highlight_is_enabled))
-end, {})
+end, {
+    desc = "Enable/disable highlight word under cursor with lsp",
+})
 
 return function(client, bufnr)
     local capabilities = client.server_capabilities
