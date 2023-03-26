@@ -4,4 +4,9 @@ if not comment_ok then
     return
 end
 
-comment.setup({})
+comment.setup({
+    mappings = {
+        basic = true,
+        extra = false,
+    },
+})
