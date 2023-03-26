@@ -17,7 +17,8 @@
       enable = true;
       options = {
         features = "side-by-side";
-        syntax-theme = "Dracula";
+        # uses terminal colors according to base16 spec
+        syntax-theme = "base16";
         line-numbers = true;
         navigate = true;
         hyperlinks = false;
@@ -113,6 +114,10 @@
 
       pull = {
         rebase = "merges";
+      };
+
+      rebase = {
+        autosquash = true;
       };
 
       worktree = {
