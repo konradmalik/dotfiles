@@ -5,23 +5,20 @@ local augroup = vim.api.nvim_create_augroup("ViModeHeirlineRedraw", { clear = tr
 
 return {
     init = function(self)
-        -- this is a workaround needed to see minor status changes like n -> no
-        -- as they don't trigger statusline updates
+        self.mode = vim.fn.mode(1)
+        -- this is a workaround needed to see operation-pending status changes like n -> no
+        -- as they don't trigger statusline updates, but do trigger ModeChanged
+        -- pattern for this event is old_mode:new_mode
         if not self.once then
             vim.api.nvim_create_autocmd("ModeChanged", {
                 group = augroup,
-                pattern = "*",
+                pattern = "*:*o",
                 callback = function()
-                    -- trigger redraw only if minor change
-                    if self.modeone == vim.fn.mode() then
-                        vim.cmd("redrawstatus")
-                    end
+                    vim.cmd("redrawstatus")
                 end
             })
         end
         self.once = true
-        self.mode = vim.fn.mode(1)
-        self.modeone = self.mode:sub(1, 1) -- get only the first mode character
     end,
     static = {
         mode_names = {
@@ -82,7 +79,8 @@ return {
         return icons.misc.Vi .. " %2(" .. name .. "%)"
     end,
     hl = function(self)
-        return { fg = self.mode_colors[self.modeone], bold = true, }
+        local modeone = self.mode:sub(1, 1) -- get only the first mode character
+        return { fg = self.mode_colors[modeone], bold = true, }
     end,
     update = { "ModeChanged" },
 }
