@@ -7,12 +7,6 @@
       VISUAL = "nvim -u NONE";
       GIT_EDITOR = "nvim -u NONE";
     };
-
-    packages = with pkgs;[
-      #makes sense to keep those globally
-      nodePackages.prettier
-      shfmt
-    ];
   };
 
   programs.git.ignores = [
@@ -28,10 +22,17 @@
     vimAlias = true;
     vimdiffAlias = true;
     withPython3 = false;
+    # copilot dependency
     withNodeJs = true;
     withRuby = false;
-    extraPackages = [
-      # this won't be useful globally, so neovim only is fine
+    # plugin dependencies
+    extraPackages = with pkgs; [
+      # telescope
+      fzf
+      ripgrep
+      # null-ls
+      nodePackages.prettier
+      shfmt
       pkgs.shellcheck
     ];
     plugins = pkgs.callPackage ./plugins.nix { };

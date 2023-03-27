@@ -43,7 +43,8 @@
     tmux-sessionizer
     tmux-windowizer
 
-    unstable.nix-init
+    nodePackages.prettier
+    shfmt
   ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
     psmisc
   ];
