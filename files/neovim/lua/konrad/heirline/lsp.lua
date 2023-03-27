@@ -18,6 +18,10 @@ M.LSPActive = {
         max_part_taken = 0.15,
         lbr = "[",
         rbr = "]",
+        icons = {
+            ['null-ls'] = icons.ui.CircleDot,
+            ['copilot'] = icons.kind.Copilot .. " ",
+        }
     },
 
     init = function(self)
@@ -27,13 +31,13 @@ M.LSPActive = {
     provider = function(self)
         local names = {}
         for _, server in pairs(self.clients) do
-            table.insert(names, server.name)
+            table.insert(names, self.icons[server.name] or server.name)
         end
         local prefix = #self.clients > 1 and icons.ui.Gears or icons.ui.Gear
-        local banner = prefix .. self.lbr .. table.concat(names, " ") .. self.rbr
+        local banner = table.concat({ prefix, " ", self.lbr, table.concat(names, " "), self.rbr })
         -- hide if to big compared to the whole bar
         if not conditions.width_percent_below(#banner, 0.15) then
-            banner = prefix .. self.lbr .. #self.clients .. self.rbr
+            banner = table.concat({ prefix, " ", self.lbr, #self.clients, self.rbr })
         end
         return banner
     end,
