@@ -67,8 +67,17 @@
         packages = (import ./nix/pkgs { inherit pkgs; }
         // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "linux" system)
           (
+            let
+              rpiSdCard = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
+            in
             {
               installer-iso = import ./nix/pkgs/special/installer-iso { inherit pkgs specialArgs; };
+              rpi4-1-sd-image = (self.nixosConfigurations.rpi4-2.extendModules {
+                modules = [ rpiSdCard ];
+              }).config.system.build.sdImage;
+              rpi4-2-sd-image = (self.nixosConfigurations.rpi4-2.extendModules {
+                modules = [ rpiSdCard ];
+              }).config.system.build.sdImage;
             }
           )
         // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "darwin" system)

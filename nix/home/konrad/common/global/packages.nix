@@ -36,7 +36,7 @@
     croc
     gh
     glab
-    konradmalik.rtx
+    # konradmalik.rtx
     up
 
     rfv

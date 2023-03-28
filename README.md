@@ -54,7 +54,7 @@ $ TARGET=rpi4-1 ssh $TARGET -- sudo nixos-rebuild --flake github:konradmalik/dot
 #### Build sd-image:
 
 ```bash
-$ nix build .#nixosConfigurations.rpi4-2.config.system.build.sdImage
+$ nix build .#rpi4-2-sd-image
 ```
 
 Copy it somewhere and unpack:
