@@ -6,13 +6,6 @@
       add_newline = false;
       command_timeout = 2000;
 
-      shell = {
-        disabled = false;
-        zsh_indicator = "";
-        bash_indicator = "bsh ";
-        format = "[$indicator]($style)";
-      };
-
       aws.disabled = true;
       battery.disabled = true;
       cmd_duration.disabled = true;
@@ -26,7 +19,9 @@
       erlang.disabled = true;
       gcloud.disabled = true;
       golang.disabled = false;
+      hostname.disabled = false;
       java.disabled = false;
+      jobs.disabled = false;
       julia.disabled = true;
       kubernetes.disabled = false;
       line_break.disabled = false;
@@ -43,6 +38,12 @@
       python.disabled = false;
       ruby.disabled = true;
       rust.disabled = false;
+      shell = {
+        disabled = false;
+        zsh_indicator = "";
+        bash_indicator = "bsh ";
+        format = "[$indicator]($style)";
+      };
       shlvl = {
         disabled = false;
         # start with 1
@@ -52,6 +53,8 @@
       };
       singularity.disabled = true;
       swift.disabled = true;
+      terraform.disabled = false;
+      username.disabled = false;
       zig.disabled = true;
     };
   };
