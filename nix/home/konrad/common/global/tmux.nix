@@ -64,59 +64,38 @@ let
       c = config.colorscheme.colors;
     in
     ''
-      # --> Catppuccin
-      thm_base00="#${lib.toLower c.base00}"
-      thm_base01="#${lib.toLower c.base01}"
-      thm_base02="#${lib.toLower c.base02}"
-      thm_base03="#${lib.toLower c.base03}"
-      thm_base04="#${lib.toLower c.base04}"
-      thm_base05="#${lib.toLower c.base05}"
-      thm_base06="#${lib.toLower c.base06}"
-      thm_base07="#${lib.toLower c.base07}"
-      thm_base08="#${lib.toLower c.base08}"
-      thm_base09="#${lib.toLower c.base09}"
-      thm_base0A="#${lib.toLower c.base0A}"
-      thm_base0B="#${lib.toLower c.base0B}"
-      thm_base0C="#${lib.toLower c.base0C}"
-      thm_base0D="#${lib.toLower c.base0D}"
-      thm_base0E="#${lib.toLower c.base0E}"
-      thm_base0F="#${lib.toLower c.base0F}"
+      # Base16 ${config.colorscheme.name}
+      # Scheme author: ${config.colorscheme.author}
+      # Template author: Tinted Theming: (https://github.com/tinted-theming)
 
-      # ----------------------------=== Theme ===--------------------------
-      # Catppuccin layout
+      # default statusbar colors
+      set-option -g status-style "fg=#${c.base04},bg=#${c.base01}"
 
-      # status
-      set -g status-position bottom
-      set -g status "on"
-      set -g status-justify "left"
-      set -g status-left-length "100"
-      set -g status-right-length "100"
-      set -g status-style "fg=''${thm_base04},bg=''${thm_base01}"
+      # default window title colors
+      set-window-option -g window-status-style "fg=#${c.base04},bg=default"
 
-      # messages
-      set -g message-style fg="''${thm_base05}",bg="''${thm_base01}",align="centre"
-      set -g message-command-style fg="''${thm_base05}",bg="''${thm_base01}",align="centre"
+      # active window title colors
+      set-window-option -g window-status-current-style "fg=#${c.base0A},bg=default"
 
-      # panes
-      set -g pane-border-style fg="''${thm_base01}"
-      set -g pane-active-border-style fg="''${thm_base02}"
+      # pane border
+      set-option -g pane-border-style "fg=#${c.base01}"
+      set-option -g pane-active-border-style "fg=#${c.base02}"
 
-      # windows
-      setw -g window-status-activity-style fg="''${thm_base04}",bg="default",none
-      setw -g window-status-separator ""
-      setw -g window-status-style fg="''${thm_base0A}",bg="default",none
+      # message text
+      set-option -g message-style "fg=#${c.base05},bg=#${c.base01}"
 
-      # --------=== Statusline
-      set -g status-left ""
-      set -g status-right "#{?client_prefix,#[bg=$thm_base0F],#[bg=$thm_base0C]}#[fg=$thm_base01]  #[fg=$thm_base05,bg=$thm_base01] #S "
+      # pane number display
+      set-option -g display-panes-active-colour "#${c.base0B}"
+      set-option -g display-panes-colour "#${c.base0A}"
 
-      # current_dir
-      setw -g window-status-current-format "#[fg=$thm_base01,bg=$thm_base0C] #I #[fg=$thm_base0C,bg=$thm_base03] #W #{?window_zoomed_flag, ,}"
-      setw -g window-status-format "#[fg=$thm_base01,bg=$thm_base07] #I #[fg=$thm_base07,bg=$thm_base01] #W #{?window_zoomed_flag, ,}"
+      # clock
+      set-window-option -g clock-mode-colour "#${c.base0B}"
 
-      # --------=== Modes
-      setw -g clock-mode-colour "''${thm_base0D}"
-      setw -g mode-style "fg=''${thm_base02} bg=''${thm_base0F} bold"
+      # copy mode highlight
+      set-window-option -g mode-style "fg=#${c.base04},bg=#${c.base02}"
+
+      # bell
+      set-window-option -g window-status-bell-style "fg=#${c.base01},bg=#${c.base08}"
     '';
 in
 {
