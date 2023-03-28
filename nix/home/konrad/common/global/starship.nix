@@ -43,7 +43,13 @@
       python.disabled = false;
       ruby.disabled = true;
       rust.disabled = false;
-      shlvl.disabled = true;
+      shlvl = {
+        disabled = false;
+        # start with 1
+        # tmux adds another 1
+        # 3 and more is suspicious
+        threshold = 3;
+      };
       singularity.disabled = true;
       swift.disabled = true;
       zig.disabled = true;

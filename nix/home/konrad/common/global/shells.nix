@@ -45,6 +45,20 @@ let
       direnv allow
       ''${EDITOR:-vim} flake.nix
     }
+
+    # credit to https://github.com/MatthewCroughan/nixcfg
+    flash-to() {
+      if [ $(${pkgs.file}/bin/file $1 --mime-type -b) == "application/zstd" ]; then
+        echo "Flashing zst using zstdcat | dd"
+        ( set -x; ${pkgs.zstd}/bin/zstdcat $1 | sudo dd of=$2 status=progress iflag=fullblock oflag=direct conv=fsync,noerror bs=64k )
+      elif [ $(${pkgs.file}/bin/file $2 --mime-type -b) == "application/xz" ]; then
+        echo "Flashing xz using xzcat | dd"
+        ( set -x; ${pkgs.xz}/bin/xzcat $1 | sudo dd of=$2 status=progress iflag=fullblock oflag=direct conv=fsync,noerror bs=64k )
+      else
+        echo "Flashing arbitrary file $1 to $2"
+        sudo dd if=$1 of=$2 status=progress conv=sync,noerror bs=64k
+      fi
+    }
   '';
   zshCompletionInit = ''
     autoload -U compinit && compinit

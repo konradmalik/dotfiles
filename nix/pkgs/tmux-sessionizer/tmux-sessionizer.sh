@@ -2,7 +2,7 @@
 
 set -e
 
-active_sessions=$(tmux ls 2> /dev/null || echo "no sessions")
+active_sessions=$(tmux ls 2>/dev/null || echo "no sessions")
 export active_sessions
 if [[ $# -eq 1 ]]; then
 	selected=$1
@@ -18,7 +18,8 @@ selected_name=$(basename "$selected" | tr . _)
 
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
 	# if not such session, create
-	tmux new-session -ds "$selected_name" -c "$selected"
+	# use $() to avoid SHLVL increase
+	$(tmux new-session -ds "$selected_name" -c "$selected")
 fi
 
 # at this point we have a session, now figure out how to connect
