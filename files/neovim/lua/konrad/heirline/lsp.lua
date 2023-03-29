@@ -19,7 +19,7 @@ M.LSPActive = {
         lbr = "[",
         rbr = "]",
         icons = {
-            ['null-ls'] = icons.ui.CircleDot,
+            ['null-ls'] = icons.misc.NullCircle .. " ",
             ['copilot'] = icons.kind.Copilot .. " ",
         }
     },

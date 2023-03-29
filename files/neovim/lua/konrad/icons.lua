@@ -425,6 +425,7 @@ return {
         Attention = "",
     },
     misc = {
+        NullCircle = "",
         Robot = "ﮧ",
         Squirrel = "",
         Tag = "",
