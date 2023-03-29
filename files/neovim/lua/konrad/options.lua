@@ -31,7 +31,7 @@ vim.wo.signcolumn = 'yes'
 -- show some hidden chars
 vim.o.list = true
 vim.o.listchars = table.concat({
-    "trail:" .. icons.Trail, "tab:" .. icons.Tab .. " ",
+    "trail:" .. icons.Trail, "tab:" .. icons.Tab .. "-" .. icons.Tab,
     "nbsp:" .. icons.Nbsp2, "extends:" .. icons.SlopeDown,
     "precedes:" .. icons.SlopeUp
 }, ",")
