@@ -59,6 +59,8 @@ let
         sudo dd if=$1 of=$2 status=progress conv=sync,noerror bs=64k
       fi
     }
+
+    bindkey -s '^G' '^urfv^M'
   '';
   zshCompletionInit = ''
     autoload -U compinit && compinit
