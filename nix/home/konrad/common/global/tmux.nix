@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   baseConfig = ''
-    ## SENSIBLE DEFAULTS
-    ## don't use the tpm plugin, it's a bit outdated
+    ## KONRAD's SENSIBLE DEFAULTS
     # tmux messages are displayed for 4 seconds
     set-option -g display-time 4000
     # upgrade color and fix italics
@@ -64,6 +63,9 @@ let
       c = config.colorscheme.colors;
     in
     ''
+      # make left status a bit longer to not cut off our names
+      set-option -g status-left-length 50
+
       # Base16 ${config.colorscheme.name}
       # Scheme author: ${config.colorscheme.author}
       # Template author: Tinted Theming: (https://github.com/tinted-theming)
