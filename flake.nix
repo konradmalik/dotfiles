@@ -145,7 +145,6 @@
           modules = [ ./nix/home/konrad/generic.nix ];
         };
       };
-
     };
 
   nixConfig = {
