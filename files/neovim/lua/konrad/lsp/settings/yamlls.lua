@@ -13,18 +13,15 @@ return {
             },
         },
         yaml = {
-            format = {
+            format  = {
                 enable = false -- use prettier from null-ls instead
             },
             schemas = vim.list_extend(
                 {
-                    {
-                        description = "Newest kubernetes scheima from yannh",
-                        fileMatch = { "**/k8s/**/*.yml", "**/k8s/**/*.yaml" },
-                        name = "kubernetes.yaml",
-                        -- this schema does not work at all, test with:  # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.5-standalone-strict/all.json all.json
-                        url = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/all.json",
-                    }
+                    ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/all.json"] =
+                    { "k8s/**/*.yml", "k8s/**/*.yaml" },
+                    -- or use:
+                    -- # yaml-language-server: $schema=<urlToTheSchema>
                 },
                 schemastore.yaml.schemas()
             ),
