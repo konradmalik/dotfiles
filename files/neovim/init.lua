@@ -39,3 +39,16 @@ utils.make_enable_command(
     {
         desc = "Initialize Copilot server and cmp source",
     })
+
+utils.make_enable_command(
+    "UndotreeToggle",
+    { "undotree" },
+    function()
+        vim.cmd("UndotreeToggle")
+    end,
+    {
+        desc = "Initialize Undotree and open it",
+    },
+    -- no idea why if we delete UndotreeToggle before running packadd
+    -- then the command from UndotreeToggle from undotree itself is also deleted...
+    false)

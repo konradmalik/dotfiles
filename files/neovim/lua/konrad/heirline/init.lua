@@ -59,7 +59,7 @@ local DefaultStatusline = {
     ViMode, Space, Git, Align,
     DAPMessages, Align,
     Diagnostics, Space, LSPActive, Space,
-    FileType, Space, FileEncoding, Space, FileFormat, Space,
+    FileType, Space, FileFormat, Space, FileEncoding, Space,
     Hostname, Space,
     Ruler, Space, ScrollBar
 }

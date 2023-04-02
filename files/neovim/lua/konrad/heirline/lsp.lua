@@ -18,10 +18,6 @@ M.LSPActive = {
         max_part_taken = 0.15,
         lbr = "[",
         rbr = "]",
-        icons = {
-            ['null-ls'] = icons.misc.NullCircle .. " ",
-            ['copilot'] = icons.kind.Copilot .. " ",
-        }
     },
 
     init = function(self)
@@ -31,7 +27,7 @@ M.LSPActive = {
     provider = function(self)
         local names = {}
         for _, server in pairs(self.clients) do
-            table.insert(names, self.icons[server.name] or server.name)
+            table.insert(names, server.name)
         end
         local prefix = #self.clients > 1 and icons.ui.Gears or icons.ui.Gear
         local banner = table.concat({ prefix, " ", self.lbr, table.concat(names, " "), self.rbr })
