@@ -122,8 +122,10 @@ in
 
   programs.zsh.initExtra = ''
     # tmux baby
-    rtxs() { ${pkgs.tmux-sessionizer}/bin/tmux-sessionizer }
-    bindkey -s '^F' '^urtxs^M'
+    # (this cannot be a zsh widget unfortunately, tmux attach can only attach to a terminal,
+    # but zsh widgets do not allocate/reuse current terminal)
+    __txs() { ${pkgs.tmux-sessionizer}/bin/tmux-sessionizer }
+    bindkey -s '^F' '^u__txs^M'
 
     # fix for tmux ssh socket
     fix_ssh_auth_sock() {

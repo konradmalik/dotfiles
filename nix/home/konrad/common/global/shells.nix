@@ -43,7 +43,7 @@ let
         nix flake new -t github:konradmalik/dotfiles#default .
       fi
       direnv allow
-      ''${EDITOR:-vim} flake.nix
+      ''${VISUAL:-vim} flake.nix
     }
 
     # credit to https://github.com/MatthewCroughan/nixcfg
@@ -60,7 +60,10 @@ let
       fi
     }
 
-    bindkey -s '^G' '^urfv^M'
+    # rfv keybind
+    rfv-widget() { export VISUAL=nvim && ${pkgs.rfv}/bin/rfv }
+    zle -N rfv-widget
+    bindkey '^G' rfv-widget
   '';
   zshCompletionInit = ''
     autoload -U compinit && compinit

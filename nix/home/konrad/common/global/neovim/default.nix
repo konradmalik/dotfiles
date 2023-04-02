@@ -3,7 +3,7 @@
   home = {
     sessionVariables = {
       # no profile makes it start faster than the speed of light
-      EDITOR = "nvim -u NONE";
+      EDITOR = "nvim -u NONE -e";
       VISUAL = "nvim -u NONE";
       GIT_EDITOR = "nvim -u NONE";
     };
