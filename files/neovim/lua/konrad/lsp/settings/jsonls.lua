@@ -11,6 +11,7 @@ return {
     },
     settings = {
         json = {
+            format = false,
             validate = true,
             schemas = schemastore.json.schemas(),
         },
