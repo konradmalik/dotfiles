@@ -40,7 +40,7 @@ processMadePlugins (with source; [
   (makePlugin
     {
       plugin = nvim-lspconfig;
-      dependencies = [ null-ls-nvim neodev-nvim fidget-nvim plenary-nvim ];
+      dependencies = [ null-ls-nvim neodev-nvim fidget-nvim plenary-nvim SchemaStore-nvim ];
     })
   # dap
   (makePlugin
@@ -97,7 +97,6 @@ processMadePlugins (with source; [
   (makePlugin impatient-nvim)
   (makePlugin indent-blankline-nvim)
   (makePlugin nvim-luaref)
-  (makePlugin SchemaStore-nvim)
   (makePlugin { plugin = undotree; optional = true; })
   (makePlugin vim-sleuth)
   (makePlugin which-key-nvim)
