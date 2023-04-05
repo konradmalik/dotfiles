@@ -26,7 +26,6 @@
               part-type = "primary";
               start = "500MiB";
               end = "100%";
-              bootable = true;
               content = {
                 type = "filesystem";
                 format = "ext4";
