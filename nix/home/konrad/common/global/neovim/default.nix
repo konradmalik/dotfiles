@@ -2,8 +2,10 @@
 {
   home = {
     sessionVariables = {
+      # should be like that but many programs don't respect VISUAL in favor of EDITOR so...
+      # EDITOR = "nvim -u NONE -e";
+      EDITOR = "nvim -u NONE";
       # no profile makes it start faster than the speed of light
-      EDITOR = "nvim -u NONE -e";
       VISUAL = "nvim -u NONE";
       GIT_EDITOR = "nvim -u NONE";
     };
