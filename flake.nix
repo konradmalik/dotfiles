@@ -90,18 +90,11 @@
             let
               hostPkgs = nixpkgs-darwin.legacyPackages.${system};
               toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
+              guestPkgs = nixpkgs.legacyPackages.${toGuest system};
             in
             {
-              darwin-builder = import ./nix/pkgs/special/darwin-builder
-                {
-                  inherit hostPkgs;
-                  guestPkgs = nixpkgs-unstable.legacyPackages.${toGuest system};
-                };
-              darwin-docker = import ./nix/pkgs/special/darwin-docker
-                {
-                  inherit hostPkgs;
-                  guestPkgs = nixpkgs.legacyPackages.${toGuest system};
-                };
+              darwin-builder = import ./nix/pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
+              darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
             }
           ));
       })
