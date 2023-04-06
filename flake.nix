@@ -10,6 +10,10 @@
       nixpkgs-konradmalik.url = "github:konradmalik/nixpkgs/rtx";
       nixos-hardware.url = "github:NixOS/nixos-hardware/master";
       flake-utils.url = "github:numtide/flake-utils";
+      flake-compat = {
+        url = "github:edolstra/flake-compat";
+        flake = false;
+      };
 
       darwin = {
         # url = "github:lnl7/nix-darwin";
@@ -45,6 +49,7 @@
     , nixpkgs-konradmalik
     , nixos-hardware
     , flake-utils
+    , flake-compat
     , darwin
     , home-manager
     , sops-nix
@@ -61,7 +66,7 @@
       let pkgs = nixpkgs.legacyPackages.${system}; in
       {
         devShells = {
-          default = pkgs.callPackage ./shell.nix { inherit pkgs; };
+          default = pkgs.callPackage ./nix/shell.nix { inherit inputs outputs; };
         };
         formatter = pkgs.nixpkgs-fmt;
         packages = (import ./nix/pkgs { inherit pkgs; }

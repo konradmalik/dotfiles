@@ -193,6 +193,20 @@ $ nix run .#darwin-docker
 
 `DOCKER_HOST` is already set globally in my darwin preset (home-manager).
 
+#### Pro tip for macos
+
+To prevent our custom builder and docker from being GC'd, just nix build them to some folder here
+(other than the default `result`) and don't remove that folder. Done.
+
+Like that:
+
+```bash
+$ nix build .#darwin-builder --out-link darwin-builder
+$ nix build .#darwin-docker --out-link darwin-docker
+```
+
+> Why not add them as packages to devshell or to the system? Well, github actions won't be able to build it :(
+
 ### linux (non-NixOS; home-manager):
 
 Build and enable config locally:

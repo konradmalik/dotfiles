@@ -11,6 +11,8 @@ result
 outputs
 *.qcow2
 /keys
+/darwin-builder
+/darwin-docker
 #nvim
 .netrwhist
 packer_compiled.vim
