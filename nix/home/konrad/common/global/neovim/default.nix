@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, outputs, ... }:
 {
   home = {
     sessionVariables = {
@@ -43,7 +43,7 @@
   xdg.configFile =
     {
       "nvim" = {
-        source = "${pkgs.dotfiles}/neovim";
+        source = "${outputs.lib.dotfiles}/neovim";
         recursive = true;
       };
 

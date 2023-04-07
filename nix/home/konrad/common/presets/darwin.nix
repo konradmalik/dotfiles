@@ -1,4 +1,4 @@
-{ pkgs, lib, dotfiles, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./../global

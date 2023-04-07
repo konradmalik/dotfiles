@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dotfiles, ... }:
+{ config, lib, pkgs, ... }:
 let
   zshInitExtra = ''
     # beeping is annoying

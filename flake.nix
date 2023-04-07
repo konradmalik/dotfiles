@@ -100,6 +100,9 @@
       })
     //
     {
+      lib = {
+        dotfiles = ./files;
+      };
       homeManagerModules = import ./nix/modules/home-manager;
       nixosModules = import ./nix/modules/nixos;
       templates = import ./nix/templates;

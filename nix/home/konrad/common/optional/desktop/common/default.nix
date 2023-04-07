@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, outputs, ... }:
 {
   imports = [
     ./firefox.nix
@@ -29,5 +29,5 @@
     ];
   };
 
-  konrad.wallpaper = "${pkgs.dotfiles}/wallpapers/bishal-mishra.jpg";
+  konrad.wallpaper = "${outputs.lib.dotfiles}/wallpapers/bishal-mishra.jpg";
 }
