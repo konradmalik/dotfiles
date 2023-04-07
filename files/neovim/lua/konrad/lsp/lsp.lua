@@ -11,7 +11,7 @@ vim.api.nvim_create_user_command('AutoFormatToggle',
 })
 
 local codelens_is_enabled = true;
-vim.api.nvim_create_user_command('CodelensToggle',
+vim.api.nvim_create_user_command('CodeLensToggle',
     function()
         codelens_is_enabled = not codelens_is_enabled
         print('Setting codelens to: ' .. tostring(codelens_is_enabled))
