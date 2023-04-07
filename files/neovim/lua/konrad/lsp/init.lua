@@ -1,12 +1,4 @@
 local utils = require('konrad.utils')
-
----@param config table
----@return boolean
-local function is_matching_filetype(config)
-    local ft = vim.bo.filetype or ''
-    return ft ~= '' and utils.has_value(config.filetypes or {}, ft)
-end
-
 -- if add is called rather late, after the file is opened, then the configured server won't start for the current buffer
 -- solution is to check if we currently have a buffer and if it matches configure filetype
 ---@param config table
@@ -21,7 +13,7 @@ local function start_if_needed(config)
         return
     end
     -- launch if matching filetype
-    if is_matching_filetype(config) then
+    if utils.is_matching_filetype(config) then
         config.launch()
     end
 end

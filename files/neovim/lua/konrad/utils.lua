@@ -46,4 +46,11 @@ function utils.make_enable_command(name, packadds, fun, opts, delete)
     end, opts or {});
 end
 
+---@param config table Can be obtained by getting the 'client' object in some way and calling 'client.config'
+---@return boolean
+function utils.is_matching_filetype(config)
+    local ft = vim.bo.filetype or ''
+    return ft ~= '' and utils.has_value(config.filetypes or {}, ft)
+end
+
 return utils

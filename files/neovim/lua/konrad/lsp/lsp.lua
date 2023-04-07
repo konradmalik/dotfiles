@@ -1,3 +1,5 @@
+local utils = require("konrad.utils")
+
 local M = {}
 local telescope_ok, telescope = pcall(require, 'telescope.builtin')
 
@@ -97,16 +99,28 @@ M.attach = function(client, bufnr)
         vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, opts_with_desc("CodeLens run"))
     end
 
-    if capabilities.documentFormattingProvider then
+    -- why this check here?
+    -- because null-ls is specific, in that it registers documentFormattingProvider
+    -- only for specific filetypes (correctly set in client.config.filetypes)
+    -- but it attaches itself to all files (eg. if git_signs code action is enabled).
+    -- The result is that an autocommand that always fails in created for null_ls.
+    -- We're avoiding this situation here.
+    local properDocumentFormattingProvider = (client.name ~= "null-ls" or utils.is_matching_filetype(client.config)) and
+        capabilities.documentFormattingProvider
+
+    if properDocumentFormattingProvider then
         vim.api.nvim_create_autocmd('BufWritePre', {
             desc = "AutoFormat on save",
             group = augroup,
             buffer = bufnr,
+            -- why pcall? null-ls registers itself as formatter, but
+            -- it attaches to all buffers
             callback = function()
                 if format_is_enabled then
                     vim.lsp.buf.format({
                         async = false,
-                        id = client.id
+                        id = client.id,
+                        bufnr = bufnr,
                     })
                 end
             end,
@@ -115,7 +129,8 @@ M.attach = function(client, bufnr)
             function()
                 vim.lsp.buf.format({
                     async = false,
-                    id = client.id
+                    id = client.id,
+                    bufnr = bufnr,
                 })
             end,
             { desc = 'Format current buffer with LSP' })
