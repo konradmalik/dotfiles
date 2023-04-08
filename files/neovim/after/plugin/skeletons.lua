@@ -11,3 +11,11 @@ vim.api.nvim_create_autocmd({ "BufNewFile" }, {
         insert_skeleton(".nvim.lua")
     end
 })
+
+vim.api.nvim_create_autocmd({ "BufNewFile" }, {
+    group    = group,
+    pattern  = ".editorconfig",
+    callback = function()
+        insert_skeleton(".editorconfig")
+    end
+})
