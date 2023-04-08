@@ -16,6 +16,9 @@ local codelens_is_enabled = true;
 vim.api.nvim_create_user_command('CodeLensToggle',
     function()
         codelens_is_enabled = not codelens_is_enabled
+        if not codelens_is_enabled then
+            vim.lsp.codelens.clear()
+        end
         print('Setting codelens to: ' .. tostring(codelens_is_enabled))
     end, {
     desc = "Enable/disable codelens with lsp",
@@ -87,7 +90,7 @@ M.attach = function(client, bufnr)
             group = augroup,
             buffer = bufnr,
             callback = function()
-                if format_is_enabled then
+                if codelens_is_enabled then
                     vim.lsp.codelens.refresh()
                 end
             end,
