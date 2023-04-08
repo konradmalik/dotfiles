@@ -1,5 +1,5 @@
--- impatient needs to be the first
-require("konrad.impatient")
+-- caching needs to be first
+vim.loader.enable()
 
 require("konrad.globals")
 require("konrad.options")

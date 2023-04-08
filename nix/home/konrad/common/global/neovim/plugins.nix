@@ -94,7 +94,6 @@ processMadePlugins (with source; [
       dependencies = [ nvim-web-devicons ];
     })
   (makePlugin harpoon)
-  (makePlugin impatient-nvim)
   (makePlugin indent-blankline-nvim)
   (makePlugin nvim-luaref)
   (makePlugin { plugin = undotree; optional = true; })
