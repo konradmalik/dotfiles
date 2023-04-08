@@ -32,7 +32,7 @@ vim.o.backup = false
 vim.bo.autoread = true;
 -- Save undo history
 vim.o.undofile = true
-vim.o.undodir = "/tmp/.vim-undo"
+vim.o.undodir = vim.fn.stdpath("state") .. "/undodir"
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
