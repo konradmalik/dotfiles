@@ -10,6 +10,8 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.smartindent = true
+-- exrc (.nvim.lua), I use it a lot
+vim.o.exrc = true
 -- Set highlight on search. Use :noh to disable until next search
 vim.o.hlsearch = true
 -- Make line numbers default

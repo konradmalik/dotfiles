@@ -87,7 +87,6 @@ processMadePlugins (with source; [
       plugin = diffview-nvim;
       dependencies = [ plenary-nvim nvim-web-devicons ];
     })
-  (makePlugin exrc-nvim)
   (makePlugin
     {
       plugin = gitsigns-nvim;
