@@ -255,16 +255,16 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1680505589,
-        "narHash": "sha256-p96BJ6i1O7S4skZAs1ipXsioDiGYqD+QuKc1kq5BRQk=",
-        "owner": "NixOS",
+        "lastModified": 1680873626,
+        "narHash": "sha256-ahLLzydOSrdgZzxBzugQL+kiN2Y9/dZ26Itf+ymss/k=",
+        "owner": "GaetanLepage",
         "repo": "nixpkgs",
-        "rev": "6264caf76f49aa024c003675dbec2b4ea8548847",
+        "rev": "09f49769746a9ba87ea3985402615e0f90dc7ffb",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "master",
+        "owner": "GaetanLepage",
+        "ref": "neovim",
         "repo": "nixpkgs",
         "type": "github"
       }

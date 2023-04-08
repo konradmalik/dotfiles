@@ -19,7 +19,7 @@
 
   programs.neovim = {
     enable = true;
-    package = pkgs.unstable.neovim-unwrapped;
+    package = pkgs.master.neovim-unwrapped;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -37,7 +37,7 @@
       shfmt
       pkgs.shellcheck
     ];
-    plugins = pkgs.callPackage ./plugins.nix { };
+    plugins = pkgs.callPackage ./plugins.nix { pkgs = pkgs.master; };
   };
 
   xdg.configFile =

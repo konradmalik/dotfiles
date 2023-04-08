@@ -2,7 +2,7 @@
 
 let
   unpackaged = pkgs.callPackage ./unpackaged.nix { };
-  source = pkgs.unstable.vimPlugins // unpackaged;
+  source = pkgs.vimPlugins // unpackaged;
   makePlugin = plugin:
     let
       makeAttrset = p: if builtins.hasAttr "plugin" p then p else { plugin = p; };
