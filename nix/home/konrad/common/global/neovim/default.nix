@@ -1,4 +1,7 @@
 { config, pkgs, outputs, ... }:
+let
+  nvimPkgs = pkgs.master;
+in
 {
   home = {
     sessionVariables = {
@@ -19,7 +22,7 @@
 
   programs.neovim = {
     enable = true;
-    package = pkgs.master.neovim-unwrapped;
+    package = nvimPkgs.neovim-unwrapped;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -37,7 +40,7 @@
       shfmt
       pkgs.shellcheck
     ];
-    plugins = pkgs.callPackage ./plugins.nix { pkgs = pkgs.master; };
+    plugins = pkgs.callPackage ./plugins.nix { pkgs = nvimPkgs; };
   };
 
   xdg.configFile =
