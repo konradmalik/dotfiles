@@ -2,6 +2,14 @@ local icons = require("konrad.icons").characters
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
+-- use spaces instead of tabs. Mostly useful for new files not in repos/isolated files etc.
+-- this happens rarely but happens. Most often I use either vim-sleuth (existing file/project)
+-- and/or .editorconfig (neovim loads it automatically)
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.smartindent = true
 -- Set highlight on search. Use :noh to disable until next search
 vim.o.hlsearch = true
 -- Make line numbers default
