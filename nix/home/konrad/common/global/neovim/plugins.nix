@@ -88,6 +88,5 @@ processMadePlugins (with source; [
   (makePlugin indent-blankline-nvim)
   (makePlugin nvim-luaref)
   (makePlugin { plugin = undotree; optional = true; })
-  (makePlugin vim-sleuth)
   (makePlugin which-key-nvim)
 ])
