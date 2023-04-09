@@ -6,6 +6,7 @@
     moreutils
     nq
     tree
+    unstable.trurl
     unzip
     wget
     zip
