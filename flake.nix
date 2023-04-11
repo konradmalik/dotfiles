@@ -6,8 +6,7 @@
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
       nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-      # nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-      nixpkgs-master.url = "github:GaetanLepage/nixpkgs/neovim";
+      nixpkgs-master.url = "github:NixOS/nixpkgs/master";
       nixpkgs-konradmalik.url = "github:konradmalik/nixpkgs/rtx";
       nixos-hardware.url = "github:NixOS/nixos-hardware/master";
       flake-utils.url = "github:numtide/flake-utils";
