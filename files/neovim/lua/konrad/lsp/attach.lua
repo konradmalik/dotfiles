@@ -26,6 +26,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local client_id = args.data.client_id
         local client = vim.lsp.get_client_by_id(client_id)
         local bufnr = args.buf
+
+        -- TODO ugly workaround because omnisharp does not implement semanticTokens properly
+        -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
+        if client.name == 'omnisharp' then
+            local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
+            for i, v in ipairs(tokenModifiers) do
+                tokenModifiers[i] = v:gsub(' ', '_')
+            end
+            local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
+            for i, v in ipairs(tokenTypes) do
+                tokenTypes[i] = v:gsub(' ', '_')
+            end
+        end
+
         on_attach(client, bufnr)
     end,
 })
