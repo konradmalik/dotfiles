@@ -31,13 +31,25 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
         if client.name == 'omnisharp' then
             local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
-            for i, v in ipairs(tokenModifiers) do
-                tokenModifiers[i] = v:gsub(' ', '_')
+            local replace = function(tab, i, v)
+                local nv = v:gsub('-', ' ')
+                tab[i] = nv:gsub("%s+", '_')
             end
+
+            for i, v in ipairs(tokenModifiers) do
+                P(v)
+                replace(tokenModifiers, i, v)
+                P(tokenModifiers[i])
+            end
+
             local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
             for i, v in ipairs(tokenTypes) do
-                tokenTypes[i] = v:gsub(' ', '_')
+                P(v)
+                replace(tokenTypes, i, v)
+                P(tokenTypes[i])
             end
+            -- P(tokenModifiers)
+            -- P(tokenTypes)
         end
 
         on_attach(client, bufnr)
