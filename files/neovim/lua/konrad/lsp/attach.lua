@@ -1,5 +1,6 @@
 local lsp = require("konrad.lsp.lsp")
 local navic = require("konrad.lsp.navic")
+local hacks = require("konrad.lsp.hacks")
 
 ---@param client table
 ---@param bufnr number
@@ -26,26 +27,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local client_id = args.data.client_id
         local client = vim.lsp.get_client_by_id(client_id)
         local bufnr = args.buf
-
-        -- TODO ugly workaround because omnisharp does not implement semanticTokens properly
-        -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
-        if client.name == 'omnisharp' then
-            local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
-            local replace = function(tab, i, v)
-                local nv = v:gsub('-', ' ')
-                tab[i] = nv:gsub("%s+", '_')
-            end
-
-            for i, v in ipairs(tokenModifiers) do
-                replace(tokenModifiers, i, v)
-            end
-
-            local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
-            for i, v in ipairs(tokenTypes) do
-                replace(tokenTypes, i, v)
-            end
-        end
-
+        -- run needed hacks per server
+        hacks(client)
         on_attach(client, bufnr)
     end,
 })
