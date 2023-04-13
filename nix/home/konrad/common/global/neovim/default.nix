@@ -1,6 +1,6 @@
 { config, pkgs, outputs, ... }:
 let
-  nvimPkgs = pkgs.master;
+  nvimPkgs = pkgs.unstable;
 in
 {
   home = {

@@ -37,19 +37,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
             end
 
             for i, v in ipairs(tokenModifiers) do
-                P(v)
                 replace(tokenModifiers, i, v)
-                P(tokenModifiers[i])
             end
 
             local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
             for i, v in ipairs(tokenTypes) do
-                P(v)
                 replace(tokenTypes, i, v)
-                P(tokenTypes[i])
             end
-            -- P(tokenModifiers)
-            -- P(tokenTypes)
         end
 
         on_attach(client, bufnr)
