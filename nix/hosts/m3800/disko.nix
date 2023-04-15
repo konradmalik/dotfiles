@@ -9,7 +9,6 @@
         partitions = [
           {
             name = "ESP";
-            type = "partition";
             start = "1MiB";
             end = "500MiB";
             bootable = true;
@@ -21,7 +20,6 @@
           }
           {
             name = "root";
-            type = "partition";
             start = "500MiB";
             end = "100%";
             part-type = "primary";
@@ -43,7 +41,6 @@
         partitions = [
           {
             name = "home";
-            type = "partition";
             start = "1MiB";
             end = "100%";
             part-type = "primary";
