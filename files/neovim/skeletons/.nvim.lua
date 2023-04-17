@@ -1,6 +1,7 @@
 -- CHANGEME: this is skeleton file from neovim
 local lsp = require("konrad.lsp")
 -- lsp.add("ansiblels")
+-- lsp.add("csharp_ls")
 -- lsp.add("gopls")
 -- lsp.add("jsonls")
 lsp.add("nil_ls")

@@ -48,6 +48,7 @@ local M = {}
 ---
 --- Common examples for LSP:
 ---      - ansiblels
+---      - csharp_ls
 ---      - gopls
 ---      - jsonls
 ---      - nil_ls
