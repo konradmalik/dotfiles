@@ -190,6 +190,7 @@ in
       # prime
       txs = "${pkgs.tmux-sessionizer}/bin/tmux-sessionizer";
       txw = "${pkgs.tmux-windowizer}/bin/tmux-windowizer";
+      txr = "${pkgs.tmux-switcher}/bin/tmux-switcher";
       # faster navigation
       ".." = "cd ..";
       "..." = "cd ../..";

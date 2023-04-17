@@ -2,15 +2,16 @@
 
 set -e
 
-active_sessions=$(tmux ls 2>/dev/null || echo "no sessions")
+active_sessions=$(tmux list-sessions 2>/dev/null || echo "no sessions")
 export active_sessions
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd . --type d --min-depth 1 --max-depth 4 ~/Code | fzf --preview 'echo "Selected session: $(basename {} | tr . _)\nActive sessions:\n$active_sessions"')
+    selected=$(fd . --type d --min-depth 1 --max-depth 4 ~/Code | fzf-tmux --preview 'echo "Selected session: $(basename {} | tr . _)\nActive sessions:\n$active_sessions"')
 fi
 
 if [[ -z $selected ]]; then
+    echo "nothing selected"
     exit 0
 fi
 

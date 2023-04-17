@@ -57,6 +57,9 @@ let
     # C-a will send the prefix directly to the remote session
     # C-A clashes with C-A in neovim!
     #bind-key -n C-a send-prefix
+
+    # tmux session switcher
+    bind-key r run-shell -b "${pkgs.tmux-switcher}/bin/tmux-switcher"
   '';
   themeConfig =
     let
