@@ -70,14 +70,6 @@ treesitter.setup({
     },
 })
 
--- maybe use UFO? https://github.com/kevinhwang91/nvim-ufo
--- treesitter based folding
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
--- this means - open all unfolded by default
-vim.opt.foldenable = false
--- vim.opt.foldlevel = 99
-
 local treesitter_context_ok, treesitter_context = pcall(require, "treesitter-context")
 if not treesitter_context_ok then
     vim.notify("cannot load treesitter-context")

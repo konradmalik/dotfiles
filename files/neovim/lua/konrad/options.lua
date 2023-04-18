@@ -1,4 +1,4 @@
-local icons = require("konrad.icons").characters
+local icons = require("konrad.icons")
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -37,12 +37,22 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
+-- keep foldcolumn on by default
+vim.wo.foldcolumn = "1"
+-- custom icons for foldcolumn
+vim.o.fillchars = "eob: ,fold: ,foldopen:" ..
+    icons.ui.FoldOpen .. ",foldsep:" .. icons.ui.Guide .. ",foldclose:" .. icons.ui.FoldClosed
+-- treesitter based folding
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+-- needs to be set to a high value to not fold everything at start
+vim.wo.foldlevel = 99
 -- show some hidden chars
-vim.o.list = true
-vim.o.listchars = table.concat({
-    "trail:" .. icons.Trail, "tab:" .. icons.Tab .. "-" .. icons.Tab,
-    "nbsp:" .. icons.Nbsp2, "extends:" .. icons.SlopeDown,
-    "precedes:" .. icons.SlopeUp
+vim.opt.list = true
+vim.opt.listchars = table.concat({
+    "trail:" .. icons.characters.Trail, "tab:" .. icons.characters.Tab .. "-" .. icons.characters.Tab,
+    "nbsp:" .. icons.characters.Nbsp2, "extends:" .. icons.characters.SlopeDown,
+    "precedes:" .. icons.characters.SlopeUp
 }, ",")
 -- Lines of context when scrolling
 vim.o.scrolloff = 8
@@ -59,7 +69,5 @@ vim.o.termguicolors = true
 -- highlight the current line
 vim.o.cursorline = true
 -- use ripgrep as grep program if available
-if vim.fn.executable("rg") == 1 then
-    vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
-    vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
-end
+vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
+vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
