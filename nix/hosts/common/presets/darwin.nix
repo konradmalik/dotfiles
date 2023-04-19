@@ -73,7 +73,6 @@
       GoodNotes = 1444383602;
       Pocket = 568494494;
       Tailscale = 1475387142;
-      WireGuard = 1451685025;
     };
   };
 
