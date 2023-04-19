@@ -30,12 +30,12 @@ in
 
   xdg.portal = {
     enable = true;
-    # hyprland has it's own fork which is automatically added via hyprland module
+    # hyprland has it's own fork which we add explicitly via extraPortals
     wlr.enable = !anyHyprlandEnabled;
     # gtk portal needed to make gtk apps happy
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
-    ];
+    ] ++ lib.optionals anyHyprlandEnabled [ inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland ];
   };
 
   hardware.opengl = {
