@@ -57,15 +57,22 @@
     , hyprland
     }@inputs:
     let
-      inherit (self) outputs;
-      specialArgs = { inherit inputs outputs; };
+      specialArgs = {
+        inherit inputs;
+        # provide only necessary outputs to avoid infinite recursion
+        outputs = {
+          inherit (self) homeManagerModules nixosModules overlays;
+        };
+        dotfiles = ./files;
+      };
     in
     flake-utils.lib.eachDefaultSystem
       (system:
-      let pkgs = nixpkgs.legacyPackages.${system}; in
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in
       {
         devShells = {
-          default = pkgs.callPackage ./nix/shell.nix { inherit inputs outputs; };
+          default = pkgs.callPackage ./nix/shell.nix { };
         };
         formatter = pkgs.nixpkgs-fmt;
         packages = (import ./nix/pkgs { inherit pkgs; }
@@ -76,7 +83,7 @@
             in
             {
               installer-iso = import ./nix/pkgs/special/installer-iso { inherit pkgs specialArgs; };
-              rpi4-1-sd-image = (self.nixosConfigurations.rpi4-2.extendModules {
+              rpi4-1-sd-image = (self.nixosConfigurations.rpi4-1.extendModules {
                 modules = [ rpiSdCard ];
               }).config.system.build.sdImage;
               rpi4-2-sd-image = (self.nixosConfigurations.rpi4-2.extendModules {
@@ -93,19 +100,17 @@
             in
             {
               darwin-builder = import ./nix/pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
+              # darwin-devnix = import ./nix/pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs; };
               darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
             }
           ));
       })
     //
     {
-      lib = {
-        dotfiles = ./files;
-      };
       homeManagerModules = import ./nix/modules/home-manager;
       nixosModules = import ./nix/modules/nixos;
-      templates = import ./nix/templates;
       overlays = import ./nix/overlays;
+      templates = import ./nix/templates;
 
       darwinConfigurations = {
         mbp13 = darwin.lib.darwinSystem {

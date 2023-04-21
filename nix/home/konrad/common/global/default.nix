@@ -22,7 +22,6 @@ in
     ./ranger.nix
     ./readline.nix
     ./shells.nix
-    ./sops.nix
     ./ssh-ingress.nix
     ./ssh-keys.nix
     ./starship.nix

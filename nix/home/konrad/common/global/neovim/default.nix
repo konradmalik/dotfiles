@@ -1,4 +1,4 @@
-{ config, pkgs, outputs, ... }:
+{ config, pkgs, dotfiles, ... }:
 let
   nvimPkgs = pkgs.unstable;
 in
@@ -46,7 +46,7 @@ in
   xdg.configFile =
     {
       "nvim" = {
-        source = "${outputs.lib.dotfiles}/neovim";
+        source = "${dotfiles}/neovim";
         recursive = true;
       };
 

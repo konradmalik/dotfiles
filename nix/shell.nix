@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, outputs }:
+{ pkgs, lib }:
 pkgs.mkShell {
   name = "dotfiles-shell";
 

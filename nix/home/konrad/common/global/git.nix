@@ -1,5 +1,4 @@
-{ pkgs, outputs, ... }:
-
+{ pkgs, dotfiles, ... }:
 {
   home.packages = with pkgs;
     [
@@ -79,7 +78,7 @@
       gpg = {
         format = "ssh";
         ssh = {
-          allowedSignersFile = "${outputs.lib.dotfiles}/ssh/allowed_signers";
+          allowedSignersFile = "${dotfiles}/ssh/allowed_signers";
         };
       };
 
