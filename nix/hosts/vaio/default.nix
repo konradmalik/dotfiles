@@ -13,6 +13,10 @@
     interfaces = [ "wlp2s0" ];
   };
 
+  konrad.services.autoupgrade = {
+    enable = true;
+  };
+
   # enable aarch64-linux emulation
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

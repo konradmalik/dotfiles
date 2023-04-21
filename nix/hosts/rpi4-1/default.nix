@@ -13,10 +13,15 @@
 
   networking.firewall.enable = false;
 
-  konrad.services.syncthing = {
-    enable = true;
-    user = "konrad";
-    bidirectional = false;
+  konrad.services = {
+    autoupgrade = {
+      enable = true;
+    };
+    syncthing = {
+      enable = true;
+      user = "konrad";
+      bidirectional = false;
+    };
   };
 
   systemd.services.hd-idle = {

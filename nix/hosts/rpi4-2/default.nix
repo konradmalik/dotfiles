@@ -11,5 +11,9 @@
     interfaces = [ "wlan0" ];
   };
 
+  konrad.services.autoupgrade = {
+    enable = true;
+  };
+
   networking.firewall.enable = false;
 }
