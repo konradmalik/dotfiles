@@ -130,23 +130,11 @@ in
     __txs() { ${pkgs.tmux-sessionizer}/bin/tmux-sessionizer }
     bindkey -s '^F' '^u__txs^M'
 
-    # fix for tmux ssh socket
-    fix_ssh_auth_sock() {
-        # (On) reverses globbing order
-        # https://unix.stackexchange.com/a/27400
-        for tsock in /tmp/ssh*/agent*(On); do
-            if [ -O "$tsock" ]; then
-                sock=$tsock
-                break
-            fi
-        done
-        if [ -n "$sock" ]; then
-            export SSH_AUTH_SOCK="$sock"
-            echo "New socket: $sock"
-        else
-            echo "Could not find appropriate socket :("
-            unset SSH_AUTH_SOCK
-        fi
+    # fix for ssh socket and display env var in tmux
+    # run after attaching to a remote session for a 2+ time if you need it
+    tmux-refresh() {
+        eval "$(tmux show-environment -s SSH_AUTH_SOCK)"
+        eval "$(tmux show-environment -s DISPLAY)"
     }
   '';
 }
