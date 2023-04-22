@@ -57,7 +57,7 @@ in
       enable = true;
       persistent = cfg.persistent;
       operation = cfg.operation;
-      flake = "${cfg.flakeUrl}#{cfg.hostname}";
+      flake = "${cfg.flakeUrl}#${cfg.hostname}";
       dates = cfg.dates;
       allowReboot = cfg.allowReboot;
       rebootWindow = {
