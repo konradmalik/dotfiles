@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, outputs, ... }:
+{ config, pkgs, lib, inputs, customArgs, ... }:
 let
   inherit (inputs.nix-colors) colorSchemes;
   inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) nixWallpaperFromScheme;
@@ -28,7 +28,7 @@ in
     ./tealdeer.nix
     ./tmux.nix
   ] ++ (builtins.attrValues (import ./../modules))
-  ++ (builtins.attrValues outputs.homeManagerModules);
+  ++ (builtins.attrValues customArgs.homeManagerModules);
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

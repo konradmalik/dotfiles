@@ -1,8 +1,8 @@
-{ pkgs, dotfiles, ... }:
+{ pkgs, customArgs, ... }:
 {
   home.packages = [ pkgs.ranger ];
   xdg.configFile."ranger" = {
-    source = "${dotfiles}/ranger";
+    source = "${customArgs.dotfiles}/ranger";
     recursive = true;
   };
 

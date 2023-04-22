@@ -1,8 +1,8 @@
-{ inputs, outputs, dotfiles, ... }:
+{ inputs, customArgs, ... }:
 {
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-    extraSpecialArgs = { inherit inputs outputs dotfiles; };
+    extraSpecialArgs = { inherit inputs customArgs; };
   };
 }

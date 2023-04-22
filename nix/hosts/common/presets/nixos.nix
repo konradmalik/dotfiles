@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, outputs, ... }:
+{ config, pkgs, lib, inputs, customArgs, ... }:
 let
   key = builtins.elemAt (builtins.filter (k: k.type == "ed25519") config.services.openssh.hostKeys) 0;
 in
@@ -18,7 +18,7 @@ in
 
     ./../users/konrad
   ] ++ (builtins.attrValues (import ./../modules))
-  ++ (builtins.attrValues outputs.nixosModules);
+  ++ (builtins.attrValues customArgs.nixosModules);
 
   # make tmp in ram
   # boot.tmpOnTmpfs = true;

@@ -7,18 +7,22 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-konradmalik.url = "github:konradmalik/nixpkgs/rtx";
+    darwin = {
+      # url = "github:lnl7/nix-darwin";
+      url = "github:konradmalik/nix-darwin/uri-builder-fix";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
 
-    darwin = {
-      # url = "github:lnl7/nix-darwin";
-      url = "github:konradmalik/nix-darwin/uri-builder-fix";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,10 +31,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.nixpkgs-stable.follows = "nixpkgs";
-    };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
     hyprland = {
@@ -46,24 +46,23 @@
     , nixpkgs-unstable
     , nixpkgs-master
     , nixpkgs-konradmalik
+    , darwin
     , nixos-hardware
+    , disko
     , flake-utils
     , flake-compat
-    , darwin
     , home-manager
     , sops-nix
-    , disko
     , nix-colors
     , hyprland
     }@inputs:
     let
       specialArgs = {
         inherit inputs;
-        # provide only necessary outputs to avoid infinite recursion
-        outputs = {
+        customArgs = {
           inherit (self) homeManagerModules nixosModules overlays;
+          dotfiles = ./files;
         };
-        dotfiles = ./files;
       };
     in
     flake-utils.lib.eachDefaultSystem

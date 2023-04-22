@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, outputs, ... }:
+{ config, pkgs, lib, inputs, customArgs, ... }:
 let
   # Add each flake input as a registry
   # To make nix3 commands consistent with the flake
@@ -12,8 +12,8 @@ in
 {
   nixpkgs = {
     overlays = [
-      outputs.overlays.modifications
-      outputs.overlays.additions
+      customArgs.overlays.modifications
+      customArgs.overlays.additions
 
       (final: prev: {
         unstable = import inputs.nixpkgs-unstable {
