@@ -75,6 +75,18 @@ in {
               StrictHostKeyChecking = "no";
             };
           };
+          # TODO
+        } // lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) {
+          devnix = {
+            host = "devnix";
+            hostname = "127.0.0.1";
+            port = 2222;
+            user = "konrad";
+            identityFile = "${config.home.homeDirectory}/.ssh/personal";
+            extraOptions = {
+              StrictHostKeyChecking = "no";
+            };
+          };
         };
       };
     }

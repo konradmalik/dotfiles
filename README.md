@@ -73,10 +73,10 @@ The filesystem won't be complete, it will miss `etc` and more. NixOS will popula
 
 So if you need to modify something on the card (like read host keys or add `wpa_supplicant.conf`) then the steps are:
 
-- boot rpi with the newly flashed card once
-- wait a minute or two
-- poweroff rpi and mount the card on your PC
-- filesystem will be complete
+-   boot rpi with the newly flashed card once
+-   wait a minute or two
+-   poweroff rpi and mount the card on your PC
+-   filesystem will be complete
 
 In our case, WiFi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
 
@@ -148,8 +148,8 @@ It is useful to have a linux builder on a MacOS machine to build linux-specific 
 
 NixOS has a great support for this. We need to:
 
-- set-up a remote builder
-- configure nix.buildMachines to use it
+-   set-up a remote builder
+-   configure nix.buildMachines to use it
 
 Starting with the latter, it's already done in my darwinConfiguration via nix-darwin, so let's go straight into the former.
 
@@ -191,6 +191,15 @@ Works similarly to Linux builder above:
 $ nix run .#darwin-docker
 ```
 
+#### devnix
+
+`devnix` is a VM designed mainly for linux-based development on darwin. It shares `Code` directory with the host and is
+exposed on port `2222`.
+
+```bash
+$ nix run .#devnix
+```
+
 `DOCKER_HOST` is already set globally in my darwin preset (home-manager).
 
 #### Pro tip for macos
@@ -203,6 +212,7 @@ Like that:
 ```bash
 $ nix build .#darwin-builder --out-link darwin-builder
 $ nix build .#darwin-docker --out-link darwin-docker
+$ nix build .#devnix --out-link devnix
 ```
 
 > Why not add them as packages to devshell or to the system? Well, github actions won't be able to build it :(
@@ -229,9 +239,9 @@ We use `age`, it's way easier and more straightforward than `gpg`.
 
 Strategy with keys:
 
-- `age` derived from host ssh key for host-wide secrets
-- `age` derived from personal ssh key for personal secrets
-- one global `age` key per person that is keps secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
+-   `age` derived from host ssh key for host-wide secrets
+-   `age` derived from personal ssh key for personal secrets
+-   one global `age` key per person that is keps secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
 
 Create `age` dir for sops:
 

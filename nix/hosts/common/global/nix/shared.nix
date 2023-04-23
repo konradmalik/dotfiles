@@ -34,7 +34,7 @@ in
     ];
     config = {
       allowUnfree = true;
-      # obsidian electron workaround
+      # TODO obsidian electron workaround
       permittedInsecurePackages = [
         "electron-21.4.0"
       ];
@@ -44,7 +44,7 @@ in
     inherit registry;
     package = pkgs.nix;
     settings = {
-      auto-optimise-store = true;
+      auto-optimise-store = lib.mkDefault true;
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
       keep-derivations = true;
       keep-outputs = true;

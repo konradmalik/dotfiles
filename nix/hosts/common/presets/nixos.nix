@@ -40,7 +40,7 @@ in
     systemPackages = with pkgs;[
       pciutils
     ];
-    pathsToLink = [ "/share" "/bin" ];
+    pathsToLink = [ "/bin" "/lib" "/man" "/share" ];
   };
 
   system.stateVersion = lib.mkDefault "22.11";

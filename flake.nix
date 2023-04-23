@@ -99,8 +99,8 @@
             in
             {
               darwin-builder = import ./nix/pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
-              # darwin-devnix = import ./nix/pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs; };
               darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
+              devnix = self.nixosConfigurations.devnix.config.system.build.vm;
             }
           ));
       })
@@ -139,6 +139,10 @@
         rpi4-2 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./nix/hosts/rpi4-2 ];
+        };
+        devnix = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./nix/hosts/devnix ];
         };
       };
 
