@@ -36,7 +36,7 @@ in
     dates = lib.mkOption {
       type = lib.types.str;
       example = "22:00";
-      default = "22:00";
+      default = "02:00";
       description = "systemd timer when to run upgrade";
     };
     rebootWindowLower = lib.mkOption {
