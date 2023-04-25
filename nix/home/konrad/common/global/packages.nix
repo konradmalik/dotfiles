@@ -7,6 +7,7 @@
     nq
     tree
     unstable.trurl
+    unrar
     unzip
     wget
     zip
