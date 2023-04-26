@@ -34,10 +34,6 @@ in
     ];
     config = {
       allowUnfree = true;
-      # TODO obsidian electron workaround
-      permittedInsecurePackages = [
-        "electron-21.4.0"
-      ];
     };
   };
   nix = {
