@@ -32,7 +32,10 @@ in
     withRuby = false;
     # plugin dependencies
     extraPackages = with pkgs; [
+      # gitsigns
+      git
       # telescope
+      fd
       fzf
       ripgrep
       # null-ls
