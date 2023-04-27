@@ -13,10 +13,11 @@ pkgs.mkShell {
     sumneko-lua-language-server
     nil
     # useful tools
-    git
+    manix
     nmap
-    #
+    # necessary tools
     age
+    git
     home-manager
     nix
     # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
