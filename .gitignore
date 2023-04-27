@@ -13,7 +13,7 @@ outputs
 /keys
 /darwin-builder
 /darwin-docker
-/devnix
+/darwin-devnix
 #nvim
 .netrwhist
 packer_compiled.vim

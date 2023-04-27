@@ -191,13 +191,13 @@ Works similarly to Linux builder above:
 $ nix run .#darwin-docker
 ```
 
-#### devnix
+#### darwin-devnix
 
-`devnix` is a VM designed mainly for linux-based development on darwin. It shares `Code` directory with the host and is
+`darwin-devnix` is a VM designed mainly for linux-based development on darwin. It shares `Code` directory with the host and is
 exposed on port `2222`.
 
 ```bash
-$ nix run .#devnix
+$ nix run .#darwin-devnix
 ```
 
 `DOCKER_HOST` is already set globally in my darwin preset (home-manager).
@@ -212,7 +212,7 @@ Like that:
 ```bash
 $ nix build .#darwin-builder --out-link darwin-builder
 $ nix build .#darwin-docker --out-link darwin-docker
-$ nix build .#devnix --out-link devnix
+$ nix build .#darwin-devnix --out-link darwin-devnix
 ```
 
 > Why not add them as packages to devshell or to the system? Well, github actions won't be able to build it :(

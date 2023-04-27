@@ -32,8 +32,6 @@ in
     age.sshKeyPaths = [ key.path ];
   };
 
-  programs.zsh.enable = true;
-
   services.fwupd.enable = true;
 
   environment = {
