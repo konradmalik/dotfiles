@@ -8,8 +8,7 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-konradmalik.url = "github:konradmalik/nixpkgs/rtx";
     darwin = {
-      # url = "github:lnl7/nix-darwin";
-      url = "github:konradmalik/nix-darwin/uri-builder-fix";
+      url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
