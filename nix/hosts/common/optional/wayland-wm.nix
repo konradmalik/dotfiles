@@ -15,7 +15,6 @@ in
     # but enable only if hyprland in hm is enabled
     hyprland = {
       enable = anyHyprlandEnabled;
-      package = null;
     };
   };
 
