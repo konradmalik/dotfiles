@@ -1,6 +1,6 @@
 local lsp = require("konrad.lsp.lsp")
 local navic = require("konrad.lsp.navic")
-local hacks = require("konrad.lsp.hacks")
+local hacks = require("konrad.lsp.after_attach_hacks")
 
 ---@param client table
 ---@param bufnr number
