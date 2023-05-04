@@ -1,8 +1,11 @@
----TODO ugly workaround because omnisharp does not implement semanticTokens properly
----https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
----needs to be called after Attach as those tokens come from the server itself
 ---@param client table
 local function omnisharp(client)
+    -- disable codelens for omnisharp because it makes it extremely slow
+    client.server_capabilities.codeLensProvider = nil
+
+    ---TODO ugly workaround because omnisharp does not implement semanticTokens properly
+    ---https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
+    ---needs to be called after Attach as those tokens come from the server itself
     local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
     local replace = function(tab, i, v)
         local nv = v:gsub('-', ' ')
