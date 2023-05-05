@@ -3,8 +3,7 @@ vim.loader.enable()
 
 require("konrad.globals")
 require("konrad.options")
--- disabled until treesitter-based ones work ok: https://github.com/neovim/neovim/issues/14977
---require("konrad.folding")
+require("konrad.folding")
 require("konrad.keymaps")
 
 require("konrad.diagnostic")

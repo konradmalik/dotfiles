@@ -8,8 +8,7 @@ vim.o.fillchars = "eob: ,fold: ,foldopen:" ..
 -- treesitter based folding
 vim.wo.foldmethod = "indent"
 -- treesitter based folding
--- (disabled for now, as it appears inconsistently on file open, can be removed by lsp format etc..)
--- vim.wo.foldmethod = "expr"
--- vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 -- needs to be set to a high value to not fold everything at start
 vim.wo.foldlevel = 99
