@@ -15,6 +15,7 @@
 
   konrad.services.autoupgrade = {
     enable = true;
+    dates = "8:30";
   };
 
   # enable aarch64-linux emulation
