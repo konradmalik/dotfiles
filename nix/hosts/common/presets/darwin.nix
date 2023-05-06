@@ -24,9 +24,6 @@
         PermitRootLogin no
         PasswordAuthentication no
         ChallengeResponseAuthentication no
-        # TODO this won't work, see: https://github.com/NixOS/nixpkgs/issues/94653
-        #AuthorizedKeysCommand /usr/local/bin/ssh-key-dir %u
-        AuthorizedKeysCommandUser root
       '';
     };
   };
