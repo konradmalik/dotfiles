@@ -8,7 +8,7 @@ end
 return function(group)
     vim.api.nvim_create_autocmd("InsertEnter", {
         group = group,
-        desc = "Lazily initialize copilot",
+        desc = "Lazily initialize snippets completion",
         once = true,
         callback = initialize,
     })
