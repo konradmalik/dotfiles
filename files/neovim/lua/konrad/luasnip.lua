@@ -11,3 +11,20 @@ ls.add_snippets("yaml", {
         text("# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/all.json")
     }),
 })
+
+ls.add_snippets("all", {
+    snip({
+        trig = "shrug",
+        name = "ascii shrug",
+        dscr = "shrug when you have nothing better to say",
+    }, {
+        text("¯\\_(ツ)_/¯")
+    }),
+    snip({
+        trig = "rageflip",
+        name = "ascii rageflip",
+        dscr = "rageflip when you have enough",
+    }, {
+        text("(╯°□°)╯彡┻━┻")
+    }),
+})
