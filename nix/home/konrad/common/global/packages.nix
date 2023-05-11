@@ -1,7 +1,6 @@
 { pkgs, lib, ... }:
 {
   home.packages = with pkgs;[
-    curl
     dnsutils
     moreutils
     nq

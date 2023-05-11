@@ -10,6 +10,7 @@ in
 
     ./bat.nix
     ./btop.nix
+    ./curl.nix
     ./direnv.nix
     ./earthly.nix
     ./fzf.nix
