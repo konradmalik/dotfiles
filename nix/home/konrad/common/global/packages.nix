@@ -3,7 +3,7 @@
   home.packages = with pkgs;[
     dnsutils
     moreutils
-    nq
+    #nq
     tree
     unstable.trurl
     unar
@@ -22,6 +22,7 @@
     watchexec
 
     age
+    fq
     dsq
     jc
     jo
@@ -47,5 +48,6 @@
     shfmt
   ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
     psmisc
+    trace-cmd
   ];
 }
