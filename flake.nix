@@ -24,7 +24,10 @@
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+      };
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
