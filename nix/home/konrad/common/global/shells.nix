@@ -43,7 +43,6 @@ let
         nix flake new -t github:konradmalik/dotfiles#default .
       fi
       direnv allow
-      ''${VISUAL:-vim} flake.nix
     }
 
     # credit to https://github.com/MatthewCroughan/nixcfg
