@@ -1,4 +1,4 @@
-{ pkgs, customArgs, ... }:
+{ config, pkgs, customArgs, ... }:
 {
   home.packages = with pkgs;
     [
@@ -12,6 +12,7 @@
     ignores = [
       ".DS_Store"
     ];
+
     delta = {
       enable = true;
       options = {
@@ -24,8 +25,30 @@
         dark = true;
       };
     };
-    userName = "Konrad Malik";
-    userEmail = "konrad.malik@gmail.com";
+
+    includes = [
+      {
+        condition = "gitdir/i:~/Code/";
+        contents = {
+          user = {
+            email = "konrad.malik@gmail.com";
+            name = "Konrad Malik";
+            signingKey = "${config.home.homeDirectory}/.ssh/personal.pub";
+          };
+        };
+      }
+      {
+        condition = "gitdir/i:~/Code/gitlab.cerebredev.com/";
+        contents = {
+          user = {
+            email = "konrad@cerebre.io";
+            name = "Konrad Malik";
+            signingKey = "${config.home.homeDirectory}/.ssh/personal.pub";
+          };
+        };
+      }
+    ];
+
     aliases = {
       graph = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
       root = "rev-parse --show-toplevel";
@@ -75,6 +98,10 @@
         fsmonitor = true;
       };
 
+      commit = {
+        gpgSign = true;
+      };
+
       gpg = {
         format = "ssh";
         ssh = {
@@ -117,6 +144,10 @@
 
       rebase = {
         autosquash = true;
+      };
+
+      tag = {
+        gpgSign = true;
       };
 
       worktree = {

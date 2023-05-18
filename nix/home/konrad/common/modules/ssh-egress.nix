@@ -13,16 +13,6 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      # TODO:
-      # 1. move this to git.nix (enable only for trusted? or always?)
-      # 2. split into cerebre and personal https://markentier.tech/posts/2021/02/github-with-multiple-profiles-gpg-ssh-keys/
-      #    also: https://rycee.gitlab.io/home-manager/options.html#opt-programs.git.includes
-      # 3. cleverly choose ssh key (something with gpg.ssh.defaultKeyCommand="ssh-add -L")
-      programs.git.signing = {
-        key = "${config.home.homeDirectory}/.ssh/personal";
-        signByDefault = true;
-      };
-
       programs.ssh = {
         enable = true;
         compression = true;
