@@ -4,6 +4,7 @@
     dnsutils
     moreutils
     #nq
+    unstable.progress
     tree
     unstable.trurl
     unar
