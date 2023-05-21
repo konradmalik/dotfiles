@@ -16,7 +16,6 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -26,7 +25,6 @@
       url = "github:nix-community/home-manager/release-22.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        utils.follows = "flake-utils";
       };
     };
     sops-nix = {
@@ -51,7 +49,6 @@
     , darwin
     , nixos-hardware
     , disko
-    , flake-utils
     , flake-compat
     , home-manager
     , sops-nix
@@ -59,6 +56,14 @@
     , hyprland
     }@inputs:
     let
+      forAllSystems = function:
+        nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "aarch64-linux"
+          "x86_64-darwin"
+        ]
+          (system: function nixpkgs.legacyPackages.${system});
+
       specialArgs = {
         inherit inputs;
         customArgs = {
@@ -67,47 +72,41 @@
         };
       };
     in
-    flake-utils.lib.eachDefaultSystem
-      (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        devShells = {
-          default = pkgs.callPackage ./nix/shell.nix { };
-        };
-        formatter = pkgs.nixpkgs-fmt;
-        packages = (import ./nix/pkgs { inherit pkgs; }
-        // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "linux" system)
-          (
-            let
-              rpiSdCard = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
-            in
-            {
-              installer-iso = import ./nix/pkgs/special/installer-iso { inherit pkgs specialArgs; };
-              rpi4-1-sd-image = (self.nixosConfigurations.rpi4-1.extendModules {
-                modules = [ rpiSdCard ];
-              }).config.system.build.sdImage;
-              rpi4-2-sd-image = (self.nixosConfigurations.rpi4-2.extendModules {
-                modules = [ rpiSdCard ];
-              }).config.system.build.sdImage;
-            }
-          )
-        // pkgs.lib.optionalAttrs (pkgs.lib.hasSuffix "darwin" system)
-          (
-            let
-              hostPkgs = nixpkgs-darwin.legacyPackages.${system};
-              toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
-              guestPkgs = nixpkgs.legacyPackages.${toGuest system};
-            in
-            {
-              darwin-builder = import ./nix/pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
-              darwin-devnix = import ./nix/pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs specialArgs; };
-              darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
-            }
-          ));
-      })
-    //
     {
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.callPackage ./nix/shell.nix { };
+      });
+      packages = forAllSystems (pkgs: (import ./nix/pkgs { inherit pkgs; }
+        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux)
+        (
+          let
+            rpiSdCard = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
+          in
+          {
+            installer-iso = import ./nix/pkgs/special/installer-iso { inherit pkgs specialArgs; };
+            rpi4-1-sd-image = (self.nixosConfigurations.rpi4-1.extendModules {
+              modules = [ rpiSdCard ];
+            }).config.system.build.sdImage;
+            rpi4-2-sd-image = (self.nixosConfigurations.rpi4-2.extendModules {
+              modules = [ rpiSdCard ];
+            }).config.system.build.sdImage;
+          }
+        )
+        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin)
+        (
+          let
+            hostPkgs = nixpkgs-darwin.legacyPackages.${pkgs.system};
+            toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
+            guestPkgs = nixpkgs.legacyPackages.${toGuest pkgs.system};
+          in
+          {
+            darwin-builder = import ./nix/pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
+            darwin-devnix = import ./nix/pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs specialArgs; };
+            darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
+          }
+        )));
+      formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
+
       homeManagerModules = import ./nix/modules/home-manager;
       nixosModules = import ./nix/modules/nixos;
       overlays = import ./nix/overlays;
