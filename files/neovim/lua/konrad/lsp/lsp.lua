@@ -217,11 +217,23 @@ M.attach = function(client, bufnr)
         vim.cmd('packadd lsp-inlayhints.nvim')
         local inlayhints_ok, inlayhints = pcall(require, 'lsp-inlayhints')
         if inlayhints_ok then
-            inlayhints.on_attach(client, bufnr)
-
-            vim.api.nvim_create_user_command('InlayHintsReset',
-                inlayhints.reset, { desc = "Enable/disable inlayhints with lsp",
+            local inlayhints_is_enabled = true;
+            vim.api.nvim_create_user_command('InlayHintsToggle',
+                function()
+                    inlayhints_is_enabled = not inlayhints_is_enabled
+                    inlayhints.toggle()
+                    if inlayhints_is_enabled then
+                        inlayhints.show()
+                    else
+                        inlayhints.reset()
+                    end
+                    print('Setting inlayhints to: ' .. tostring(inlayhints_is_enabled))
+                end, {
+                desc = "Enable/disable inlayhints with lsp",
             })
+
+            inlayhints.setup({ enabled_at_startup = inlayhints_is_enabled })
+            inlayhints.on_attach(client, bufnr)
         end
     end
 
