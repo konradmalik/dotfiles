@@ -37,7 +37,17 @@ processMadePlugins (with source; [
   # lsp
   (makePlugin {
     plugin = nvim-lspconfig;
-    dependencies = [ null-ls-nvim neodev-nvim fidget-nvim plenary-nvim SchemaStore-nvim ];
+    dependencies = [
+      null-ls-nvim
+      neodev-nvim
+      fidget-nvim
+      plenary-nvim
+      SchemaStore-nvim
+      {
+        plugin = lsp-inlayhints-nvim;
+        optional = true;
+      }
+    ];
   })
   # dap
   (makePlugin {
