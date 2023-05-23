@@ -25,6 +25,7 @@ in {
           AddKeysToAgent yes
         '' + optionalString pkgs.stdenvNoCC.isDarwin
           ''
+            IgnoreUnknown UseKeychain
             UseKeychain yes
           '';
 
