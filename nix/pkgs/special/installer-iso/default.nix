@@ -10,6 +10,7 @@ let
         )
         (import ./module.nix)
       ];
+    system = "x86_64-linux";
     inherit specialArgs;
   };
 in

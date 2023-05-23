@@ -43,14 +43,13 @@ in
   };
 
   users.users = {
-    ${user}.uid = 501;
     root.password = "";
   };
   services.getty.autologinUser = "root";
 
   system = {
     name = "darwin-devnix";
-    stateVersion = "22.11";
+    stateVersion = "23.05";
   };
 
   virtualisation = {

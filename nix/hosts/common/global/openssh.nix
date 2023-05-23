@@ -2,8 +2,6 @@
 {
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = lib.mkDefault "no";
     ports = [ 22 ];
     # disable rsa keys
     hostKeys = [{
@@ -15,7 +13,11 @@
       StreamLocalBindUnlink yes
     '';
     # Allow forwarding ports to everywhere
-    gatewayPorts = "clientspecified";
+    settings = {
+      GatewayPorts = "clientspecified";
+      PasswordAuthentication = false;
+      PermitRootLogin = lib.mkDefault "no";
+    };
   };
 
   # Passwordless sudo when SSH'ing with keys

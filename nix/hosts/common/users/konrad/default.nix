@@ -18,6 +18,9 @@ in
     };
   };
 
+  # required if users use zsh
+  programs.zsh.enable = true;
+
   sops.secrets.konrad-password = {
     sopsFile = ./secrets.yaml;
     neededForUsers = true;

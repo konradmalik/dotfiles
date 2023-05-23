@@ -20,11 +20,8 @@ in
   ] ++ (builtins.attrValues (import ./../modules))
   ++ (builtins.attrValues customArgs.nixosModules);
 
-  # make tmp in ram
-  # boot.tmpOnTmpfs = true;
-  # boot.tmpOnTmpfsSize = "25%";
   # clean tmp after reboot
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   # shared sops config
   sops = {
@@ -41,5 +38,5 @@ in
     pathsToLink = [ "/bin" "/lib" "/man" "/share" ];
   };
 
-  system.stateVersion = lib.mkDefault "22.11";
+  system.stateVersion = lib.mkDefault "23.05";
 }

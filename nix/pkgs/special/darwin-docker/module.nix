@@ -23,16 +23,18 @@ in
 
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
-  users.users.root.openssh.authorizedKeys.keys = keys;
-  users.extraUsers.root.password = "";
+  users.users.root = {
+    openssh.authorizedKeys.keys = keys;
+    password = "";
+  };
   users.mutableUsers = false;
-  services.openssh.permitRootLogin = "yes";
+  services.openssh.settings.PermitRootLogin = "yes";
 
   services.getty.autologinUser = "root";
 
   system = {
     name = lib.mkDefault "darwin-docker";
-    stateVersion = lib.mkDefault "22.11";
+    stateVersion = lib.mkDefault "23.05";
   };
 
   virtualisation = {

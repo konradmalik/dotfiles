@@ -38,7 +38,7 @@ in
   home = {
     username = lib.mkDefault "konrad";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
-    stateVersion = lib.mkDefault "22.11";
+    stateVersion = lib.mkDefault "23.05";
 
     sessionVariables = {
       LANG = "en_US.UTF-8";

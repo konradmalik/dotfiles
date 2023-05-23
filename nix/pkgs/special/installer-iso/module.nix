@@ -22,8 +22,10 @@
 
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
     ports = [ 22 ];
+    settings = {
+      passwordAuthentication = false;
+    };
   };
 
   networking.firewall = {

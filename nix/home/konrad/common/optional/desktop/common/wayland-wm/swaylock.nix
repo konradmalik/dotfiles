@@ -1,8 +1,12 @@
 { config, pkgs, ... }:
-let inherit (config.colorscheme) colors;
-in {
-  home.packages = [ pkgs.swaylock-effects ];
+let
+  inherit (config.colorscheme) colors;
+  swaylock = pkgs.swaylock-effects;
+in
+{
+  home.packages = [ swaylock ];
   programs.swaylock = {
+    package = swaylock;
     settings = {
       effect-blur = "20x3";
       fade-in = 0.1;
