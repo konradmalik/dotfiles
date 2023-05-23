@@ -108,7 +108,7 @@ in
           on-click = calendar;
         };
         cpu = {
-          format = "   {usage}%";
+          format = "  {usage}%";
           on-click = systemMonitor;
         };
         memory = {
@@ -125,8 +125,8 @@ in
           format-source-muted = "  0%";
           format-icons = {
             headphone = " ";
-            headset = " ";
-            hands-free = "響";
+            headset = "󰋎 ";
+            hands-free = "󰋎 ";
             portable = " ";
             phone = " ";
             car = " ";
@@ -137,8 +137,8 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "零";
-            deactivated = "鈴";
+            activated = "󰒳 ";
+            deactivated = "󰒲 ";
           };
         };
         backlight = {
@@ -149,11 +149,11 @@ in
         };
         battery = {
           bat = "BAT1";
-          interval = 10;
-          format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
+          interval = 20;
+          format-icons = [ " " " " " " " " " " ];
           format = "{icon} {capacity}%";
-          format-charging = " {capacity}%";
-          format-plugged = "  {capacity}% ";
+          format-charging = "󰂄 {capacity}%";
+          format-plugged = "󰚥 {capacity}% ";
           states = {
             full = 95;
             good = 50;
@@ -168,44 +168,14 @@ in
         network = {
           interval = 3;
           format-wifi = "  {essid}";
-          format-ethernet = " Connected";
-          format-disconnected = " Disconnected";
+          format-ethernet = "󰈀 Connected";
+          format-disconnected = "󰖪 Disconnected";
           format-linked = "  {ifname} (No IP)";
           tooltip-format = ''
             {ifname}
             {ipaddr}/{cidr}
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
-          on-click = "";
-        };
-        "custom/tailscale-ping" = {
-          interval = 2;
-          return-type = "json";
-          exec =
-            let
-              targets = {
-                electra = { host = "electra"; icon = " "; };
-                merope = { host = "merope"; icon = " "; };
-                atlas = { host = "atlas"; icon = " "; };
-                maia = { host = "maia"; icon = " "; };
-                pleione = { host = "pleione"; icon = " "; };
-              };
-
-              showPingCompact = { host, icon }: "${icon} $ping_${host}";
-              showPingLarge = { host, icon }: "${icon} ${host}: $ping_${host}";
-              setPing = { host, ... }: ''
-                ping_${host}="$(timeout 2 ping -c 1 -q ${host} 2>/dev/null | tail -1 | cut -d '/' -f5 | cut -d '.' -f1)ms" || ping_${host}="Disconnected"
-              '';
-            in
-            jsonOutput "tailscale-ping" {
-              pre = ''
-                set -o pipefail
-                ${builtins.concatStringsSep "\n" (map setPing (builtins.attrValues targets))}
-              '';
-              text = "${showPingCompact targets.electra} / ${showPingCompact targets.merope}";
-              tooltip = builtins.concatStringsSep "\n" (map showPingLarge (builtins.attrValues targets));
-            };
-          format = "{}";
           on-click = "";
         };
         "custom/menu" = {
@@ -236,8 +206,8 @@ in
           };
           format = "{icon}";
           format-icons = {
-            "activating" = " ";
-            "deactivating" = " ";
+            "activating" = "󰖛 ";
+            "deactivating" = "󰖜 ";
             "inactive" = "? ";
             "active (Night)" = " ";
             "active (Nighttime)" = " ";
@@ -270,13 +240,9 @@ in
           format = "{icon}{}";
           format-icons = {
             "No player active" = " ";
-            "spotify" = " 阮";
-            "ncspot" = " 阮";
-            "qutebrowser" = "爵";
+            "spotify" = " ";
             "firefox" = " ";
-            "discord" = " ﭮ ";
-            "sublimemusic" = " ";
-            "kdeconnect" = " ";
+            "discord" = "󰙯 ";
           };
           on-click = "${playerctld} shift";
           on-click-right = "${playerctld} unshift";
@@ -289,9 +255,9 @@ in
           max-length = 30;
           format = "{icon} {}";
           format-icons = {
-            "Playing" = "契";
-            "Paused" = " ";
-            "Stopped" = "栗";
+            "Playing" = " ";
+            "Paused" = " ";
+            "Stopped" = "";
           };
           on-click = "${playerctl} play-pause";
         };
