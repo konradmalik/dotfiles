@@ -14,8 +14,7 @@
     ripgrep
     ripgrep-all
     fd
-    # fix for aarch64 is only on unstable as of now
-    unstable.sad
+    sad
     sd
 
     hyperfine
