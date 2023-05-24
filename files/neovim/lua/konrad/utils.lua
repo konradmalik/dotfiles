@@ -29,6 +29,13 @@ function utils.has_bins(...)
     return true
 end
 
+---@param String string
+---@param Start string
+---@return boolean
+function utils.stringstarts(String, Start)
+    return string.sub(String, 1, string.len(Start)) == Start
+end
+
 ---@param name string
 ---@param packadds string[]
 ---@param fun function

@@ -1,12 +1,15 @@
 local utils = require("konrad.utils")
+local telescope_ok, telescope = pcall(require, 'telescope.builtin')
+
+local keymap_prefix = "[LSP]"
 
 local M = {}
-local telescope_ok, telescope = pcall(require, 'telescope.builtin')
 
 -- client id to group id mapping
 local _augroups = {}
 
 ---@param client table
+---@return integer
 local get_augroup = function(client)
     if not _augroups[client.id] then
         local group_name = 'personal-lsp-' .. client.name
@@ -15,6 +18,22 @@ local get_augroup = function(client)
         return group
     end
     return _augroups[client.id]
+end
+
+-- client-id to command name
+local commands = {};
+-- client id to buf command name (don't need to store buf here since del requires a buf arg so we won't delete stuff by
+-- accident)
+local buf_commands = {};
+
+---@param ttable table
+---@param key any
+---@param value any
+local insert_into_nested = function(ttable, key, value)
+    if not ttable[key] then
+        ttable[key] = {}
+    end
+    table.insert(ttable[key], value)
 end
 
 M.get_augroup = get_augroup
@@ -28,12 +47,26 @@ M.detach = function(client, bufnr)
         vim.api.nvim_del_autocmd(aucmd.id)
     end
 
+    for _, cmd in ipairs(commands[client.id]) do
+        vim.api.nvim_del_user_command(cmd)
+    end
+
+    for _, buf_cmd in ipairs(buf_commands[client.id]) do
+        vim.api.nvim_buf_del_user_command(bufnr, buf_cmd)
+    end
+
     for _, mode in ipairs({ 'n', 'i', 'v' }) do
         local keymaps = vim.api.nvim_buf_get_keymap(bufnr, mode)
         for _, keymap in ipairs(keymaps) do
-            vim.api.nvim_buf_del_keymap(bufnr, mode, keymap.lhs)
+            if utils.stringstarts(keymap.desc, keymap_prefix) then
+                vim.api.nvim_buf_del_keymap(bufnr, mode, keymap.lhs)
+            end
         end
     end
+
+    vim.lsp.codelens.clear()
+    local inlayhints_ok, inlayhints = pcall(require, 'lsp-inlayhints')
+    if inlayhints_ok then inlayhints.reset() end
 end
 M.attach = function(client, bufnr)
     local capabilities = client.server_capabilities
@@ -45,7 +78,7 @@ M.attach = function(client, bufnr)
     -- Mappings.
     local opts = { buffer = bufnr, noremap = true, silent = true }
     local opts_with_desc = function(desc)
-        return vim.tbl_extend("error", opts, { desc = "[LSP] " .. desc })
+        return vim.tbl_extend("error", opts, { desc = keymap_prefix .. " " .. desc })
     end
 
     if capabilities.codeActionProvider then
@@ -54,7 +87,9 @@ M.attach = function(client, bufnr)
 
     if capabilities.codeLensProvider then
         local codelens_is_enabled = true;
-        vim.api.nvim_create_user_command('CodeLensToggle',
+        local command = "CodeLensToggle"
+        insert_into_nested(commands, client.id, command)
+        vim.api.nvim_create_user_command(command,
             function()
                 codelens_is_enabled = not codelens_is_enabled
                 if not codelens_is_enabled then
@@ -62,8 +97,8 @@ M.attach = function(client, bufnr)
                 end
                 print('Setting codelens to: ' .. tostring(codelens_is_enabled))
             end, {
-            desc = "Enable/disable codelens with lsp",
-        })
+                desc = "Enable/disable codelens with lsp",
+            })
 
         vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
             group = augroup,
@@ -75,11 +110,14 @@ M.attach = function(client, bufnr)
             end,
             desc = "Refresh codelens",
         })
+        -- refresh now as well
         vim.lsp.codelens.refresh()
-        vim.api.nvim_buf_create_user_command(bufnr, 'CodeLensRefresh', vim.lsp.codelens.refresh,
+
+        command = "CodeLensRefresh"
+        insert_into_nested(buf_commands, client.id, command)
+        vim.api.nvim_buf_create_user_command(bufnr, command, vim.lsp.codelens.refresh,
             { desc = 'Refresh codelens for the current buffer' })
         vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, opts_with_desc("CodeLens run"))
-
     end
 
     -- why this check here?
@@ -93,13 +131,15 @@ M.attach = function(client, bufnr)
 
     if properDocumentFormattingProvider then
         local format_is_enabled = true;
-        vim.api.nvim_create_user_command('AutoFormatToggle',
+        local command = "AutoFormatToggle"
+        insert_into_nested(commands, client.id, command)
+        vim.api.nvim_create_user_command(command,
             function()
                 format_is_enabled = not format_is_enabled
                 print('Setting autoformatting to: ' .. tostring(format_is_enabled))
             end, {
-            desc = "Enable/disable autoformat with lsp",
-        })
+                desc = "Enable/disable autoformat with lsp",
+            })
 
         vim.api.nvim_create_autocmd('BufWritePre', {
             desc = "AutoFormat on save",
@@ -117,7 +157,9 @@ M.attach = function(client, bufnr)
                 end
             end,
         })
-        vim.api.nvim_buf_create_user_command(bufnr, 'Format',
+        command = "Format"
+        insert_into_nested(buf_commands, client.id, command)
+        vim.api.nvim_buf_create_user_command(bufnr, command,
             function()
                 vim.lsp.buf.format({
                     async = false,
@@ -130,7 +172,9 @@ M.attach = function(client, bufnr)
 
     if capabilities.documentHighlightProvider then
         local highlight_is_enabled = true;
-        vim.api.nvim_create_user_command('DocumentHighlightToggle',
+        local command = "DocumentHighlightToggle"
+        insert_into_nested(commands, client.id, command)
+        vim.api.nvim_create_user_command(command,
             function()
                 highlight_is_enabled = not highlight_is_enabled
                 if not highlight_is_enabled then
@@ -138,8 +182,8 @@ M.attach = function(client, bufnr)
                 end
                 print('Setting document highlight to: ' .. tostring(highlight_is_enabled))
             end, {
-            desc = "Enable/disable highlight word under cursor with lsp",
-        })
+                desc = "Enable/disable highlight word under cursor with lsp",
+            })
 
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             group = augroup,
@@ -218,7 +262,9 @@ M.attach = function(client, bufnr)
         local inlayhints_ok, inlayhints = pcall(require, 'lsp-inlayhints')
         if inlayhints_ok then
             local inlayhints_is_enabled = true;
-            vim.api.nvim_create_user_command('InlayHintsToggle',
+            local command = "InlayHintsToggle"
+            insert_into_nested(commands, client.id, command)
+            vim.api.nvim_create_user_command(command,
                 function()
                     inlayhints_is_enabled = not inlayhints_is_enabled
                     inlayhints.toggle()
@@ -229,8 +275,8 @@ M.attach = function(client, bufnr)
                     end
                     print('Setting inlayhints to: ' .. tostring(inlayhints_is_enabled))
                 end, {
-                desc = "Enable/disable inlayhints with lsp",
-            })
+                    desc = "Enable/disable inlayhints with lsp",
+                })
 
             inlayhints.setup({ enabled_at_startup = inlayhints_is_enabled })
             inlayhints.on_attach(client, bufnr)
@@ -241,7 +287,6 @@ M.attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts_with_desc("Remove Workspace Folder"))
     vim.keymap.set("n", "<leader>wl", function() P(vim.lsp.buf.list_workspace_folders()) end,
         opts_with_desc("List Workspace Folders"))
-
 end
 
 return M
