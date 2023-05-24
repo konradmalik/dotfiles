@@ -44,22 +44,22 @@ M.detach = function(client, bufnr)
         buffer = bufnr,
     })
     for _, aucmd in ipairs(aucmds) do
-        vim.api.nvim_del_autocmd(aucmd.id)
+        pcall(vim.api.nvim_del_autocmd, aucmd.id)
     end
 
     for _, cmd in ipairs(commands[client.id]) do
-        vim.api.nvim_del_user_command(cmd)
+        pcall(vim.api.nvim_del_user_command, cmd)
     end
 
     for _, buf_cmd in ipairs(buf_commands[client.id]) do
-        vim.api.nvim_buf_del_user_command(bufnr, buf_cmd)
+        pcall(vim.api.nvim_buf_del_user_command, bufnr, buf_cmd)
     end
 
     for _, mode in ipairs({ 'n', 'i', 'v' }) do
         local keymaps = vim.api.nvim_buf_get_keymap(bufnr, mode)
         for _, keymap in ipairs(keymaps) do
             if utils.stringstarts(keymap.desc, keymap_prefix) then
-                vim.api.nvim_buf_del_keymap(bufnr, mode, keymap.lhs)
+                pcall(vim.api.nvim_buf_del_keymap, bufnr, mode, keymap.lhs)
             end
         end
     end
