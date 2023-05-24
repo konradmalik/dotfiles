@@ -4,8 +4,8 @@ let
   swaylock = pkgs.swaylock-effects;
 in
 {
-  home.packages = [ swaylock ];
   programs.swaylock = {
+    enable = true;
     package = swaylock;
     settings = {
       effect-blur = "20x3";
