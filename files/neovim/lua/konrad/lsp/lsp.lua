@@ -47,12 +47,18 @@ M.detach = function(client, bufnr)
         pcall(vim.api.nvim_del_autocmd, aucmd.id)
     end
 
-    for _, cmd in ipairs(commands[client.id]) do
-        pcall(vim.api.nvim_del_user_command, cmd)
+    local client_commands = commands[client.id]
+    if client_commands then
+        for _, cmd in ipairs(client_commands) do
+            pcall(vim.api.nvim_del_user_command, cmd)
+        end
     end
 
-    for _, buf_cmd in ipairs(buf_commands[client.id]) do
-        pcall(vim.api.nvim_buf_del_user_command, bufnr, buf_cmd)
+    local client_buf_commands = buf_commands[client.id]
+    if client_buf_commands then
+        for _, buf_cmd in ipairs(client_buf_commands) do
+            pcall(vim.api.nvim_buf_del_user_command, bufnr, buf_cmd)
+        end
     end
 
     for _, mode in ipairs({ 'n', 'i', 'v' }) do
