@@ -20,7 +20,6 @@ in
     ./khal.nix
     ./neovim
     ./packages.nix
-    ./ranger.nix
     ./readline.nix
     ./shells.nix
     ./sops.nix

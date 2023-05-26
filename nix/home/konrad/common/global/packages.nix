@@ -20,6 +20,7 @@
     hyperfine
     viddy
     watchexec
+    joshuto
 
     age
     fq
