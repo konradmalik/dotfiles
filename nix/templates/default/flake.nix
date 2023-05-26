@@ -10,7 +10,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }:
     let
       mkOverlay = input: name: (final: prev: {
         "${name}" = import input {
