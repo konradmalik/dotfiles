@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs;[
     dnsutils
+    file
     moreutils
     #nq
     unstable.progress
