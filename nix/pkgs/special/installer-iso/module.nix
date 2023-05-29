@@ -24,7 +24,7 @@
     enable = true;
     ports = [ 22 ];
     settings = {
-      passwordAuthentication = false;
+      PasswordAuthentication = false;
     };
   };
 
