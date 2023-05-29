@@ -12,6 +12,7 @@
               name = "boot";
               start = "1MiB";
               end = "500MiB";
+              part-type = "primary";
               bootable = true;
               content = {
                 type = "filesystem";
@@ -21,9 +22,9 @@
             }
             {
               name = "root";
-              part-type = "primary";
               start = "500MiB";
               end = "100%";
+              part-type = "primary";
               content = {
                 type = "filesystem";
                 format = "ext4";
