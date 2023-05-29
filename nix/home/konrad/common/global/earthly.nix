@@ -8,5 +8,9 @@
       cache_size_mb: 40000
       disable_analytics: true
       conversion_parallelism: 5
+    git:
+        repositories.gitlab.cerebredev.com:
+            auth: ssh
+            user: git
   '';
 }
