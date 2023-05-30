@@ -43,6 +43,7 @@ in
         margin-top = 10;
         margin-left = 10;
         margin-right = 10;
+        height = 30;
         position = "top";
         modules-center = (lib.optionals config.wayland.windowManager.sway.enable [
           "sway/workspaces"
@@ -66,6 +67,7 @@ in
         margin-top = 10;
         margin-left = 10;
         margin-right = 10;
+        height = 30;
         modules-left = [
           "custom/menu"
           "idle_inhibitor"

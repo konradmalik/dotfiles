@@ -22,7 +22,8 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      # url = "github:nix-community/home-manager/release-23.05";
+      url = "github:fufexan/home-manager/hyprland";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -33,10 +34,6 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.25.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -53,7 +50,6 @@
     , home-manager
     , sops-nix
     , nix-colors
-    , hyprland
     }@inputs:
     let
       forAllSystems = function:
@@ -156,12 +152,10 @@
     extra-trusted-substituters = [
       "https://konradmalik.cachix.org"
       "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "konradmalik.cachix.org-1:9REXmCYRwPNL0kAB0IMeTxnMB1Gl9VY5I8w7UVBTtSI="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs"
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 }

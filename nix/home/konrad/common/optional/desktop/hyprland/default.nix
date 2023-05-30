@@ -1,8 +1,7 @@
-{ inputs, lib, config, pkgs, osConfig, ... }: {
+{ lib, config, pkgs, osConfig, ... }: {
   imports = [
     ../common
     ../common/wayland-wm
-    inputs.hyprland.homeManagerModules.default
   ];
 
   assertions = [
@@ -15,8 +14,6 @@
   home.packages = with pkgs; [
     swaybg
   ];
-
-  programs.waybar.package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
 
   wayland.windowManager.hyprland = {
     enable = true;

@@ -1,14 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 let
   allHmUsers = builtins.attrNames config.home-manager.users;
   anyHyprlandEnabled = builtins.any (user: config.home-manager.users.${user}.wayland.windowManager.hyprland.enable) allHmUsers;
   anyGnomeKeyringEnabled = builtins.any (user: config.home-manager.users.${user}.services.gnome-keyring.enable) allHmUsers;
 in
 {
-  imports = [
-    inputs.hyprland.nixosModules.default
-  ];
-
   programs = {
     light.enable = true;
     # enable hyprland defaults without installing the package
@@ -34,7 +30,7 @@ in
     # gtk portal needed to make gtk apps happy
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
-    ] ++ lib.optionals anyHyprlandEnabled [ inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland ];
+    ] ++ lib.optionals anyHyprlandEnabled [ pkgs.xdg-desktop-portal-hyprland ];
   };
 
   hardware.opengl = {
