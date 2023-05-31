@@ -44,7 +44,7 @@
 
             packages = with pkgs; [
               # formatters/linters
-              pkgs.nixpkgs-fmt
+              nixpkgs-fmt
               # language-servers
               nil
             ];
