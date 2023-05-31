@@ -72,10 +72,11 @@ M.detach = function(client, bufnr)
         end
     end
 
-    vim.lsp.codelens.clear()
+    pcall(vim.lsp.codelens.clear)
     local inlayhints_ok, inlayhints = pcall(require, 'lsp-inlayhints')
     if inlayhints_ok then inlayhints.reset() end
 end
+
 M.attach = function(client, bufnr)
     local capabilities = client.server_capabilities
     local augroup = get_augroup(client)
