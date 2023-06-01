@@ -52,6 +52,8 @@
         volume_normalisation = true;
         device_name = "rpi4-1";
         device_type = "speaker";
+        use_keyring = false;
+        use_mpris = false;
       };
     };
   };
