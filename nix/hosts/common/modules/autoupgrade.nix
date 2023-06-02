@@ -7,7 +7,7 @@ in
     enable = lib.mkEnableOption "Whether to enable autoupgrade from Github flake";
     persistent = lib.mkOption {
       type = lib.types.bool;
-      default = false;
+      default = true;
       description = "whether to run if missed when the system was powered down";
     };
     allowReboot = lib.mkOption {
