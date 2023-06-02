@@ -2,7 +2,7 @@
   general {
     gaps_in=5
     gaps_out=10
-    border_size=2.7
+    border_size=2
     col.active_border=0xff${colorscheme.colors.base0C}
     col.inactive_border=0xff${colorscheme.colors.base02}
     col.group_border_active=0xff${colorscheme.colors.base0B}
@@ -11,39 +11,37 @@
     layout=dwindle
   }
   decoration {
-    active_opacity=0.9
-    inactive_opacity=0.8
-    fullscreen_opacity=1.0
-    rounding=5
-    blur=true
-    blur_size=6
-    blur_passes=3
-    blur_new_optimizations=true
-    blur_ignore_opacity=true
-    drop_shadow=true
-    shadow_range=12
-    shadow_offset=3 3
-    col.shadow=0x44000000
-    col.shadow_inactive=0x66000000
+    rounding = 10
+
+    blur = false
+    blur_size = 3
+    blur_passes = 1
+    blur_new_optimizations = true
+
+    drop_shadow = false
+    shadow_ignore_window = true
+    shadow_offset = 0 5
+    shadow_range = 50
+    shadow_render_power = 3
+    col.shadow = rgba(00000099)
   }
   animations {
-    enabled=true
-    bezier=easein,0.11, 0, 0.5, 0
-    bezier=easeout,0.5, 1, 0.89, 1
-    bezier=easeinout,0.45, 0, 0.55, 1
-    animation=windowsIn,1,3,easeout,popin 80%
-    animation=windowsOut,1,3,easein,popin 80%
-    animation=windowsMove,1,2,easeout
-    animation=fadeIn,1,2,easeout
-    animation=fadeOut,1,2,easein
-    animation=fadeSwitch,1,2,easeout
-    animation=fadeShadow,1,2,easeout
-    animation=fadeDim,1,2,easeout
-    animation=border,1,2,easeout
-    animation=workspaces,1,2,easeout,slide
+    enabled = false
+    animation = border, 1, 2, default
+    animation = fade, 1, 4, default
+    animation = windows, 1, 3, default, popin 80%
+    animation = workspaces, 1, 2, default, slide
   }
   dwindle {
-    split_width_multiplier=1.35
+    # keep floating dimentions while tiling
+    pseudotile = true
+    preserve_split = true
+  }
+  misc {
+    # disable auto polling for config file changes
+    disable_autoreload = true
+    # disable dragging animation
+    animate_mouse_windowdragging = false
   }
   input {
     kb_layout=us,pl
