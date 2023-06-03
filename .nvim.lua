@@ -1,5 +1,6 @@
 local lsp = require("konrad.lsp")
 lsp.add("nil_ls")
+-- lsp.add("nixd")
 lsp.add("lua_ls")
 
 local null = require("null-ls")

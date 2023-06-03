@@ -34,6 +34,10 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
+    nixd = {
+      url = "github:nix-community/nixd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -50,6 +54,7 @@
     , home-manager
     , sops-nix
     , nix-colors
+    , nixd
     }@inputs:
     let
       forAllSystems = function:
@@ -58,7 +63,16 @@
           "aarch64-linux"
           "x86_64-darwin"
         ]
-          (system: function nixpkgs.legacyPackages.${system});
+          (system:
+            function (import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+              overlays = [
+                (final: prev: {
+                  nixd = inputs.nixd.packages.${final.system}.default;
+                })
+              ];
+            }));
 
       specialArgs = {
         inherit inputs;
