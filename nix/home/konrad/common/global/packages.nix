@@ -3,6 +3,7 @@
   home.packages = with pkgs;[
     dnsutils
     file
+    inetutils
     moreutils
     #nq
     unstable.progress
@@ -39,7 +40,6 @@
     croc
     gh
     glab
-    # konradmalik.rtx
     up
 
     rfv
