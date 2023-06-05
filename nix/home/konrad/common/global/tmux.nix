@@ -121,6 +121,10 @@ in
     plugins = [ ];
   };
 
+  programs.git.ignores = [
+    ".tmux.sh"
+  ];
+
   programs.fzf.tmux.enableShellIntegration = true;
 
   programs.zsh.initExtra = ''

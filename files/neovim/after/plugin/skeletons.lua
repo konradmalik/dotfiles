@@ -14,8 +14,24 @@ vim.api.nvim_create_autocmd({ "BufNewFile" }, {
 
 vim.api.nvim_create_autocmd({ "BufNewFile" }, {
     group    = group,
+    pattern  = ".tmux.sh",
+    callback = function()
+        insert_skeleton(".tmux.sh")
+    end
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile" }, {
+    group    = group,
     pattern  = ".editorconfig",
     callback = function()
         insert_skeleton(".editorconfig")
+    end
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile" }, {
+    group    = group,
+    pattern  = "flake.nix",
+    callback = function()
+        insert_skeleton("flake.nix")
     end
 })

@@ -2,6 +2,8 @@
 
 set -e
 
+tmux_script_name=".tmux.sh"
+
 active_sessions=$(tmux list-sessions 2>/dev/null || echo "no sessions")
 export active_sessions
 if [[ $# -eq 1 ]]; then
@@ -21,6 +23,11 @@ if ! tmux has-session -t="$selected_name" 2>/dev/null; then
     # if not such session, create
     # use $() to avoid SHLVL increase
     $(tmux new-session -ds "$selected_name" -c "$selected")
+
+    # try to execute script if exists
+    if [ -f "$selected/$tmux_script_name" ]; then
+        "$selected/$tmux_script_name" "$selected_name"
+    fi
 fi
 
 # at this point we have a session, now figure out how to connect
