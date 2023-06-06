@@ -41,7 +41,7 @@ in
       # null-ls
       nodePackages.prettier
       shfmt
-      pkgs.shellcheck
+      shellcheck
     ];
     plugins = pkgs.callPackage ./plugins.nix { pkgs = nvimPkgs; };
   };
