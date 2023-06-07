@@ -12,7 +12,6 @@ pkgs.mkShell {
     nodePackages.yaml-language-server
     sumneko-lua-language-server
     nil
-    nixd
     # useful tools
     manix
     nmap

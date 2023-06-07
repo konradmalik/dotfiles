@@ -16,10 +16,6 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
 
     home-manager = {
       # url = "github:nix-community/home-manager/release-23.05";
@@ -34,10 +30,6 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
-    nixd = {
-      url = "github:nix-community/nixd";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -50,11 +42,9 @@
     , darwin
     , nixos-hardware
     , disko
-    , flake-compat
     , home-manager
     , sops-nix
     , nix-colors
-    , nixd
     }@inputs:
     let
       forAllSystems = function:
@@ -67,11 +57,6 @@
             function (import nixpkgs {
               inherit system;
               config.allowUnfree = true;
-              overlays = [
-                (final: prev: {
-                  nixd = inputs.nixd.packages.${final.system}.default;
-                })
-              ];
             }));
 
       specialArgs = {
