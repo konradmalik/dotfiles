@@ -16,6 +16,12 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim = {
+      url = "github:konradmalik/neovim-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+      };
+    };
 
     home-manager = {
       # url = "github:nix-community/home-manager/release-23.05";
@@ -42,6 +48,7 @@
     , darwin
     , nixos-hardware
     , disko
+    , neovim
     , home-manager
     , sops-nix
     , nix-colors

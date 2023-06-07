@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, inputs, pkgs, lib, ... }:
 {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
+
   home.sessionVariables =
     # I want to have it in the same place as on linux
     lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {

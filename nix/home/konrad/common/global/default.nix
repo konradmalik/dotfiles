@@ -6,7 +6,6 @@ in
 {
   imports = [
     inputs.nix-colors.homeManagerModule
-    inputs.sops-nix.homeManagerModules.sops
 
     ./bat.nix
     ./btop.nix
@@ -18,7 +17,7 @@ in
     ./glow.nix
     ./k9s.nix
     ./khal.nix
-    ./neovim
+    ./neovim.nix
     ./packages.nix
     ./readline.nix
     ./shells.nix

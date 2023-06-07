@@ -10,7 +10,6 @@ pkgs.mkShell {
     nixpkgs-fmt
     # language servers
     nodePackages.yaml-language-server
-    sumneko-lua-language-server
     nil
     # useful tools
     manix

@@ -56,6 +56,21 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -74,6 +89,70 @@
         "owner": "fufexan",
         "ref": "hyprland",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "mini-base16": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1683463477,
+        "narHash": "sha256-dP1lDEQ++HLoz1ald75HnEYtv4BLC3mLD+vqIwM6x6M=",
+        "owner": "echasnovski",
+        "repo": "mini.base16",
+        "rev": "577219204f2e29ff4e2095c979409d5498d7c226",
+        "type": "github"
+      },
+      "original": {
+        "owner": "echasnovski",
+        "repo": "mini.base16",
+        "type": "github"
+      }
+    },
+    "neovim": {
+      "inputs": {
+        "mini-base16": "mini-base16",
+        "neovim": "neovim_2",
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "nvim-luaref": "nvim-luaref"
+      },
+      "locked": {
+        "lastModified": 1686162672,
+        "narHash": "sha256-F4v5Fhvwx9L0fZgoHAEBO2n7oOHLX0UqK71DosJ+oYQ=",
+        "owner": "konradmalik",
+        "repo": "neovim-flake",
+        "rev": "49b407f9bb161e6f91df921e1d2165faccf4706d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "konradmalik",
+        "repo": "neovim-flake",
+        "type": "github"
+      }
+    },
+    "neovim_2": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "neovim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "contrib",
+        "lastModified": 1685359478,
+        "narHash": "sha256-G51qD7GklEn0JrneKSSqDDx0Odi7W2FjdQc0ZDE9ZK4=",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "7d4bba7aa7a4a3444919ea7a3804094c290395ef",
+        "type": "github"
+      },
+      "original": {
+        "dir": "contrib",
+        "owner": "neovim",
+        "ref": "stable",
+        "repo": "neovim",
         "type": "github"
       }
     },
@@ -207,11 +286,28 @@
         "type": "github"
       }
     },
+    "nvim-luaref": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1645064202,
+        "narHash": "sha256-nmsKg1Ah67fhGzevTFMlncwLX9gN0JkR7Woi0T5On34=",
+        "owner": "milisims",
+        "repo": "nvim-luaref",
+        "rev": "9cd3ed50d5752ffd56d88dd9e395ddd3dc2c7127",
+        "type": "github"
+      },
+      "original": {
+        "owner": "milisims",
+        "repo": "nvim-luaref",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
         "disko": "disko",
         "home-manager": "home-manager",
+        "neovim": "neovim",
         "nix-colors": "nix-colors",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
