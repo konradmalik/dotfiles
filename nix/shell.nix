@@ -9,7 +9,6 @@ pkgs.mkShell {
     # linters,formatters
     nixpkgs-fmt
     # language servers
-    nodePackages.yaml-language-server
     nil
     # useful tools
     manix

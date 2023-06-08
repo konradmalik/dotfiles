@@ -4,6 +4,7 @@
   ];
   programs.neovim-pde = {
     enable = true;
+    appName = "neovim-pde-hm";
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
