@@ -8,6 +8,12 @@
   nixpkgs.pkgs = guestPkgs;
 
   virtualisation = {
+    darwin-builder = {
+      diskSize = 20 * 1024;
+      memorySize = 3 * 1024;
+      hostPort = 22;
+    };
+
     host.pkgs = hostPkgs;
     diskImage = "./VMs/darwin-builder.qcow2";
   };

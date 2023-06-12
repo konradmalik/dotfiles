@@ -43,6 +43,15 @@ in
   };
 
   users.users = {
+    ${user} = {
+      # because we need uid < 1000
+      # (to mach macos uid and avoid permission problems)
+      isSystemUser = true;
+      isNormalUser = lib.mkForce false;
+      group = "users";
+      useDefaultShell = true;
+      uid = 501;
+    };
     root.password = "";
   };
   services.getty.autologinUser = "root";
