@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, config, ... }: {
   imports = [
     inputs.neovim.homeManagerModules.default
   ];
@@ -10,6 +10,7 @@
     vimdiffAlias = true;
     simpleDefaultEditor = true;
     extendGitIgnores = true;
-    colorscheme = "catppuccin-macchiato";
+    colorscheme = config.colorscheme.slug;
+    palette = config.colorscheme.colors;
   };
 }
