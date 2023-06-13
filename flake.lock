@@ -118,11 +118,11 @@
         "nvim-luaref": "nvim-luaref"
       },
       "locked": {
-        "lastModified": 1686644900,
-        "narHash": "sha256-wMAiktGLR8R4Cx4pFGGFs8p8WqLfPmFon93+02YXFVk=",
+        "lastModified": 1686650249,
+        "narHash": "sha256-MM0eYkN67gXA3WBoayGNX/SeuuBk6OvRmUHE6cOV9mE=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "4a15cc9fe1097894ca043985e1f3fa3889d5a804",
+        "rev": "30456a059b848b867856f81d6cbe60f59fb6f564",
         "type": "github"
       },
       "original": {
@@ -141,17 +141,17 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1685359478,
-        "narHash": "sha256-G51qD7GklEn0JrneKSSqDDx0Odi7W2FjdQc0ZDE9ZK4=",
+        "lastModified": 1686493597,
+        "narHash": "sha256-i+5UAPKh1eVXCwA3cnTRQi1y669ZIQmgARq7/8rL0f0=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "7d4bba7aa7a4a3444919ea7a3804094c290395ef",
+        "rev": "3d06b6c6af138de8c769a93801625f4c3beab88c",
         "type": "github"
       },
       "original": {
         "dir": "contrib",
         "owner": "neovim",
-        "ref": "stable",
+        "ref": "release-0.9",
         "repo": "neovim",
         "type": "github"
       }
@@ -256,11 +256,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1686587774,
-        "narHash": "sha256-XlpqWh5qn8gqryLUfIAzFZccQ+AItRhKqwIrppNVQQM=",
+        "lastModified": 1686649934,
+        "narHash": "sha256-nwjkwWxMqZpVhoIZWcNB5p1Ijk08kTe5wCNxIC0tQvQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3b0f5393d9eb3a90ce4e4b0ed8d671a5ac977a46",
+        "rev": "3fc89747ed3abb658cef013c3345b22f4ed99b2e",
         "type": "github"
       },
       "original": {
