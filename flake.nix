@@ -4,9 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-konradmalik.url = "github:konradmalik/nixpkgs/rtx";
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -24,8 +23,7 @@
     };
 
     home-manager = {
-      # url = "github:nix-community/home-manager/release-23.05";
-      url = "github:fufexan/home-manager/hyprland";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -36,6 +34,10 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
+    hyprland = {
+      url = "github:hyprwm/Hyprland/v0.26.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -44,7 +46,6 @@
     , nixpkgs-darwin
     , nixpkgs-unstable
     , nixpkgs-master
-    , nixpkgs-konradmalik
     , darwin
     , nixos-hardware
     , disko
@@ -52,6 +53,7 @@
     , home-manager
     , sops-nix
     , nix-colors
+    , hyprland
     }@inputs:
     let
       forAllSystems = function:

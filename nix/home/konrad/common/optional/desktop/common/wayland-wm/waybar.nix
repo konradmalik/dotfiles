@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 let
   inherit (pkgs.lib) optionals;
@@ -36,6 +36,7 @@ in
 {
   programs.waybar = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
     settings = {
       secondary = {
         output = builtins.map (m: m.name) (builtins.filter (m: !m.isPrimary) config.monitors);

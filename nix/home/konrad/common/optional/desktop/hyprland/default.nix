@@ -1,7 +1,9 @@
-{ lib, config, pkgs, osConfig, ... }: {
+{ inputs, lib, config, pkgs, osConfig, ... }: {
   imports = [
     ../common
     ../common/wayland-wm
+
+    inputs.hyprland.homeManagerModules.default
   ];
 
   assertions = [

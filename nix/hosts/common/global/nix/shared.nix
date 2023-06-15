@@ -25,11 +25,6 @@ in
           system = final.system;
           config = final.config;
         };
-
-        konradmalik = import inputs.nixpkgs-konradmalik {
-          system = final.system;
-          config = final.config;
-        };
       })
     ];
     config = {

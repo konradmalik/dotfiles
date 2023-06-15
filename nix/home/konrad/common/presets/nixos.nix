@@ -3,6 +3,7 @@
   imports = [
     ./../global
   ];
+
   programs.zsh = {
     shellAliases = {
       pbcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
