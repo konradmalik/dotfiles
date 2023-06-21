@@ -171,6 +171,7 @@ in
 
       rebase = {
         autosquash = true;
+        rebaseMerges = true;
       };
 
       tag = {
