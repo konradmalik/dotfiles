@@ -156,7 +156,9 @@
     "neovim": {
       "inputs": {
         "mini-base16": "mini-base16",
-        "neovim": "neovim_2",
+        "neovim": [
+          "neovim-source"
+        ],
         "nixpkgs": [
           "nixpkgs-unstable"
         ],
@@ -176,21 +178,20 @@
         "type": "github"
       }
     },
-    "neovim_2": {
+    "neovim-source": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "neovim",
-          "nixpkgs"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1686871086,
-        "narHash": "sha256-2JPGdMZjja07OBKPR3JW03JzKBzwnjWzFQaA6Wo3asY=",
+        "lastModified": 1687165272,
+        "narHash": "sha256-xsG5AYCL8tDpnqZvXWeVE4rX/DVPh3WpGerYoCF0yY8=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "d9a76056bbed41e64471bf84b599176d532dfb7c",
+        "rev": "b9a513ae1105078b79a9b54a15161d5f304a07c9",
         "type": "github"
       },
       "original": {
@@ -338,6 +339,7 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "neovim": "neovim",
+        "neovim-source": "neovim-source",
         "nix-colors": "nix-colors",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
