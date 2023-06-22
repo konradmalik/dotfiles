@@ -51,7 +51,7 @@ in
     ];
 
     aliases = {
-      graph = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative";
+      graph = "git log --graph --oneline --decorate --abbrev-commit";
       root = "rev-parse --show-toplevel";
       unstage = "reset HEAD --";
       last = "log --name-status HEAD^..HEAD";
