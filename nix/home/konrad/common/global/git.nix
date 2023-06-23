@@ -1,6 +1,27 @@
 { config, pkgs, lib, customArgs, ... }:
 let
   localSshSigningKey = "${config.home.homeDirectory}/.ssh/personal.pub";
+  git-commit-template = pkgs.writeText "git-commit-template" ''
+    # If applied, this commit will...
+
+
+    # Explain why this change is being made
+
+    # Provide links to any relevant tickets, articles or other resources
+
+    #------------------------------------------------@---------------------*
+    #
+    # Remember the seven rules of a great Git commit message:
+    #   - Separate subject from body with a blank line
+    #   - Limit the subject line to 50 characters (@)
+    #   - Capitalize the subject line
+    #   - Do not end the subject line with a period
+    #   - Use the imperative mood in the subject line
+    #   - Wrap the body at 72 characters (*)
+    #   - Use the body to explain what and why vs. how
+    #
+    # More info: https://chris.beams.io/posts/git-commit/
+  '';
 in
 {
   home.packages = with pkgs;
@@ -101,6 +122,7 @@ in
 
       commit = {
         gpgSign = true;
+        template = "${git-commit-template}";
       };
 
       gpg = {
