@@ -2,8 +2,8 @@
   fontProfiles = {
     enable = true;
     monospace = {
-      family = "Hack Nerd Font";
-      package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+      family = "IosevkaTerm Nerd Font";
+      package = pkgs.nerdfonts.override { fonts = [ "IosevkaTerm" ]; };
       size = lib.mkDefault 13;
     };
     regular = {
