@@ -97,6 +97,7 @@ in
       core = {
         autocrlf = "input";
         fsmonitor = true;
+        untrackedcache = true;
       };
 
       commit = {
