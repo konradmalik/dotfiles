@@ -56,6 +56,23 @@
         "type": "github"
       }
     },
+    "fidget-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1686378433,
+        "narHash": "sha256-N3O/AvsD6Ckd62kDEN4z/K5A3SZNR15DnQeZhH6/Rr0=",
+        "owner": "j-hui",
+        "repo": "fidget.nvim",
+        "rev": "90c22e47be057562ee9566bad313ad42d622c1d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "j-hui",
+        "ref": "legacy",
+        "repo": "fidget.nvim",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1667395993,
@@ -155,6 +172,7 @@
     },
     "neovim": {
       "inputs": {
+        "fidget-nvim": "fidget-nvim",
         "mini-base16": "mini-base16",
         "neovim": [
           "neovim-source"
@@ -165,11 +183,11 @@
         "nvim-luaref": "nvim-luaref"
       },
       "locked": {
-        "lastModified": 1687940628,
-        "narHash": "sha256-ZheBxYMmTKJYUO506AjB4acwCF3H7Wu4Qgfht3EDEKg=",
+        "lastModified": 1687981903,
+        "narHash": "sha256-YJ6UuXsDLJGHdGhB06fIVR0pzDuYNvFSGyfFHmSGT8o=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "e1a1fbb30db9c716648bc38ecb6b0463b808bb89",
+        "rev": "1969dcb34b326cf09169f57c32382ae3d954cc9d",
         "type": "github"
       },
       "original": {
@@ -187,11 +205,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1687754221,
-        "narHash": "sha256-2QN9T/EB1CdHO9KpunzSzez8n+W7KZFglwB/P+8Emb0=",
+        "lastModified": 1687955695,
+        "narHash": "sha256-Gwr7sU4kAsjcjIYRp/J8fg1VctfXnPSfExWbtECdKTg=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "213a5204ee8cae8e736ef05106b3ca7debf8d0c8",
+        "rev": "c8bd1d131f74ca765862eb12867093d5488c04a8",
         "type": "github"
       },
       "original": {
@@ -286,11 +304,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1687940426,
-        "narHash": "sha256-PYx4EqDdb50WR6yZnawb0M4mq4Zomy9psW/svQX6K8Y=",
+        "lastModified": 1687962348,
+        "narHash": "sha256-LN4ty2KLmdMqZaVVBsB34zSh6M69DWUrmFi3X7jkda0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "85eecbe18081bb9c5b15edda481138da5f38b9b7",
+        "rev": "e9782f715dd40e35476f2723fb1b7c232288c6b7",
         "type": "github"
       },
       "original": {
