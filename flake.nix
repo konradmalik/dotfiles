@@ -84,9 +84,33 @@
       };
     in
     {
-      devShells = forAllSystems (pkgs: {
-        default = pkgs.callPackage ./nix/shell.nix { };
-      });
+      devShells = forAllSystems
+        (pkgs: {
+          default = pkgs.mkShell
+            {
+              name = "dotfiles";
+              # Enable experimental features without having to specify the argument
+              NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+              packages = with pkgs; [
+                # linters,formatters
+                nixpkgs-fmt
+                # language servers
+                nil
+                # useful tools
+                manix
+                nmap
+                # necessary tools
+                age
+                git
+                pkgs.home-manager
+                nix
+                # https://discourse.nixos.org/t/how-to-run-nixos-rebuild-target-host-from-darwin/9488/3
+                nixos-rebuild
+                sops
+                ssh-to-age
+              ];
+            };
+        });
       packages = forAllSystems (pkgs: (import ./nix/pkgs { inherit pkgs; }
         // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux)
         (
