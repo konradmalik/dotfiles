@@ -1,6 +1,15 @@
-{ config, pkgs, lib, customArgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   localSshSigningKey = "${config.home.homeDirectory}/.ssh/personal.pub";
+  allowedSigners = pkgs.writeText "allowed_signers"
+    ''
+      # m3800
+      konrad.malik@gmail.com,konrad@cerebre.io namespaces="git",valid-after="20221227",valid-before="20230108" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0lM5i9YyDbO7wZQvywEWFbr09wQnhQpobbdZBII0gV7zXM9sBIQODiqRqZt+7Qln+udMwKDofhNPWfnbR0TWrN44HKSdNSYaCcJYm9lEElkdVMw5H0kMVYDbitiGKCQg+BTERWFM57nLlrDJf/y5YBx7tDLL4ajWZXklgJVL4gYQxy6TeAutS/5wpR1ndOQZfToshfAP9HNZ2hJUDvAhyTYv2F9KY49neeL+eJ8GSKjriAZp3IsUUYxWZMdjspmmZ9XmtJIWc0pStuTGy5gTBxhNR8Kuv74EXG+bTf4maB+i7UwNatJiRS4CtKyMQbU0rdzs2ttfYwJf+3PCl/HBSB4qlHiEE/SVBZXY/3tOdfswoIDihzsVkvMDdbj2Rm0CetiYWWdeXnLrA+fgLjo9dtyuLnnQ734BZy7lk33mQTzSMIpThiznzXfveg2fowjiZ/ZoxEMR52UdTnl+rxUyIE38ChbT7ifjEF6jur5tToXfKStMiaVs1XHI/ifaGdHE= konrad@m3800
+      konrad.malik@gmail.com,konrad@cerebre.io namespaces="git",valid-after="20230108" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIcUBQiF/k6vA4YyBgbw05SDWGidAOZYbsUVP4Tv4pzp konrad@m3800
+      # mbp13
+      konrad.malik@gmail.com,konrad@cerebre.io namespaces="git",valid-after="20221227",valid-before="20230108" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvctuFgvgc8xdgFci03ftgADd00HHgiSDsLCvij4KZJXxk/IJ/jloRn1cRO4i16l+FKxun5iip3ePL3B9ivbuEdM1bUnhyM2C1sz85BGzOzZRT2zqzuVqkQmIJJ0y3YTZ7BohJNSwyYCHDrLNLD8TowNGUH8+5R52mbHupTSxqkdOo9jHZHh3zdxdttJwTkChLdz8UX0wgVx9JxwT4BwcMeLRYkHHEDKG9+uEYxsbNzRp4/LuS6ENKV9IVU0zAJcPVR55/cHZxDktVhQ75tddFT6wnYvNLjL6KqBsuOclTNbAfoo30w2WWZll2qFeOQun7rJStcNy1XMkl69/Xd7wUS81LfvL32qU9UzE9NBRz8HfKTKoyWwnJYtTC9kHybPVwobdyBZjs7rv8lCXV8TbFb+8aV3L6jC65FP2QQUw7CR1Nmi89NehUY+MeDOBuE6jIT1lsHznfYdpjdRY0tIAOrtQT+NxTQIuDzWq0DDScyJeGoSxRqRdUcRQSA6OMewk= konrad@mbp13
+      konrad.malik@gmail.com,konrad@cerebre.io namespaces="git",valid-after="20230108" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGDg7JoFuhpys7a8Y0Tbyo1tk8w9T2oqpGjiGkGxSAsr konrad@mbp13
+    '';
 in
 {
   home.packages = with pkgs;
@@ -130,7 +139,7 @@ in
             '';
           in
           {
-            allowedSignersFile = "${customArgs.dotfiles}/ssh/allowed_signers";
+            allowedSignersFile = "${allowedSigners}";
             defaultKeyCommand = "${getSshSigningKey}";
           };
       };
