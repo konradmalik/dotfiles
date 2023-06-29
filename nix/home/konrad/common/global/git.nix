@@ -66,13 +66,15 @@ in
       cam = "commit -a -m";
       m = "commit --amend --verbose";
 
-      f = "fetch";
-
       d = "diff";
       ds = "diff --stat";
       dc = "diff --cached";
       dl = "diff HEAD^..HEAD";
 
+      g = "graph";
+      l = "log";
+
+      f = "fetch";
       p = "push";
       pl = "pull";
 
