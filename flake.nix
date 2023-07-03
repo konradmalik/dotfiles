@@ -111,14 +111,14 @@
               ];
             };
         });
-      packages = forAllSystems (pkgs: (import ./nix/pkgs { inherit pkgs; }
+      packages = forAllSystems (pkgs: (import ./pkgs { inherit pkgs; }
         // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux)
         (
           let
             rpiSdCard = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
           in
           {
-            installer-iso = import ./nix/pkgs/special/installer-iso { inherit pkgs specialArgs; };
+            installer-iso = import ./pkgs/special/installer-iso { inherit pkgs specialArgs; };
             rpi4-1-sd-image = (self.nixosConfigurations.rpi4-1.extendModules {
               modules = [ rpiSdCard ];
             }).config.system.build.sdImage;
@@ -135,46 +135,46 @@
             guestPkgs = nixpkgs.legacyPackages.${toGuest pkgs.system};
           in
           {
-            darwin-builder = import ./nix/pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
-            darwin-devnix = import ./nix/pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs specialArgs; };
-            darwin-docker = import ./nix/pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
+            darwin-builder = import ./pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
+            darwin-devnix = import ./pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs specialArgs; };
+            darwin-docker = import ./pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
           }
         )));
       formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
 
-      homeManagerModules = import ./nix/modules/home-manager;
-      nixosModules = import ./nix/modules/nixos;
-      overlays = import ./nix/overlays;
-      templates = import ./nix/templates;
+      homeManagerModules = import ./modules/home-manager;
+      nixosModules = import ./modules/nixos;
+      overlays = import ./overlays;
+      templates = import ./templates;
 
       darwinConfigurations = {
         mbp13 = darwin.lib.darwinSystem {
           inherit specialArgs;
           inputs = nixpkgs.lib.overrideExisting inputs { nixpkgs = nixpkgs-darwin; };
-          modules = [ ./nix/hosts/mbp13 ];
+          modules = [ ./hosts/mbp13 ];
         };
       };
 
       nixosConfigurations = {
         m3800 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./nix/hosts/m3800 ];
+          modules = [ ./hosts/m3800 ];
         };
         xps12 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./nix/hosts/xps12 ];
+          modules = [ ./hosts/xps12 ];
         };
         vaio = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./nix/hosts/vaio ];
+          modules = [ ./hosts/vaio ];
         };
         rpi4-1 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./nix/hosts/rpi4-1 ];
+          modules = [ ./hosts/rpi4-1 ];
         };
         rpi4-2 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./nix/hosts/rpi4-2 ];
+          modules = [ ./hosts/rpi4-2 ];
         };
       };
 
@@ -182,7 +182,7 @@
         "konrad@generic" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = specialArgs;
-          modules = [ ./nix/home/konrad/generic.nix ];
+          modules = [ ./home/konrad/generic.nix ];
         };
       };
     };
