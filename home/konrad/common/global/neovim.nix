@@ -1,4 +1,4 @@
-{ inputs, config, ... }: {
+{ inputs, ... }: {
   imports = [
     inputs.neovim.homeManagerModules.default
   ];
@@ -11,7 +11,5 @@
     vimdiffAlias = true;
     simpleDefaultEditor = true;
     extendGitIgnores = true;
-    colorscheme = config.colorscheme.slug;
-    palette = config.colorscheme.colors;
   };
 }
