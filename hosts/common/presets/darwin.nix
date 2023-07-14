@@ -35,9 +35,6 @@
       upgrade = true;
       cleanup = "zap";
     };
-    taps = [
-      "homebrew/cask"
-    ];
     casks =
       [
         "alacritty"
