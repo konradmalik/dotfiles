@@ -154,27 +154,9 @@
         "type": "github"
       }
     },
-    "neo-tree-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1689375767,
-        "narHash": "sha256-DfR0pFtQdkRmJexUVVCQ4xYHnlkOVbnhq+X43OORd9w=",
-        "owner": "nvim-neo-tree",
-        "repo": "neo-tree.nvim",
-        "rev": "981a43adcca25e7ccc3c589902d49f25e4d48ebc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-neo-tree",
-        "ref": "v3.x",
-        "repo": "neo-tree.nvim",
-        "type": "github"
-      }
-    },
     "neovim": {
       "inputs": {
         "fidget-nvim": "fidget-nvim",
-        "neo-tree-nvim": "neo-tree-nvim",
         "neovim": [
           "neovim-source"
         ],
@@ -184,11 +166,11 @@
         "nvim-luaref": "nvim-luaref"
       },
       "locked": {
-        "lastModified": 1689578063,
-        "narHash": "sha256-/JUW7NC9m4icUWt6HrRnW1i2tIBrCyR0cYUqDCXkZaM=",
+        "lastModified": 1689800973,
+        "narHash": "sha256-Rgp5lICT9Zv9/HpB4Blnslb4QdTyCcAFFqFYgxM1sQk=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "064f74f87add7892706617832ca9d176c29888aa",
+        "rev": "4f656ae1b808ef48ec4902795326cc91ef1b9e4d",
         "type": "github"
       },
       "original": {
