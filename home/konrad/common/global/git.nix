@@ -148,11 +148,7 @@ in
       };
 
       merge = {
-        tool = "diffview";
-      };
-
-      "mergetool \"diffview\"" = {
-        cmd = "nvim -c \"DiffviewOpen\"";
+        tool = "vimdiff";
       };
 
       mergetool = {
