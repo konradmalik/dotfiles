@@ -149,10 +149,12 @@ in
 
       merge = {
         tool = "vimdiff";
+        conflictstyle = "diff3";
       };
 
       mergetool = {
         keepBackup = false;
+        prompt = false;
       };
 
       push = {
