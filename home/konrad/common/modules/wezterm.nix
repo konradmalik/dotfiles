@@ -35,23 +35,45 @@ in
     };
 
     colorscheme = lib.mkOption {
-      type = types.str;
-      default = "Kanagawa (Gogh)";
+      type = lib.types.nullOr lib.types.attrs;
+      default = config.colorscheme;
       description = "Colorscheme attrset compatible with nix-colors format.";
-      example = "Kanagawa (Gogh)";
+      example = "config.colorscheme";
     };
   };
 
   config =
     let
+      colors = pkgs.writeText "wezterm-colorscheme"
+        ''
+          scheme: "${config.colorscheme.name}"
+          author: "${config.colorscheme.author}"
+          base00: "#${cfg.colorscheme.colors.base00}"
+          base01: "#${cfg.colorscheme.colors.base01}"
+          base02: "#${cfg.colorscheme.colors.base02}"
+          base03: "#${cfg.colorscheme.colors.base03}"
+          base04: "#${cfg.colorscheme.colors.base04}"
+          base05: "#${cfg.colorscheme.colors.base05}"
+          base06: "#${cfg.colorscheme.colors.base06}"
+          base07: "#${cfg.colorscheme.colors.base07}"
+          base08: "#${cfg.colorscheme.colors.base08}"
+          base09: "#${cfg.colorscheme.colors.base09}"
+          base0A: "#${cfg.colorscheme.colors.base0A}"
+          base0B: "#${cfg.colorscheme.colors.base0B}"
+          base0C: "#${cfg.colorscheme.colors.base0C}"
+          base0D: "#${cfg.colorscheme.colors.base0D}"
+          base0E: "#${cfg.colorscheme.colors.base0E}"
+          base0F: "#${cfg.colorscheme.colors.base0F}"
+        '';
       baseConfig = ''
         local wezterm = require('wezterm')
 
         local config = wezterm.config_builder()
 
         config.font_size = ${toString cfg.fontSize}
-        config.font = wezterm.font '${cfg.fontFamily}'
-        config.color_scheme = '${cfg.colorscheme}'
+        config.font = wezterm.font('${cfg.fontFamily}')
+        colors, metadata = wezterm.color.load_base16_scheme('${colors}')
+        config.colors = colors
         config.hide_tab_bar_if_only_one_tab = true
 
         return config
