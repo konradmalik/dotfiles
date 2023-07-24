@@ -5,4 +5,5 @@
   ssh-egress = import ./ssh-egress.nix;
   syncthing = import ./syncthing.nix;
   wallpaper = import ./wallpaper.nix;
+  wezterm = import ./wezterm.nix;
 }

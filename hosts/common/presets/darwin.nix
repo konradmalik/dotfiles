@@ -56,6 +56,7 @@
         "spotify"
         "syncthing"
         "telegram"
+        "wezterm"
         "whatsapp"
         "zoom"
       ];

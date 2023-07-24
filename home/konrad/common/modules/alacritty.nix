@@ -7,6 +7,12 @@ in
   options.konrad.programs.alacritty = {
     enable = mkEnableOption "Enables Alacritty configuration management through home-manager";
 
+    makeDefault = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to make this terminal default by setting TERMINAL env var";
+    };
+
     fontSize = mkOption {
       type = types.number;
       default = config.fontProfiles.monospace.size;
@@ -155,7 +161,7 @@ in
     mkIf cfg.enable {
       home = {
         packages = lib.optional (cfg.package != null) cfg.package;
-        sessionVariables.TERMINAL = "alacritty";
+        sessionVariables.TERMINAL = mkIf cfg.makeDefault "alacritty";
       };
 
       xdg.configFile."alacritty/alacritty.yml".text =
