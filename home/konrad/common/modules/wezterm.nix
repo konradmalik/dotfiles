@@ -75,6 +75,7 @@ in
         colors, metadata = wezterm.color.load_base16_scheme('${colors}')
         config.colors = colors
         config.hide_tab_bar_if_only_one_tab = true
+        config.window_close_confirmation = 'NeverPrompt'
 
         return config
       '';
