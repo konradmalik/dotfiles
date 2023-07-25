@@ -52,6 +52,9 @@ in
             y: 1
           dynamic_padding: true
 
+        mouse:
+          hide_when_typing: true
+
         cursor:
           style:
             shape: Block
