@@ -45,12 +45,14 @@ in
   config =
     let
       baseConfig = ''
+        live_config_reload: false
+
         window:
           dynamic_title: true
           padding:
             x: 2
             y: 1
-          dynamic_padding: true
+          dynamic_padding: false
 
         mouse:
           hide_when_typing: true
