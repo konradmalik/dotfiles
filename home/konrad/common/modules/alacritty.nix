@@ -55,7 +55,6 @@ in
         cursor:
           style:
             shape: Block
-            blinking: Always
 
         fontfamily: &fontfamily "${cfg.fontFamily}"
         font:
