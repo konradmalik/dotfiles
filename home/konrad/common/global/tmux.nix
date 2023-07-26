@@ -1,5 +1,14 @@
 { config, lib, pkgs, ... }:
 let
+  tmux = "${pkgs.tmux}/bin/tmux";
+  tmuxFpp = pkgs.writeShellScript "tmux_fpp" ''
+    ${tmux} capture-pane -J -S - -E - -b "fpp-$1" -t "$1"
+    ${tmux} split-window -c "$2" "${tmux} show-buffer -b 'fpp-$1' | ${pkgs.fpp}/bin/fpp || true; ${tmux} delete-buffer -b 'fpp-$1'"
+  '';
+  tmuxUrlview = pkgs.writeShellScript "tmux_urlview" ''
+    ${tmux} capture-pane -J -S - -E - -b "urlview-$1" -t "$1"
+    ${tmux} split-window "${tmux} show-buffer -b 'urlview-$1' | ${pkgs.urlview}/bin/urlview || true; ${tmux} delete-buffer -b 'urlview-$1'"
+  '';
   baseConfig = ''
     ## KONRAD's SENSIBLE DEFAULTS
     # tmux messages are displayed for 4 seconds
@@ -58,8 +67,21 @@ let
     # C-A clashes with C-A in neovim!
     #bind-key -n C-a send-prefix
 
+
+    # urlview
+    bind-key U run-shell -b "${tmuxUrlview} '#{pane_id}'"
+
+    # facebook pathpicker
+    bind-key F run-shell -b "${tmuxFpp} '#{pane_id}' '#{pane_current_path}'"
+
     # tmux session switcher
     bind-key r run-shell -b "${pkgs.tmux-switcher}/bin/tmux-switcher"
+
+    # toggle last window
+    bind-key W last-window
+
+    # toggle last session
+    bind-key S switch-client -l
   '';
   themeConfig =
     let

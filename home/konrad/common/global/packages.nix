@@ -16,8 +16,10 @@
     ripgrep
     ripgrep-all
     fd
+    fpp
     sad
     sd
+    urlview
 
     hyperfine
     viddy
