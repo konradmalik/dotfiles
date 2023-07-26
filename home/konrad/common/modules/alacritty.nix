@@ -50,12 +50,15 @@ in
         window:
           dynamic_title: true
           padding:
-            x: 2
-            y: 1
+            x: 6
+            y: 6
           dynamic_padding: false
 
         mouse:
           hide_when_typing: true
+
+        scrolling:
+          history: 5000
 
         cursor:
           style:
