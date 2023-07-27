@@ -15,7 +15,7 @@
       darwin-zsh-completions
       unstable.lima-bin
       # only to provide tmux-256color terminfo
-      # until macos ships with newer ncurses
+      # until macos ships with ncurses 6
       ncurses
     ];
     pathsToLink = [ "Applications" "/bin" "/lib" "/man" "/share" ];
