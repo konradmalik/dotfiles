@@ -19,10 +19,4 @@
     # installed via homebrew
     package = null;
   };
-  konrad.programs.wezterm = {
-    enable = true;
-    makeDefault = false;
-    # installed via homebrew
-    package = null;
-  };
 }
