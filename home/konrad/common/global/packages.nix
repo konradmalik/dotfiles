@@ -19,7 +19,7 @@
     fpp
     sad
     sd
-    urlview
+    urlscan
 
     hyperfine
     viddy
