@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   imports = [
     ./common/presets/nixos.nix
@@ -10,7 +10,14 @@
   konrad.programs.ssh-egress.enable = true;
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
-  konrad.programs.restic.enable = true;
+  konrad.programs.restic = {
+    enable = true;
+    includes = [
+      "${config.home.homeDirectory}/Code/scratch"
+      "${config.home.homeDirectory}/Documents"
+      "${config.home.homeDirectory}/obsidian"
+    ];
+  };
 
   konrad.services.syncthing = {
     enable = true;
