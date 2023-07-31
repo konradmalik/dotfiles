@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 {
   imports = [
     ./common/presets/nixos.nix
@@ -10,6 +10,7 @@
   konrad.programs.ssh-egress.enable = true;
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
+  konrad.programs.restic.enable = true;
 
   konrad.services.syncthing = {
     enable = true;

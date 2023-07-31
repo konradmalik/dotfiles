@@ -61,12 +61,6 @@ in
     stateHome = "${config.home.homeDirectory}/.local/state";
   };
 
-  # shared sops config
-  sops = {
-    defaultSopsFile = ./../secrets.yaml;
-    age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
-  };
-
   # colorscheme = lib.mkDefault colorSchemes.catppuccin;
   colorscheme = {
     slug = "catppuccin-macchiato";
