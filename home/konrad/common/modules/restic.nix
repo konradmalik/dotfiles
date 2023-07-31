@@ -60,6 +60,7 @@ in
         [
           "**/node_modules/"
           "**/.DS_Store"
+          "**/.stfolder"
         ];
       default = [ "**/.DS_Store" "**/.direnv" ];
     };

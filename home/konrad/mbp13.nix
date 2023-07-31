@@ -23,6 +23,7 @@
     enable = true;
     includes = [
       "${config.home.homeDirectory}/Code/scratch"
+      "${config.home.homeDirectory}/Desktop"
       "${config.home.homeDirectory}/Documents"
       "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents"
     ];
