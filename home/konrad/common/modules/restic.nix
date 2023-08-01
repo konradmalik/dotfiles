@@ -42,6 +42,18 @@ in
       example = "pkgs.restic";
     };
 
+    backupInterval = lib.mkOption {
+      type = lib.types.attrs;
+      default = {
+        Minute = 0;
+      };
+      description = "When to run backup. Default is every hour.";
+      example = {
+        Hour = 2;
+        Minute = 30;
+      };
+    };
+
     includes = lib.mkOption {
       type = lib.types.listOf (lib.types.str);
       description = "What to include";
@@ -173,6 +185,37 @@ in
 
           ${cfg.package}/bin/restic "''${args[@]}"
         '';
+
+      mkUnit = command: {
+        Unit = {
+          Description = "Restic ${command}";
+          After = [ "sops-nix.service" "network.target" ];
+        };
+
+        # Install.WantedBy = [ "default.target" ];
+
+        Service = {
+          User = "%I";
+          ExecStart = "${baker}/bin/baker b2 ${command}";
+          Restart = "on-abort";
+        };
+      };
+
+      mkAgent = command: {
+        enable = true;
+        config = {
+          KeepAlive = {
+            Crashed = false;
+            SuccessfulExit = false;
+          };
+          ProcessType = "Background";
+          ProgramArguments = [ "${baker}/bin/baker" "b2" command ];
+          RunAtLoad = false;
+          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/restic-${command}/stdout";
+          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/restic-${command}/stderr";
+          StartCalendarInterval = [ cfg."${command}Interval" ];
+        };
+      };
     in
     mkIf cfg.enable {
       sops.secrets = {
@@ -186,6 +229,14 @@ in
 
       home = {
         packages = [ restic-b2 baker ];
+      };
+
+      systemd.user.services = {
+        "restic-backup" = mkUnit "backup";
+      };
+
+      launchd.agents = {
+        "restic-backup" = mkAgent "backup";
       };
     };
 }
