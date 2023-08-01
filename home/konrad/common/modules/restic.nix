@@ -206,8 +206,8 @@ in
           ProcessType = "Background";
           ProgramArguments = [ "${baker}/bin/baker" "b2" command ];
           RunAtLoad = false;
-          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/restic-${command}/stdout";
-          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/restic-${command}/stderr";
+          StandardOutPath = "/tmp/restic/${command}/stdout";
+          StandardErrorPath = "/tmp/restic/${command}/stderr";
           StartCalendarInterval = interval;
         };
       };
