@@ -100,7 +100,8 @@
                 manix
                 nmap
                 # necessary tools
-                age
+                # TODO
+                # age
                 git
                 pkgs.home-manager
                 nix
