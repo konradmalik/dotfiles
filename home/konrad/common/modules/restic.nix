@@ -203,10 +203,6 @@ in
       mkAgent = command: interval: {
         enable = true;
         config = {
-          KeepAlive = {
-            Crashed = false;
-            SuccessfulExit = false;
-          };
           ProcessType = "Background";
           ProgramArguments = [ "${baker}/bin/baker" "b2" command ];
           RunAtLoad = false;
