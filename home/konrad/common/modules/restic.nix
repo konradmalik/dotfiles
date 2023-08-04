@@ -174,7 +174,7 @@ in
           ${cfg.package}/bin/restic "''${args[@]}"
         '';
 
-      mkUnit = command: {
+      mkUnit = command: script: {
         Unit = {
           Description = "Restic ${command}";
           After = [ "sops-nix.service" "network.target" ];
@@ -182,7 +182,7 @@ in
 
         Service = {
           Type = "oneshot";
-          ExecStart = "${baker}/bin/baker b2 ${command}";
+          ExecStart = "${script}";
         };
       };
 
@@ -200,17 +200,22 @@ in
         };
       };
 
-      mkAgent = command: interval: {
+      mkAgent = command: script: interval: {
         enable = true;
         config = {
           ProcessType = "Background";
-          ProgramArguments = [ "${baker}/bin/baker" "b2" command ];
+          Program = "${script}";
           RunAtLoad = false;
           StandardOutPath = "/tmp/restic/${command}/stdout";
           StandardErrorPath = "/tmp/restic/${command}/stderr";
           StartCalendarInterval = interval;
         };
       };
+
+      mkBaker = command: "${baker}/bin/baker b2 ${command}";
+
+      resticBackup = pkgs.writeShellScript "restic-backup.sh" (mkBaker "backup");
+      resticForget = pkgs.writeShellScript "restic-forget.sh" (mkBaker "forget-prune");
     in
     mkIf cfg.enable {
       sops.secrets = {
@@ -222,20 +227,21 @@ in
         };
       };
 
-      home = {
-        packages = [ restic-b2 baker ];
-      };
+      home.packages = [ restic-b2 baker ];
 
       systemd.user.services = {
-        "restic-backup" = mkUnit "backup";
+        "restic-backup" = mkUnit "backup" resticBackup;
+        "restic-forget" = mkUnit "forget" resticForget;
       };
 
       systemd.user.timers = {
         "restic-backup" = mkTimer "backup" "hourly";
+        "restic-forget" = mkTimer "forget" "weekly";
       };
 
       launchd.agents = {
-        "restic-backup" = mkAgent "backup" [{ Minute = 0; }];
+        "restic-backup" = mkAgent "backup" resticBackup [{ Minute = 0; }];
+        "restic-forget" = mkAgent "forget" resticForget [{ Weekday = 0; }];
       };
     };
 }
