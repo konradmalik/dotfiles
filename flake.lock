@@ -165,11 +165,11 @@
         "nvim-luaref": "nvim-luaref"
       },
       "locked": {
-        "lastModified": 1691095148,
-        "narHash": "sha256-HVu1t1AeDfgnlXk3WC1UEZl6KwOdD35JuDB+z/tqAUs=",
+        "lastModified": 1691158137,
+        "narHash": "sha256-E+Or1Gxj8LYTAcQFHhEgznAFEKP222q9lwIQg8hBqxM=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "6d0cdfcc0f9e9575e98551c8a23112692f37420e",
+        "rev": "850454ffb47020c7e5d586703dc8b8c11ca60d99",
         "type": "github"
       },
       "original": {
