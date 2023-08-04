@@ -35,6 +35,27 @@ in
       default = "restic/password";
     };
 
+    hcCheckUrlFileRef = mkOption {
+      type = types.str;
+      description = "sops nix reference containing healthchecks.io url for signaling backup check";
+      example = "restic/hc_check_url";
+      default = "restic/hc_check_url";
+    };
+
+    hcForgetUrlFileRef = mkOption {
+      type = types.str;
+      description = "sops nix reference containing healthchecks.io url for signaling backup forget";
+      example = "restic/hc_forget_url";
+      default = "restic/hc_forget_url";
+    };
+
+    hcBackupUrlFileRef = mkOption {
+      type = types.str;
+      description = "sops nix reference containing healthchecks.io url for signaling backup";
+      example = "restic/hc_backup_url";
+      default = "restic/hc_backup_url";
+    };
+
     package = lib.mkOption {
       type = lib.types.package;
       default = pkgs.restic;
@@ -70,9 +91,9 @@ in
   config =
     let
       repostiory = "b2:${cfg.b2Bucket}";
-      # wraps restic with backblaze env with all configs in one place
       b2ApplicationKeyFile = config.sops.secrets.${cfg.b2ApplicationKeySopsRef}.path;
       passwordFile = config.sops.secrets.${cfg.passwordFileSopsRef}.path;
+      # wraps restic with backblaze env with all configs in one place
       b2-env = pkgs.writeText "restic-b2-env"
         ''
           export B2_ACCOUNT_ID="${cfg.b2ApplicationId}"
@@ -212,10 +233,22 @@ in
         };
       };
 
-      mkBaker = command: "${baker}/bin/baker b2 ${command}";
+      hcCheckUrl = config.sops.secrets.${cfg.hcCheckUrlFileRef}.path;
+      hcForgetUrl = config.sops.secrets.${cfg.hcForgetUrlFileRef}.path;
+      hcBackupUrl = config.sops.secrets.${cfg.hcBackupUrlFileRef}.path;
 
-      resticBackup = pkgs.writeShellScript "restic-backup.sh" (mkBaker "backup");
-      resticForget = pkgs.writeShellScript "restic-forget.sh" (mkBaker "forget-prune");
+      resticBackup = pkgs.writeShellScript "restic-backup.sh" ''
+        "${baker}/bin/baker b2 backup"
+        ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcBackupUrl})"
+      '';
+      resticForget = pkgs.writeShellScript "restic-forget.sh" ''
+        "${baker}/bin/baker b2 forget-prune"
+        ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcForgetUrl})"
+      '';
+      resticCheck = pkgs.writeShellScript "restic-check.sh" ''
+        ${restic-b2}/bin/restic-b2 check
+        ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcCheckUrl})"
+      '';
     in
     mkIf cfg.enable {
       sops.secrets = {
@@ -225,6 +258,15 @@ in
         ${cfg.passwordFileSopsRef} = {
           path = "${config.xdg.dataHome}/restic/password";
         };
+        ${cfg.hcBackupUrlFileRef} = {
+          path = "${config.xdg.dataHome}/restic/hc_backup_url";
+        };
+        ${cfg.hcCheckUrlFileRef} = {
+          path = "${config.xdg.dataHome}/restic/hc_check_url";
+        };
+        ${cfg.hcForgetUrlFileRef} = {
+          path = "${config.xdg.dataHome}/restic/hc_forget_url";
+        };
       };
 
       home.packages = [ restic-b2 baker ];
@@ -232,15 +274,20 @@ in
       systemd.user.services = {
         "restic-backup" = mkUnit "backup" resticBackup;
         "restic-forget" = mkUnit "forget" resticForget;
+        "restic-check" = mkUnit "check" resticCheck;
       };
 
       systemd.user.timers = {
         "restic-backup" = mkTimer "backup" "hourly";
-        "restic-forget" = mkTimer "forget" "weekly";
+        "restic-forget" = mkTimer "forget" "Mon";
+        "restic-check" = mkTimer "check" "Fri";
       };
 
       launchd.agents = {
         "restic-backup" = mkAgent "backup" resticBackup [{ Minute = 0; }];
+        # Saturday
+        "restic-check" = mkAgent "check" resticCheck [{ Weekday = 6; }];
+        # Sunday
         "restic-forget" = mkAgent "forget" resticForget [{ Weekday = 0; }];
       };
     };
