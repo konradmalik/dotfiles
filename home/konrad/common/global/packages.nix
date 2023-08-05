@@ -26,8 +26,7 @@
     watchexec
     joshuto
 
-    # TODO
-    # age
+    age
     fq
     dsq
     jc
