@@ -13,10 +13,11 @@
   decoration {
     rounding = 10
 
-    blur = false
-    blur_size = 3
-    blur_passes = 1
-    blur_new_optimizations = true
+    blur {
+        enabled = false
+        size = 3
+        passes = 1
+    }
 
     drop_shadow = false
     shadow_ignore_window = true
