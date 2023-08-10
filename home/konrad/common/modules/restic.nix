@@ -238,16 +238,25 @@ in
       hcBackupUrl = config.sops.secrets.${cfg.hcBackupUrlFileRef}.path;
 
       resticBackup = pkgs.writeShellScript "restic-backup.sh" ''
-        "${baker}/bin/baker b2 backup"
+        echo "rustic-backup"
+        ${pkgs.coreutils}/bin/date
+        ${baker}/bin/baker b2 backup
         ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcBackupUrl})"
+        echo
       '';
       resticForget = pkgs.writeShellScript "restic-forget.sh" ''
-        "${baker}/bin/baker b2 forget-prune"
+        echo "rustic-forget"
+        ${pkgs.coreutils}/bin/date
+        ${baker}/bin/baker b2 forget-prune
         ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcForgetUrl})"
+        echo
       '';
       resticCheck = pkgs.writeShellScript "restic-check.sh" ''
+        echo "rustic-check"
+        ${pkgs.coreutils}/bin/date
         ${restic-b2}/bin/restic-b2 check
         ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcCheckUrl})"
+        echo
       '';
     in
     mkIf cfg.enable {
