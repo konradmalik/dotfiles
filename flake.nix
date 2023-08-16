@@ -35,7 +35,8 @@
       };
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      # url = "github:Mic92/sops-nix";
+      url = "github:shyim/sops-nix/shyim-patch-1";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
