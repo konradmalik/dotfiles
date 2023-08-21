@@ -35,14 +35,13 @@
       };
     };
     sops-nix = {
-      # url = "github:Mic92/sops-nix";
-      url = "github:shyim/sops-nix/shyim-patch-1";
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.28.0";
+      url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };

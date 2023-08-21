@@ -29,8 +29,8 @@ in
     wlr.enable = !anyHyprlandEnabled;
     # gtk portal needed to make gtk apps happy
     extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-    ] ++ lib.optionals anyHyprlandEnabled [ pkgs.xdg-desktop-portal-hyprland ];
+      pkgs.unstable.xdg-desktop-portal-gtk
+    ];
   };
 
   hardware.opengl = {
