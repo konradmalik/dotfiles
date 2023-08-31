@@ -15,7 +15,8 @@
 
   home = {
     packages = with pkgs; [
-      bitwarden
+      unstable.bitwarden
+      unstable.calibre
       unstable.discord
       unstable.obsidian
       unstable.signal-desktop
