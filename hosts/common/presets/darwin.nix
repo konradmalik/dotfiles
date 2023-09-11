@@ -13,7 +13,7 @@
   environment = {
     systemPackages = with pkgs; [
       darwin-zsh-completions
-      unstable.lima-bin
+      unstable.colima
       # only to provide tmux-256color terminfo
       # until macos ships with ncurses 6
       ncurses
