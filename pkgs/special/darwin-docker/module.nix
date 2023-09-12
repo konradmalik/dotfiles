@@ -1,10 +1,9 @@
 { hostPkgs, guestPkgs }:
 { config, lib, modulesPath, ... }:
 let
-  # not sure why, but docker panics at cores more than 1 on macos...
-  cores = 1;
+  cores = 4;
   diskSize = 40 * 1024;
-  memorySize = 4 * 1024;
+  memorySize = 8 * 1024;
   keys = config.sshKeys.personal.keys;
 in
 {
@@ -21,12 +20,16 @@ in
 
   documentation.enable = false;
 
-  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
+  networking = {
+    nameservers = [ "1.1.1.1" "1.0.0.1" ];
+    firewall.enable = false;
+  };
 
   users.users.root = {
     openssh.authorizedKeys.keys = keys;
     password = "";
   };
+
   users.mutableUsers = false;
   services.openssh.settings.PermitRootLogin = "yes";
 
@@ -46,7 +49,14 @@ in
     graphics = false;
 
     forwardPorts = [
+      # ssh
       { from = "host"; guest.port = 22; host.port = 2376; }
+      # k3s
+      { from = "host"; guest.port = 6443; host.port = 6443; }
     ];
+    # if this is not enabled, then nscd will fail and there won't be any network
+    # why? idk
+    useNixStoreImage = true;
+    writableStore = true;
   };
 }

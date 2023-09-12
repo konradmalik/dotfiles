@@ -23,7 +23,6 @@ in
     ./../../../hosts/common/users/${user}
 
     "${modulesPath}/virtualisation/qemu-vm.nix"
-    "${modulesPath}/profiles/qemu-guest.nix"
   ];
 
   sops = {
