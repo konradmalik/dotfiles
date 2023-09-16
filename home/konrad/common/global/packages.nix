@@ -24,7 +24,7 @@
     hyperfine
     viddy
     watchexec
-    joshuto
+    unstable.yazi
 
     age
     fq
