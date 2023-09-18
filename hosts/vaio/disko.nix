@@ -6,31 +6,26 @@
         type = "disk";
         content = {
           type = "msdos";
-          partitions = [
-            {
-              name = "boot";
+          partitions = {
+            boot = {
               start = "1MiB";
               end = "500MiB";
-              part-type = "primary";
-              bootable = true;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
               };
-            }
-            {
-              name = "root";
+            };
+            root = {
               start = "500MiB";
               end = "100%";
-              part-type = "primary";
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
               };
-            }
-          ];
+            };
+          };
         };
       };
       sdb = {
@@ -38,19 +33,18 @@
         type = "disk";
         content = {
           type = "gpt";
-          partitions = [
-            {
+          partitions = {
+            home = {
               name = "home";
               start = "1M";
               end = "100%";
-              part-type = "primary";
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/home";
               };
-            }
-          ];
+            };
+          };
         };
       };
     };

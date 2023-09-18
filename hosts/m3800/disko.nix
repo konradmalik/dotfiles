@@ -5,31 +5,26 @@
       type = "disk";
       content = {
         type = "gpt";
-        partitions = [
-          {
-            name = "ESP";
+        partitions = {
+          esp = {
             start = "1MiB";
             end = "500MiB";
-            part-type = "primary";
-            bootable = true;
             content = {
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
             };
-          }
-          {
-            name = "root";
+          };
+          root = {
             start = "500MiB";
             end = "100%";
-            part-type = "primary";
             content = {
               type = "filesystem";
               format = "ext4";
               mountpoint = "/";
             };
-          }
-        ];
+          };
+        };
       };
     };
     sda = {
@@ -37,19 +32,17 @@
       type = "disk";
       content = {
         type = "gpt";
-        partitions = [
-          {
-            name = "home";
+        partitions = {
+          home = {
             start = "1MiB";
             end = "100%";
-            part-type = "primary";
             content = {
               type = "filesystem";
               format = "ext4";
               mountpoint = "/home";
             };
-          }
-        ];
+          };
+        };
       };
     };
   };
