@@ -4,8 +4,7 @@
       device = "/dev/sdb";
       type = "disk";
       content = {
-        type = "table";
-        format = "gpt";
+        type = "gpt";
         partitions = [
           {
             name = "ESP";
@@ -37,8 +36,7 @@
       device = "/dev/sda";
       type = "disk";
       content = {
-        type = "table";
-        format = "gpt";
+        type = "gpt";
         partitions = [
           {
             name = "home";

@@ -5,8 +5,7 @@
         device = "/dev/sda";
         type = "disk";
         content = {
-          type = "table";
-          format = "msdos";
+          type = "msdos";
           partitions = [
             {
               name = "boot";
@@ -38,8 +37,7 @@
         device = "/dev/sdb";
         type = "disk";
         content = {
-          type = "table";
-          format = "gpt";
+          type = "gpt";
           partitions = [
             {
               name = "home";
