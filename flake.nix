@@ -3,13 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko = {
@@ -48,7 +47,7 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgs-darwin
+    , nixpkgs-stable
     , nixpkgs-unstable
     , nixpkgs-master
     , darwin
@@ -128,7 +127,7 @@
         // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin)
         (
           let
-            hostPkgs = nixpkgs-darwin.legacyPackages.${pkgs.system};
+            hostPkgs = nixpkgs.legacyPackages.${pkgs.system};
             toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
             guestPkgs = nixpkgs.legacyPackages.${toGuest pkgs.system};
           in
@@ -148,7 +147,6 @@
       darwinConfigurations = {
         mbp13 = darwin.lib.darwinSystem {
           inherit specialArgs;
-          inputs = nixpkgs.lib.overrideExisting inputs { nixpkgs = nixpkgs-darwin; };
           modules = [ ./hosts/mbp13 ];
         };
       };
