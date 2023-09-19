@@ -14,8 +14,8 @@ in
 
     package = mkOption {
       type = types.package;
-      default = pkgs.bluezFull;
-      defaultText = "pkgs.bluezFull";
+      default = pkgs.bluez;
+      defaultText = "pkgs.bluez";
       description = "package to install";
     };
   };

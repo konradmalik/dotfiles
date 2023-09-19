@@ -14,7 +14,7 @@
     zip
 
     ripgrep
-    ripgrep-all
+    stable.ripgrep-all
     fd
     fpp
     sad

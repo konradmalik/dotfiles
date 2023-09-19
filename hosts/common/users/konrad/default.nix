@@ -9,7 +9,7 @@ in
     mutableUsers = false;
     users.konrad = {
       openssh.authorizedKeys.keys = config.home-manager.users.konrad.sshKeys.personal.keys;
-      passwordFile = config.sops.secrets.konrad-password.path;
+      hashedPasswordFile = config.sops.secrets.konrad-password.path;
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Konrad";

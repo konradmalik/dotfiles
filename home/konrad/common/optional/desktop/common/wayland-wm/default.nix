@@ -12,7 +12,6 @@
 
   home.packages = with pkgs; [
     grim # screenshots
-    hyprland-share-picker
     libnotify # notify-send
     pavucontrol # audio gui
     playerctl # control audio players system-wide

@@ -21,6 +21,6 @@
   system = {
     # don't change name here, it's hardcoded in script name in macos-builder.nix
     name = "nixos";
-    stateVersion = lib.mkDefault "23.05";
+    stateVersion = lib.mkDefault "23.11";
   };
 }

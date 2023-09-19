@@ -16,6 +16,11 @@ in
       customArgs.overlays.additions
 
       (final: prev: {
+        stable = import inputs.nixpkgs-stable {
+          system = final.system;
+          config = final.config;
+        };
+
         unstable = import inputs.nixpkgs-unstable {
           system = final.system;
           config = final.config;

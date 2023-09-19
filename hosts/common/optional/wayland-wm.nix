@@ -7,10 +7,9 @@ in
 {
   programs = {
     light.enable = true;
-    # enable hyprland defaults without installing the package
-    # but enable only if hyprland in hm is enabled
     hyprland = {
       enable = anyHyprlandEnabled;
+      package = pkgs.unstable.hyprland;
     };
   };
 
@@ -25,8 +24,6 @@ in
 
   xdg.portal = {
     enable = true;
-    # hyprland has it's own fork which we add explicitly via extraPortals
-    wlr.enable = !anyHyprlandEnabled;
     # gtk portal needed to make gtk apps happy
     extraPortals = [
       pkgs.unstable.xdg-desktop-portal-gtk
@@ -45,4 +42,7 @@ in
       libvdpau-va-gl
     ];
   };
+
+  # Optional, hint electron apps to use wayland:
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }

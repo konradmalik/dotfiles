@@ -57,7 +57,7 @@ in
 
   system = {
     name = "darwin-devnix";
-    stateVersion = "23.05";
+    stateVersion = "23.11";
   };
 
   virtualisation = {

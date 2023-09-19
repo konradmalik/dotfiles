@@ -1,9 +1,7 @@
-{ inputs, lib, config, pkgs, osConfig, ... }: {
+{ lib, config, pkgs, osConfig, ... }: {
   imports = [
     ../common
     ../common/wayland-wm
-
-    inputs.hyprland.homeManagerModules.default
   ];
 
   assertions = [
@@ -19,7 +17,9 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    xwayland.enable = true;
     systemdIntegration = true;
+    package = pkgs.unstable.hyprland;
     extraConfig =
       (import ./monitors.nix {
         inherit lib;

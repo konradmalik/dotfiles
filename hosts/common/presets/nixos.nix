@@ -38,5 +38,5 @@ in
     pathsToLink = [ "/bin" "/lib" "/man" "/share" ];
   };
 
-  system.stateVersion = lib.mkDefault "23.05";
+  system.stateVersion = lib.mkDefault "23.11";
 }

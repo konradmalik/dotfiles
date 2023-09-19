@@ -94,7 +94,7 @@ in
     historyControl = [ "ignoredups" "ignorespace" ];
   };
 
-  programs.exa = {
+  programs.eza = {
     enable = true;
     enableAliases = true;
   };
@@ -119,7 +119,7 @@ in
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     autocd = true;
     dotDir = lib.removePrefix "${config.home.homeDirectory}" "${config.xdg.configHome}/zsh";
     defaultKeymap = "viins";

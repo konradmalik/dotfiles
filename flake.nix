@@ -2,8 +2,9 @@
   description = "NixOS and nix-darwin systems and tools by konradmalik";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     darwin = {
@@ -29,7 +30,9 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      # url = "github:nix-community/home-manager/release-23.05";
+      # until hyprland is backported
+      url = "github:nix-community/home-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -40,10 +43,6 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs =
@@ -59,7 +58,6 @@
     , home-manager
     , sops-nix
     , nix-colors
-    , hyprland
     , ...
     }@inputs:
     let
