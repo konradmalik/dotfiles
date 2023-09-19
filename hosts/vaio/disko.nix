@@ -5,27 +5,33 @@
         device = "/dev/sda";
         type = "disk";
         content = {
-          type = "msdos";
-          partitions = {
-            boot = {
+          type = "table";
+          format = "msdos";
+          partitions = [
+            {
+              name = "boot";
               start = "1MiB";
               end = "500MiB";
+              part-type = "primary";
+              bootable = true;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
               };
-            };
-            root = {
+            }
+            {
+              name = "root";
               start = "500MiB";
               end = "100%";
+              part-type = "primary";
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
               };
-            };
-          };
+            }
+          ];
         };
       };
       sdb = {
