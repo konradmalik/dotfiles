@@ -38,17 +38,19 @@ in
           openDefaultPorts = true;
           overrideDevices = true; # overrides any devices added or deleted through the WebUI
           overrideFolders = true; # overrides any folders added or deleted through the WebUI
-          devices = otherDevices;
-          folders = {
-            "Documents" = {
-              path = "${homeDirectory}/Documents"; # Which folder to add to Syncthing
-              devices = lib.attrNames otherDevices;
-              type = if cfg.bidirectional then "sendreceive" else "receiveonly";
-            };
-            "obsidian" = {
-              path = "${homeDirectory}/obsidian";
-              devices = lib.attrNames otherDevices;
-              type = if cfg.bidirectional then "sendreceive" else "receiveonly";
+          settings = {
+            devices = otherDevices;
+            folders = {
+              "Documents" = {
+                path = "${homeDirectory}/Documents"; # Which folder to add to Syncthing
+                devices = lib.attrNames otherDevices;
+                type = if cfg.bidirectional then "sendreceive" else "receiveonly";
+              };
+              "obsidian" = {
+                path = "${homeDirectory}/obsidian";
+                devices = lib.attrNames otherDevices;
+                type = if cfg.bidirectional then "sendreceive" else "receiveonly";
+              };
             };
           };
         };
