@@ -16,16 +16,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-source = {
-      url = "github:neovim/neovim/release-0.9?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     neovim = {
       url = "github:konradmalik/neovim-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        neovim.follows = "neovim-source";
-      };
     };
 
     home-manager = {
