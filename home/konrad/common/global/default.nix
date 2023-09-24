@@ -1,6 +1,5 @@
 { config, pkgs, lib, inputs, customArgs, ... }:
 let
-  inherit (inputs.nix-colors) colorSchemes;
   inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) nixWallpaperFromScheme;
 in
 {
@@ -8,7 +7,7 @@ in
     inputs.nix-colors.homeManagerModule
 
     ./bat.nix
-    ./btop.nix
+    ./bottom.nix
     ./curl.nix
     ./direnv.nix
     ./earthly.nix
