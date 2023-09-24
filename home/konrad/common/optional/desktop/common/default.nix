@@ -15,15 +15,15 @@
 
   home = {
     packages = with pkgs; [
-      unstable.bitwarden
-      unstable.calibre
-      unstable.discord
-      unstable.obsidian
-      unstable.signal-desktop
-      unstable.slack
-      unstable.spotify
-      unstable.teams
-      unstable.tdesktop
+      bitwarden
+      calibre
+      discord
+      obsidian
+      signal-desktop
+      slack
+      spotify
+      teams
+      tdesktop
       # for xdg-open in 'gx' in vim for example
       xdg-utils
       zathura

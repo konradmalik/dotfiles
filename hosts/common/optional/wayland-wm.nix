@@ -9,7 +9,7 @@ in
     light.enable = true;
     hyprland = {
       enable = anyHyprlandEnabled;
-      package = pkgs.unstable.hyprland;
+      package = pkgs.hyprland;
     };
   };
 
@@ -26,7 +26,7 @@ in
     enable = true;
     # gtk portal needed to make gtk apps happy
     extraPortals = [
-      pkgs.unstable.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gtk
     ];
   };
 

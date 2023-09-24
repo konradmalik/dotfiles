@@ -19,7 +19,7 @@
     enable = true;
     xwayland.enable = true;
     systemdIntegration = true;
-    package = pkgs.unstable.hyprland;
+    package = pkgs.hyprland;
     extraConfig =
       (import ./monitors.nix {
         inherit lib;

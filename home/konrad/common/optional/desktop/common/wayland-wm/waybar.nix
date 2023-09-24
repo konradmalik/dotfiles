@@ -36,7 +36,7 @@ in
 {
   programs.waybar = {
     enable = true;
-    package = pkgs.unstable.waybar;
+    package = pkgs.waybar;
     settings = {
       secondary = {
         output = builtins.map (m: m.name) (builtins.filter (m: !m.isPrimary) config.monitors);

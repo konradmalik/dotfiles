@@ -6,9 +6,9 @@
     inetutils
     moreutils
     #nq
-    unstable.progress
+    progress
     tree
-    unstable.trurl
+    trurl
     unar
     wget
     zip
@@ -24,7 +24,7 @@
     hyperfine
     viddy
     watchexec
-    unstable.yazi
+    yazi
 
     age
     fq
