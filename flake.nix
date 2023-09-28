@@ -52,18 +52,20 @@
     , ...
     }@inputs:
     let
+      nixpkgsFor = system: (import nixpkgs
+        {
+          localSystem = {
+            inherit system;
+          };
+          config. allowUnfree = true;
+        });
       forAllSystems = function:
         nixpkgs.lib.genAttrs [
           "x86_64-linux"
           "aarch64-linux"
           "x86_64-darwin"
         ]
-          (system:
-            function (import nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
-            }));
-
+          (system: function (nixpkgsFor system));
       specialArgs = {
         inherit inputs;
         customArgs = {
@@ -117,9 +119,9 @@
         // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin)
         (
           let
-            hostPkgs = nixpkgs.legacyPackages.${pkgs.system};
+            hostPkgs = nixpkgsFor pkgs.system;
             toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
-            guestPkgs = nixpkgs.legacyPackages.${toGuest pkgs.system};
+            guestPkgs = nixpkgsFor (toGuest pkgs.system);
           in
           {
             darwin-builder = import ./pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
@@ -166,7 +168,7 @@
 
       homeConfigurations = {
         "konrad@generic" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          pkgs = nixpkgsFor "x86_64-linux";
           extraSpecialArgs = specialArgs;
           modules = [ ./home/konrad/generic.nix ];
         };
