@@ -57,7 +57,7 @@
           localSystem = {
             inherit system;
           };
-          config. allowUnfree = true;
+          config.allowUnfree = true;
         });
       forAllSystems = function:
         nixpkgs.lib.genAttrs [
