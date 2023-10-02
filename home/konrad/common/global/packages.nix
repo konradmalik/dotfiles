@@ -8,7 +8,7 @@
     #nq
     progress
     tree
-    trurl
+    stable.trurl
     unar
     wget
     zip
