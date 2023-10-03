@@ -459,11 +459,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1696231003,
-        "narHash": "sha256-8nHvODrSZDjR4OPPTgy+Gz7GYT6VcjMI/wL+5Y9/zAI=",
+        "lastModified": 1696318758,
+        "narHash": "sha256-h4uaNiVZ2ePBcVY2df2AaB8nZl8v43mNRA0ZTTaVhL0=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "e404a53b9ba725ab9b04e592961f5a9c058d967b",
+        "rev": "a393ed38be16407eb2cc115010dbbe031e4f2fe4",
         "type": "github"
       },
       "original": {
@@ -482,17 +482,16 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1695434072,
-        "narHash": "sha256-iiUAd2PKzHVUhfnRxfsrYPfLAy3gAk3PUfeGZLHUMq8=",
-        "owner": "Pegasust",
+        "lastModified": 1696314767,
+        "narHash": "sha256-UPYK5Fv3U08yQAo7JPrZ1uBvYRpc85F0aE3De6aYzZs=",
+        "owner": "neovim",
         "repo": "neovim",
-        "rev": "563efe467c8320c455e54e356dc76e488a51ec8e",
+        "rev": "08aea256c8330f482319b0579944a56707cc5bbe",
         "type": "github"
       },
       "original": {
         "dir": "contrib",
-        "owner": "Pegasust",
-        "ref": "nix-aarch64-darwin-fix",
+        "owner": "neovim",
         "repo": "neovim",
         "type": "github"
       }
