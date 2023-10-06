@@ -36,6 +36,7 @@ in
           user = {
             email = "konrad.malik@gmail.com";
             name = "Konrad Malik";
+            signingKey = "${config.home.homeDirectory}/.ssh/personal.pub";
           };
         };
       }
@@ -45,6 +46,7 @@ in
           user = {
             email = "konrad@cerebre.io";
             name = "Konrad Malik";
+            signingKey = "${config.home.homeDirectory}/.ssh/cerebre.pub";
           };
         };
       }
@@ -108,31 +110,9 @@ in
 
       gpg = {
         format = "ssh";
-        ssh =
-          let
-            allKeys = lib.concatStringsSep "\\n" config.sshKeys.personal.keys;
-            comm = "${pkgs.coreutils}/bin/comm";
-            cat = "${pkgs.coreutils}/bin/cat";
-            cut = "${pkgs.coreutils}/bin/cut";
-            sort = "${pkgs.coreutils}/bin/sort";
-            ssh-add = "${pkgs.openssh}/bin/ssh-add";
-
-            getSshSigningKey = pkgs.writeShellScript "getSshSigningKey" ''
-              set -e
-              allKeys=$(printf "${allKeys}" | ${cut} -d " " -f -2 | ${sort})
-              agentKeys=$(${ssh-add} -L | ${cut} -d " " -f -2 | ${sort})
-              agentFoundKey=$(${comm} -12 <(echo "$allKeys") <(echo "$agentKeys"))
-              if [ -z "$agentFoundKey" ]
-              then
-                agentFoundKey=$(${cat} ${localSshSigningKey})
-              fi
-              echo "key::$agentFoundKey"
-            '';
-          in
-          {
-            allowedSignersFile = "${customArgs.dotfiles}/allowed_signers";
-            defaultKeyCommand = "${getSshSigningKey}";
-          };
+        ssh = {
+          allowedSignersFile = "${customArgs.dotfiles}/allowed_signers";
+        };
       };
 
       fetch = {

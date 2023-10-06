@@ -37,6 +37,14 @@ in
         description = "all keys";
       };
     };
+    work = {
+      keys = mkOption {
+        type = types.attrsOf types.str;
+        example = ''{ company="ssh-rsa abcd" }'';
+        default = { };
+        description = "company - key mapping to be added";
+      };
+    };
   };
 
   config =

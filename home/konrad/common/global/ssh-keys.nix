@@ -1,13 +1,14 @@
-{ lib, ... }:
 {
-  sshKeys.personal.remotes = [
-    {
-      url = "https://github.com/konradmalik.keys";
-      sha256 = "sha256:0bajvxjz8d4x7r7z3jv18f3jakmycri0dksmcilxjnwsiqca7jyc";
-    }
-    {
-      url = "https://gitlab.com/konradmalik.keys";
-      sha256 = "sha256:1l3r8zq420yw2pmgynihlplad983a1bypsm3zpzqxvf81ynfygag";
-    }
-  ];
+  sshKeys = {
+    personal.remotes = [
+      {
+        url = "https://github.com/konradmalik.keys";
+        sha256 = "sha256:1c7dg2ilvfpwp00945mgdv88ankdvsdxqn0c5f6cl8x82bs22a7w";
+      }
+      {
+        url = "https://gitlab.com/konradmalik.keys";
+        sha256 = "sha256:1v84r1q46szgs1hyjkj7hpgg8wrjydc42g4gmnwy5h3rv17rzr8i";
+      }
+    ];
+  };
 }

@@ -23,24 +23,23 @@ in {
         serverAliveInterval = 15;
         extraConfig = ''
           AddKeysToAgent yes
-        '' + optionalString pkgs.stdenvNoCC.isDarwin
-          ''
-            IgnoreUnknown UseKeychain
-            UseKeychain yes
-          '';
-
+          IgnoreUnknown UseKeychain
+          UseKeychain yes
+        '';
         includes = [ "config.d/*" ];
         matchBlocks = {
           git = {
             host = "github.com gitlab.com bitbucket.org";
             user = "git";
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
+            identitiesOnly = true;
           };
           tailscale = {
             host = "vaio xps12 rpi4-1 rpi4-2 m3800 mbp13";
             user = "${config.home.username}";
             forwardAgent = true;
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
+            identitiesOnly = true;
           };
           vaio = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.67.103.124";
@@ -67,6 +66,7 @@ in {
             port = 2376;
             user = "root";
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
+            identitiesOnly = true;
             extraOptions = {
               StrictHostKeyChecking = "no";
             };
@@ -77,6 +77,7 @@ in {
             port = 2222;
             user = "konrad";
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
+            identitiesOnly = true;
             extraOptions = {
               StrictHostKeyChecking = "no";
             };
