@@ -1,14 +1,9 @@
-{ config, pkgs, lib, osConfig, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let cfg = config.konrad.programs.ssh-egress;
 in {
   options.konrad.programs.ssh-egress = {
     enable = mkEnableOption "Enables ssh-egress configuration through home-manager";
-    enableSecret = mkOption {
-      type = types.bool;
-      default = false;
-      description = "whether to enable secret ssh config.d (requires sops-nix and age key)";
-    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -59,6 +54,11 @@ in {
           mbp13 = hm.dag.entryAfter [ "tailscale" ] {
             hostname = "100.70.57.115";
           };
+          work = {
+            host = "*.cerebredev.com";
+            identityFile = "${config.home.homeDirectory}/.ssh/cerebre";
+            identitiesOnly = true;
+          };
         } // lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
           darwin-docker = {
             host = "darwin-docker";
@@ -85,10 +85,5 @@ in {
         };
       };
     }
-    (mkIf cfg.enableSecret {
-      sops.secrets."ssh_configd/cerebre" = {
-        path = "${config.home.homeDirectory}/.ssh/config.d/cerebre";
-      };
-    })
   ]);
 }
