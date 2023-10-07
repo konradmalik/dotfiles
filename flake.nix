@@ -125,7 +125,7 @@
           in
           {
             darwin-builder = import ./pkgs/special/darwin-builder { inherit hostPkgs guestPkgs; };
-            darwin-devnix = import ./pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs specialArgs; };
+            # darwin-devnix = import ./pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs specialArgs; };
             darwin-docker = import ./pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
           }
         )));

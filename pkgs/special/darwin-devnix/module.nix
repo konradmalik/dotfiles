@@ -1,8 +1,7 @@
 { hostPkgs, guestPkgs }:
 { config, lib, modulesPath, inputs, customArgs, ... }:
 let
-  # same issue as in darwin-docker, seems like all go apps panic when cores are > 1 ...
-  cores = 1;
+  cores = 4;
   diskSize = 40 * 1024;
   memorySize = 8 * 1024;
   user = "konrad";
