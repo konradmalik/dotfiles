@@ -31,7 +31,11 @@ in
 
   environment.pathsToLink = [ "/bin" "/lib" "/man" "/share" ];
 
-  nixpkgs.pkgs = guestPkgs;
+  nixpkgs = {
+    pkgs = guestPkgs;
+    # we provide external instance
+    config = lib.mkForce { };
+  };
 
   documentation.enable = false;
 

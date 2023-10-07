@@ -18,7 +18,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    systemdIntegration = true;
+    systemd.enable = true;
     package = pkgs.hyprland;
     extraConfig =
       (import ./monitors.nix {

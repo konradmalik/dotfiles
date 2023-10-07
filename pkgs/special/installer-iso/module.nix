@@ -6,7 +6,11 @@
     ./../../../home/konrad/common/global/ssh-keys.nix
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs = {
+    hostPlatform = lib.mkDefault "x86_64-linux";
+    # we provide external instance
+    config = lib.mkForce { };
+  };
 
   networking.hostName = "nix-installer-iso";
   networking.networkmanager.enable = true;
