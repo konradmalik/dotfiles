@@ -2,8 +2,7 @@ keys:
   # main
   - &admin_konrad age1p3uhyl5gr00kfykdmhm8tgq75ct2ajcptxqrnrf9hx2nd2w4u5rqmh36k7
   # personal ssh
-  - &admin_konrad_mbp13 age1n2saguuqjaea7szgcy45nuzg0kwh7h9c979wtnf4yt65jv3n4v6qkt37mh
-  - &admin_konrad_m3800 age1pcgwdcx2l2hx3j0xrsd3fakxt4qqze6n4xvyl37kkksn63ehyyxqn3utts
+  - &admin_konrad_ssh age1n2saguuqjaea7szgcy45nuzg0kwh7h9c979wtnf4yt65jv3n4v6qkt37mh
   # host ssh
   - &host_m3800 age1s9xeq5c22a9t8escdep5zryz5ug56tsqc9j7wvaw4rkdregue3tqa6c2gz
   - &host_mbp13 age1nyqqwhp6pecz47qmdskagyldlwm69ngu8ec7wyua99lrk28a8pkqaw0dtg
@@ -16,8 +15,7 @@ creation_rules:
     key_groups:
       - age:
           - *admin_konrad
-          - *admin_konrad_mbp13
-          - *admin_konrad_m3800
+          - *admin_konrad_ssh
           - *host_m3800
           - *host_xps12
           - *host_vaio
@@ -27,8 +25,7 @@ creation_rules:
     key_groups:
       - age:
           - *admin_konrad
-          - *admin_konrad_mbp13
-          - *admin_konrad_m3800
+          - *admin_konrad_ssh
           - *host_m3800
           - *host_xps12
           - *host_vaio
@@ -38,5 +35,4 @@ creation_rules:
     key_groups:
       - age:
           - *admin_konrad
-          - *admin_konrad_mbp13
-          - *admin_konrad_m3800
+          - *admin_konrad_ssh
