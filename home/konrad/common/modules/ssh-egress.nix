@@ -6,7 +6,7 @@ in {
     enable = mkEnableOption "Enables ssh-egress configuration through home-manager";
     enableSecret = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "whether to enable secret ssh config.d (requires sops-nix and age key)";
     };
   };

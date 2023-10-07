@@ -16,7 +16,7 @@ in
     ./../global/openssh.nix
     ./../global/tailscale.nix
 
-    ./../users/konrad
+    ./../users/konrad/nixos.nix
   ] ++ (builtins.attrValues (import ./../modules))
   ++ (builtins.attrValues customArgs.nixosModules);
 

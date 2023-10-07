@@ -12,7 +12,10 @@
     monospace.size = 16.0;
   };
   konrad.programs.gpg.enable = true;
-  konrad.programs.ssh-egress.enable = true;
+  konrad.programs.ssh-egress = {
+    enable = true;
+    enableSecret = true;
+  };
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty = {
     enable = true;
