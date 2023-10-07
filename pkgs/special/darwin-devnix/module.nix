@@ -20,7 +20,7 @@ in
     ./../../../hosts/common/global/nix/shared.nix
     ./../../../hosts/common/global/openssh.nix
 
-    ./../../../hosts/common/users/${user}
+    ./../../../hosts/common/users/${user}/nixos.nix
 
     "${modulesPath}/virtualisation/qemu-vm.nix"
   ];
