@@ -21,7 +21,6 @@ in
     ./readline.nix
     ./shells.nix
     ./sops.nix
-    ./ssh-ingress.nix
     ./ssh-keys.nix
     ./starship.nix
     ./tealdeer.nix

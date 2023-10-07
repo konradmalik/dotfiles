@@ -6,7 +6,6 @@
     name = "konrad";
     home = "/Users/${config.users.users.konrad.name}";
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = config.home-manager.users.konrad.sshKeys.personal.keys;
   };
-
-
 }
