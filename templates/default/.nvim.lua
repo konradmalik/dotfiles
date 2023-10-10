@@ -13,6 +13,7 @@ require("konrad.lsp").setup({
     -- "rust_analyzer",
     -- "terraformls",
     -- "yamlls",
+    -- "zls",
 })
 
 -- require("konrad.dap").setup({
