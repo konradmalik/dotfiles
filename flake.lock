@@ -335,22 +335,6 @@
         "type": "github"
       }
     },
-    "indent-blankline-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1697516559,
-        "narHash": "sha256-oif/14yBGleDkeq8aZRwMdrZrGXKEHCjtYu2f3ieR9Q=",
-        "owner": "lukas-reineke",
-        "repo": "indent-blankline.nvim",
-        "rev": "9301e434dd41154ffe5c3d5b8a5c9acd075ebeff",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lukas-reineke",
-        "repo": "indent-blankline.nvim",
-        "type": "github"
-      }
-    },
     "kanagawa-nvim": {
       "flake": false,
       "locked": {
@@ -432,7 +416,6 @@
         "gitsigns-nvim": "gitsigns-nvim",
         "harpoon": "harpoon",
         "heirline-nvim": "heirline-nvim",
-        "indent-blankline-nvim": "indent-blankline-nvim",
         "kanagawa-nvim": "kanagawa-nvim",
         "luasnip": "luasnip",
         "neo-tree-nvim": "neo-tree-nvim",
@@ -459,11 +442,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1697540254,
-        "narHash": "sha256-CSEEMKRnbUAp21PB2o5XuVpDnoZa/30vtC7XDBtAB3k=",
+        "lastModified": 1697658946,
+        "narHash": "sha256-5WfzxTjt4+mG93WkO1yxL7w5/67fwTqLyPt+fzB9EhU=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "9a89f788e6fd3ae4d7dff39743ae17163bd42963",
+        "rev": "f23d8d4a34948b9263d6ef35acd6b2c1c32e90d3",
         "type": "github"
       },
       "original": {
