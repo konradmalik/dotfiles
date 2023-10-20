@@ -83,10 +83,6 @@
               # Enable experimental features without having to specify the argument
               NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
               packages = with pkgs; [
-                # linters,formatters
-                nixpkgs-fmt
-                # language servers
-                nil
                 # useful tools
                 manix
                 nmap
