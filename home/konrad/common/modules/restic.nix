@@ -56,6 +56,13 @@ in
       default = "restic/hc_backup_url";
     };
 
+    ntfyPathFileRef = mkOption {
+      type = types.str;
+      description = "sops nix reference containing ntfy.sh url path for notifications";
+      example = "restic/ntfy_restic_path";
+      default = "restic/ntfy_restic_path";
+    };
+
     package = lib.mkOption {
       type = lib.types.package;
       default = pkgs.restic;
@@ -236,26 +243,62 @@ in
       hcCheckUrl = config.sops.secrets.${cfg.hcCheckUrlFileRef}.path;
       hcForgetUrl = config.sops.secrets.${cfg.hcForgetUrlFileRef}.path;
       hcBackupUrl = config.sops.secrets.${cfg.hcBackupUrlFileRef}.path;
+      ntfyPath = config.sops.secrets.${cfg.ntfyPathFileRef}.path;
 
       resticBackup = pkgs.writeShellScript "restic-backup.sh" ''
         echo "rustic-backup"
         ${pkgs.coreutils}/bin/date
         ${baker}/bin/baker b2 backup
-        ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcBackupUrl})"
+        code=$?
+        if [[ "$code" == 0 ]]; then
+          ${pkgs.curl}/bin/curl \
+            -H "Title: Baker status" \
+            -H prio:min \
+            -d "$(${pkgs.inetutils}/bin/hostname): restic-backup succeeded" ntfy.sh/$(<${ntfyPath})
+          ${pkgs.curl}/bin/curl -m 10 --retry 5 "$(<${hcBackupUrl})"
+        else
+          ${pkgs.curl}/bin/curl \
+            -H "Title: Baker status" \
+            -H tags:warning \
+            -H prio:high \
+            -d "$(${pkgs.inetutils}/bin/hostname): restic-backup failed" ntfy.sh/$(<${ntfyPath})
+        fi
         echo
       '';
       resticForget = pkgs.writeShellScript "restic-forget.sh" ''
         echo "rustic-forget"
         ${pkgs.coreutils}/bin/date
         ${baker}/bin/baker b2 forget-prune
-        ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcForgetUrl})"
+        code=$?
+        if [[ "$code" == 0 ]]; then
+          ${pkgs.curl}/bin/curl \
+            -H "Title: Baker status" \
+            -H prio:min \
+            -d "$(${pkgs.inetutils}/bin/hostname): restic-forget succeeded" ntfy.sh/$(<${ntfyPath})
+          ${pkgs.curl}/bin/curl -m 10 --retry 5 "$(<${hcForgetUrl})"
+        else
+          ${pkgs.curl}/bin/curl -H tags:warning -H prio:high -d "$(${pkgs.inetutils}/bin/hostname): restic-forget failed" ntfy.sh/$(<${ntfyPath})
+        fi
         echo
       '';
       resticCheck = pkgs.writeShellScript "restic-check.sh" ''
         echo "rustic-check"
         ${pkgs.coreutils}/bin/date
         ${restic-b2}/bin/restic-b2 check
-        ${pkgs.curl}/bin/curl -m 10 --retry 5 "''$(<${hcCheckUrl})"
+        code=$?
+        if [[ "$code" == 0 ]]; then
+          ${pkgs.curl}/bin/curl \
+            -H "Title: Baker status" \
+            -H prio:min \
+            -d "$(hostname): restic-check succeeded" ntfy.sh/$(<${ntfyPath})
+          ${pkgs.curl}/bin/curl -m 10 --retry 5 "$(<${hcCheckUrl})"
+        else
+          ${pkgs.curl}/bin/curl \
+            -H "Title: Baker status" \
+            -H tags:warning \
+            -H prio:high \
+            -d "$(${pkgs.inetutils}/bin/hostname): restic-check failed" ntfy.sh/$(<${ntfyPath})
+        fi
         echo
       '';
     in
@@ -275,6 +318,9 @@ in
         };
         ${cfg.hcForgetUrlFileRef} = {
           path = "${config.xdg.dataHome}/restic/hc_forget_url";
+        };
+        ${cfg.ntfyPathFileRef} = {
+          path = "${config.xdg.dataHome}/restic/ntfy_restic_path";
         };
       };
 
