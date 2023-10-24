@@ -5,7 +5,6 @@
     file
     inetutils
     moreutils
-    #nq
     progress
     tree
     stable.trurl
@@ -32,6 +31,7 @@
     jc
     jo
     jq
+    lnav
     xsv
     yq-go
 
@@ -47,9 +47,6 @@
     rfv
     tmux-sessionizer
     tmux-windowizer
-
-    nodePackages.prettier
-    shfmt
   ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
     psmisc
     trace-cmd
