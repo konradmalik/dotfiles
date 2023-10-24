@@ -37,7 +37,6 @@
     casks =
       [
         "alacritty"
-        "backblaze"
         "calibre"
         "discord"
         "drawio"
