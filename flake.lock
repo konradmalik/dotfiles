@@ -427,7 +427,6 @@
         "nvim-dap": "nvim-dap",
         "nvim-dap-ui": "nvim-dap-ui",
         "nvim-dap-virtual-text": "nvim-dap-virtual-text",
-        "nvim-lspconfig": "nvim-lspconfig",
         "nvim-luaref": "nvim-luaref",
         "nvim-navic": "nvim-navic",
         "nvim-treesitter-context": "nvim-treesitter-context",
@@ -442,11 +441,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1698178830,
-        "narHash": "sha256-1PcKqG0hDSnbjByIhnINFa3r7K+1ua14oD4NazGQDwg=",
+        "lastModified": 1698318648,
+        "narHash": "sha256-cPFzCIN3jexnigTp1LV2I8y+tt8TYbB6sQxEfR+32M8=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "8e5e172acc7ef623c59e8850569af75e4c7b19e9",
+        "rev": "1267e23d7a42e336fd220f556decdc4d0d3c0de4",
         "type": "github"
       },
       "original": {
@@ -686,22 +685,6 @@
       "original": {
         "owner": "theHamsta",
         "repo": "nvim-dap-virtual-text",
-        "type": "github"
-      }
-    },
-    "nvim-lspconfig": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1698055249,
-        "narHash": "sha256-Ohckvu+Vt5CE5uZt2TJcUmG4QM97d1F67n2YmCaVGwo=",
-        "owner": "neovim",
-        "repo": "nvim-lspconfig",
-        "rev": "6428fcab6f3c09e934bc016c329806314384a41e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "neovim",
-        "repo": "nvim-lspconfig",
         "type": "github"
       }
     },
