@@ -55,7 +55,7 @@
       swift.disabled = true;
       terraform.disabled = false;
       username.disabled = false;
-      zig.disabled = true;
+      zig.disabled = false;
     };
   };
 
