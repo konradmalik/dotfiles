@@ -15,7 +15,6 @@ in
     ./git.nix
     ./glow.nix
     ./k9s.nix
-    ./khal.nix
     ./neovim.nix
     ./packages.nix
     ./readline.nix

@@ -12,12 +12,12 @@ let
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
   btm = "${pkgs.bottom}/bin/btm";
   wofi = "${pkgs.wofi}/bin/wofi";
-  ikhal = "${pkgs.khal}/bin/ikhal";
+  cal = "${pkgs.util-linux}/bin/cal";
 
   terminal = "${pkgs.alacritty}/bin/alacritty";
   terminal-spawn = cmd: "${terminal} -e $SHELL -i -c ${cmd}";
 
-  calendar = terminal-spawn ikhal;
+  calendar = terminal-spawn cal;
   systemMonitor = terminal-spawn btm;
 
   # Function to simplify making waybar outputs
