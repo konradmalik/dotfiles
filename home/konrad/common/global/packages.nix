@@ -13,7 +13,7 @@
     zip
 
     ripgrep
-    stable.ripgrep-all
+    master.ripgrep-all
     fd
     fpp
     sad
