@@ -89,15 +89,12 @@ let
       c = config.colorscheme.colors;
     in
     ''
-      # make left status a bit longer to not cut off our names
-      set-option -g status-left-length 50
-
       # Base16 ${config.colorscheme.name}
       # Scheme author: ${config.colorscheme.author}
       # Template author: Tinted Theming: (https://github.com/tinted-theming)
 
       # default statusbar colors
-      set-option -g status-style "fg=#${c.base04},bg=#${c.base01}"
+      set-option -g status-style "fg=#${c.base04},bg=default"
 
       # default window title colors
       set-window-option -g window-status-style "fg=#${c.base04},bg=default"
@@ -124,6 +121,19 @@ let
 
       # bell
       set-window-option -g window-status-bell-style "fg=#${c.base01},bg=#${c.base08}"
+
+      # status bar formatting
+      set -g status-left "#[fg=#${c.base0D},bold]  #S "
+      set -g status-right "#[fg=#${c.base06},bold]%a %Y-%m-%d 󱑒 %H:%M"
+      set -g status-justify left
+      set -g status-left-length 200     # increase length (from 10)
+      set -g status-right-length 200    # increase length (from 10)
+      set -g status-position top
+
+      # window formatting
+      set -g window-status-current-format '#[fg=#${c.base0E}] #I #W#{?window_zoomed_flag,( ),}'
+      set -g window-status-format '#[fg=#${c.base04}]  #I #W'
+      set -g window-status-last-style 'fg=#${c.base06},bg=#${c.base01}'
     '';
 in
 {
