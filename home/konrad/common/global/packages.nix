@@ -31,7 +31,7 @@
     jc
     jo
     jq
-    lnav
+    tailspin
     xsv
     yq-go
 
