@@ -131,8 +131,8 @@ let
       set -g status-position top
 
       # window formatting
-      set -g window-status-current-format '#[fg=#${c.base0E}] #I #W#{?window_zoomed_flag,( ),}'
-      set -g window-status-format '#[fg=#${c.base04}]  #I #W'
+      set -g window-status-current-format '#[fg=#${c.base0E}][#I #W#{?window_zoomed_flag,( ),}]'
+      set -g window-status-format '#[fg=#${c.base04}] #I #W '
       set -g window-status-last-style 'fg=#${c.base06},bg=#${c.base01}'
     '';
 in
