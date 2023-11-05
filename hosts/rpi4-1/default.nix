@@ -64,6 +64,11 @@
     arguments = "-a rpi4-1 -v -o alsa";
   };
 
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+  };
+
   fileSystems = {
     "/mnt" = {
       device = "/dev/sda2";
