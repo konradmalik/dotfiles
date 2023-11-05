@@ -19,6 +19,8 @@ let
     set -ga terminal-overrides ",-256color:Tc,alacritty:Tc"
     # focus events enabled for terminals that support them
     set-option -g focus-events on
+    # refresh interval
+    set-option -g status-interval 60
 
     # Let the window to be renamed automatically when launching a process
     set-option -g automatic-rename on
