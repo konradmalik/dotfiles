@@ -35,27 +35,6 @@ in
       default = "restic/password";
     };
 
-    hcCheckUrlFileRef = mkOption {
-      type = types.str;
-      description = "sops nix reference containing healthchecks.io url for signaling backup check";
-      example = "restic/hc_check_url";
-      default = "restic/hc_check_url";
-    };
-
-    hcForgetUrlFileRef = mkOption {
-      type = types.str;
-      description = "sops nix reference containing healthchecks.io url for signaling backup forget";
-      example = "restic/hc_forget_url";
-      default = "restic/hc_forget_url";
-    };
-
-    hcBackupUrlFileRef = mkOption {
-      type = types.str;
-      description = "sops nix reference containing healthchecks.io url for signaling backup";
-      example = "restic/hc_backup_url";
-      default = "restic/hc_backup_url";
-    };
-
     ntfyPathFileRef = mkOption {
       type = types.str;
       description = "sops nix reference containing ntfy.sh url path for notifications";
@@ -240,9 +219,6 @@ in
         };
       };
 
-      hcCheckUrl = config.sops.secrets.${cfg.hcCheckUrlFileRef}.path;
-      hcForgetUrl = config.sops.secrets.${cfg.hcForgetUrlFileRef}.path;
-      hcBackupUrl = config.sops.secrets.${cfg.hcBackupUrlFileRef}.path;
       ntfyPath = config.sops.secrets.${cfg.ntfyPathFileRef}.path;
 
       resticBackup = pkgs.writeShellScript "restic-backup.sh" ''
@@ -251,17 +227,18 @@ in
         ${baker}/bin/baker b2 backup
         code=$?
         if [[ "$code" == 0 ]]; then
-          ${pkgs.curl}/bin/curl \
-            -H "Title: Baker status" \
-            -H prio:min \
-            -d "$(${pkgs.inetutils}/bin/hostname): restic-backup succeeded" ntfy.sh/$(<${ntfyPath})
-          ${pkgs.curl}/bin/curl -m 10 --retry 5 "$(<${hcBackupUrl})"
+          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+            --header "Title: Baker status" \
+            --header prio:min \
+            --data "$(${pkgs.inetutils}/bin/hostname): restic-backup succeeded" \
+            ntfy.sh/$(<${ntfyPath}) > /dev/null
         else
-          ${pkgs.curl}/bin/curl \
-            -H "Title: Baker status" \
-            -H tags:warning \
-            -H prio:high \
-            -d "$(${pkgs.inetutils}/bin/hostname): restic-backup failed" ntfy.sh/$(<${ntfyPath})
+          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+            --header "Title: Baker status" \
+            --header tags:warning \
+            --header prio:high \
+            --data "$(${pkgs.inetutils}/bin/hostname): restic-backup failed" \
+            ntfy.sh/$(<${ntfyPath}) > /dev/null
         fi
         echo
       '';
@@ -271,13 +248,17 @@ in
         ${baker}/bin/baker b2 forget-prune
         code=$?
         if [[ "$code" == 0 ]]; then
-          ${pkgs.curl}/bin/curl \
-            -H "Title: Baker status" \
-            -H prio:min \
-            -d "$(${pkgs.inetutils}/bin/hostname): restic-forget succeeded" ntfy.sh/$(<${ntfyPath})
-          ${pkgs.curl}/bin/curl -m 10 --retry 5 "$(<${hcForgetUrl})"
+          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+            --header "Title: Baker status" \
+            --header prio:min \
+            --data "$(${pkgs.inetutils}/bin/hostname): restic-forget succeeded" \
+            ntfy.sh/$(<${ntfyPath}) > /dev/null
         else
-          ${pkgs.curl}/bin/curl -H tags:warning -H prio:high -d "$(${pkgs.inetutils}/bin/hostname): restic-forget failed" ntfy.sh/$(<${ntfyPath})
+          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+            --header tags:warning \
+            --header prio:high \
+            --data "$(${pkgs.inetutils}/bin/hostname): restic-forget failed" \
+            ntfy.sh/$(<${ntfyPath}) > /dev/null
         fi
         echo
       '';
@@ -287,17 +268,18 @@ in
         ${restic-b2}/bin/restic-b2 check
         code=$?
         if [[ "$code" == 0 ]]; then
-          ${pkgs.curl}/bin/curl \
-            -H "Title: Baker status" \
-            -H prio:min \
-            -d "$(hostname): restic-check succeeded" ntfy.sh/$(<${ntfyPath})
-          ${pkgs.curl}/bin/curl -m 10 --retry 5 "$(<${hcCheckUrl})"
+          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+            --header "Title: Baker status" \
+            --header prio:min \
+            --data "$(hostname): restic-check succeeded" \
+            ntfy.sh/$(<${ntfyPath}) > /dev/null
         else
-          ${pkgs.curl}/bin/curl \
-            -H "Title: Baker status" \
-            -H tags:warning \
-            -H prio:high \
-            -d "$(${pkgs.inetutils}/bin/hostname): restic-check failed" ntfy.sh/$(<${ntfyPath})
+          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+            --header "Title: Baker status" \
+            --header tags:warning \
+            --header prio:high \
+            --data "$(${pkgs.inetutils}/bin/hostname): restic-check failed" \
+            ntfy.sh/$(<${ntfyPath}) > /dev/null
         fi
         echo
       '';
@@ -309,15 +291,6 @@ in
         };
         ${cfg.passwordFileSopsRef} = {
           path = "${config.xdg.dataHome}/restic/password";
-        };
-        ${cfg.hcBackupUrlFileRef} = {
-          path = "${config.xdg.dataHome}/restic/hc_backup_url";
-        };
-        ${cfg.hcCheckUrlFileRef} = {
-          path = "${config.xdg.dataHome}/restic/hc_check_url";
-        };
-        ${cfg.hcForgetUrlFileRef} = {
-          path = "${config.xdg.dataHome}/restic/hc_forget_url";
         };
         ${cfg.ntfyPathFileRef} = {
           path = "${config.xdg.dataHome}/restic/ntfy_restic_path";
