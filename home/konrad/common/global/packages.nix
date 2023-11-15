@@ -21,6 +21,7 @@
     urlscan
 
     hyperfine
+    noti
     viddy
     watchexec
     yazi
