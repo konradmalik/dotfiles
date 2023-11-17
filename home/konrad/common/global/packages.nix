@@ -32,7 +32,6 @@
     jc
     jo
     jq
-    tailspin
     xsv
     yq-go
 
