@@ -24,6 +24,20 @@ let
     bindkey -M vicmd '^v' edit-command-line
 
     #### Functions
+    take() {
+      mkdir -p "$1" && cd "$1"
+    }
+
+    groot() {
+      cd "$(git rev-parse --show-toplevel 2>/dev/null)"
+    }
+
+    tmp () {
+        [ "$1" = "view" ] && cd /tmp/workspaces && cd $(${pkgs.eza}/bin/exa --sort=modified --reverse | ${pkgs.fzf}/bin/fzf --preview 'ls -A {}') && return 0
+        r="/tmp/workspaces/$(${pkgs.unixtools.xxd}/bin/xxd -l3 -ps /dev/urandom)"
+        mkdir -p "$r" && pushd "$r"
+    }
+
     weather() {
       local param="$1"
       if [ -z "$param" ]; then
@@ -31,11 +45,6 @@ let
       else
           curl "wttr.in/''${param}?F"
       fi
-    }
-
-    timezsh() {
-      local shell=''${1-''$SHELL}
-      for i in $(seq 1 10); do time $shell -i -c exit; done
     }
 
     flakify() {

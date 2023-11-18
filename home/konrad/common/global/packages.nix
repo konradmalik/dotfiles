@@ -9,6 +9,7 @@
     tree
     stable.trurl
     unar
+    unixtools.xxd
     wget
     zip
 
