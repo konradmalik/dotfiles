@@ -7,14 +7,14 @@
     moreutils
     progress
     tree
-    stable.trurl
+    trurl
     unar
     unixtools.xxd
     wget
     zip
 
     ripgrep
-    master.ripgrep-all
+    ripgrep-all
     fd
     fpp
     sad
