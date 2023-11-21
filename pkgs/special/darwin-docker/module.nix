@@ -37,7 +37,7 @@ in
 
   system = {
     name = lib.mkDefault "darwin-docker";
-    stateVersion = lib.mkDefault "23.11";
+    stateVersion = lib.mkDefault "24.05";
   };
 
   virtualisation = {
