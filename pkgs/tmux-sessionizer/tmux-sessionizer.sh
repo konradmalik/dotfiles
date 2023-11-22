@@ -4,12 +4,11 @@ set -e
 
 tmux_script_name=".tmux.sh"
 
-active_sessions=$(tmux list-sessions 2>/dev/null || echo "no sessions")
-export active_sessions
+cmd='echo "Selected session: $(basename {} | tr . _)\nActive sessions:\n$(tmux list-sessions 2>/dev/null || echo "no active sessions")"'
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd . --type d --min-depth 1 --max-depth 4 ~/Code | fzf-tmux --preview 'echo "Selected session: $(basename {} | tr . _)\nActive sessions:\n$active_sessions"')
+    selected=$(fd . --type d --min-depth 1 --max-depth 4 ~/Code | fzf-tmux -- --preview="$cmd")
 fi
 
 if [[ -z $selected ]]; then

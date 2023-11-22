@@ -8,10 +8,9 @@ if [[ -z $active_sessions ]]; then
     exit 0
 fi
 
-selected=$(tmux list-sessions | fzf-tmux -p | cut -d ":" -f1)
-
+selected=$(echo "$active_sessions" | fzf-tmux -p | cut -d ":" -f1)
 if [[ -z $selected ]]; then
-    echo "nothing selected"
+    # nothing selected
     exit 0
 fi
 
