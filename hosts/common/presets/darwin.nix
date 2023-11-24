@@ -38,7 +38,6 @@
       [
         "alacritty"
         "calibre"
-        "discord"
         "firefox"
         "gimp"
         "grammarly"
@@ -51,8 +50,6 @@
         "slack"
         "spotify"
         "syncthing"
-        "telegram"
-        "whatsapp"
         "zoom"
       ];
 
