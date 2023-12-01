@@ -20,6 +20,10 @@
       url = "github:konradmalik/neovim-flake";
     };
 
+    baywatch = {
+      url = "github:konradmalik/baywatch";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs = {
@@ -44,6 +48,7 @@
     , nixos-hardware
     , disko
     , neovim
+    , baywatch
     , home-manager
     , sops-nix
     , nix-colors
@@ -127,7 +132,7 @@
 
       homeManagerModules = import ./modules/home-manager;
       nixosModules = import ./modules/nixos;
-      overlays = import ./overlays;
+      overlays = import ./overlays { inherit inputs; };
       templates = import ./templates;
 
       darwinConfigurations = {

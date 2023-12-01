@@ -24,7 +24,7 @@
     hyperfine
     noti
     viddy
-    watchexec
+    baywatch
     yazi
 
     age

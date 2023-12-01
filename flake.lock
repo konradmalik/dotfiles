@@ -32,6 +32,24 @@
         "type": "github"
       }
     },
+    "baywatch": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1701521306,
+        "narHash": "sha256-NzZSr+iOc5qB6xnk5j0QG3W8QYD+XBqo4AG9napcxZ0=",
+        "owner": "konradmalik",
+        "repo": "baywatch",
+        "rev": "21031816b3a1f776708a67469e62d17553309c30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "konradmalik",
+        "repo": "baywatch",
+        "type": "github"
+      }
+    },
     "boole-nvim": {
       "flake": false,
       "locked": {
@@ -437,7 +455,7 @@
         "neo-tree-nvim": "neo-tree-nvim",
         "neodev-nvim": "neodev-nvim",
         "neovim": "neovim_2",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nui-nvim": "nui-nvim",
         "nvim-cmp": "nvim-cmp",
         "nvim-dap": "nvim-dap",
@@ -533,13 +551,13 @@
       "locked": {
         "lastModified": 1701174899,
         "narHash": "sha256-1W+FMe8mWsJKXoBc+QgKmEeRj33kTFnPq7XCjU+bfnA=",
-        "owner": "nixos",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "010c7296f3b19a58b206fdf7d68d75a5b0a09e9e",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -609,6 +627,22 @@
       }
     },
     "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1701174899,
+        "narHash": "sha256-1W+FMe8mWsJKXoBc+QgKmEeRj33kTFnPq7XCjU+bfnA=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "010c7296f3b19a58b206fdf7d68d75a5b0a09e9e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1701068326,
         "narHash": "sha256-vmMceA+q6hG1yrjb+MP8T0YFDQIrW3bl45e7z24IEts=",
@@ -818,13 +852,14 @@
     },
     "root": {
       "inputs": {
+        "baywatch": "baywatch",
         "darwin": "darwin",
         "disko": "disko",
         "home-manager": "home-manager",
         "neovim": "neovim",
         "nix-colors": "nix-colors",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
