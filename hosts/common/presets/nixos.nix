@@ -11,6 +11,7 @@ in
     ./../global/docker.nix
     ./../global/home-manager.nix
     ./../global/locale.nix
+    ./../global/locate.nix
     ./../global/nix/nixos.nix
     ./../global/oom-killer.nix
     ./../global/openssh.nix
