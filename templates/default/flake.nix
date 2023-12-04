@@ -2,7 +2,7 @@
   description = "Development environment for this project";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
 
@@ -37,12 +37,7 @@
           {
             name = "Shell for this project";
 
-            packages = with pkgs; [
-              # formatters/linters
-              nixpkgs-fmt
-              # language-servers
-              nil
-            ];
+            packages = [ ];
           };
       });
       formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
