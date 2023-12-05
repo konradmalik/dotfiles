@@ -50,7 +50,9 @@
     # use both shofts together to toggle keyboard layout
     # capslock acts as another ctrl
     # left alt allows to write special characters just like right alt
-    kb_options=grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch
+    kb_options=grp:shifts_toggle,ctrl:nocaps
+    # enable lalt_switch only on-demand via keybind below
+    #kb_options=grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch
 
     natural_scroll=true
 
@@ -74,6 +76,9 @@
   # Mouse binding
   bindm=SUPER,mouse:272,movewindow
   bindm=SUPER,mouse:273,resizewindow
+  # Keyboard alt behavior
+  bind=SUPER,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch
+  bind=SUPERSHIFT,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps
   # Program bindings
   bind=SUPER,return,exec,$TERMINAL
   bind=SUPER,w,exec,makoctl dismiss
