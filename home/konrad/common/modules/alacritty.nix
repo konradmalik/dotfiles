@@ -53,6 +53,7 @@ in
             x: 6
             y: 6
           dynamic_padding: false
+          option_as_alt: Both
 
         mouse:
           hide_when_typing: true
