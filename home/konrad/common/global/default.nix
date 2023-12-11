@@ -15,6 +15,7 @@ in
     ./git.nix
     ./glow.nix
     ./k9s.nix
+    ./modules.nix
     ./neovim.nix
     ./packages.nix
     ./readline.nix
@@ -23,11 +24,9 @@ in
     ./ssh-keys.nix
     ./starship.nix
     ./tealdeer.nix
-    ./tmux.nix
-  ] ++ (builtins.attrValues (import ./../modules))
+  ]
   ++ (builtins.attrValues customArgs.homeManagerModules);
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   home = {

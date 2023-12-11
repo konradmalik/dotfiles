@@ -4,8 +4,6 @@
     ./common/presets/nixos.nix
   ];
 
-  konrad.programs.ssh-egress.enable = true;
-
   programs.rtorrent = {
     enable = true;
     extraConfig = ''

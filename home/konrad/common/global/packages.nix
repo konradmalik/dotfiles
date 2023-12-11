@@ -46,8 +46,6 @@
     up
 
     rfv
-    tmux-sessionizer
-    tmux-windowizer
   ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
     psmisc
     trace-cmd

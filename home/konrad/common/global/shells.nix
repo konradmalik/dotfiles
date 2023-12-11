@@ -167,10 +167,6 @@ in
       watch = "viddy";
       # For a full list of active aliases, run `alias`.
       # to run command that is shadowed by an alias run (for example): \ls or command ls
-      # prime
-      txs = "${pkgs.tmux-sessionizer}/bin/tmux-sessionizer";
-      txw = "${pkgs.tmux-windowizer}/bin/tmux-windowizer";
-      txr = "${pkgs.tmux-switcher}/bin/tmux-switcher";
       # faster navigation
       ".." = "cd ..";
       "..." = "cd ../..";
