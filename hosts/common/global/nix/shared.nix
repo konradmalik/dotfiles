@@ -34,6 +34,10 @@ in
     ];
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        # FIXME
+        "electron-25.9.0"
+      ];
     };
   };
   nix = {
