@@ -37,11 +37,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1702315887,
-        "narHash": "sha256-iAVrsjBr4b/YkV5HjLer7uaxlD3rVHu1D4FQC4U2hQ8=",
+        "lastModified": 1702486474,
+        "narHash": "sha256-+s5apXrGFddV03jy7P3bbhSYc/PZ6LoZ9JldJ3eQ20g=",
         "owner": "konradmalik",
         "repo": "baywatch",
-        "rev": "db17214f5056ff95f90d680100f3d7949365f5d2",
+        "rev": "8bbc993cfe1775b057e98ef6197ac5925031e2c0",
         "type": "github"
       },
       "original": {
