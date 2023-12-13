@@ -13,18 +13,19 @@
     wget
     zip
 
-    ripgrep
-    ripgrep-all
+    ast-grep
     fd
     fpp
+    ripgrep
+    ripgrep-all
     sad
     sd
     urlscan
 
+    baywatch
     hyperfine
     noti
     viddy
-    baywatch
     yazi
 
     age
