@@ -9,7 +9,6 @@
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    simpleDefaultEditor = true;
     extendGitIgnores = true;
   };
 }
