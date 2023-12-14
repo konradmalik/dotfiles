@@ -60,7 +60,7 @@
   #bind-key -n C-a send-prefix
 
   # facebook pathpicker
-  bind-key F run-shell -b "${tmuxTextProcessor} '${pkgs.fpp}/bin/fpp' '#{pane_id}' '#{pane_current_path}'"
+  bind-key F run-shell -b "${tmuxTextProcessor} '${pkgs.fpp}/bin/fpp -nfc' '#{pane_id}' '#{pane_current_path}'"
 
   # urlscan
   bind-key U run-shell -b "${tmuxTextProcessor} '${pkgs.urlscan}/bin/urlscan' '#{pane_id}' '#{pane_current_path}'"
