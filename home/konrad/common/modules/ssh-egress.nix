@@ -10,6 +10,7 @@ in {
     {
       programs.ssh = {
         enable = true;
+        addKeysToAgent = "yes";
         compression = true;
         controlMaster = "auto";
         controlPath = "/tmp/%r@%h:%p";
@@ -17,7 +18,6 @@ in {
         serverAliveCountMax = 6;
         serverAliveInterval = 15;
         extraConfig = ''
-          AddKeysToAgent yes
           IgnoreUnknown UseKeychain
           UseKeychain yes
         '';
