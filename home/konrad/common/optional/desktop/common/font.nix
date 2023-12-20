@@ -2,9 +2,9 @@
   fontProfiles = {
     enable = true;
     monospace = {
-      family = "IosevkaTerm Nerd Font";
-      package = pkgs.nerdfonts.override { fonts = [ "IosevkaTerm" ]; };
-      size = lib.mkDefault 13;
+      family = "MonaspiceNe Nerd Font";
+      package = pkgs.nerdfonts.override { fonts = [ "Monaspace" ]; };
+      size = lib.mkDefault 11;
     };
     regular = {
       family = "Fira Sans";

@@ -9,7 +9,7 @@
 
   fontProfiles = {
     enable = true;
-    monospace.size = 16.0;
+    monospace.size = 14.0;
   };
   konrad.programs.gpg.enable = true;
   konrad.programs.bitwarden.enable = true;
