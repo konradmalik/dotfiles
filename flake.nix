@@ -14,14 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim = {
-      url = "github:konradmalik/neovim-flake";
-    };
-
-    baywatch = {
-      url = "github:konradmalik/baywatch";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs = {
@@ -34,6 +26,9 @@
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
     nix-colors.url = "github:misterio77/nix-colors";
+
+    neovim.url = "github:konradmalik/neovim-flake";
+    baywatch.url = "github:konradmalik/baywatch";
   };
 
   outputs =
@@ -43,11 +38,11 @@
     , darwin
     , nixos-hardware
     , disko
-    , neovim
-    , baywatch
     , home-manager
     , sops-nix
     , nix-colors
+    , neovim
+    , baywatch
     , ...
     }@inputs:
     let
