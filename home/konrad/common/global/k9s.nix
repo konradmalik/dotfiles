@@ -1,9 +1,7 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   programs.k9s = {
     enable = true;
-    # FIXME workaround for build failure
-    package = pkgs.stable.k9s;
     skin =
       let c = config.colorscheme.colors;
       in builtins.fromJSON
