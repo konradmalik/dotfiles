@@ -1,4 +1,5 @@
-[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+[![Actions Status](https://github.com/konradmalik/dotfiles/actions/workflows/linux.yml/badge.svg)](https://github.com/konradmalik/dotfiles/actions)
+[![Actions Status](https://github.com/konradmalik/dotfiles/actions/workflows/darwin.yml/badge.svg)](https://github.com/konradmalik/dotfiles/actions)
 
 # Dotfiles
 

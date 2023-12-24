@@ -18,7 +18,6 @@ jobs:
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           pr-title: "Update flake.lock"
           pr-assignees: konradmalik
-          pr-reviewers: konradmalik
           pr-labels: |
             dependencies
             automated
