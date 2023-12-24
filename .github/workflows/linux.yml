@@ -18,7 +18,7 @@ jobs:
       - name: Flake check
         run: nix flake check
 
-      - uses: cachix/cachix-action@v12
+      - uses: cachix/cachix-action@v13
         with:
           name: konradmalik
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
