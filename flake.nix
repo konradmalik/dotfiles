@@ -64,7 +64,7 @@
         inherit inputs;
         customArgs = {
           inherit (self) homeManagerModules nixosModules overlays;
-          dotfiles = ./files;
+          files = ./files;
         };
       };
     in

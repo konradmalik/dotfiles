@@ -1,4 +1,4 @@
-{ config, pkgs, customArgs, ... }:
+{ pkgs, customArgs, ... }:
 {
   imports = [
     ./firefox.nix
@@ -29,5 +29,5 @@
     ];
   };
 
-  konrad.wallpaper = "${customArgs.dotfiles}/wallpapers/bishal-mishra.jpg";
+  konrad.wallpaper = "${customArgs.files}/wallpapers/bishal-mishra.jpg";
 }

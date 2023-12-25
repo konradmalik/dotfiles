@@ -16,6 +16,7 @@ creation_rules:
       - age:
           - *admin_konrad
           - *admin_konrad_ssh
+          - *host_mbp13
           - *host_m3800
           - *host_xps12
           - *host_vaio
@@ -26,6 +27,7 @@ creation_rules:
       - age:
           - *admin_konrad
           - *admin_konrad_ssh
+          - *host_mbp13
           - *host_m3800
           - *host_xps12
           - *host_vaio

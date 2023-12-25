@@ -1,7 +1,4 @@
-{ config, pkgs, lib, customArgs, ... }:
-let
-  localSshSigningKey = "${config.home.homeDirectory}/.ssh/personal.pub";
-in
+{ config, pkgs, customArgs, ... }:
 {
   home.packages = with pkgs;
     [
@@ -93,6 +90,7 @@ in
       # gitignore.io
       gitignore = "!curl -sL https://www.toptal.com/developers/gitignore/api/$@";
     };
+
     extraConfig = {
       color = {
         ui = true;
@@ -111,7 +109,7 @@ in
       gpg = {
         format = "ssh";
         ssh = {
-          allowedSignersFile = "${customArgs.dotfiles}/allowed_signers";
+          allowedSignersFile = "${customArgs.files}/allowed_signers";
         };
       };
 
@@ -158,9 +156,6 @@ in
       tag = {
         gpgSign = true;
       };
-
-      # use defaultKeyCommand
-      #user.signingKey = "${config.home.homeDirectory}/.ssh/personal.pub";
 
       worktree = {
         guessRemote = true;

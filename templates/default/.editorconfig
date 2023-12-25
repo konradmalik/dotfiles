@@ -9,11 +9,5 @@ max_line_length = 120
 indent_style = space
 indent_size = 4
 
-[{*.yaml,*.yml,*.nix}]
+[*.nix]
 indent_size = 2
-
-[*.go]
-indent_style = tab
-
-[Makefile]
-indent_style = tab
