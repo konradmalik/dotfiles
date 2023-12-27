@@ -1,4 +1,4 @@
-{ pkgs, lib, modulesPath, inputs, ... }: {
+{ lib, inputs, ... }: {
   imports = [
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
   ];
@@ -14,11 +14,7 @@
       fsType = "ext4";
     };
 
-  # keep this until sd-image-aarch64-new-kernel-no-zfs-installer.nix moves to stable
-  # Makes `availableOn` fail for zfs, see <nixos/modules/profiles/base.nix>.
-  # This is a workaround since we cannot remove the `"zfs"` string from `supportedFilesystems`.
-  # The proper fix would be to make `supportedFilesystems` an attrset with true/false which we
-  # could then `lib.mkForce false`
+  # remove after it's solved here nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix
   nixpkgs.overlays = [
     (final: super: {
       zfs = super.zfs.overrideAttrs (_: {
