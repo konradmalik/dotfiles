@@ -9,14 +9,6 @@
     nix-direnv = {
       enable = true;
     };
-    stdlib = ''
-      use_rtx() {
-        direnv_load rtx direnv exec
-      }
-      use_asdf() {
-        use_rtx
-      }
-    '';
     config = {
       global = {
         strict_env = true;
