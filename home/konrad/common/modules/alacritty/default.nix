@@ -53,7 +53,7 @@ in
         sessionVariables.TERMINAL = mkIf cfg.makeDefault "alacritty";
       };
 
-      xdg.configFile."alacritty/alacritty.yml".text =
+      xdg.configFile."alacritty/alacritty.toml".text =
         lib.concatStringsSep "\n" ([ baseConfig ] ++ lib.optional (cfg.colorscheme != null) colorConfig);
     };
 }

@@ -1,41 +1,41 @@
 { fontFamily, fontSize }:
 ''
-  live_config_reload: false
+  live_config_reload = false
 
-  window:
-    dynamic_title: true
-    padding:
-      x: 6
-      y: 6
-    dynamic_padding: false
-    option_as_alt: Both
+  [cursor.style]
+  shape = "Block"
 
-  mouse:
-    hide_when_typing: true
+  [font]
+  size = ${toString fontSize}
 
-  scrolling:
-    history: 5000
+  [font.bold]
+  family = "${fontFamily}"
+  style = "Bold"
 
-  cursor:
-    style:
-      shape: Block
+  [font.bold_italic]
+  family = "${fontFamily}"
+  style = "Bold Italic"
 
-  fontfamily: &fontfamily "${fontFamily}"
-  font:
-    size: ${toString fontSize}
-    normal:
-      family: *fontfamily
-      style: Regular
+  [font.italic]
+  family = "${fontFamily}"
+  style = "Italic"
 
-    bold:
-      family: *fontfamily
-      style: Bold
+  [font.normal]
+  family = "${fontFamily}"
+  style = "Regular"
 
-    italic:
-      family: *fontfamily
-      style: Italic
+  [mouse]
+  hide_when_typing = true
 
-    bold_italic:
-      family: *fontfamily
-      style: Bold Italic
+  [scrolling]
+  history = 5000
+
+  [window]
+  dynamic_padding = false
+  dynamic_title = true
+  option_as_alt = "Both"
+
+  [window.padding]
+  x = 6
+  y = 6
 ''
