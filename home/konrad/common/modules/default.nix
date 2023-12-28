@@ -1,5 +1,5 @@
 {
-  alacritty = import ./alacritty.nix;
+  alacritty = import ./alacritty;
   bitwarden = import ./bitwarden.nix;
   gpg-agent = import ./gpg-agent.nix;
   tmux = import ./tmux;
