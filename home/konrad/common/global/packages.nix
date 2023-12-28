@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 {
   home.packages = with pkgs;[
+    curl
     dnsutils
     file
     inetutils

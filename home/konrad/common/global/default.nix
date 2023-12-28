@@ -8,7 +8,6 @@ in
 
     ./bat.nix
     ./bottom.nix
-    ./curl.nix
     ./direnv.nix
     ./earthly.nix
     ./fzf.nix
