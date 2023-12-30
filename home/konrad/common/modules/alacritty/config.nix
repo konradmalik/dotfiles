@@ -31,6 +31,7 @@
   history = 5000
 
   [window]
+  blur = true
   dynamic_padding = false
   dynamic_title = true
   option_as_alt = "Both"
