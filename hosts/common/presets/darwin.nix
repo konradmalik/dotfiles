@@ -74,12 +74,6 @@
   programs = {
     # needed to Create /etc/zshrc that loads the nix-darwin environment.
     zsh.enable = true;
-    # as of now, no way to enable gpg-agent through home-manager for darwin
-    # but see home-manager comment, we can disable this in the future
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = false;
-    };
   };
 
   # allow sudo with touchID

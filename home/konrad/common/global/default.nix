@@ -13,6 +13,7 @@ in
     ./fzf.nix
     ./git.nix
     ./glow.nix
+    ./gpg.nix
     ./k9s.nix
     ./modules.nix
     ./neovim.nix

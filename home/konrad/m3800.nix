@@ -6,7 +6,6 @@
   ];
 
   fontProfiles.enable = true;
-  konrad.programs.gpg.enable = true;
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
   konrad.programs.restic = {
