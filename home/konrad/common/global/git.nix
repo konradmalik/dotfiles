@@ -106,6 +106,11 @@
         gpgSign = true;
       };
 
+      diff = {
+        colormoved = "default";
+        colormovedws = "allow-indentation-change";
+      };
+
       gpg = {
         format = "ssh";
         ssh = {
