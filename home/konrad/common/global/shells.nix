@@ -91,7 +91,9 @@ let
     # Zsh can generate completion from looking at the output of --help
     compdef _gnu_generic -default- -P '*'
     # use cache
-    zstyle ':completion::complete:*' use-cache 1
+    zstyle ':completion:*' use-cache on
+    zstyle ':completion:*' cache-path "${config.xdg.cacheHome}/zsh/.zcompcache"
+
     # autocompletion menu
     zstyle ':completion:*' menu select
     # shift-tab to go back in completions
