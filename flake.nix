@@ -29,6 +29,11 @@
 
     neovim.url = "github:konradmalik/neovim-flake";
     baywatch.url = "github:konradmalik/baywatch";
+
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
   };
 
   outputs =
