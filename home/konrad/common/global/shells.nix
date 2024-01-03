@@ -106,6 +106,14 @@ let
     zstyle ':completion:*' completer _extensions _complete _approximate
     # display completer while waiting
     zstyle ":completion:*" show-completer true
+    # group completions
+    zstyle ':completion:*' group-name '''
+    # completions colors
+    zstyle ':completion:*:default' list-colors ''${(s.:.)LS_COLORS}
+    # show corrections
+    zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+    # show 'tag' info
+    zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
   '';
 in
 {
