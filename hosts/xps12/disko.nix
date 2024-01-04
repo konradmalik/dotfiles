@@ -1,4 +1,3 @@
-# look for disko-create and disko-mount scripts in your PATH
 {
   disko.devices.disk.sda = {
     device = "/dev/sda";

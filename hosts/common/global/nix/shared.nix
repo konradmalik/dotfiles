@@ -20,16 +20,6 @@ in
           system = final.system;
           config = final.config;
         };
-
-        unstable = import inputs.nixpkgs-unstable {
-          system = final.system;
-          config = final.config;
-        };
-
-        master = import inputs.nixpkgs-master {
-          system = final.system;
-          config = final.config;
-        };
       })
     ];
     config = {

@@ -1,14 +1,21 @@
-{ pkgs, ... }:
+{ ripgrep
+, bat
+, fzf
+, writeScriptBin
+, symlinkJoin
+, makeWrapper
+, ...
+}:
 let
   name = "rfv";
-  script = (pkgs.writeScriptBin name (builtins.readFile ./rfv.sh)).overrideAttrs (old: {
+  script = (writeScriptBin name (builtins.readFile ./rfv.sh)).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });
-  deps = with pkgs; [ ripgrep bat fzf ];
+  deps = [ ripgrep bat fzf ];
 in
-pkgs.symlinkJoin {
+symlinkJoin {
   inherit name;
   paths = [ script ] ++ deps;
-  buildInputs = [ pkgs.makeWrapper ];
+  buildInputs = [ makeWrapper ];
   postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
 }

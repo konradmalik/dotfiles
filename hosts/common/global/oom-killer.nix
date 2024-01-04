@@ -1,4 +1,3 @@
-{ ... }:
 {
   systemd.oomd = {
     enable = true;

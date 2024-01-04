@@ -1,4 +1,3 @@
-{ config, pkgs, ... }:
 {
   imports = [
     ../../hosts/common/global/nix/linux.nix
