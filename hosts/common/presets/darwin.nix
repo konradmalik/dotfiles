@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 {
   imports = [
     inputs.home-manager.darwinModules.home-manager
@@ -12,7 +12,6 @@
   # packages installed in system profile
   environment = {
     systemPackages = with pkgs; [
-      darwin-zsh-completions
       # only to provide tmux-256color terminfo
       # until macos ships with ncurses 6
       ncurses
