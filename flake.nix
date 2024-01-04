@@ -39,15 +39,8 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgs-stable
     , darwin
-    , nixos-hardware
-    , disko
     , home-manager
-    , sops-nix
-    , nix-colors
-    , neovim
-    , baywatch
     , ...
     }@inputs:
     let
