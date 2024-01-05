@@ -5,9 +5,7 @@
 
 Nix ftw.
 
-## installation
-
-## commands
+## Commands
 
 Note: in all commands flake location can be one of the following:
 
