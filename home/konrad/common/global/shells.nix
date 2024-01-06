@@ -3,9 +3,6 @@ let
   zshInitExtra = ''
     # beeping is annoying
     unsetopt beep
-    # alacritty icon jumping
-    # https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878
-    printf "\e[?1042l"
 
     # enable directories stack
     setopt autopushd           # Push the current directory visited on the stack.
@@ -32,18 +29,27 @@ let
       cd "$(git rev-parse --show-toplevel 2>/dev/null)"
     }
 
-    tmp () {
-        [ "$1" = "view" ] && cd /tmp/workspaces && cd $(${pkgs.eza}/bin/exa --sort=modified --reverse | ${pkgs.fzf}/bin/fzf --preview 'ls -A {}') && return 0
-        r="/tmp/workspaces/$(${pkgs.unixtools.xxd}/bin/xxd -l3 -ps /dev/urandom)"
-        mkdir -p "$r" && pushd "$r"
+    tmp() {
+      case "$cms" in
+        help|h|-h|--help)
+          echo "use 'tmp view' to see tmp folders; without arguments it'll create a new one"
+          ;;
+        view|list|ls)
+          cd /tmp/workspaces && cd $(${pkgs.eza}/bin/exa --sort=modified --reverse | ${pkgs.fzf}/bin/fzf --preview 'ls -A {}') && return 0
+          ;;
+        *)
+          r="/tmp/workspaces/$(${pkgs.unixtools.xxd}/bin/xxd -l3 -ps /dev/urandom)"
+          mkdir -p "$r" && pushd "$r"
+          ;;
+      esac
     }
 
     weather() {
       local param="$1"
       if [ -z "$param" ]; then
-          curl "wttr.in/?F"
+        curl "wttr.in/?F"
       else
-          curl "wttr.in/''${param}?F"
+        curl "wttr.in/''${param}?F"
       fi
     }
 
@@ -51,7 +57,6 @@ let
       if [ ! -e flake.nix ]; then
         nix flake new -t github:konradmalik/dotfiles#default .
       fi
-      direnv allow
     }
 
     # credit to https://github.com/MatthewCroughan/nixcfg
@@ -82,7 +87,13 @@ let
     rfv-widget() { export VISUAL=nvim && ${pkgs.rfv}/bin/rfv }
     zle -N rfv-widget
     bindkey '^G' rfv-widget
-  '';
+  '' +
+  lib.optionalString (pkgs.stdenvNoCC.isDarwin)
+    ''
+      # alacritty icon jumping
+      # https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878
+      printf "\e[?1042l"
+    '';
   zshCompletionInit = ''
     # autocompletion
     autoload -Uz compinit && compinit
