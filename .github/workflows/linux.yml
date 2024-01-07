@@ -6,31 +6,52 @@ on:
 
 name: x86_64-linux
 jobs:
-  flake:
+  flake-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v24
+      - name: Setup
+        uses: "./.github/actions/setup"
         with:
-          extra_nix_config: |
-            accept-flake-config = true
-
+          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake check
         run: nix flake check
 
-      - uses: cachix/cachix-action@v13
+  build-shell:
+    runs-on: ubuntu-latest
+    needs:
+      - flake-check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: "./.github/actions/setup"
         with:
-          name: konradmalik
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-
+          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Shell build
-        run: |
-          nix build .#devShells.x86_64-linux.default
+        run: nix build .#devShells.x86_64-linux.default
 
-      - name: Flake build generic linux
-        run: |
-          nix build .#homeConfigurations.konrad@generic.activationPackage
-
+  build-m3800:
+    runs-on: ubuntu-latest
+    needs:
+      - flake-check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: "./.github/actions/setup"
+        with:
+          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake build m3800
-        run: |
-          nix build .#nixosConfigurations.m3800.config.system.build.toplevel
+        run: nix build .#nixosConfigurations.m3800.config.system.build.toplevel
+
+  build-generic:
+    runs-on: ubuntu-latest
+    needs:
+      - flake-check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: "./.github/actions/setup"
+        with:
+          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Flake build generic linux
+        run: nix build .#homeConfigurations.konrad@generic.activationPackage

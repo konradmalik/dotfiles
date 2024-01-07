@@ -1,0 +1,23 @@
+name: Nix setup
+description: "Sets up the nix environment for jobs during CI workflow"
+
+inputs:
+  cachix-user:
+    description: "user for cachix"
+    default: konradmalik
+  cachix-token:
+    description: "cachix authToken"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: cachix/install-nix-action@v24
+      with:
+        extra_nix_config: |
+          accept-flake-config = true
+    - if: ${{ !github.event.pull_request.head.repo.fork }}
+      uses: cachix/cachix-action@v13
+      with:
+        name: "${{ inputs.cachix-user }}"
+        authToken: "${{ inputs.cachix-token }}"

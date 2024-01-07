@@ -6,15 +6,14 @@ on:
 
 name: x86_64-darwin
 jobs:
-  flake:
+  flake-check:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v24
+      - name: Setup
+        uses: "./.github/actions/setup"
         with:
-          extra_nix_config: |
-            accept-flake-config = true
-
+          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake check
         env:
           # workaround for segfaults
@@ -22,15 +21,28 @@ jobs:
           GC_DONT_GC: 1
         run: nix flake check
 
-      - uses: cachix/cachix-action@v13
+  build-shell:
+    runs-on: macos-latest
+    needs:
+      - flake-check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: "./.github/actions/setup"
         with:
-          name: konradmalik
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-
+          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Shell build
-        run: |
-          nix build .#devShells.x86_64-darwin.default
+        run: nix build .#devShells.x86_64-darwin.default
 
+  build-mbp13:
+    runs-on: macos-latest
+    needs:
+      - flake-check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        uses: "./.github/actions/setup"
+        with:
+          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake build mbp13
-        run: |
-          nix build .#darwinConfigurations.mbp13.system
+        run: nix build .#darwinConfigurations.mbp13.system
