@@ -1,4 +1,3 @@
-{ pkgs, lib, ... }:
 {
   programs.readline = {
     enable = true;

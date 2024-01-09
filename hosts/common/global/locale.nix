@@ -1,8 +1,6 @@
 { lib, ... }:
 {
-  # Set your time zone.
   time.timeZone = lib.mkDefault "Europe/Warsaw";
-  # Select internationalisation properties.
   i18n = {
     defaultLocale = lib.mkDefault "en_US.UTF-8";
     extraLocaleSettings = {

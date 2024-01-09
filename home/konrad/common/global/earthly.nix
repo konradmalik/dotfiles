@@ -1,4 +1,3 @@
-{ pkgs, lib, ... }:
 {
   # just the config file, if earthly is needed in a particular version
   # then it's installed in per-project shells

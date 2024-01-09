@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.services.rtcwake;
 in

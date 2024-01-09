@@ -4,7 +4,6 @@
 , writeScriptBin
 , symlinkJoin
 , makeWrapper
-, ...
 }:
 let
   name = "rfv";

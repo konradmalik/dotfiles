@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   xdg.mimeApps.defaultApplications = {
     "application/pdf" = [ "firefox.desktop" ];

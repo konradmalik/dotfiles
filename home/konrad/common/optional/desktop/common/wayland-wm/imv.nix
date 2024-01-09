@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   xdg.mimeApps.defaultApplications = {
     "image/jpeg" = [ "imv.desktop" ];
