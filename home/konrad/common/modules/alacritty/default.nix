@@ -44,7 +44,7 @@ in
 
   config =
     let
-      baseConfig = import ./config.nix { inherit (cfg) fontFamily fontSize; };
+      baseConfig = pkgs.callPackage ./config.nix { inherit (cfg) fontFamily fontSize; };
       colorConfig = import ./theme.nix { inherit (cfg) colorscheme; };
     in
     mkIf cfg.enable {
