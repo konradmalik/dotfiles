@@ -3,8 +3,12 @@
   ## KONRAD's SENSIBLE DEFAULTS
   # tmux messages are displayed for 4 seconds
   set-option -g display-time 4000
-  # upgrade color and fix italics
+  # true color
   set -ga terminal-overrides ",*256col*:Tc"
+  # TODO: for some reason tmux does not color undercurls (yet?)
+  # probably connected with upsteam tmux-256color term
+  # fix underscore colours
+  set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
   # focus events enabled for terminals that support them
   set-option -g focus-events on
   # refresh interval
