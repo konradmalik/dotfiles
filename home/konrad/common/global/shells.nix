@@ -88,7 +88,7 @@ let
     zle -N rfv-widget
     bindkey '^G' rfv-widget
   '' +
-  lib.optionalString (pkgs.stdenvNoCC.isDarwin)
+  lib.optionalString (pkgs.stdenvNoCC.isDarwin && config.konrad.programs.alacritty.enable)
     ''
       # alacritty icon jumping
       # https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878

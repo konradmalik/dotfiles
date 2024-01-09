@@ -6,7 +6,7 @@ let
   tmux-sessionizer = pkgs.callPackage ./tmux-sessionizer { };
   tmux-switcher = pkgs.callPackage ./tmux-switcher { };
   tmux-windowizer = pkgs.callPackage ./tmux-windowizer { };
-  baseConfig = pkgs.callPackage ./config.nix { inherit tmuxTextProcessor tmux-switcher; };
+  baseConfig = pkgs.callPackage ./config.nix { inherit config tmuxTextProcessor tmux-switcher; };
   themeConfig = import ./theme.nix { inherit (cfg) colorscheme; };
 in
 {

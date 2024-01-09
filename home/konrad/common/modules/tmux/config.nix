@@ -1,10 +1,10 @@
-{ tmux-switcher, tmuxTextProcessor, pkgs, ... }:
+{ config, tmux-switcher, tmuxTextProcessor, pkgs, lib }:
 ''
   ## KONRAD's SENSIBLE DEFAULTS
   # tmux messages are displayed for 4 seconds
   set-option -g display-time 4000
   # upgrade color and fix italics
-  set -ga terminal-overrides ",-256color:Tc,alacritty:Tc"
+  set -ga terminal-overrides ",*256col*:Tc"
   # focus events enabled for terminals that support them
   set-option -g focus-events on
   # refresh interval
@@ -74,3 +74,8 @@
   # toggle last session
   bind-key S switch-client -l
 ''
+  + lib.optionalString config.konrad.programs.alacritty.enable
+  ''
+    # alacritty specifics
+    set -ga terminal-overrides ",alacritty:Tc"
+  ''
