@@ -27,10 +27,9 @@ in
         enable = true;
         aggressiveResize = true;
         sensibleOnTop = true;
-        # tmux-256color is the proper one to enable italics
-        # just ensure you have that terminfo, newer ncurses provide it
-        # Macos does not have it but we fix that by installing ncurses through nix-darwin
-        # screen-256color works properly everywhere but does not have italics
+        # tmux-256color is the proper one to enable italics, undercurls etc.
+        # just ensure you have that terminfo
+        # screen-256color works properly everywhere but does not have many features
         terminal = "tmux-256color";
         keyMode = "vi";
         escapeTime = 0;

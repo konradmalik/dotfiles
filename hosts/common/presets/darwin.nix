@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+{ lib, inputs, ... }:
 {
   imports = [
     inputs.home-manager.darwinModules.home-manager
@@ -11,11 +11,6 @@
 
   # packages installed in system profile
   environment = {
-    systemPackages = with pkgs; [
-      # only to provide tmux-256color terminfo
-      # until macos ships with ncurses 6
-      ncurses
-    ];
     pathsToLink = [ "Applications" "/bin" "/lib" "/man" "/share" ];
     etc = {
       "ssh/sshd_config.d/99-nix.conf".text = ''
