@@ -13,6 +13,7 @@
     ./k9s.nix
     ./modules.nix
     ./neovim.nix
+    ./nix-index.nix
     ./packages.nix
     ./readline.nix
     ./shells.nix
