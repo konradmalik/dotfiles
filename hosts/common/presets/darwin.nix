@@ -1,4 +1,4 @@
-{ lib, inputs, ... }:
+{ lib, inputs, customArgs, ... }:
 {
   imports = [
     inputs.home-manager.darwinModules.home-manager
@@ -7,7 +7,7 @@
     ./../global/home-manager.nix
 
     ./../users/konrad/darwin.nix
-  ];
+  ] ++ (builtins.attrValues customArgs.darwinModules);
 
   # packages installed in system profile
   environment = {
