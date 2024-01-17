@@ -5,9 +5,16 @@ with lib;
 let
   cfg = config.darwin-docker;
 
-  builderWithOverrides = pkgs.darwin.linux-builder.override
+  # TODO dont use stable in general
+  # we build on top of linux-builder
+  builderWithOverrides = pkgs.stable.darwin.linux-builder.override
     {
       modules = [
+        ({
+          # to not conflict with docker-builder
+          virtualisation.darwin-builder.hostPort = 31023;
+        })
+
         ({
           system = {
             name = "darwin-docker";
@@ -17,16 +24,16 @@ let
           virtualisation = {
             docker = {
               enable = true;
-              autoPrune = {
-                enable = true;
-                flags = [ "--all" ];
-                dates = "weekly";
+              daemon.settings = {
+                hosts = [ "tcp://0.0.0.0:2375" ];
               };
             };
+            forwardPorts = [
+              { from = "host"; guest.port = 2375; host.port = 2375; }
+            ];
           };
+          networking.firewall.allowedTCPPorts = [ 2375 ];
         })
-
-        ({ virtualisation.darwin-builder.hostPort = 2376; })
 
         cfg.config
       ];
@@ -70,17 +77,17 @@ in
     workingDirectory = mkOption {
       type = types.str;
       default = "/var/lib/darwin-docker";
-      description = lib.mdDoc ''
+      description = ''
         The working directory of the Darwin docker daemon process.
       '';
     };
 
-    ephemeral = mkEnableOption (lib.mdDoc ''
+    ephemeral = mkEnableOption ''
       wipe the VM's filesystem on every restart.
 
       This is disabled by default as maintaining the VM's filesystem keeps all docker images
       etc. from downloading each time the VM is started.
-    '');
+    '';
   };
 
   config = mkIf cfg.enable {
@@ -103,22 +110,8 @@ in
 
     environment = {
       variables = {
-        DOCKER_HOST = "ssh://darwin-docker:2376";
+        DOCKER_HOST = "tcp://127.0.0.1:2375";
       };
-
-      # TODO the VM starts, but I cannot login, due to keys having bad permissions
-      # this as root connects ok: ssh -i /var/lib/darwin-docker/keys/builder_ed25519 -- builder@darwin-docker
-      # I need to:
-      # - make user builder valid as docker user (docker group)
-      # - make it so that I can "just" connect without root
-      etc."ssh/ssh_config.d/100-darwin-docker.conf".text = ''
-        Host darwin-docker
-          HostName localhost
-          HostKeyAlias darwin-docker
-          StrictHostKeyChecking no
-          IdentityFile ${cfg.workingDirectory}/keys/builder_ed25519
-          Port 2376
-      '';
     };
   };
 }
