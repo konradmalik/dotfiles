@@ -60,17 +60,6 @@ in {
             identitiesOnly = true;
           };
         } // lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
-          darwin-docker = {
-            host = "darwin-docker";
-            hostname = "127.0.0.1";
-            port = 2376;
-            user = "root";
-            identityFile = "${config.home.homeDirectory}/.ssh/personal";
-            identitiesOnly = true;
-            extraOptions = {
-              StrictHostKeyChecking = "no";
-            };
-          };
           devnix = {
             host = "devnix";
             hostname = "127.0.0.1";

@@ -21,8 +21,6 @@
 
     sessionVariables = {
       XDG_RUNTIME_DIR = "$TMPDIR";
-      # darwin-docker nixos vm
-      DOCKER_HOST = "ssh://darwin-docker:2376";
     };
   };
 
