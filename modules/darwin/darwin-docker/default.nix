@@ -3,17 +3,34 @@
 with lib;
 
 let
-  cfg = config.nix.darwin-docker;
+  cfg = config.darwin-docker;
 
-  package = import ./package
+  builderWithOverrides = pkgs.darwin.linux-builder.override
     {
-      # TODO
-      guestPkgs = pkgs;
-    };
+      modules = [
+        ({
+          system = {
+            name = "darwin-docker";
+            stateVersion = "24.05";
+          };
 
-  builderWithOverrides = package.override {
-    modules = [ cfg.config ];
-  };
+          virtualisation = {
+            docker = {
+              enable = true;
+              autoPrune = {
+                enable = true;
+                flags = [ "--all" ];
+                dates = "weekly";
+              };
+            };
+          };
+        })
+
+        ({ virtualisation.darwin-builder.hostPort = 2376; })
+
+        cfg.config
+      ];
+    };
 
   # create-builder uses TMPDIR to share files with the builder, notably certs.
   # macOS will clean up files in /tmp automatically that haven't been accessed in 3+ days.
@@ -32,7 +49,7 @@ let
 in
 
 {
-  options.nix.darwin-docker = {
+  options.darwin-docker = {
     enable = mkEnableOption "enable Darwin Docker";
 
     config = mkOption {
@@ -59,9 +76,9 @@ in
     };
 
     ephemeral = mkEnableOption (lib.mdDoc ''
-      wipe the builder's filesystem on every restart.
+      wipe the VM's filesystem on every restart.
 
-      This is disabled by default as maintaining the builder's filesystem keeps all docker images
+      This is disabled by default as maintaining the VM's filesystem keeps all docker images
       etc. from downloading each time the VM is started.
     '');
   };
@@ -84,23 +101,24 @@ in
       };
     };
 
-    environment.etc."ssh/ssh_config.d/100-linux-builder.conf".text = ''
-      Host darwin-docker
-        Port 2376
-        IdentitiesOnly yes
-        User root
-        HostName 127.0.0.1
-        IdentityFile /Users/konrad/.ssh/personal
-        StrictHostKeyChecking no
+    environment = {
+      variables = {
+        DOCKER_HOST = "ssh://darwin-docker:2376";
+      };
 
-       Host linux-builder
-         Hostname localhost
-         HostKeyAlias linux-builder
-         Port 31022
-    '';
-  };
-
-  sessionVariables = {
-    DOCKER_HOST = "ssh://darwin-docker:2376";
+      # TODO the VM starts, but I cannot login, due to keys having bad permissions
+      # this as root connects ok: ssh -i /var/lib/darwin-docker/keys/builder_ed25519 -- builder@darwin-docker
+      # I need to:
+      # - make user builder valid as docker user (docker group)
+      # - make it so that I can "just" connect without root
+      etc."ssh/ssh_config.d/100-darwin-docker.conf".text = ''
+        Host darwin-docker
+          HostName localhost
+          HostKeyAlias darwin-docker
+          StrictHostKeyChecking no
+          IdentityFile ${cfg.workingDirectory}/keys/builder_ed25519
+          Port 2376
+      '';
+    };
   };
 }

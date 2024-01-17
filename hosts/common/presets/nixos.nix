@@ -8,7 +8,7 @@ in
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
 
-    ./../global/docker.nix
+    ./../global/docker/linux.nix
     ./../global/home-manager.nix
     ./../global/locale.nix
     ./../global/locate.nix
