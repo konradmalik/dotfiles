@@ -12,7 +12,9 @@
       };
     };
     linux-builder = {
-      enable = true;
+      enable = false;
+      # TODO
+      # ephemeral = true;
       # not sure why but it tries to build it when nixos-unstable is used
       package = pkgs.stable.darwin.linux-builder;
     };

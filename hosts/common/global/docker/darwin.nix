@@ -1,3 +1,6 @@
 {
-  darwin-docker.enable = true;
+  darwin-docker = {
+    enable = false;
+    ephemeral = true;
+  };
 }
