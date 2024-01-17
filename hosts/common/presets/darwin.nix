@@ -3,6 +3,7 @@
   imports = [
     inputs.home-manager.darwinModules.home-manager
 
+    ./../global/docker/darwin.nix
     ./../global/nix/darwin.nix
     ./../global/home-manager.nix
 

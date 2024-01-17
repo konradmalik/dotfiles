@@ -1,0 +1,3 @@
+{
+  darwin-docker.enable = true;
+}
