@@ -74,26 +74,29 @@
     in
     {
       devShells = forAllSystems
-        (pkgs: {
-          default = pkgs.mkShell
-            {
-              name = "dotfiles";
-              # Enable experimental features without having to specify the argument
-              NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
-              packages = with pkgs; [
-                # useful tools
-                manix
-                nmap
-                # necessary tools
-                age
-                git
-                pkgs.home-manager
-                nix
-                sops
-                ssh-to-age
-              ];
-            };
-        });
+        (pkgs:
+          let
+            darwinPackages = builtins.attrValues (builtins.removeAttrs inputs.darwin.packages.${pkgs.system}
+              [ "default" ]);
+          in
+          {
+            default = pkgs.mkShell
+              {
+                NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
+
+                name = "dotfiles";
+                packages = with pkgs; [
+                  manix
+                  nmap
+                  age
+                  git
+                  pkgs.home-manager
+                  nix
+                  sops
+                  ssh-to-age
+                ] ++ lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;
+              };
+          });
       packages = forAllSystems (pkgs: (import ./pkgs { inherit pkgs; }
         // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux)
         (
