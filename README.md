@@ -150,45 +150,33 @@ NixOS has a great support for this. We need to:
 -   set-up a remote builder
 -   configure nix.buildMachines to use it
 
-Starting with the latter, it's already done in my darwinConfiguration via nix-darwin, so let's go straight into the former.
-
 We can have either a truly remote machine (local PC, cloud VM etc. etc.) or a 'local remote builder' which is just a qemu virtual machine with
 NixOS inside. This 'local remote builder' is very handy to have either way, very easy to deploy and very lightweight
 (it mounts your existing /nix/store for example for absolutely minimal disk usage).
 
-To start local-remote builder in the current terminal, as a foregroud process:
+`nix-darwin` support a linux builder as an option:
+
+```nix
+nix.linux-builder.enable = true;
+```
+
+#### Docker on darwin
+
+To start in the current terminal, as a foregroud process:
 
 ```bash
-$ nix run .#darwin-builder
+$ nix run .#darwin-docker
 ```
 
 or if it's installed as a package:
 
 ```bash
-$ darwin-builder
+$ darwin-docker
 ```
 
 To stop it: "type `Ctrl-a + c` to open the qemu prompt and then type `quit` followed by Enter".
 
 I think you could just quit the terminal as well.
-
-Above builder relies on the actual builder derivation being cached. So, because it runs whatever I have defined in my flake
-then any change (a local customisation for example) invalidates the cache and requires a rebuilt. To rebuild it, you
-still need to have some linux builder running which makes a chicken-and-egg problem but it can be easily solved:
-
-Try running this builder directly from upstream:
-
-```bash
-$ nix run nixpkgs-darwin#darwin.builder
-```
-
-#### Docker on darwin
-
-Works similarly to Linux builder above:
-
-```bash
-$ nix run .#darwin-docker
-```
 
 #### darwin-devnix
 
@@ -203,13 +191,12 @@ $ nix run .#darwin-devnix
 
 #### Pro tip for macos
 
-To prevent our custom builder and docker from being GC'd, just nix build them to some folder here
+To prevent our custom docker from being GC'd, just nix build them to some folder here
 (other than the default `result`) and don't remove that folder. Done.
 
 Like that:
 
 ```bash
-$ nix build .#darwin-builder --out-link darwin-builder
 $ nix build .#darwin-docker --out-link darwin-docker
 $ nix build .#darwin-devnix --out-link darwin-devnix
 ```
