@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [ ./shared.nix ];
   nix = {
@@ -10,7 +11,11 @@
         Minute = 0;
       };
     };
-    linux-builder.enable = false;
+    linux-builder = {
+      enable = true;
+      # not sure why but it tries to build it when nixos-unstable is used
+      package = pkgs.stable.darwin.linux-builder;
+    };
   };
   services.nix-daemon.enable = true;
 }
