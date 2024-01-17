@@ -67,7 +67,7 @@
       specialArgs = {
         inherit inputs;
         customArgs = {
-          inherit (self) homeManagerModules nixosModules overlays;
+          inherit (self) darwinModules homeManagerModules nixosModules overlays;
           files = ./files;
         };
       };
