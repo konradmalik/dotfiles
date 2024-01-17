@@ -124,23 +124,12 @@
               inherit modules;
             }).config.system.build.sdImage;
           }
-        )
-        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin)
-        (
-          let
-            hostPkgs = nixpkgsFor pkgs.system;
-            toGuest = builtins.replaceStrings [ "darwin" ] [ "linux" ];
-            guestPkgs = nixpkgsFor (toGuest pkgs.system);
-          in
-          {
-            # darwin-devnix = import ./pkgs/special/darwin-devnix { inherit hostPkgs guestPkgs specialArgs; };
-            darwin-docker = import ./pkgs/special/darwin-docker { inherit hostPkgs guestPkgs; };
-          }
         )));
       formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
 
       homeManagerModules = import ./modules/home-manager;
       nixosModules = import ./modules/nixos;
+      darwinModules = import ./modules/darwin;
       overlays = import ./overlays { inherit inputs; };
       templates = import ./templates;
 
