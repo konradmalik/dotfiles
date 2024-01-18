@@ -4,10 +4,9 @@ with lib;
 
 let
   cfg = config.darwin-docker;
+  dockerPort = cfg.dockerPort;
 
-  # TODO dont use stable in general
-  # we build on top of linux-builder
-  builderWithOverrides = pkgs.stable.darwin.linux-builder.override
+  builderWithOverrides = cfg.package.override
     {
       modules = [
         ({
@@ -15,25 +14,7 @@ let
           virtualisation.darwin-builder.hostPort = 31023;
         })
 
-        ({
-          system = {
-            name = "darwin-docker";
-            stateVersion = "24.05";
-          };
-
-          virtualisation = {
-            docker = {
-              enable = true;
-              daemon.settings = {
-                hosts = [ "tcp://0.0.0.0:2375" ];
-              };
-            };
-            forwardPorts = [
-              { from = "host"; guest.port = 2375; host.port = 2375; }
-            ];
-          };
-          networking.firewall.allowedTCPPorts = [ 2375 ];
-        })
+        (import ./config.nix { inherit dockerPort; })
 
         cfg.config
       ];
@@ -59,14 +40,43 @@ in
   options.darwin-docker = {
     enable = mkEnableOption "enable Darwin Docker";
 
+    package = mkOption {
+      type = types.package;
+      default = pkgs.darwin.linux-builder;
+      defaultText = "pkgs.darwin.linux-builder";
+      description = ''
+        This option specifies the Linux builder to use.
+        Linux builder is the underlying VM on which Darwin docker builds.
+      '';
+    };
+
+    dockerPort = mkOption {
+      type = types.number;
+      default = 2375;
+      description = ''
+        TCP port over which to serve docker daemon api to the host.
+      '';
+    };
+
     config = mkOption {
       type = types.deferredModule;
       default = { };
       example = literalExpression ''
-        ({ pkgs, ... }:
+        ({ pkgs, ...}:
 
         {
-          environment.systemPackages = [ pkgs.neovim ];
+          virtualisation = {
+            cores = 4
+            memorySize = 8192
+
+            docker = {
+              autoPrune = {
+                enable = true;
+                flags = [ "--all" ];
+                dates = "weekly";
+              };
+            };
+          };
         })
       '';
       description = ''
@@ -79,6 +89,13 @@ in
       default = "/var/lib/darwin-docker";
       description = ''
         The working directory of the Darwin docker daemon process.
+      '';
+    };
+
+    dockerHostVariable = mkEnableOption {
+      default = true;
+      description = ''
+        set DOCKER_HOST="tcp://127.0.0.1:${dockerPort}" for all shell sessions
       '';
     };
 
@@ -110,7 +127,7 @@ in
 
     environment = {
       variables = {
-        DOCKER_HOST = "tcp://127.0.0.1:2375";
+        DOCKER_HOST = "tcp://127.0.0.1:${dockerPort}";
       };
     };
   };
