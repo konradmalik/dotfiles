@@ -59,18 +59,6 @@ in {
             identityFile = "${config.home.homeDirectory}/.ssh/cerebre";
             identitiesOnly = true;
           };
-        } // lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
-          devnix = {
-            host = "devnix";
-            hostname = "127.0.0.1";
-            port = 2222;
-            user = "konrad";
-            identityFile = "${config.home.homeDirectory}/.ssh/personal";
-            identitiesOnly = true;
-            extraOptions = {
-              StrictHostKeyChecking = "no";
-            };
-          };
         };
       };
     }
