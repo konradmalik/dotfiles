@@ -162,46 +162,7 @@ nix.linux-builder.enable = true;
 
 #### Docker on darwin
 
-To start in the current terminal, as a foregroud process:
-
-```bash
-$ nix run .#darwin-docker
-```
-
-or if it's installed as a package:
-
-```bash
-$ darwin-docker
-```
-
-To stop it: "type `Ctrl-a + c` to open the qemu prompt and then type `quit` followed by Enter".
-
-I think you could just quit the terminal as well.
-
-#### darwin-devnix
-
-`darwin-devnix` is a VM designed mainly for linux-based development on darwin. It shares `Code` directory with the host and is
-exposed on port `2222`.
-
-```bash
-$ nix run .#darwin-devnix
-```
-
-`DOCKER_HOST` is already set globally in my darwin preset (home-manager).
-
-#### Pro tip for macos
-
-To prevent our custom docker from being GC'd, just nix build them to some folder here
-(other than the default `result`) and don't remove that folder. Done.
-
-Like that:
-
-```bash
-$ nix build .#darwin-docker --out-link darwin-docker
-$ nix build .#darwin-devnix --out-link darwin-devnix
-```
-
-> Why not add them as packages to devshell or to the system? Well, github actions won't be able to build it :(
+Use `darwin-docker` module.
 
 ### linux (non-NixOS; home-manager):
 
