@@ -12,7 +12,7 @@
       };
     };
     linux-builder = {
-      enable = false;
+      enable = true;
       # TODO
       # ephemeral = true;
       # not sure why but it tries to build it when nixos-unstable is used
