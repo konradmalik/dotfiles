@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   darwin-docker = {
-    enable = true;
+    enable = false;
     ephemeral = true;
     package = pkgs.stable.darwin.linux-builder;
   };
