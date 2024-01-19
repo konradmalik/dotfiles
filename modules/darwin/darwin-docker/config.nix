@@ -1,7 +1,7 @@
-{ dockerPort }:
+{ dockerPort, name }:
 {
   system = {
-    name = "darwin-docker";
+    inherit name;
     stateVersion = "24.05";
   };
 

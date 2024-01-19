@@ -4,6 +4,7 @@ with lib;
 
 let
   cfg = config.darwin-docker;
+  name = "darwin-docker";
   dockerPort = cfg.dockerPort;
 
   builderWithOverrides = cfg.package.override
@@ -14,7 +15,7 @@ let
           virtualisation.darwin-builder.hostPort = 31023;
         })
 
-        (import ./config.nix { inherit dockerPort; })
+        (import ./config.nix { inherit dockerPort name; })
 
         cfg.config
       ];
@@ -24,8 +25,8 @@ let
   # macOS will clean up files in /tmp automatically that haven't been accessed in 3+ days.
   # If we let it use /tmp, leaving the computer asleep for 3 days makes the certs vanish.
   # So we'll use /run/org.nixos.darwin-docker instead and clean it up ourselves.
-  script = pkgs.writeShellScript "darwin-docker-start" ''
-    export TMPDIR=/run/org.nixos.darwin-docker USE_TMPDIR=1
+  script = pkgs.writeShellScript "${name}-start" ''
+    export TMPDIR=/run/org.nixos.${name} USE_TMPDIR=1
     rm -rf $TMPDIR
     mkdir -p $TMPDIR
     trap "rm -rf $TMPDIR" EXIT
@@ -86,7 +87,7 @@ in
 
     workingDirectory = mkOption {
       type = types.str;
-      default = "/var/lib/darwin-docker";
+      default = "/var/lib/${name}";
       description = ''
         The working directory of the Darwin docker daemon process.
       '';
