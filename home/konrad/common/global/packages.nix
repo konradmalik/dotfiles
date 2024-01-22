@@ -26,6 +26,7 @@
     baywatch
     hyperfine
     noti
+    spacer
     viddy
     yazi
 
