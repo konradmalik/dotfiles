@@ -333,22 +333,6 @@
         "type": "github"
       }
     },
-    "heirline-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1705063055,
-        "narHash": "sha256-2LD2dlb+p8vuU6036S4Ffdr8x4OtqvOrpIUCVn7MGU8=",
-        "owner": "rebelot",
-        "repo": "heirline.nvim",
-        "rev": "1b6f12e011f225a26aa162905cbf68804479e7e6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rebelot",
-        "repo": "heirline.nvim",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -449,7 +433,6 @@
         "git-conflict-nvim": "git-conflict-nvim",
         "gitsigns-nvim": "gitsigns-nvim",
         "harpoon": "harpoon",
-        "heirline-nvim": "heirline-nvim",
         "kanagawa-nvim": "kanagawa-nvim",
         "luasnip": "luasnip",
         "neo-tree-nvim": "neo-tree-nvim",
@@ -475,11 +458,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1705763172,
-        "narHash": "sha256-0jQpSk8qxRX2U5B/DVmyrm6D6LXspgl8kqvZr6Pr3xU=",
+        "lastModified": 1705956807,
+        "narHash": "sha256-GIbyrlb4BLIdG6TKAgAuwvdEMp6U87Par2Bb60vLrBU=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "baf6f6a2f4aa8dd2f0b9dc4ffb3a737b15682bc4",
+        "rev": "a639a1c97e4690024187cd04c9bf691c3ea4abde",
         "type": "github"
       },
       "original": {
