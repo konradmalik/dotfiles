@@ -21,8 +21,11 @@ in
   ] ++ (builtins.attrValues (import ./../modules))
   ++ (builtins.attrValues customArgs.nixosModules);
 
-  # clean tmp after reboot
-  boot.tmp.cleanOnBoot = true;
+  boot = {
+    # clean tmp after reboot
+    tmp.cleanOnBoot = true;
+    kernel.sysctl."fs.inotify.max_user_instances" = 524288;
+  };
 
   # shared sops config
   sops = {
