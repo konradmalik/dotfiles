@@ -198,6 +198,21 @@
         "type": "github"
       }
     },
+    "darwin-docker": {
+      "locked": {
+        "lastModified": 1706263069,
+        "narHash": "sha256-sctbCl+q2Z8COviEbbA74Yh4QCGCWklRJFCtjI+c/hY=",
+        "owner": "konradmalik",
+        "repo": "darwin-docker",
+        "rev": "2b4beefea35a9dc653aac31918d85791796e3432",
+        "type": "github"
+      },
+      "original": {
+        "owner": "konradmalik",
+        "repo": "darwin-docker",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -824,6 +839,7 @@
       "inputs": {
         "baywatch": "baywatch",
         "darwin": "darwin",
+        "darwin-docker": "darwin-docker",
         "disko": "disko",
         "flake-compat": "flake-compat",
         "home-manager": "home-manager",

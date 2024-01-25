@@ -8,6 +8,7 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin-docker.url = "github:konradmalik/darwin-docker";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     disko = {
       url = "github:nix-community/disko";
@@ -67,7 +68,7 @@
       specialArgs = {
         inherit inputs;
         customArgs = {
-          inherit (self) darwinModules homeManagerModules nixosModules overlays;
+          inherit (self) homeManagerModules nixosModules overlays;
           files = ./files;
         };
       };
@@ -129,7 +130,6 @@
 
       homeManagerModules = import ./modules/home-manager;
       nixosModules = import ./modules/nixos;
-      darwinModules = import ./modules/darwin;
       overlays = import ./overlays { inherit inputs; };
       templates = import ./templates;
 
