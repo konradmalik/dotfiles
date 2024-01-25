@@ -94,9 +94,16 @@ let
       # https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878
       printf "\e[?1042l"
     '';
+
+  zcompdumpRemoval = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD rm -f ${config.programs.zsh.dotDir}/.zcompdump
+  '';
+
   zshCompletionInit = ''
     # autocompletion
-    autoload -Uz compinit && compinit
+    # (-C makes it regenerate .zcompdump only if it does not exist)
+    # (I delete .zcompdump in a script after each system rebuild)
+    autoload -Uz compinit && compinit -C
     # bash-compatible mode
     autoload -Uz bashcompinit && bashcompinit
     # Zsh can generate completion from looking at the output of --help
@@ -155,13 +162,15 @@ in
     enableBashIntegration = true;
   };
 
+  home.activation = { inherit zcompdumpRemoval; };
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     autocd = true;
-    dotDir = lib.removePrefix "${config.home.homeDirectory}" "${config.xdg.configHome}/zsh";
+    dotDir = lib.removePrefix "${config.home.homeDirectory}/" "${config.xdg.configHome}/zsh";
     defaultKeymap = "viins";
     profileExtra = ''
       # sourced on login shell, after zshenv.
