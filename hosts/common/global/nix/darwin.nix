@@ -13,8 +13,7 @@
     };
     linux-builder = {
       enable = false;
-      # TODO
-      # ephemeral = true;
+      ephemeral = true;
       package = pkgs.stable.darwin.linux-builder;
     };
   };
