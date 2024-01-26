@@ -200,11 +200,11 @@
     },
     "darwin-docker": {
       "locked": {
-        "lastModified": 1706263069,
-        "narHash": "sha256-sctbCl+q2Z8COviEbbA74Yh4QCGCWklRJFCtjI+c/hY=",
+        "lastModified": 1706266014,
+        "narHash": "sha256-VmBdisFXyX2oB/VNt9ZHj9peHw+GSyrgz0FQvdRb+TY=",
         "owner": "konradmalik",
         "repo": "darwin-docker",
-        "rev": "2b4beefea35a9dc653aac31918d85791796e3432",
+        "rev": "9cc4d9e879a53b404b812fd3b0012657cbd68e6a",
         "type": "github"
       },
       "original": {
