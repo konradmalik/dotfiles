@@ -473,11 +473,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1706268570,
-        "narHash": "sha256-wJq+bdeHCOppSViHGD8ehpfD+PELUmfFbE/Ok7WRl2Y=",
+        "lastModified": 1706361820,
+        "narHash": "sha256-ZcjHcY25a2hTF4/jALjy2YmQORWHWSYxk9OzyWA6Pb0=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "5fcc58ee4be618bc77c827d36d3d85df08259096",
+        "rev": "45c390bdb851240dd2ec03ecb1a4d021ea2dd2c5",
         "type": "github"
       },
       "original": {
