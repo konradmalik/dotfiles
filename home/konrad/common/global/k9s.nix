@@ -2,7 +2,7 @@
 {
   programs.k9s = {
     enable = true;
-    skin =
+    skins.base16 =
       let c = config.colorscheme.colors;
       in builtins.fromJSON
         ''
