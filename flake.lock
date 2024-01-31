@@ -302,11 +302,11 @@
     "git-conflict-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1706087386,
-        "narHash": "sha256-0JgAr45fHAEiVM/vPd9IliGDoPktUZcCD0ePqdwliSw=",
+        "lastModified": 1706695170,
+        "narHash": "sha256-COOOSTmyym+eRpSFCBGsjdQmy+A2TvmhiUl+N02cYZg=",
         "owner": "konradmalik",
         "repo": "git-conflict.nvim",
-        "rev": "74e0f3351edc5654c2bac3fae314572008c5fc85",
+        "rev": "a47d14488c9c00df0502692ce573ca7bb95fb50d",
         "type": "github"
       },
       "original": {
@@ -473,11 +473,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1706638689,
-        "narHash": "sha256-S7uHXnrf0oG19SPwLCY5+j3+mpAVMGQ2Id5ciMV9M0g=",
+        "lastModified": 1706695259,
+        "narHash": "sha256-mM5t/2X8/2n9fPqgMXCy39o8wkmN4OZfr7ZxI+B6+Vw=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "602abb4981aa5de5583fa677f31663991bca6379",
+        "rev": "f1fe4c79f981769a513548921fba2681946d7b24",
         "type": "github"
       },
       "original": {
