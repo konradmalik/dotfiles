@@ -1,6 +1,6 @@
 { colorscheme }:
 let
-  c = colorscheme.colors;
+  c = colorscheme.palette;
 in
 ''
   # Base16 ${colorscheme.name}

@@ -3,7 +3,7 @@
   home.packages = [ pkgs.wofi ];
 
   xdg.configFile."wofi/config".text = ''
-    gtk_dark=${toString (config.colorscheme.kind == "dark")}
+    gtk_dark=${toString (config.colorscheme.variant == "dark")}
     image_size=48
     columns=1
     allow_images=true

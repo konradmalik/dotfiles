@@ -13,7 +13,7 @@
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     changeDirWidgetOptions = [ "--preview '${pkgs.tree}/bin/tree -C {} | head -200'" ];
     colors =
-      let c = config.colorscheme.colors;
+      let c = config.colorscheme.palette;
       in with lib;{
         "bg+" = "#${toLower c.base01}";
         "bg" = "#${toLower c.base00}";

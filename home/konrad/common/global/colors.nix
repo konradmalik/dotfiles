@@ -11,8 +11,8 @@ in
     slug = "catppuccin-macchiato";
     name = "Catppuccin Macchiato";
     author = "https://github.com/catppuccin/catppuccin";
-    kind = "dark";
-    colors = {
+    variant = "dark";
+    palette = {
       base00 = "24273A"; # base
       base01 = "1E2030"; # mantle
       base02 = "363A4F"; # surface0

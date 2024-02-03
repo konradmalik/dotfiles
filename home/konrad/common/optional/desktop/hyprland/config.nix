@@ -1,12 +1,16 @@
-{ colorscheme, wallpaper }: ''
+{ colorscheme, wallpaper }:
+let
+  c = colorscheme.palette;
+in
+''
   general {
     gaps_in=5
     gaps_out=10
     border_size=2
-    col.active_border=0xff${colorscheme.colors.base0C}
-    col.inactive_border=0xff${colorscheme.colors.base02}
-    col.nogroup_border_active=0xff${colorscheme.colors.base0B}
-    col.nogroup_border=0xff${colorscheme.colors.base04}
+    col.active_border=0xff${c.base0C}
+    col.inactive_border=0xff${c.base02}
+    col.nogroup_border_active=0xff${c.base0B}
+    col.nogroup_border=0xff${c.base04}
     cursor_inactive_timeout=5
     layout=dwindle
   }
