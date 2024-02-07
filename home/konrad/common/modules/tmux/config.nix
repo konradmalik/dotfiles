@@ -43,6 +43,8 @@
   bind-key - resize-pane -D 10
   bind-key + resize-pane -U 10
 
+  # vi-like copy mode
+  set-window-option -g mode-keys vi
   # Setup 'v' to begin selection, just like vim
   bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
   bind-key -T copy-mode-vi 'V' send-keys -X select-line
