@@ -431,6 +431,7 @@
         "nvim-treesitter-textobjects": "nvim-treesitter-textobjects",
         "nvim-web-devicons": "nvim-web-devicons",
         "plenary-nvim": "plenary-nvim",
+        "roslyn": "roslyn",
         "telescope-fzf-native-nvim": "telescope-fzf-native-nvim",
         "telescope-nvim": "telescope-nvim",
         "undotree": "undotree",
@@ -438,11 +439,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1707146247,
-        "narHash": "sha256-LDji7gLXfKOaPz2CD6e9tD+sicJgvjC242slk6wv+Vc=",
+        "lastModified": 1707405903,
+        "narHash": "sha256-TFgGm9KBJvvBB9cKVMI0PwY28aeRDoJTFiq9E/2ZCR8=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "cf4d63b0c8efd73e70d8fcc59dda89f504d05f43",
+        "rev": "d7947bfa1e477f37cd129ef4af55fbc6e30eaf4d",
         "type": "github"
       },
       "original": {
@@ -579,16 +580,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1707069997,
-        "narHash": "sha256-cT1HBbA5c5RfHLH2vVaKVActd8KWwn2GB0BZlgiCQO8=",
-        "owner": "konradmalik",
+        "lastModified": 1706925685,
+        "narHash": "sha256-hVInjWMmgH4yZgA4ZtbgJM1qEAel72SYhP5nOWX4UIM=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "479d676c4f1ca2fdedf2eb87cb8a00001b249e5b",
+        "rev": "79a13f1437e149dc7be2d1290c74d378dad60814",
         "type": "github"
       },
       "original": {
-        "owner": "konradmalik",
-        "ref": "roslyn-ls",
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -800,6 +801,22 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "sops-nix": "sops-nix"
+      }
+    },
+    "roslyn": {
+      "locked": {
+        "lastModified": 1707069997,
+        "narHash": "sha256-cT1HBbA5c5RfHLH2vVaKVActd8KWwn2GB0BZlgiCQO8=",
+        "owner": "konradmalik",
+        "repo": "nixpkgs",
+        "rev": "479d676c4f1ca2fdedf2eb87cb8a00001b249e5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "konradmalik",
+        "ref": "roslyn-ls",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "sops-nix": {
