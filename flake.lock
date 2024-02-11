@@ -439,11 +439,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1707466478,
-        "narHash": "sha256-1SUbtWlVjfpDKA+NIPMXqJurenrVX3ezYp8R/8ThGQE=",
+        "lastModified": 1707651725,
+        "narHash": "sha256-5gHXFOrYVoHpZ60mHTmSVCRNYd3oMviB28eJbT3+Rco=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "1054277362d072df7032be78888228d387f0e387",
+        "rev": "3933633a24f066a30223039f59ee661bd1832325",
         "type": "github"
       },
       "original": {
@@ -462,18 +462,17 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1706221562,
-        "narHash": "sha256-ysv2kgZp1PzYtYP7O4jYru/QY4OZzANjlBHNMfHrWn8=",
+        "lastModified": 1707608379,
+        "narHash": "sha256-mAsRMj6kjuox6uMaXEzx7/H2FuzPJ+hU6xN8YHjdRXo=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "89a9745a1a55dc9ffd0f8292735e45bae6c7b01e",
+        "rev": "170c890dca8f160bdcd41e4fdc6bf15ee0bdba49",
         "type": "github"
       },
       "original": {
         "dir": "contrib",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "89a9745a1a55dc9ffd0f8292735e45bae6c7b01e",
         "type": "github"
       }
     },
@@ -580,11 +579,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1707423438,
-        "narHash": "sha256-6URYQs2deyXOa6q9SuV2OgKtjx1q7Jnr0mgmO3DFqfw=",
+        "lastModified": 1707588924,
+        "narHash": "sha256-0e1ce6X5ghapv6cAF9rxLZKeNyFHHXsLbGxN2cQQE8U=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a1eec211fcb06ae6eb9a46b399878cb1cc1717c0",
+        "rev": "10b813040df67c4039086db0f6eaf65c536886c6",
         "type": "github"
       },
       "original": {
