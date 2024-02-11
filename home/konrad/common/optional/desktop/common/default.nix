@@ -17,7 +17,6 @@
     packages = with pkgs; [
       bitwarden
       calibre
-      discord
       obsidian
       signal-desktop
       slack

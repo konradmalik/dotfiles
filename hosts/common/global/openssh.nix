@@ -1,8 +1,7 @@
-{ config, lib, ... }:
+{ lib, ... }:
 {
   services.openssh = {
     enable = true;
-    ports = [ 22 ];
     # disable rsa keys
     hostKeys = [{
       path = "/etc/ssh/ssh_host_ed25519_key";
@@ -29,9 +28,5 @@
     authorizedKeysFiles = [
       "/etc/ssh/authorized_keys.d/%u"
     ];
-  };
-
-  networking.firewall = {
-    allowedTCPPorts = config.services.openssh.ports;
   };
 }

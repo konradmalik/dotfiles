@@ -36,7 +36,6 @@ in
 {
   programs.waybar = {
     enable = true;
-    package = pkgs.waybar;
     settings = {
       secondary = {
         output = builtins.map (m: m.name) (builtins.filter (m: !m.isPrimary) config.monitors);
@@ -46,10 +45,7 @@ in
         margin-right = 10;
         height = 30;
         position = "top";
-        modules-center = (lib.optionals config.wayland.windowManager.sway.enable [
-          "sway/workspaces"
-          "sway/mode"
-        ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
+        modules-center = (lib.optionals config.wayland.windowManager.hyprland.enable [
           "wlr/workspaces"
         ]);
 
@@ -72,10 +68,7 @@ in
         modules-left = [
           "custom/menu"
           "idle_inhibitor"
-        ] ++ (optionals config.wayland.windowManager.sway.enable [
-          "sway/workspaces"
-          "sway/mode"
-        ]) ++ (optionals config.wayland.windowManager.hyprland.enable [
+        ] ++ (optionals config.wayland.windowManager.hyprland.enable [
           "wlr/workspaces"
         ]) ++ [
           "custom/currentplayer"
@@ -164,9 +157,6 @@ in
             critical = 15;
           };
           onclick = "";
-        };
-        "sway/window" = {
-          max-length = 20;
         };
         network = {
           interval = 3;

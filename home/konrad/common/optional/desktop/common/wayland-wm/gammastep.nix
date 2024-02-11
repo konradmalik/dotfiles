@@ -1,8 +1,14 @@
+{ osConfig, ... }:
 {
+  assertions = [
+    {
+      assertion = osConfig.services.geoclue2.enable;
+      message = "geoclue2 must be enabled globally to use it in gammastep";
+    }
+  ];
+
   services.gammastep = {
     enable = true;
-    enableVerboseLogging = true;
-    tray = false;
     provider = "geoclue2";
     temperature = {
       day = 6000;
@@ -11,12 +17,5 @@
     settings = {
       general.adjustment-method = "wayland";
     };
-  };
-
-  services.wlsunset = {
-    enable = false;
-    systemdTarget = "graphical-session.target";
-    latitude = "52.2";
-    longitude = "21.0";
   };
 }
