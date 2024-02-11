@@ -1,14 +1,8 @@
 { config, pkgs, ... }:
 {
-  services.tailscale.enable = true;
-  networking.firewall = {
-    checkReversePath = "loose";
-    # https://tailscale.com/kb/1082/firewall-ports/
-    allowedUDPPorts = [
-      3478 # stun
-      config.services.tailscale.port # direct wireguard
-    ];
-    trustedInterfaces = [ config.services.tailscale.interfaceName ];
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
   };
 
   # setup a key secret
