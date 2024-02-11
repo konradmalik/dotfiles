@@ -7,7 +7,8 @@ on:
 name: x86_64-darwin
 jobs:
   flake-check:
-    runs-on: macos-latest
+    # the latest one for x86_64-darwin
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
       - name: Setup
