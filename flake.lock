@@ -339,11 +339,11 @@
     "kanagawa-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1696244569,
-        "narHash": "sha256-pbLcomZHzC2JGKF4oII6AAm5q/dzQtNfFAZVNX74nB8=",
+        "lastModified": 1707750322,
+        "narHash": "sha256-R/rEV7SU/eZfs+aQQR2D2Z+zRHNI4DsCSflCdN0kMT4=",
         "owner": "rebelot",
         "repo": "kanagawa.nvim",
-        "rev": "c19b9023842697ec92caf72cd3599f7dd7be4456",
+        "rev": "ab41956c4559c3eb21e713fcdf54cda1cb6d5f40",
         "type": "github"
       },
       "original": {
@@ -439,11 +439,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1707651725,
-        "narHash": "sha256-5gHXFOrYVoHpZ60mHTmSVCRNYd3oMviB28eJbT3+Rco=",
+        "lastModified": 1707769810,
+        "narHash": "sha256-ahWvaoeU0Z1sx0TTwLU+zhyCmk8L6hXrOTlB8GP26Lk=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "3933633a24f066a30223039f59ee661bd1832325",
+        "rev": "f9059b73b198555255e9fac94ab8b4fbfb509db9",
         "type": "github"
       },
       "original": {
@@ -804,11 +804,11 @@
     },
     "roslyn": {
       "locked": {
-        "lastModified": 1707240621,
-        "narHash": "sha256-dPJAgvz6UNnAfJ7+nRymLog3A1dcij847KmHHSwhnMs=",
+        "lastModified": 1707761392,
+        "narHash": "sha256-8yF/ULfLoFu9FSo9XwnnVQbaEXj67fPRIHvLyqcBvXY=",
         "owner": "konradmalik",
         "repo": "nixpkgs",
-        "rev": "18569d9e13a68e791ad3d9178a6bb293549ca409",
+        "rev": "c6f4ab4b5440d80bc55254fc1f6396ea7203ae44",
         "type": "github"
       },
       "original": {
