@@ -1,5 +1,0 @@
-{
-  systemd.oomd = {
-    enable = true;
-  };
-}
