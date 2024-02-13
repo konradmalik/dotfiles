@@ -38,4 +38,9 @@
     enableRedistributableFirmware = true;
     enableAllFirmware = true;
   };
+
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 3 * 1024;
+  }];
 }
