@@ -92,8 +92,16 @@
     };
 
     extraConfig = {
+      branch = {
+        sort = "-committerdate";
+      };
+
       color = {
         ui = true;
+      };
+
+      column = {
+        ui = "auto";
       };
 
       core = {
@@ -104,9 +112,11 @@
 
       commit = {
         gpgSign = true;
+        verbose = true;
       };
 
       diff = {
+        algotithm = "histogram";
         colormoved = "default";
         colormovedws = "allow-indentation-change";
       };
@@ -119,7 +129,9 @@
       };
 
       fetch = {
+        fsckobjects = true;
         prune = true;
+        pruneTags = true;
       };
 
       help = {
@@ -131,35 +143,42 @@
       };
 
       merge = {
+        conflictstyle = "zdiff3";
+        keepBackup = false;
         tool = "vimdiff";
-        conflictstyle = "diff3";
       };
 
       mergetool = {
-        keepBackup = false;
         prompt = false;
       };
 
       push = {
         default = "tracking";
         autoSetupRemote = true;
-      };
-
-      pull = {
-        rebase = "merges";
-      };
-
-      push = {
         gpgSign = "if-asked";
       };
 
       rebase = {
         autosquash = true;
         rebaseMerges = true;
+        updateRefs = true;
+      };
+
+      receive = {
+        fsckobjects = true;
+      };
+
+      rerere = {
+        enabled = true;
+        autoUpdate = true;
       };
 
       tag = {
         gpgSign = true;
+      };
+
+      transfer = {
+        fsckobjects = true;
       };
 
       worktree = {
