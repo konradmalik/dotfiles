@@ -431,7 +431,6 @@
         "nvim-treesitter-textobjects": "nvim-treesitter-textobjects",
         "nvim-web-devicons": "nvim-web-devicons",
         "plenary-nvim": "plenary-nvim",
-        "roslyn": "roslyn",
         "telescope-fzf-native-nvim": "telescope-fzf-native-nvim",
         "telescope-nvim": "telescope-nvim",
         "undotree": "undotree",
@@ -439,11 +438,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1708066762,
-        "narHash": "sha256-6p0RfW1P2kMSNVt5dYrItKuB3aqhjh05qXZG7qg/JzQ=",
+        "lastModified": 1708250810,
+        "narHash": "sha256-NdSOTXXphnHDxbyRW/bRSo4QPbPt7d6NmpKUnzK8svE=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "3f9868920b2c2c95045e303fd1c8cd0e7417f0a8",
+        "rev": "2daa8f56bf9ea81cce28b632e7fb451d1680b3b3",
         "type": "github"
       },
       "original": {
@@ -579,11 +578,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1708001613,
-        "narHash": "sha256-woOmAXW05XnqlLn7dKzCkRAEOSOdA/Z2ndVvKcjid94=",
+        "lastModified": 1708214945,
+        "narHash": "sha256-LwP/lKuPasVLqUX+XFf6DbW4BWmM7o5K5unx/dXCJWY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "085589047343aad800c4d305cf7b98e8a3d51ae2",
+        "rev": "e015f24e508c549ab2ab2ad74dcdad3ae07513fe",
         "type": "github"
       },
       "original": {
@@ -800,22 +799,6 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "sops-nix": "sops-nix"
-      }
-    },
-    "roslyn": {
-      "locked": {
-        "lastModified": 1707761392,
-        "narHash": "sha256-8yF/ULfLoFu9FSo9XwnnVQbaEXj67fPRIHvLyqcBvXY=",
-        "owner": "konradmalik",
-        "repo": "nixpkgs",
-        "rev": "c6f4ab4b5440d80bc55254fc1f6396ea7203ae44",
-        "type": "github"
-      },
-      "original": {
-        "owner": "konradmalik",
-        "ref": "roslyn-ls",
-        "repo": "nixpkgs",
-        "type": "github"
       }
     },
     "sops-nix": {
