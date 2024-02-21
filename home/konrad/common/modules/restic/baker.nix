@@ -37,6 +37,8 @@ let
     '';
   baker = writeShellScriptBin "baker"
     ''
+      source "${b2-env}"
+
       # Args to be passed to the restic invocation
       args=()
 
@@ -70,14 +72,13 @@ let
 
           args+=(
             "forget"
-            "--host" "''$(hostname)"
             "--group-by" "paths"
-            "--keep-last" "''$KEEP_LAST"
-            "--keep-hourly" "''$RETENTION_HOURS"
-            "--keep-daily" "''$RETENTION_DAYS"
-            "--keep-weekly" "''$RETENTION_WEEKS"
-            "--keep-monthly" "''$RETENTION_MONTHS"
-            "--keep-yearly" "''$RETENTION_YEARS"
+            "--keep-last" "$KEEP_LAST"
+            "--keep-hourly" "$RETENTION_HOURS"
+            "--keep-daily" "$RETENTION_DAYS"
+            "--keep-weekly" "$RETENTION_WEEKS"
+            "--keep-monthly" "$RETENTION_MONTHS"
+            "--keep-yearly" "$RETENTION_YEARS"
           )
           ;;
 
@@ -87,7 +88,6 @@ let
           args+=(
             "forget"
             "--prune"
-            "--host" "''$(hostname)"
             "--group-by" "paths"
             "--keep-last" "$KEEP_LAST"
             "--keep-hourly" "$RETENTION_HOURS"
@@ -107,7 +107,7 @@ let
           ;;
       esac
 
-      ${restic-b2}/bin/restic-b2 "''${args[@]}"
+      ${restic}/bin/restic "''${args[@]}"
     '';
 in
 symlinkJoin { name = "baker"; paths = [ baker restic-b2 ]; }
