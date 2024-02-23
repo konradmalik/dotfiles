@@ -144,23 +144,11 @@ in
   programs.eza = {
     enable = true;
     enableAliases = true;
+    git = true;
+    icons = true;
   };
 
-  programs.fzf = {
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-  };
-
-  programs.starship = {
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-  };
+  programs.zoxide.enable = true;
 
   home.activation = { inherit zcompdumpRemoval; };
 
