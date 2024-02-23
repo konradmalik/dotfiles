@@ -1,6 +1,7 @@
 { config, lib, customArgs, ... }:
 {
   imports = [
+    ./atuin.nix
     ./bat.nix
     ./bottom.nix
     ./colors.nix
