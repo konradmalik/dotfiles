@@ -33,7 +33,6 @@
         "calibre"
         "firefox"
         "gimp"
-        "grammarly"
         "keepingyouawake"
         "microsoft-office"
         "microsoft-teams"
