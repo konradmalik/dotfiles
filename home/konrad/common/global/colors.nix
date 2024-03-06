@@ -6,29 +6,29 @@ in
   imports = [
     inputs.nix-colors.homeManagerModule
   ];
-  # colorscheme = lib.mkDefault colorSchemes.catppuccin;
   colorscheme = {
-    slug = "catppuccin-macchiato";
-    name = "Catppuccin Macchiato";
-    author = "https://github.com/catppuccin/catppuccin";
+    # https://github.com/tinted-theming/schemes/blob/spec-0.11/base16/tokyo-night-dark.yaml
+    slug = "tokyo-night-dark";
+    name = "Tokyo Night Dark";
+    author = "Michaël Ball";
     variant = "dark";
     palette = {
-      base00 = "24273A"; # base
-      base01 = "1E2030"; # mantle
-      base02 = "363A4F"; # surface0
-      base03 = "494D64"; # surface1
-      base04 = "5B6078"; # surface2
-      base05 = "CAD3F5"; # text
-      base06 = "F4DBD6"; # rosewater
-      base07 = "B7BDF8"; # lavender
-      base08 = "ED8796"; # red
-      base09 = "F5A97F"; # peach
-      base0A = "EED49F"; # yellow
-      base0B = "A6DA95"; # green
-      base0C = "8BD5CA"; # teal
-      base0D = "8AADF4"; # blue
-      base0E = "C6A0F6"; # mauve
-      base0F = "F0C6C6"; # flamingo
+      base00 = "1A1B26";
+      base01 = "16161E";
+      base02 = "2F3549";
+      base03 = "444B6A";
+      base04 = "787C99";
+      base05 = "A9B1D6";
+      base06 = "CBCCD1";
+      base07 = "D5D6DB";
+      base08 = "C0CAF5";
+      base09 = "A9B1D6";
+      base0A = "0DB9D7";
+      base0B = "9ECE6A";
+      base0C = "B4F9F8";
+      base0D = "2AC3DE";
+      base0E = "BB9AF7";
+      base0F = "F7768E";
     };
   };
 
