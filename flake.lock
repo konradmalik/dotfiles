@@ -270,11 +270,11 @@
     "git-conflict-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1706696122,
-        "narHash": "sha256-LokM1Py/qheQDMPmqQZVh8lFWh0nolsmctrYVux5gpQ=",
+        "lastModified": 1709633293,
+        "narHash": "sha256-HT+HOYZF5XRUrfFRLqPVlT5P5JextpxI7tSDh0K7fQI=",
         "owner": "konradmalik",
         "repo": "git-conflict.nvim",
-        "rev": "810e1281610f97db67ea5ace37d2e863d22ac381",
+        "rev": "e837425df29e5fecf78c0b7431739b7ae15ed8b4",
         "type": "github"
       },
       "original": {
@@ -333,22 +333,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "kanagawa-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1709127321,
-        "narHash": "sha256-eSrng/h+hN8iSu2nLLfqSMvnOmBXE2Rwwil4KWSZWU4=",
-        "owner": "rebelot",
-        "repo": "kanagawa.nvim",
-        "rev": "bfa818c7bf6259152f1d89cf9fbfba3554c93695",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rebelot",
-        "repo": "kanagawa.nvim",
         "type": "github"
       }
     },
@@ -414,7 +398,6 @@
         "git-conflict-nvim": "git-conflict-nvim",
         "gitsigns-nvim": "gitsigns-nvim",
         "harpoon": "harpoon",
-        "kanagawa-nvim": "kanagawa-nvim",
         "luasnip": "luasnip",
         "neo-tree-nvim": "neo-tree-nvim",
         "neodev-nvim": "neodev-nvim",
@@ -433,16 +416,17 @@
         "plenary-nvim": "plenary-nvim",
         "telescope-fzf-native-nvim": "telescope-fzf-native-nvim",
         "telescope-nvim": "telescope-nvim",
+        "tokyonight-nvim": "tokyonight-nvim",
         "undotree": "undotree",
         "vim-fugitive": "vim-fugitive",
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1709321401,
-        "narHash": "sha256-FeYB4DkGga7MFr85ZGPJNbj8BnFof0hBUet+ie7PM7Q=",
+        "lastModified": 1709758406,
+        "narHash": "sha256-MuRhW/1RMJiafwbNGHgI8dUJk/hocYeaU/qaECkwjIU=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "a67111072ddfb703257c4233beecdc42bdb4f5fd",
+        "rev": "5eda5ae45e586569a3372956b88ba7e29322d72b",
         "type": "github"
       },
       "original": {
@@ -868,6 +852,22 @@
       "original": {
         "owner": "nvim-telescope",
         "repo": "telescope.nvim",
+        "type": "github"
+      }
+    },
+    "tokyonight-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706697570,
+        "narHash": "sha256-mzCdcf7FINhhVLUIPv/eLohm4qMG9ndRJ5H4sFU2vO0=",
+        "owner": "folke",
+        "repo": "tokyonight.nvim",
+        "rev": "610179f7f12db3d08540b6cc61434db2eaecbcff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "tokyonight.nvim",
         "type": "github"
       }
     },
