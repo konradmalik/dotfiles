@@ -2,9 +2,9 @@
   fontProfiles = {
     enable = true;
     monospace = {
-      family = "MonaspiceNe Nerd Font";
-      package = pkgs.nerdfonts.override { fonts = [ "Monaspace" ]; };
-      size = lib.mkDefault 11;
+      family = "Hack Nerd Font";
+      package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+      size = lib.mkDefault 13;
     };
     regular = {
       family = "Fira Sans";
