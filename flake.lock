@@ -368,22 +368,6 @@
         "type": "github"
       }
     },
-    "neodev-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1709144748,
-        "narHash": "sha256-VyJTGbWBzGmuEkotKwTxAVpznfrrQ26aaBc31n6ZjlE=",
-        "owner": "folke",
-        "repo": "neodev.nvim",
-        "rev": "84e0290f5600e8b89c0dfcafc864f45496a53400",
-        "type": "github"
-      },
-      "original": {
-        "owner": "folke",
-        "repo": "neodev.nvim",
-        "type": "github"
-      }
-    },
     "neovim": {
       "inputs": {
         "SchemaStore-nvim": "SchemaStore-nvim",
@@ -400,7 +384,6 @@
         "harpoon": "harpoon",
         "luasnip": "luasnip",
         "neo-tree-nvim": "neo-tree-nvim",
-        "neodev-nvim": "neodev-nvim",
         "neovim": "neovim_2",
         "nixpkgs": "nixpkgs_2",
         "nui-nvim": "nui-nvim",
@@ -416,17 +399,18 @@
         "plenary-nvim": "plenary-nvim",
         "telescope-fzf-native-nvim": "telescope-fzf-native-nvim",
         "telescope-nvim": "telescope-nvim",
+        "todo-comments-nvim": "todo-comments-nvim",
         "tokyonight-nvim": "tokyonight-nvim",
         "undotree": "undotree",
         "vim-fugitive": "vim-fugitive",
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1709758406,
-        "narHash": "sha256-MuRhW/1RMJiafwbNGHgI8dUJk/hocYeaU/qaECkwjIU=",
+        "lastModified": 1709833908,
+        "narHash": "sha256-J96+H0RR7v0q9y6wlEomyBXJVWNlu1iO1qP7RG2Vu98=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "5eda5ae45e586569a3372956b88ba7e29322d72b",
+        "rev": "abf2e67efe5d13d1da974a8b9ba0203b512c2be4",
         "type": "github"
       },
       "original": {
@@ -852,6 +836,22 @@
       "original": {
         "owner": "nvim-telescope",
         "repo": "telescope.nvim",
+        "type": "github"
+      }
+    },
+    "todo-comments-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1705847650,
+        "narHash": "sha256-DiyieXXx7iYGWkpeOvduJf0n7dnpaQ7rXmaWvZQaCyE=",
+        "owner": "folke",
+        "repo": "todo-comments.nvim",
+        "rev": "833d8dd8b07eeda37a09e99460f72a02616935cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "todo-comments.nvim",
         "type": "github"
       }
     },
