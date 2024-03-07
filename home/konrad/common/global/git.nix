@@ -132,6 +132,7 @@
         fsckobjects = true;
         prune = true;
         pruneTags = true;
+        writeCommitGraph = true;
       };
 
       help = {
