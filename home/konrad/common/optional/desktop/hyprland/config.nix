@@ -66,7 +66,8 @@ in
       tap-to-click=true
     }
   }
-  device:elan-touchscreen {
+  device {
+    name = elan-touchscreen
     enabled=false
   }
   gestures {
