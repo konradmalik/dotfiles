@@ -8,27 +8,27 @@ in
   ];
   colorscheme = {
     # https://github.com/tinted-theming/schemes/blob/spec-0.11/base16/tokyo-night-dark.yaml
-    slug = "tokyo-night-dark";
-    name = "Tokyo Night Dark";
-    author = "Michaël Ball";
+    slug = "kanagawa-wave";
+    name = "Kanagawa Wave";
+    author = "rebelot";
     variant = "dark";
     palette = {
-      base00 = "1A1B26";
-      base01 = "16161E";
-      base02 = "2F3549";
-      base03 = "444B6A";
-      base04 = "787C99";
-      base05 = "A9B1D6";
-      base06 = "CBCCD1";
-      base07 = "D5D6DB";
-      base08 = "C0CAF5";
-      base09 = "A9B1D6";
-      base0A = "0DB9D7";
-      base0B = "9ECE6A";
-      base0C = "B4F9F8";
-      base0D = "2AC3DE";
-      base0E = "BB9AF7";
-      base0F = "F7768E";
+      base00 = "1F1F28";
+      base01 = "2A2A37";
+      base02 = "223249";
+      base03 = "727169";
+      base04 = "C8C093";
+      base05 = "DCD7BA";
+      base06 = "938AA9";
+      base07 = "363646";
+      base08 = "C34043";
+      base09 = "FFA066";
+      base0A = "DCA561";
+      base0B = "98BB6C";
+      base0C = "7FB4CA";
+      base0D = "7E9CD8";
+      base0E = "957FB8";
+      base0F = "D27E99";
     };
   };
 
