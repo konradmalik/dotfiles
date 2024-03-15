@@ -92,7 +92,6 @@
                   age
                   git
                   pkgs.home-manager
-                  nix
                   sops
                   ssh-to-age
                 ] ++ lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;

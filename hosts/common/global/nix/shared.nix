@@ -32,7 +32,7 @@ in
   };
   nix = {
     inherit registry;
-    package = pkgs.nix;
+    package = pkgs.nixUnstable;
     settings = {
       auto-optimise-store = lib.mkDefault true;
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
