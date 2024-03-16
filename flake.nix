@@ -2,7 +2,8 @@
   description = "NixOS and nix-darwin systems and tools by konradmalik";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # FIXME: until https://nixpk.gs/pr-tracker.html?pr=296054 goes to nixos-unstable
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
     darwin = {
       url = "github:lnl7/nix-darwin";
