@@ -109,7 +109,7 @@ Then you can install the system from flake directly:
 $ sudo nixos-install --flake github:konradmalik/dotfiles#m3800 --root /mnt --no-bootloader
 ```
 
-Tip: `nixos-enter` is also very handy if you have a working system but need to fix something, eg. change your password.
+Tip: `nixos-enter` is also very handy if you have a working system but need to fix something, e.g. change your password.
 
 Tip2: I use `--no-bootloader` because I don't want grub (either way it will fail if there is systemd already defined I think,
 it will say something like '/boot/efi is not at the root'). My flake has already all the needed hardware and booloader configs for the machines I use.
@@ -123,7 +123,7 @@ Disable gatekeeper or however it's called:
 $ sudo spctl --master-disable
 ```
 
-Go to Settings -> Security and Privacy and allow apps from "Anywhere".
+Go to Settings → Security and Privacy and allow apps from "Anywhere".
 
 Then install nix following the official guidelines and installer.
 
@@ -143,7 +143,7 @@ $ nix build .#darwinConfigurations.$(hostname -s).system
 
 #### Linux builder
 
-It is useful to have a linux builder on a MacOS machine to build linux-specific stuff.
+It is useful to have a Linux builder on a macOS machine to build linux-specific stuff.
 
 NixOS has a great support for this. We need to:
 
@@ -154,17 +154,17 @@ We can have either a truly remote machine (local PC, cloud VM etc. etc.) or a 'l
 NixOS inside. This 'local remote builder' is very handy to have either way, very easy to deploy and very lightweight
 (it mounts your existing /nix/store for example for absolutely minimal disk usage).
 
-`nix-darwin` support a linux builder as an option:
+`nix-darwin` support a Linux builder as an option:
 
 ```nix
 nix.linux-builder.enable = true;
 ```
 
-#### Docker on darwin
+#### Docker on Darwin
 
 Use `darwin-docker` module.
 
-### linux (non-NixOS; home-manager):
+### Linux (non-NixOS; home-manager):
 
 Build and enable config locally:
 
@@ -180,7 +180,7 @@ $ nix build .#homeConfigurations.$(whoami)@$(hostname -s).activationPackage
 
 ### sops-nix
 
-#### system-wide (linux only)
+#### system-wide (Linux only)
 
 We use `age`, it's way easier and more straightforward than `gpg`.
 
@@ -188,9 +188,9 @@ Strategy with keys:
 
 -   `age` derived from host ssh key for host-wide secrets
 -   `age` derived from personal ssh key for personal secrets
--   one global `age` key per person that is keps secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
+-   one global `age` key per person that is kept secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
 
-Create `age` dir for sops:
+Create `age` directory for sops:
 
 ```bash
 $ mkdir -p "$XDG_CONFIG_HOME/sops/age" \
@@ -201,7 +201,7 @@ $ && chmod 600 "$XDG_CONFIG_HOME/sops/age/keys.txt"
 
 Create `age` key from your personal ssh key:
 
-> why do this when decryption keys are also derived from host ssh keys?
+> Why do this when decryption keys are also derived from host ssh keys?
 >
 > 1. Redundancy, 2. Personal (user-specific) secrets, 3. Keys generated here can also be used in the home-manager module below
 
@@ -209,7 +209,7 @@ Create `age` key from your personal ssh key:
 $ ssh-to-age -private-key -i ~/.ssh/personal > "$XDG_CONFIG_HOME/sops/age/keys.txt"
 ```
 
-Add this key to `.sops.yaml` and propagate reencryption to all secrets:
+Add this key to `.sops.yaml` and propagate re-encryption to all secrets:
 
 ```bash
 # adjust this command, glob may not work!
