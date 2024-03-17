@@ -14,10 +14,8 @@
 
   konrad.services.autoupgrade = {
     enable = true;
-    dates = "8:30";
   };
 
-  # enable aarch64-linux emulation
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   services = {
