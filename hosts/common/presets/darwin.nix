@@ -48,8 +48,6 @@
     masApps = {
       "Grammarly for Safari" = 1462114288;
       Bitwarden = 1352778147;
-      # get's reinstalled every single time
-      # bugs in masApps, confused with iOS version
       GoodNotes = 1444383602;
       Tailscale = 1475387142;
     };

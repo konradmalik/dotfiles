@@ -7,7 +7,6 @@ in
     inputs.nix-colors.homeManagerModule
   ];
   colorscheme = {
-    # https://github.com/tinted-theming/schemes/blob/spec-0.11/base16/tokyo-night-dark.yaml
     slug = "kanagawa-wave";
     name = "Kanagawa Wave";
     author = "rebelot";
