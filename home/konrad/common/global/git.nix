@@ -13,17 +13,10 @@
       ".DS_Store"
     ];
 
-    delta = {
+    difftastic = {
       enable = true;
-      options = {
-        features = "side-by-side";
-        # uses terminal colors according to base16 spec
-        syntax-theme = "base16";
-        line-numbers = true;
-        navigate = true;
-        hyperlinks = false;
-        dark = true;
-      };
+      display = "side-by-side";
+      background = config.colorscheme.variant;
     };
 
     includes = [
