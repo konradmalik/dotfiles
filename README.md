@@ -3,7 +3,7 @@
 
 # Dotfiles
 
-Nix ftw.
+My NixOS and Nix-Darwin configurations.
 
 ## Commands
 
@@ -25,7 +25,7 @@ I'll use the local version for brevity.
 #### Build and enable config locally:
 
 ```bash
-$ sudo nixos-rebuild --flake .#$(hostname -s) switch
+$ sudo nixos-rebuild --flake . switch
 ```
 
 To just build (for example for a test):
@@ -68,6 +68,8 @@ Flash directly to the card:
 $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 ```
 
+> NOTE:
+
 The filesystem won't be complete, it will miss `etc` and more. NixOS will populate those dirs on first boot.
 
 So if you need to modify something on the card (like read host keys or add `wpa_supplicant.conf`) then the steps are:
@@ -77,7 +79,7 @@ So if you need to modify something on the card (like read host keys or add `wpa_
 -   poweroff rpi and mount the card on your PC
 -   filesystem will be complete
 
-In our case, WiFi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
+In my case, Wi-Fi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
 
 #### Build minimal ISO with ssh access for root:
 
@@ -147,7 +149,7 @@ It is useful to have a Linux builder on a macOS machine to build linux-specific 
 
 NixOS has a great support for this. We need to:
 
--   set-up a remote builder
+-   set up a remote builder
 -   configure nix.buildMachines to use it
 
 We can have either a truly remote machine (local PC, cloud VM etc. etc.) or a 'local remote builder' which is just a qemu virtual machine with
@@ -169,7 +171,7 @@ Use `darwin-docker` module.
 Build and enable config locally:
 
 ```bash
-$ home-manager switch --flake .#$(whoami)@$(hostname -s)
+$ home-manager switch --flake .
 ```
 
 To just build (for example for a test):
