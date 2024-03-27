@@ -409,7 +409,6 @@
         "nvim-dap-ui": "nvim-dap-ui",
         "nvim-dap-virtual-text": "nvim-dap-virtual-text",
         "nvim-luaref": "nvim-luaref",
-        "nvim-navic": "nvim-navic",
         "nvim-nio": "nvim-nio",
         "nvim-treesitter-context": "nvim-treesitter-context",
         "nvim-treesitter-textobjects": "nvim-treesitter-textobjects",
@@ -423,11 +422,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1711100417,
-        "narHash": "sha256-mErGv8QaVbyY4ob48NOYJpuzwM2WhMeVgtjgMqbIBgo=",
+        "lastModified": 1711544072,
+        "narHash": "sha256-DdMWI+zLR45sTDZAwFQjvUbZGwYaY9pQ5VDvKcUlkfs=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "d65d1fc68c9f1c7582449b04755771ce170d60a5",
+        "rev": "6f5e452fde158a818e1730f6a5c391f64d39bf3a",
         "type": "github"
       },
       "original": {
@@ -686,22 +685,6 @@
       "original": {
         "owner": "milisims",
         "repo": "nvim-luaref",
-        "type": "github"
-      }
-    },
-    "nvim-navic": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1701345631,
-        "narHash": "sha256-0p5n/V8Jlj9XyxV/fuMwsbQ7oV5m9H2GqZZEA/njxCQ=",
-        "owner": "SmiteshP",
-        "repo": "nvim-navic",
-        "rev": "8649f694d3e76ee10c19255dece6411c29206a54",
-        "type": "github"
-      },
-      "original": {
-        "owner": "SmiteshP",
-        "repo": "nvim-navic",
         "type": "github"
       }
     },
