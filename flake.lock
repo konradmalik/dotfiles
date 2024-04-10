@@ -130,22 +130,6 @@
         "type": "github"
       }
     },
-    "comment-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1691409559,
-        "narHash": "sha256-+dF1ZombrlO6nQggufSb0igXW5zwU++o0W/5ZA07cdc=",
-        "owner": "numToStr",
-        "repo": "Comment.nvim",
-        "rev": "0236521ea582747b58869cb72f70ccfa967d2e89",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numToStr",
-        "repo": "Comment.nvim",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -392,7 +376,6 @@
         "cmp-nvim-lsp": "cmp-nvim-lsp",
         "cmp-path": "cmp-path",
         "cmp_luasnip": "cmp_luasnip",
-        "comment-nvim": "comment-nvim",
         "dressing-nvim": "dressing-nvim",
         "friendly-snippets": "friendly-snippets",
         "git-conflict-nvim": "git-conflict-nvim",
@@ -422,11 +405,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1712313143,
-        "narHash": "sha256-RYWTTezS/EmsXhyiSyxTA7R164VUUbyEonJZ32ikJxk=",
+        "lastModified": 1712735072,
+        "narHash": "sha256-LpkHyvTMx8JJccPHCHH3K36KJr2LpnJJqvqB9uW6gfc=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "7d4f78c4e415110a1a25c79697d2df21833f8fe1",
+        "rev": "9d9fa7f26993106aa8ddcee80db9d0693485b728",
         "type": "github"
       },
       "original": {
@@ -445,11 +428,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1712282195,
-        "narHash": "sha256-FwPGLSR6W20YXXV/BV4z4iRMbXBUM8lOyeM940omBbI=",
+        "lastModified": 1712710236,
+        "narHash": "sha256-Cg9oJwOmikhZRFQmvCdi5YmeJ2bmMzG+u9zFUQAhcGw=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "75b80516d5133202b1e6848ad0c6d640543b313c",
+        "rev": "49983387ffd54fe0888f17098e43318a443315ac",
         "type": "github"
       },
       "original": {
