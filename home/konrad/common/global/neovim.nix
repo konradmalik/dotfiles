@@ -4,11 +4,6 @@
   ];
   programs.neovim-pde = {
     enable = true;
-    isolated = false;
-    appName = "neovim-pde-hm";
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-    extendGitIgnores = true;
+    cleanLspLog = true;
   };
 }
