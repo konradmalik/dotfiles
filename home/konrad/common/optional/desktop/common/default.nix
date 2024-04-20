@@ -16,7 +16,8 @@
   home = {
     packages = with pkgs; [
       bitwarden
-      calibre
+      # TODO go back to unstable once https://github.com/NixOS/nixpkgs/issues/305577
+      stable.calibre
       obsidian
       signal-desktop
       slack
