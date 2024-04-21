@@ -283,23 +283,6 @@
         "type": "github"
       }
     },
-    "harpoon": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1712688075,
-        "narHash": "sha256-FZQH38E02HuRPIPAog/nWM55FuBxKp8AyrEldFkoLYk=",
-        "owner": "ThePrimeagen",
-        "repo": "harpoon",
-        "rev": "0378a6c428a0bed6a2781d459d7943843f374bce",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ThePrimeagen",
-        "ref": "harpoon2",
-        "repo": "harpoon",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -380,7 +363,6 @@
         "friendly-snippets": "friendly-snippets",
         "git-conflict-nvim": "git-conflict-nvim",
         "gitsigns-nvim": "gitsigns-nvim",
-        "harpoon": "harpoon",
         "kanagawa-nvim": "kanagawa-nvim",
         "luasnip": "luasnip",
         "neo-tree-nvim": "neo-tree-nvim",
@@ -406,11 +388,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1713638330,
-        "narHash": "sha256-PVByU59Wr/+gBwdKHxc7Nupgi5xrLrT7iJ3A0tyu0t4=",
+        "lastModified": 1713726112,
+        "narHash": "sha256-syV/krjZ32cJjH5LLwUOrORsj0Na/Zmuu669Ns2bKoY=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "9439393f6b81c238ff10c9f29264e865b2deb913",
+        "rev": "0bae9fc81b0c34f6b01fdbb87d18fbaab995e3fb",
         "type": "github"
       },
       "original": {
