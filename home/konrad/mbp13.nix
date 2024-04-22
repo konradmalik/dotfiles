@@ -17,6 +17,9 @@
     # installed via homebrew
     package = null;
   };
+  programs.neovim-pde = {
+    notesPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
+  };
   konrad.programs.restic = {
     enable = true;
     includes = [

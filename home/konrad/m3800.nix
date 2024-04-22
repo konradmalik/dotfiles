@@ -8,6 +8,9 @@
   fontProfiles.enable = true;
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
+  programs.neovim-pde = {
+    notesPath = "${config.home.homeDirectory}/obsidian/Personal";
+  };
   konrad.programs.restic = {
     enable = true;
     includes = [
