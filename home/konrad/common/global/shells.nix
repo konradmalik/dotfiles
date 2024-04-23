@@ -132,6 +132,9 @@ let
     zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
     # show 'tag' info
     zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+
+    # carapace support
+    export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
   '';
 in
 {
@@ -148,6 +151,8 @@ in
   };
 
   programs.zoxide.enable = true;
+
+  programs.carapace.enable = true;
 
   home.activation = { inherit zcompdumpRemoval; };
 
