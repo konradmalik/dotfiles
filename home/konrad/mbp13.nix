@@ -1,5 +1,7 @@
 { config, ... }:
-
+let
+  obsidianPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
+in
 {
   imports = [
     ./common/presets/darwin.nix
@@ -18,7 +20,12 @@
     package = null;
   };
   programs.neovim-pde = {
-    notesPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
+    systemLua = /* lua */''
+      return {
+        repository_path = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake";
+        notes_path = "${obsidianPath}/Personal";
+      }
+    '';
   };
   konrad.programs.restic = {
     enable = true;
@@ -26,7 +33,7 @@
       "${config.home.homeDirectory}/Code/scratch"
       "${config.home.homeDirectory}/Desktop"
       "${config.home.homeDirectory}/Documents"
-      "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents"
+      obsidianPath
     ];
   };
 }

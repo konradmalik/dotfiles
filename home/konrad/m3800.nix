@@ -1,4 +1,7 @@
 { config, ... }:
+let
+  obsidianPath = "${config.home.homeDirectory}/obsidian";
+in
 {
   imports = [
     ./common/presets/nixos.nix
@@ -9,14 +12,19 @@
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
   programs.neovim-pde = {
-    notesPath = "${config.home.homeDirectory}/obsidian/Personal";
+    systemLua = /* lua */''
+      return {
+        repository_path = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake";
+        notes_path = "${obsidianPath}/Personal";
+      }
+    '';
   };
   konrad.programs.restic = {
     enable = true;
     includes = [
       "${config.home.homeDirectory}/Code/scratch"
       "${config.home.homeDirectory}/Documents"
-      "${config.home.homeDirectory}/obsidian"
+      obsidianPath
     ];
   };
 

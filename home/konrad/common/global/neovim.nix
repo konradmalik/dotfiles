@@ -1,7 +1,4 @@
-{ config, inputs, ... }:
-let
-  ifExistsElseNull = p: if builtins.pathExists p then p else null;
-in
+{ config, inputs, lib, ... }:
 {
   imports = [
     inputs.neovim.homeManagerModules.default
@@ -9,6 +6,10 @@ in
   programs.neovim-pde = {
     enable = true;
     cleanLspLog = true;
-    repositoryPath = ifExistsElseNull "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake";
+    systemLua = lib.mkDefault /* lua */ ''
+      return {
+        repository_path = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake";
+      }
+    '';
   };
 }
