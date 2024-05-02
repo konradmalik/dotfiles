@@ -125,7 +125,7 @@
             }).config.system.build.sdImage;
           }
         )));
-      formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
 
       homeManagerModules = import ./modules/home-manager;
       nixosModules = import ./modules/nixos;
