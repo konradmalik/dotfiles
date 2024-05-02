@@ -16,6 +16,7 @@ let
 
   # wraps restic with backblaze env with all configs in one place
   b2-env = writeText "restic-b2-env"
+    /* bash */
     ''
       export B2_ACCOUNT_ID="${b2ApplicationId}"
       export B2_ACCOUNT_KEY="''$(<${b2ApplicationKeyFile})"

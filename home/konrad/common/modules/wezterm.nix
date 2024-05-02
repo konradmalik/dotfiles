@@ -49,6 +49,7 @@ in
           c = cfg.colorscheme.palette;
         in
         pkgs.writeText "wezterm-colorscheme"
+          /* yaml */
           ''
             scheme: "${cfg.colorscheme.name}"
             author: "${cfg.colorscheme.author}"
