@@ -1,6 +1,7 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.konrad.networking.wireless;
+let
+  cfg = config.konrad.networking.wireless;
 in
 {
   options.konrad.networking.wireless = {
@@ -49,10 +50,9 @@ in
 
     # since we enabled Imperative, we need to make sure /etc/wpa_supplicant.conf exists
     system.activationScripts = {
-      wpa_supplicant_conf.text =
-        ''
-          touch -a /etc/wpa_supplicant.conf
-        '';
+      wpa_supplicant_conf.text = ''
+        touch -a /etc/wpa_supplicant.conf
+      '';
     };
 
     # Ensure group exists

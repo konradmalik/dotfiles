@@ -1,6 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.konrad.hardware.bluetooth;
+let
+  cfg = config.konrad.hardware.bluetooth;
 in
 {
   options.konrad.hardware.bluetooth = {

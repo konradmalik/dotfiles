@@ -1,4 +1,10 @@
-{ config, lib, pkgs, osConfig, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  ...
+}:
 with lib;
 let
   cfg = config.konrad.services.syncthing;
@@ -33,14 +39,16 @@ in
   };
   config = mkIf cfg.enable {
     warnings =
-      if (
-        !builtins.elem 22000 osConfig.networking.firewall.allowedUDPPorts ||
-        !builtins.elem 21027 osConfig.networking.firewall.allowedUDPPorts ||
-        !builtins.elem 22000 osConfig.networking.firewall.allowedTCPPorts
-      ) then [
-        "required ports are not open in the firewall, you may have problems connecting with syncthing"
-      ]
-      else [ ];
+      if
+        (
+          !builtins.elem 22000 osConfig.networking.firewall.allowedUDPPorts
+          || !builtins.elem 21027 osConfig.networking.firewall.allowedUDPPorts
+          || !builtins.elem 22000 osConfig.networking.firewall.allowedTCPPorts
+        )
+      then
+        [ "required ports are not open in the firewall, you may have problems connecting with syncthing" ]
+      else
+        [ ];
 
     services.syncthing = {
       enable = cfg.install;

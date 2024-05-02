@@ -3,9 +3,7 @@ let
   obsidianPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
 in
 {
-  imports = [
-    ./common/presets/darwin.nix
-  ];
+  imports = [ ./common/presets/darwin.nix ];
 
   home.homeDirectory = "/Users/${config.home.username}";
 
@@ -20,12 +18,13 @@ in
     package = null;
   };
   programs.neovim-pde = {
-    systemLua = /* lua */''
-      return {
-        repository_path = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake";
-        notes_path = "${obsidianPath}/Personal";
-      }
-    '';
+    systemLua = # lua
+      ''
+        return {
+          repository_path = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake";
+          notes_path = "${obsidianPath}/Personal";
+        }
+      '';
   };
   konrad.programs.restic = {
     enable = true;

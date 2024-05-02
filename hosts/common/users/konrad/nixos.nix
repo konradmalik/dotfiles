@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
@@ -14,7 +19,17 @@ in
       isNormalUser = true;
       description = "Konrad";
       # network is my own custom group for imperative wpa_supplicant config
-      extraGroups = [ "wheel" "video" "audio" ] ++ ifTheyExist [ "network" "docker" "networkmanager" ];
+      extraGroups =
+        [
+          "wheel"
+          "video"
+          "audio"
+        ]
+        ++ ifTheyExist [
+          "network"
+          "docker"
+          "networkmanager"
+        ];
     };
   };
 
@@ -28,16 +43,12 @@ in
 
   # Syncthing ports
   networking.firewall = {
-    allowedTCPPorts =
-      lib.optionals config.home-manager.users.konrad.konrad.services.syncthing.enable
-        [
-          22000 # TCP based sync protocol traffic
-        ];
-    allowedUDPPorts =
-      lib.optionals config.home-manager.users.konrad.konrad.services.syncthing.enable
-        [
-          22000 # QUIC based sync protocol traffic
-          21027 # for discovery broadcasts on IPv4 and multicasts on IPv6
-        ];
+    allowedTCPPorts = lib.optionals config.home-manager.users.konrad.konrad.services.syncthing.enable [
+      22000 # TCP based sync protocol traffic
+    ];
+    allowedUDPPorts = lib.optionals config.home-manager.users.konrad.konrad.services.syncthing.enable [
+      22000 # QUIC based sync protocol traffic
+      21027 # for discovery broadcasts on IPv4 and multicasts on IPv6
+    ];
   };
 }

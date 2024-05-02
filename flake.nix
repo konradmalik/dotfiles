@@ -43,27 +43,29 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , darwin
-    , home-manager
-    , ...
+    {
+      self,
+      nixpkgs,
+      darwin,
+      home-manager,
+      ...
     }@inputs:
     let
-      nixpkgsFor = system: (import nixpkgs
-        {
+      nixpkgsFor =
+        system:
+        (import nixpkgs {
           localSystem = {
             inherit system;
           };
         });
 
-      forAllSystems = function:
+      forAllSystems =
+        function:
         nixpkgs.lib.genAttrs [
           "x86_64-linux"
           "aarch64-linux"
           "x86_64-darwin"
-        ]
-          (system: function (nixpkgsFor system));
+        ] (system: function (nixpkgsFor system));
 
       specialArgs = {
         inherit inputs;
@@ -74,57 +76,61 @@
       };
     in
     {
-      devShells = forAllSystems
-        (pkgs:
-          let
-            darwinPackages = builtins.attrValues (builtins.removeAttrs inputs.darwin.packages.${pkgs.system}
-              [ "default" ]);
-          in
-          {
-            default = pkgs.mkShell
-              {
-                NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+      devShells = forAllSystems (
+        pkgs:
+        let
+          darwinPackages = builtins.attrValues (
+            builtins.removeAttrs inputs.darwin.packages.${pkgs.system} [ "default" ]
+          );
+        in
+        {
+          default = pkgs.mkShell {
+            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
 
-                name = "dotfiles";
-                packages = with pkgs; [
-                  manix
-                  nmap
-                  age
-                  git
-                  pkgs.home-manager
-                  sops
-                  ssh-to-age
-                ] ++ lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;
-              };
-          });
-      packages = forAllSystems (pkgs: (import ./pkgs { inherit pkgs; }
-        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux)
+            name = "dotfiles";
+            packages =
+              with pkgs;
+              [
+                manix
+                nmap
+                age
+                git
+                pkgs.home-manager
+                sops
+                ssh-to-age
+              ]
+              ++ lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;
+          };
+        }
+      );
+      packages = forAllSystems (
+        pkgs:
         (
-          let
-            rpiSdCard = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
-            # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243
-            missingKernelModulesFix = {
-              nixpkgs.overlays = [
-                (final: prev: {
-                  makeModulesClosure = x:
-                    prev.makeModulesClosure (x // {
-                      allowMissing = true;
-                    });
-                })
+          import ./pkgs { inherit pkgs; }
+          // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
+            let
+              rpiSdCard = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
+              # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243
+              missingKernelModulesFix = {
+                nixpkgs.overlays = [
+                  (final: prev: { makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; }); })
+                ];
+              };
+              modules = [
+                rpiSdCard
+                missingKernelModulesFix
               ];
-            };
-            modules = [ rpiSdCard missingKernelModulesFix ];
-          in
-          {
-            installer-iso = import ./pkgs/special/installer-iso { inherit pkgs specialArgs; };
-            rpi4-1-sd-image = (self.nixosConfigurations.rpi4-1.extendModules {
-              inherit modules;
-            }).config.system.build.sdImage;
-            rpi4-2-sd-image = (self.nixosConfigurations.rpi4-2.extendModules {
-              inherit modules;
-            }).config.system.build.sdImage;
-          }
-        )));
+            in
+            {
+              installer-iso = import ./pkgs/special/installer-iso { inherit pkgs specialArgs; };
+              rpi4-1-sd-image =
+                (self.nixosConfigurations.rpi4-1.extendModules { inherit modules; }).config.system.build.sdImage;
+              rpi4-2-sd-image =
+                (self.nixosConfigurations.rpi4-2.extendModules { inherit modules; }).config.system.build.sdImage;
+            }
+          )
+        )
+      );
       formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
 
       homeManagerModules = import ./modules/home-manager;

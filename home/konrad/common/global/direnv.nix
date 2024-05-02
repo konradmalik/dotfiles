@@ -1,8 +1,6 @@
 { config, ... }:
 {
-  programs.git.ignores = [
-    ".direnv"
-  ];
+  programs.git.ignores = [ ".direnv" ];
 
   programs.direnv = {
     enable = true;
@@ -15,9 +13,7 @@
         warn_timeout = "12h";
       };
       whitelist = {
-        prefix = [
-          "${config.home.homeDirectory}/Code/github.com/konradmalik"
-        ];
+        prefix = [ "${config.home.homeDirectory}/Code/github.com/konradmalik" ];
       };
     };
   };

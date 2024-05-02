@@ -1,11 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   programs.fzf = rec {
     enable = true;
     defaultCommand = "${pkgs.fd}/bin/fd --type f";
-    defaultOptions = [
-      "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'"
-    ];
+    defaultOptions = [ "--bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all'" ];
     fileWidgetCommand = defaultCommand;
     fileWidgetOptions = [
       "--preview '${pkgs.bat}/bin/bat --color=always --style=numbers --line-range=:200 {}'"
@@ -13,8 +16,11 @@
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     changeDirWidgetOptions = [ "--preview '${pkgs.tree}/bin/tree -C {} | head -200'" ];
     colors =
-      let c = config.colorscheme.palette;
-      in with lib;{
+      let
+        c = config.colorscheme.palette;
+      in
+      with lib;
+      {
         "bg+" = "#${toLower c.base01}";
         "bg" = "#${toLower c.base00}";
         "fg+" = "#${toLower c.base06}";

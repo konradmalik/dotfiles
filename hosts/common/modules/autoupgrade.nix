@@ -16,7 +16,10 @@ in
       description = "whether to allow reboot if kernel and related were updated";
     };
     operation = lib.mkOption {
-      type = lib.types.enum [ "switch" "boot" ];
+      type = lib.types.enum [
+        "switch"
+        "boot"
+      ];
       example = "switch";
       default = "switch";
       description = "switch or boot mode of nixos-rebuild";

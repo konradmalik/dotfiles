@@ -1,17 +1,19 @@
-{ config, pkgs, customArgs, ... }:
 {
-  home.packages = with pkgs;
-    [
-      git-extras
-      git-crypt
-    ];
+  config,
+  pkgs,
+  customArgs,
+  ...
+}:
+{
+  home.packages = with pkgs; [
+    git-extras
+    git-crypt
+  ];
 
   programs.git = {
     enable = true;
     lfs.enable = true;
-    ignores = [
-      ".DS_Store"
-    ];
+    ignores = [ ".DS_Store" ];
 
     difftastic = {
       enable = true;

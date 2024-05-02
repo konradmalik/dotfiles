@@ -1,6 +1,7 @@
 { inputs }:
 {
-  additions = final: prev:
+  additions =
+    final: prev:
     (import ../pkgs { pkgs = final; })
     // {
       baywatch = inputs.baywatch.packages.${final.system}.bwatch;

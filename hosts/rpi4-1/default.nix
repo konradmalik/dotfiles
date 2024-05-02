@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./hardware-configuration.nix
     ./../common/presets/nixos.nix
@@ -47,8 +48,8 @@
       global = {
         backend = "alsa";
         bitrate = 320;
-        max_cache_size = 5000000000; #5 GB
-        initial_volume = "30"; #%
+        max_cache_size = 5000000000; # 5 GB
+        initial_volume = "30"; # %
         volume_normalisation = true;
         device_name = "rpi4-1";
         device_type = "speaker";

@@ -12,18 +12,20 @@ in
       remotes = mkOption {
         default = [ ];
         description = "urls and their sha256 that will be passed to fetchurl function";
-        type = types.listOf (types.submodule {
-          options = {
-            url = mkOption {
-              type = types.str;
-              example = "https://github.com/konradmalik.keys";
+        type = types.listOf (
+          types.submodule {
+            options = {
+              url = mkOption {
+                type = types.str;
+                example = "https://github.com/konradmalik.keys";
+              };
+              sha256 = mkOption {
+                type = types.str;
+                example = "sha256:0i8s5nc48dpf1rvjnk22ny03ckvyk4mpydgd48g2wz687v8wip05";
+              };
             };
-            sha256 = mkOption {
-              type = types.str;
-              example = "sha256:0i8s5nc48dpf1rvjnk22ny03ckvyk4mpydgd48g2wz687v8wip05";
-            };
-          };
-        });
+          }
+        );
       };
       extraKeys = mkOption {
         type = types.listOf types.str;

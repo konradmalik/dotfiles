@@ -1,8 +1,6 @@
 { pkgs, inputs, ... }:
 {
-  imports = [
-    inputs.darwin-docker.darwinModules.docker
-  ];
+  imports = [ inputs.darwin-docker.darwinModules.docker ];
 
   virtualisation.docker = {
     enable = false;

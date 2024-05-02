@@ -1,56 +1,59 @@
 { pkgs, lib, ... }:
 {
-  home.packages = with pkgs;[
-    curl
-    dnsutils
-    file
-    inetutils
-    moreutils
-    progress
-    tree
-    trurl
-    unar
-    unixtools.xxd
-    wget
-    zip
+  home.packages =
+    with pkgs;
+    [
+      curl
+      dnsutils
+      file
+      inetutils
+      moreutils
+      progress
+      tree
+      trurl
+      unar
+      unixtools.xxd
+      wget
+      zip
 
-    ast-grep
-    fd
-    fpp
-    ripgrep
-    ripgrep-all
-    sad
-    sd
-    urlscan
+      ast-grep
+      fd
+      fpp
+      ripgrep
+      ripgrep-all
+      sad
+      sd
+      urlscan
 
-    baywatch
-    hyperfine
-    noti
-    spacer
-    viddy
-    yazi
+      baywatch
+      hyperfine
+      noti
+      spacer
+      viddy
+      yazi
 
-    age
-    fq
-    dsq
-    jc
-    jo
-    jq
-    xsv
-    yq-go
+      age
+      fq
+      dsq
+      jc
+      jo
+      jq
+      xsv
+      yq-go
 
-    du-dust
-    duf
-    procs
+      du-dust
+      duf
+      procs
 
-    croc
-    gh
-    glab
-    up
+      croc
+      gh
+      glab
+      up
 
-    rfv
-  ] ++ lib.optionals pkgs.stdenvNoCC.isLinux [
-    psmisc
-    trace-cmd
-  ];
+      rfv
+    ]
+    ++ lib.optionals pkgs.stdenvNoCC.isLinux [
+      psmisc
+      trace-cmd
+    ];
 }

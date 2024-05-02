@@ -1,4 +1,10 @@
-{ config, tmux-switcher, tmuxTextProcessor, pkgs, lib }:
+{
+  config,
+  tmux-switcher,
+  tmuxTextProcessor,
+  pkgs,
+  lib,
+}:
 ''
   ## KONRAD's SENSIBLE DEFAULTS
   # tmux messages are displayed for 4 seconds
@@ -80,8 +86,7 @@
   # toggle last session
   bind-key S switch-client -l
 ''
-  + lib.optionalString config.konrad.programs.alacritty.enable
-  ''
-    # alacritty specifics
-    set -ga terminal-overrides ",alacritty:Tc"
-  ''
++ lib.optionalString config.konrad.programs.alacritty.enable ''
+  # alacritty specifics
+  set -ga terminal-overrides ",alacritty:Tc"
+''

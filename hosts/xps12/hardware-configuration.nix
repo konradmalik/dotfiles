@@ -1,14 +1,19 @@
-{ lib, pkgs, modulesPath, inputs, ... }:
 {
-  imports =
-    [
-      inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
-      inputs.nixos-hardware.nixosModules.common-pc-ssd
+  lib,
+  pkgs,
+  modulesPath,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
 
-      (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/installer/scan/not-detected.nix")
 
-      ./disko.nix
-    ];
+    ./disko.nix
+  ];
 
   # lts
   boot.kernelPackages = pkgs.linuxPackages;
@@ -16,7 +21,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ehci_pci"
+    "ahci"
+    "usb_storage"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -35,8 +46,10 @@
     enableAllFirmware = true;
   };
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 2 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 2 * 1024;
+    }
+  ];
 }

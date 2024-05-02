@@ -1,16 +1,21 @@
-{ ripgrep
-, bat
-, fzf
-, writeScriptBin
-, symlinkJoin
-, makeWrapper
+{
+  ripgrep,
+  bat,
+  fzf,
+  writeScriptBin,
+  symlinkJoin,
+  makeWrapper,
 }:
 let
   name = "rfv";
   script = (writeScriptBin name (builtins.readFile ./rfv.sh)).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });
-  deps = [ ripgrep bat fzf ];
+  deps = [
+    ripgrep
+    bat
+    fzf
+  ];
 in
 symlinkJoin {
   inherit name;

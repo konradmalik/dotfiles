@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.konrad.programs.wezterm;
@@ -49,7 +54,7 @@ in
           c = cfg.colorscheme.palette;
         in
         pkgs.writeText "wezterm-colorscheme"
-          /* yaml */
+          # yaml
           ''
             scheme: "${cfg.colorscheme.name}"
             author: "${cfg.colorscheme.author}"

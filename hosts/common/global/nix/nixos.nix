@@ -1,7 +1,8 @@
 { config, lib, ... }:
 let
   ifTheyExist = users: builtins.filter (user: builtins.hasAttr user config.users.users) users;
-  theirAuthorizedKeys = users: builtins.map (user: config.users.users.${user}.openssh.authorizedKeys.keys) users;
+  theirAuthorizedKeys =
+    users: builtins.map (user: config.users.users.${user}.openssh.authorizedKeys.keys) users;
 in
 {
   imports = [ ./shared.nix ];

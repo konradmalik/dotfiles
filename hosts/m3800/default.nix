@@ -1,10 +1,9 @@
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./../common/presets/nixos.nix
-      ./../common/optional/wayland-wm.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./../common/presets/nixos.nix
+    ./../common/optional/wayland-wm.nix
+  ];
 
   networking.hostName = "m3800";
 

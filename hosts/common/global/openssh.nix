@@ -3,10 +3,12 @@
   services.openssh = {
     enable = true;
     # disable rsa keys
-    hostKeys = [{
-      path = "/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }];
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
     # Automatically remove stale sockets
     extraConfig = ''
       StreamLocalBindUnlink yes
@@ -25,8 +27,6 @@
     # specifically allow only ssh keys from below.
     # allowing ~/.ssh/authorized_keys is a vulnerability
     # (any user get can sudo with they want)
-    authorizedKeysFiles = [
-      "/etc/ssh/authorized_keys.d/%u"
-    ];
+    authorizedKeysFiles = [ "/etc/ssh/authorized_keys.d/%u" ];
   };
 }

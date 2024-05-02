@@ -1,4 +1,11 @@
-{ lib, config, pkgs, osConfig, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  osConfig,
+  ...
+}:
+{
   imports = [
     ../common
     ../common/wayland-wm
@@ -11,9 +18,7 @@
     }
   ];
 
-  home.packages = with pkgs; [
-    swaybg
-  ];
+  home.packages = with pkgs; [ swaybg ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -24,8 +29,8 @@
       (import ./monitors.nix {
         inherit lib;
         inherit (config) monitors;
-      }) +
-      (import ./config.nix {
+      })
+      + (import ./config.nix {
         inherit (config.konrad) wallpaper;
         inherit (config) colorscheme;
       });

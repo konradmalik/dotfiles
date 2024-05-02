@@ -22,8 +22,12 @@ in
     let
       homeDirectory = "${config.home-manager.users.${cfg.user}.home.homeDirectory}";
       devices = {
-        mbp13 = { id = "A5U7AZU-QIFZ5LZ-WDHZHSD-OQBSOTM-D3XOP2D-IU7TY2L-MEZTR3J-H3DJCQP"; };
-        m3800 = { id = "TO7DEHZ-L3KL5SE-OY7WWXF-QDT7DON-7IWM3NV-X3MES2U-TWYTJ6J-YKGT7QJ"; };
+        mbp13 = {
+          id = "A5U7AZU-QIFZ5LZ-WDHZHSD-OQBSOTM-D3XOP2D-IU7TY2L-MEZTR3J-H3DJCQP";
+        };
+        m3800 = {
+          id = "TO7DEHZ-L3KL5SE-OY7WWXF-QDT7DON-7IWM3NV-X3MES2U-TWYTJ6J-YKGT7QJ";
+        };
       };
       otherDevices = lib.filterAttrs (n: _: n != config.networking.hostName) devices;
     in

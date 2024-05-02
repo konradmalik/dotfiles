@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   xdg.mimeApps.defaultApplications = {
     "video/flv" = [ "mpv.desktop" ];

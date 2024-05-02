@@ -1,4 +1,11 @@
-{ config, pkgs, lib, inputs, customArgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  customArgs,
+  ...
+}:
 let
   key = builtins.elemAt (builtins.filter (k: k.type == "ed25519") config.services.openssh.hostKeys) 0;
 in
@@ -18,8 +25,7 @@ in
     ./../global/tailscale.nix
 
     ./../users/konrad/nixos.nix
-  ] ++ (builtins.attrValues (import ./../modules))
-  ++ (builtins.attrValues customArgs.nixosModules);
+  ] ++ (builtins.attrValues (import ./../modules)) ++ (builtins.attrValues customArgs.nixosModules);
 
   boot = {
     # clean tmp after reboot
@@ -36,10 +42,13 @@ in
   services.fwupd.enable = true;
 
   environment = {
-    systemPackages = with pkgs;[
-      pciutils
+    systemPackages = with pkgs; [ pciutils ];
+    pathsToLink = [
+      "/bin"
+      "/lib"
+      "/man"
+      "/share"
     ];
-    pathsToLink = [ "/bin" "/lib" "/man" "/share" ];
   };
 
   system.stateVersion = lib.mkDefault "24.05";

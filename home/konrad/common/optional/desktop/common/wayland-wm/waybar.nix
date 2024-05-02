@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (pkgs.lib) optionals;
@@ -21,17 +26,27 @@ let
   systemMonitor = terminal-spawn btm;
 
   # Function to simplify making waybar outputs
-  jsonOutput = name: { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-${name}" ''
-    set -euo pipefail
-    ${pre}
-    ${jq} -cn \
-      --arg text "${text}" \
-      --arg tooltip "${tooltip}" \
-      --arg alt "${alt}" \
-      --arg class "${class}" \
-      --arg percentage "${percentage}" \
-      '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-  ''}/bin/waybar-${name}";
+  jsonOutput =
+    name:
+    {
+      pre ? "",
+      text ? "",
+      tooltip ? "",
+      alt ? "",
+      class ? "",
+      percentage ? "",
+    }:
+    "${pkgs.writeShellScriptBin "waybar-${name}" ''
+      set -euo pipefail
+      ${pre}
+      ${jq} -cn \
+        --arg text "${text}" \
+        --arg tooltip "${tooltip}" \
+        --arg alt "${alt}" \
+        --arg class "${class}" \
+        --arg percentage "${percentage}" \
+        '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
+    ''}/bin/waybar-${name}";
 in
 {
   programs.waybar = {
@@ -45,9 +60,7 @@ in
         margin-right = 10;
         height = 30;
         position = "top";
-        modules-center = (lib.optionals config.wayland.windowManager.hyprland.enable [
-          "wlr/workspaces"
-        ]);
+        modules-center = (lib.optionals config.wayland.windowManager.hyprland.enable [ "wlr/workspaces" ]);
 
         "wlr/workspaces" = {
           format = "{icon}";
@@ -65,15 +78,16 @@ in
         margin-left = 10;
         margin-right = 10;
         height = 30;
-        modules-left = [
-          "custom/menu"
-          "idle_inhibitor"
-        ] ++ (optionals config.wayland.windowManager.hyprland.enable [
-          "wlr/workspaces"
-        ]) ++ [
-          "custom/currentplayer"
-          "custom/player"
-        ];
+        modules-left =
+          [
+            "custom/menu"
+            "idle_inhibitor"
+          ]
+          ++ (optionals config.wayland.windowManager.hyprland.enable [ "wlr/workspaces" ])
+          ++ [
+            "custom/currentplayer"
+            "custom/player"
+          ];
         modules-center = [
           "cpu"
           "memory"
@@ -126,7 +140,11 @@ in
             portable = " ";
             phone = " ";
             car = " ";
-            default = [ " " " " " " ];
+            default = [
+              " "
+              " "
+              " "
+            ];
           };
           on-click = pavucontrol;
         };
@@ -139,14 +157,30 @@ in
         };
         backlight = {
           format = "{icon} {percent}%";
-          format-icons = [ " " " " " " " " " " " " " " " " " " ];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
           on-scroll-up = "light -A 1";
           on-scroll-down = "light -U 1";
         };
         battery = {
           bat = "BAT1";
           interval = 20;
-          format-icons = [ " " " " " " " " " " ];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
           format = "{icon} {capacity}%";
           format-charging = "󰂄 {capacity}%";
           format-plugged = "󰚥 {capacity}% ";
@@ -255,88 +289,92 @@ in
           on-click = "${playerctl} play-pause";
         };
       };
-
     };
     # Cheatsheet:
     # x -> all sides
     # x y -> vertical, horizontal
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
-    style = let c = config.colorscheme.palette; in /* css */ ''
-      * {
-        font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
-        font-size: ${toString (builtins.floor config.fontProfiles.regular.size)}pt;
-        padding: 0 8px;
-      }
-      .modules-right {
-        margin-right: -15px;
-      }
-      .modules-left {
-        margin-left: -15px;
-      }
-      window#waybar.top {
-        opacity: 0.95;
-        padding: 0;
-        background-color: #${c.base00};
-        border: 2px solid #${c.base0C};
-        border-radius: 10px;
-      }
-      window#waybar.bottom {
-        opacity: 0.90;
-        background-color: #${c.base00};
-        border: 2px solid #${c.base0C};
-        border-radius: 10px;
-      }
-      window#waybar {
-        color: #${c.base05};
-      }
-      #workspaces button {
-        background-color: #${c.base01};
-        color: #${c.base05};
-        margin: 4px;
-      }
-      #workspaces button.hidden {
-        background-color: #${c.base00};
-        color: #${c.base04};
-      }
-      #workspaces button.focused,
-      #workspaces button.active {
-        background-color: #${c.base0A};
-        color: #${c.base00};
-      }
-      #clock {
-        background-color: #${c.base0C};
-        color: #${c.base00};
-        padding-left: 15px;
-        padding-right: 15px;
-        margin-top: 0;
-        margin-bottom: 0;
-        border-radius: 10px;
-      }
-      #custom-menu {
-        background-color: #${c.base0C};
-        color: #${c.base00};
-        padding-left: 15px;
-        padding-right: 22px;
-        margin-left: 0;
-        margin-right: 10px;
-        margin-top: 0;
-        margin-bottom: 0;
-        border-radius: 10px;
-      }
-      #custom-hostname {
-        background-color: #${c.base0C};
-        color: #${c.base00};
-        padding-left: 15px;
-        padding-right: 18px;
-        margin-right: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        border-radius: 10px;
-      }
-      #tray {
-        color: #${c.base05};
-      }
-    '';
+    style =
+      let
+        c = config.colorscheme.palette;
+      in
+      # css
+      ''
+        * {
+          font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
+          font-size: ${toString (builtins.floor config.fontProfiles.regular.size)}pt;
+          padding: 0 8px;
+        }
+        .modules-right {
+          margin-right: -15px;
+        }
+        .modules-left {
+          margin-left: -15px;
+        }
+        window#waybar.top {
+          opacity: 0.95;
+          padding: 0;
+          background-color: #${c.base00};
+          border: 2px solid #${c.base0C};
+          border-radius: 10px;
+        }
+        window#waybar.bottom {
+          opacity: 0.90;
+          background-color: #${c.base00};
+          border: 2px solid #${c.base0C};
+          border-radius: 10px;
+        }
+        window#waybar {
+          color: #${c.base05};
+        }
+        #workspaces button {
+          background-color: #${c.base01};
+          color: #${c.base05};
+          margin: 4px;
+        }
+        #workspaces button.hidden {
+          background-color: #${c.base00};
+          color: #${c.base04};
+        }
+        #workspaces button.focused,
+        #workspaces button.active {
+          background-color: #${c.base0A};
+          color: #${c.base00};
+        }
+        #clock {
+          background-color: #${c.base0C};
+          color: #${c.base00};
+          padding-left: 15px;
+          padding-right: 15px;
+          margin-top: 0;
+          margin-bottom: 0;
+          border-radius: 10px;
+        }
+        #custom-menu {
+          background-color: #${c.base0C};
+          color: #${c.base00};
+          padding-left: 15px;
+          padding-right: 22px;
+          margin-left: 0;
+          margin-right: 10px;
+          margin-top: 0;
+          margin-bottom: 0;
+          border-radius: 10px;
+        }
+        #custom-hostname {
+          background-color: #${c.base0C};
+          color: #${c.base00};
+          padding-left: 15px;
+          padding-right: 18px;
+          margin-right: 0;
+          margin-top: 0;
+          margin-bottom: 0;
+          border-radius: 10px;
+        }
+        #tray {
+          color: #${c.base05};
+        }
+      '';
   };
 }

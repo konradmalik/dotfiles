@@ -1,11 +1,15 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 let
   inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) nixWallpaperFromScheme;
 in
 {
-  imports = [
-    inputs.nix-colors.homeManagerModule
-  ];
+  imports = [ inputs.nix-colors.homeManagerModule ];
   colorscheme = {
     slug = "kanagawa-wave";
     name = "Kanagawa Wave";
@@ -37,11 +41,10 @@ in
       largestWidth = largest (x: x.width) config.monitors;
       largestHeight = largest (x: x.height) config.monitors;
     in
-    lib.mkDefault (nixWallpaperFromScheme
-      {
-        scheme = config.colorscheme;
-        width = largestWidth;
-        height = largestHeight;
-        logoScale = 4;
-      });
+    lib.mkDefault (nixWallpaperFromScheme {
+      scheme = config.colorscheme;
+      width = largestWidth;
+      height = largestHeight;
+      logoScale = 4;
+    });
 }

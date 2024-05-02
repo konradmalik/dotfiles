@@ -4,7 +4,10 @@ let
   script = (pkgs.writeScriptBin name (builtins.readFile ./tmux-switcher.sh)).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });
-  deps = with pkgs; [ tmux coreutils ];
+  deps = with pkgs; [
+    tmux
+    coreutils
+  ];
 in
 pkgs.symlinkJoin {
   inherit name;

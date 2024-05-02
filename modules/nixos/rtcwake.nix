@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.services.rtcwake;
 in
@@ -16,7 +21,15 @@ in
       description = "Time (UTC) when to power off (according to 'mode'). Should be systemd OnCalendar format.";
     };
     mode = lib.mkOption {
-      type = lib.types.enum [ "off" "on" "sleep" "mem" "disk" "standby" "freeze" ];
+      type = lib.types.enum [
+        "off"
+        "on"
+        "sleep"
+        "mem"
+        "disk"
+        "standby"
+        "freeze"
+      ];
       example = "mem";
       description = "rtcwake mode to use";
     };

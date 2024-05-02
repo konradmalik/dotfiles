@@ -1,10 +1,10 @@
 {
-  imports = [
-    ../common/hardware/rpi4.nix
-  ];
+  imports = [ ../common/hardware/rpi4.nix ];
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 4 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 4 * 1024;
+    }
+  ];
 }

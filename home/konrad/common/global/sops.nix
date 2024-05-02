@@ -1,8 +1,12 @@
-{ config, inputs, pkgs, lib, ... }:
 {
-  imports = [
-    inputs.sops-nix.homeManagerModules.sops
-  ];
+  config,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
   # shared sops config
   sops = {

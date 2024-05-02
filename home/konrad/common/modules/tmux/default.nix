@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.konrad.programs.tmux;
@@ -21,50 +26,50 @@ in
     };
   };
 
-  config = mkIf cfg.enable
-    {
-      programs.tmux = {
-        enable = true;
-        aggressiveResize = true;
-        sensibleOnTop = true;
-        # tmux-256color is the proper one to enable italics, undercurls etc.
-        # just ensure you have that terminfo
-        # screen-256color works properly everywhere but does not have many features
-        terminal = "tmux-256color";
-        keyMode = "vi";
-        escapeTime = 0;
-        baseIndex = 1;
-        historyLimit = 50000;
-        extraConfig = lib.concatStringsSep "\n" [ baseConfig themeConfig ];
-        plugins = [ ];
-      };
-
-      programs.git.ignores = [
-        ".tmux.sh"
+  config = mkIf cfg.enable {
+    programs.tmux = {
+      enable = true;
+      aggressiveResize = true;
+      sensibleOnTop = true;
+      # tmux-256color is the proper one to enable italics, undercurls etc.
+      # just ensure you have that terminfo
+      # screen-256color works properly everywhere but does not have many features
+      terminal = "tmux-256color";
+      keyMode = "vi";
+      escapeTime = 0;
+      baseIndex = 1;
+      historyLimit = 50000;
+      extraConfig = lib.concatStringsSep "\n" [
+        baseConfig
+        themeConfig
       ];
+      plugins = [ ];
+    };
 
-      programs.fzf.tmux.enableShellIntegration = true;
+    programs.git.ignores = [ ".tmux.sh" ];
 
-      programs.zsh = {
-        initExtra = ''
-          # tmux baby
-          # (this cannot be a zsh widget unfortunately, tmux attach can only attach to a terminal,
-          # but zsh widgets do not allocate/reuse current terminal)
-          __txs() { ${tmux-sessionizer}/bin/tmux-sessionizer }
-          bindkey -s '^F' '^u__txs^M'
+    programs.fzf.tmux.enableShellIntegration = true;
 
-          # fix for ssh socket and display env var in tmux
-          # run after attaching to a remote session for a 2+ time if you need it
-          tmux-refresh() {
-              eval "$(tmux show-environment -s SSH_AUTH_SOCK)"
-              eval "$(tmux show-environment -s DISPLAY)"
-          }
-        '';
-        shellAliases = {
-          txs = "${tmux-sessionizer}/bin/tmux-sessionizer";
-          txw = "${tmux-windowizer}/bin/tmux-windowizer";
-          txr = "${tmux-switcher}/bin/tmux-switcher";
-        };
+    programs.zsh = {
+      initExtra = ''
+        # tmux baby
+        # (this cannot be a zsh widget unfortunately, tmux attach can only attach to a terminal,
+        # but zsh widgets do not allocate/reuse current terminal)
+        __txs() { ${tmux-sessionizer}/bin/tmux-sessionizer }
+        bindkey -s '^F' '^u__txs^M'
+
+        # fix for ssh socket and display env var in tmux
+        # run after attaching to a remote session for a 2+ time if you need it
+        tmux-refresh() {
+            eval "$(tmux show-environment -s SSH_AUTH_SOCK)"
+            eval "$(tmux show-environment -s DISPLAY)"
+        }
+      '';
+      shellAliases = {
+        txs = "${tmux-sessionizer}/bin/tmux-sessionizer";
+        txw = "${tmux-windowizer}/bin/tmux-windowizer";
+        txr = "${tmux-switcher}/bin/tmux-switcher";
       };
     };
+  };
 }

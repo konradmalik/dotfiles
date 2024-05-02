@@ -1,7 +1,9 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.konrad.programs.ssh-egress;
-in {
+let
+  cfg = config.konrad.programs.ssh-egress;
+in
+{
   options.konrad.programs.ssh-egress = {
     enable = mkEnableOption "Enables ssh-egress configuration through home-manager";
   };
@@ -36,24 +38,12 @@ in {
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
             identitiesOnly = true;
           };
-          vaio = hm.dag.entryAfter [ "tailscale" ] {
-            hostname = "100.67.103.124";
-          };
-          xps12 = hm.dag.entryAfter [ "tailscale" ] {
-            hostname = "100.115.164.124";
-          };
-          rpi4-1 = hm.dag.entryAfter [ "tailscale" ] {
-            hostname = "100.99.159.110";
-          };
-          rpi4-2 = hm.dag.entryAfter [ "tailscale" ] {
-            hostname = "100.78.182.5";
-          };
-          m3800 = hm.dag.entryAfter [ "tailscale" ] {
-            hostname = "100.108.89.62";
-          };
-          mbp13 = hm.dag.entryAfter [ "tailscale" ] {
-            hostname = "100.70.57.115";
-          };
+          vaio = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.67.103.124"; };
+          xps12 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.115.164.124"; };
+          rpi4-1 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.99.159.110"; };
+          rpi4-2 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.78.182.5"; };
+          m3800 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.108.89.62"; };
+          mbp13 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.70.57.115"; };
           work = {
             host = "*.cerebredev.com";
             identityFile = "${config.home.homeDirectory}/.ssh/cerebre";

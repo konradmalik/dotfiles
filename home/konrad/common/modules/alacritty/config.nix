@@ -1,4 +1,9 @@
-{ fontFamily, fontSize, stdenvNoCC, lib }:
+{
+  fontFamily,
+  fontSize,
+  stdenvNoCC,
+  lib,
+}:
 ''
   live_config_reload = false
 
@@ -34,11 +39,11 @@
   blur = true
   dynamic_padding = false
   dynamic_title = true
-'' + (lib.optionalString (stdenvNoCC.isDarwin)
-  ''
-    option_as_alt = "Both"
-  '') +
 ''
++ (lib.optionalString (stdenvNoCC.isDarwin) ''
+  option_as_alt = "Both"
+'')
++ ''
 
   [window.padding]
   x = 6

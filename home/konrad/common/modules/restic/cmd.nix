@@ -1,4 +1,12 @@
-{ name, cmd, ntfyPath, writeShellScript, curl, coreutils, inetutils }:
+{
+  name,
+  cmd,
+  ntfyPath,
+  writeShellScript,
+  curl,
+  coreutils,
+  inetutils,
+}:
 writeShellScript "${name}.sh" ''
   echo "${name}"
   ${coreutils}/bin/date

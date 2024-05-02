@@ -10,7 +10,13 @@
 
   # packages installed in system profile
   environment = {
-    pathsToLink = [ "Applications" "/bin" "/lib" "/man" "/share" ];
+    pathsToLink = [
+      "Applications"
+      "/bin"
+      "/lib"
+      "/man"
+      "/share"
+    ];
     etc = {
       "ssh/sshd_config.d/99-nix.conf".text = ''
         PermitRootLogin no
@@ -27,23 +33,22 @@
       upgrade = true;
       cleanup = "zap";
     };
-    casks =
-      [
-        "alacritty"
-        "calibre"
-        "firefox"
-        "gimp"
-        "keepingyouawake"
-        "microsoft-office"
-        "microsoft-teams"
-        "netnewswire"
-        "obsidian"
-        "signal"
-        "slack"
-        "spotify"
-        "syncthing"
-        "zoom"
-      ];
+    casks = [
+      "alacritty"
+      "calibre"
+      "firefox"
+      "gimp"
+      "keepingyouawake"
+      "microsoft-office"
+      "microsoft-teams"
+      "netnewswire"
+      "obsidian"
+      "signal"
+      "slack"
+      "spotify"
+      "syncthing"
+      "zoom"
+    ];
 
     masApps = {
       "Grammarly for Safari" = 1462114288;
@@ -55,10 +60,11 @@
 
   networking = {
     # get via `networksetup -listallnetworkservices`
-    knownNetworkServices = [
-      "Wi-Fi"
+    knownNetworkServices = [ "Wi-Fi" ];
+    dns = [
+      "1.1.1.1"
+      "1.0.0.1"
     ];
-    dns = [ "1.1.1.1" "1.0.0.1" ];
   };
 
   programs = {

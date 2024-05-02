@@ -1,9 +1,8 @@
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./../common/presets/nixos.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./../common/presets/nixos.nix
+  ];
 
   networking.hostName = "xps12";
 

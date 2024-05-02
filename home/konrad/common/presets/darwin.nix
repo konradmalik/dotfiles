@@ -8,16 +8,15 @@
   ];
 
   home = {
-    packages =
-      with pkgs; [
-        # make linux people at home
-        coreutils
-        # make sure we use gnu versions of common commands
-        findutils
-        gawk
-        gnugrep
-        gnused
-      ];
+    packages = with pkgs; [
+      # make linux people at home
+      coreutils
+      # make sure we use gnu versions of common commands
+      findutils
+      gawk
+      gnugrep
+      gnused
+    ];
 
     sessionVariables = {
       XDG_RUNTIME_DIR = "$TMPDIR";
@@ -56,5 +55,4 @@
       };
     };
   };
-
 }

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.konrad.programs.alacritty;
@@ -53,8 +58,8 @@ in
         sessionVariables.TERMINAL = mkIf cfg.makeDefault "alacritty";
       };
 
-      xdg.configFile."alacritty/alacritty.toml".text =
-        lib.concatStringsSep "\n" ([ baseConfig ] ++ lib.optional (cfg.colorscheme != null) colorConfig);
+      xdg.configFile."alacritty/alacritty.toml".text = lib.concatStringsSep "\n" (
+        [ baseConfig ] ++ lib.optional (cfg.colorscheme != null) colorConfig
+      );
     };
 }
-

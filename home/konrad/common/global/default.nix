@@ -1,4 +1,9 @@
-{ config, lib, customArgs, ... }:
+{
+  config,
+  lib,
+  customArgs,
+  ...
+}:
 {
   imports = [
     ./atuin.nix
@@ -22,8 +27,7 @@
     ./ssh-keys.nix
     ./starship.nix
     ./tealdeer.nix
-  ]
-  ++ (builtins.attrValues customArgs.homeManagerModules);
+  ] ++ (builtins.attrValues customArgs.homeManagerModules);
 
   programs.home-manager.enable = true;
 

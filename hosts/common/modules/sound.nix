@@ -1,6 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.konrad.audio;
+let
+  cfg = config.konrad.audio;
 in
 {
   options.konrad.audio = {
@@ -8,7 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment. systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       pulseaudioFull # for pactl volume control and modules like raop (used by pipewire as well)
     ];
 

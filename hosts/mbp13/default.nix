@@ -1,7 +1,5 @@
 {
-  imports = [
-    ./../common/presets/darwin.nix
-  ];
+  imports = [ ./../common/presets/darwin.nix ];
 
   nixpkgs.system = "x86_64-darwin";
 

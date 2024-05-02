@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.konrad.programs.bitwarden;
@@ -35,10 +40,9 @@ in
     enable = mkEnableOption "Enables bitwarden cli client through home-manager";
   };
 
-  config = mkIf cfg.enable
-    {
-      programs.zsh.initExtra = bwuFunc;
-      programs.bash.initExtra = bwuFunc;
-      home.packages = [ pkgs.bitwarden-cli ];
-    };
+  config = mkIf cfg.enable {
+    programs.zsh.initExtra = bwuFunc;
+    programs.bash.initExtra = bwuFunc;
+    home.packages = [ pkgs.bitwarden-cli ];
+  };
 }

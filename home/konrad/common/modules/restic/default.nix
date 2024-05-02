@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.konrad.programs.restic;
@@ -52,24 +57,25 @@ in
     includes = lib.mkOption {
       type = lib.types.listOf (lib.types.str);
       description = "What to include";
-      example =
-        [
-          "${config.home.homeDirectory}/Code/scratch"
-          "${config.home.homeDirectory}/Documents"
-          "${config.home.homeDirectory}/obsidian"
-        ];
+      example = [
+        "${config.home.homeDirectory}/Code/scratch"
+        "${config.home.homeDirectory}/Documents"
+        "${config.home.homeDirectory}/obsidian"
+      ];
     };
 
     excludes = lib.mkOption {
       type = lib.types.listOf (lib.types.str);
       description = "What to exclude";
-      example =
-        [
-          "**/node_modules/"
-          "**/.DS_Store"
-          "**/.stfolder"
-        ];
-      default = [ "**/.DS_Store" "**/.direnv" ];
+      example = [
+        "**/node_modules/"
+        "**/.DS_Store"
+        "**/.stfolder"
+      ];
+      default = [
+        "**/.DS_Store"
+        "**/.direnv"
+      ];
     };
   };
 
@@ -82,14 +88,22 @@ in
       restic = cfg.package;
 
       baker = pkgs.callPackage ./baker.nix {
-        inherit b2ApplicationKeyFile repostiory passwordFile restic;
+        inherit
+          b2ApplicationKeyFile
+          repostiory
+          passwordFile
+          restic
+          ;
         inherit (cfg) includes excludes b2ApplicationId;
       };
 
       mkUnit = command: script: {
         Unit = {
           Description = "Restic ${command}";
-          After = [ "sops-nix.service" "network.target" ];
+          After = [
+            "sops-nix.service"
+            "network.target"
+          ];
         };
 
         Service = {
@@ -159,11 +173,11 @@ in
       };
 
       launchd.agents = {
-        "restic-backup" = mkAgent "backup" resticBackup [{ Minute = 0; }];
+        "restic-backup" = mkAgent "backup" resticBackup [ { Minute = 0; } ];
         # Saturday
-        "restic-check" = mkAgent "check" resticCheck [{ Weekday = 6; }];
+        "restic-check" = mkAgent "check" resticCheck [ { Weekday = 6; } ];
         # Sunday
-        "restic-forget" = mkAgent "forget" resticForget [{ Weekday = 0; }];
+        "restic-forget" = mkAgent "forget" resticForget [ { Weekday = 0; } ];
       };
     };
 }
