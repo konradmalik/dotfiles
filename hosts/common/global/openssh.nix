@@ -22,11 +22,6 @@
   };
 
   # Passwordless sudo when SSH'ing with keys
-  security.pam.sshAgentAuth = {
-    enable = true;
-    # specifically allow only ssh keys from below.
-    # allowing ~/.ssh/authorized_keys is a vulnerability
-    # (any user get can sudo with they want)
-    authorizedKeysFiles = [ "/etc/ssh/authorized_keys.d/%u" ];
-  };
+  # from "/etc/ssh/authorized_keys.d/%u"
+  security.pam.sshAgentAuth.enable = true;
 }
