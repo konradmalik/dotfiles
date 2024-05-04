@@ -37,7 +37,7 @@ in
   nix =
     {
       inherit registry;
-      package = pkgs.nixVersions.unstable;
+      package = pkgs.nixVersions.latest;
       settings = {
         auto-optimise-store = lib.mkDefault true;
         experimental-features = [
