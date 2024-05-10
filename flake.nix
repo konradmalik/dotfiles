@@ -43,17 +43,11 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      darwin,
-      home-manager,
-      ...
-    }@inputs:
+    { self, ... }@inputs:
     let
       nixpkgsFor =
         system:
-        (import nixpkgs {
+        (import inputs.nixpkgs {
           localSystem = {
             inherit system;
           };
@@ -61,7 +55,7 @@
 
       forAllSystems =
         function:
-        nixpkgs.lib.genAttrs [
+        inputs.nixpkgs.lib.genAttrs [
           "x86_64-linux"
           "aarch64-linux"
           "x86_64-darwin"
@@ -89,17 +83,16 @@
 
             name = "dotfiles";
             packages =
-              with pkgs;
-              [
+              (with pkgs; [
                 manix
                 nmap
                 age
                 git
-                pkgs.home-manager
+                home-manager
                 sops
                 ssh-to-age
-              ]
-              ++ lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;
+              ])
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;
           };
         }
       );
@@ -109,7 +102,7 @@
           import ./pkgs { inherit pkgs; }
           // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
             let
-              rpiSdCard = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
+              rpiSdCard = "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
               # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243
               missingKernelModulesFix = {
                 nixpkgs.overlays = [
@@ -139,37 +132,37 @@
       templates = import ./templates;
 
       darwinConfigurations = {
-        mbp13 = darwin.lib.darwinSystem {
+        mbp13 = inputs.darwin.lib.darwinSystem {
           inherit specialArgs;
           modules = [ ./hosts/mbp13 ];
         };
       };
 
       nixosConfigurations = {
-        m3800 = nixpkgs.lib.nixosSystem {
+        m3800 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./hosts/m3800 ];
         };
-        xps12 = nixpkgs.lib.nixosSystem {
+        xps12 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./hosts/xps12 ];
         };
-        vaio = nixpkgs.lib.nixosSystem {
+        vaio = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./hosts/vaio ];
         };
-        rpi4-1 = nixpkgs.lib.nixosSystem {
+        rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./hosts/rpi4-1 ];
         };
-        rpi4-2 = nixpkgs.lib.nixosSystem {
+        rpi4-2 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./hosts/rpi4-2 ];
         };
       };
 
       homeConfigurations = {
-        "konrad@generic" = home-manager.lib.homeManagerConfiguration {
+        "konrad@generic" = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgsFor "x86_64-linux";
           extraSpecialArgs = specialArgs;
           modules = [ ./home/konrad/generic.nix ];
