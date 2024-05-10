@@ -7,12 +7,7 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      ...
-    }:
+    { ... }@inputs:
     let
       mkOverlay =
         input: name:
@@ -25,7 +20,7 @@
 
       forAllSystems =
         function:
-        nixpkgs.lib.genAttrs
+        inputs.nixpkgs.lib.genAttrs
           [
             "x86_64-linux"
             "aarch64-linux"
@@ -35,10 +30,10 @@
           (
             system:
             function (
-              import nixpkgs {
+              import inputs.nixpkgs {
                 inherit system;
                 config.allowUnfree = true;
-                overlays = [ (mkOverlay nixpkgs-unstable "unstable") ];
+                overlays = [ (mkOverlay inputs.nixpkgs-unstable "unstable") ];
               }
             )
           );
@@ -51,6 +46,6 @@
           packages = [ ];
         };
       });
-      formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
     };
 }
