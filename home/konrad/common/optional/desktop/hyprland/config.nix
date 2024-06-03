@@ -11,8 +11,10 @@ in
     col.inactive_border=0xff${c.base02}
     col.nogroup_border_active=0xff${c.base0B}
     col.nogroup_border=0xff${c.base04}
-    cursor_inactive_timeout=5
     layout=dwindle
+  }
+  cursor {
+    inactive_timeout=5
   }
   decoration {
     rounding = 10
