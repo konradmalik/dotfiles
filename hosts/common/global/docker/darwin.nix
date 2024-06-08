@@ -5,7 +5,7 @@
   virtualisation.docker = {
     enable = false;
     ephemeral = true;
-    package = pkgs.stable.darwin.linux-builder;
+    package = pkgs.darwin.linux-builder;
     config = import ./linux.nix;
   };
 }

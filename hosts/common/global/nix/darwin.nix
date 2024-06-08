@@ -14,7 +14,7 @@
     linux-builder = {
       enable = false;
       ephemeral = true;
-      package = pkgs.stable.darwin.linux-builder;
+      package = pkgs.darwin.linux-builder;
     };
   };
   services.nix-daemon.enable = true;
