@@ -25,6 +25,10 @@ in
     ./../global/tailscale.nix
 
     ./../users/konrad/nixos.nix
+
+    # TODO: remove once fixed in .NET
+    # https://github.com/NixOS/nixpkgs/issues/315574
+    ./hack.nix
   ] ++ (builtins.attrValues (import ./../modules)) ++ (builtins.attrValues customArgs.nixosModules);
 
   boot = {
