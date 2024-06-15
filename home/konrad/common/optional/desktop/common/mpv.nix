@@ -41,7 +41,10 @@
   };
   programs.mpv = {
     enable = true;
-    package = pkgs.wrapMpv pkgs.mpv-unwrapped { youtubeSupport = true; };
+    package = pkgs.mpv-unwrapped.wrapper {
+      mpv = pkgs.mpv-unwrapped;
+      youtubeSupport = true;
+    };
     config = {
       profile = lib.mkDefault "fast";
       hwdec = "auto";
