@@ -51,10 +51,10 @@
         max-jobs = lib.mkDefault "auto";
       };
     }
-    # those options do not exist in plain home-manager
+    # below does not exist in plain home-manager
     # but it will work for nixos config and for nix-darwin config
     # this check is needed because of generic linux entry in homeConfigurations
-    // lib.optionalAttrs (builtins.hasAttr "nixPath" config.nix) {
+    // lib.optionalAttrs (builtins.hasAttr "nrBuildUsers" config.nix) {
       # should be >= max-jobs
       nrBuildUsers = 16;
     };
