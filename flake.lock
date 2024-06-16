@@ -237,7 +237,6 @@
       "inputs": {
         "nixpkgs-lib": [
           "neovim",
-          "neovim-nightly-overlay",
           "nixpkgs"
         ]
       },
@@ -256,6 +255,28 @@
       }
     },
     "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "neovim",
+          "neovim-nightly-overlay",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1717285511,
+        "narHash": "sha256-iKzJcpdXih14qYVcZ9QC9XuZYnPc6T8YImb6dX166kw=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "2a55567fcf15b1b1c7ed712a2c6fadaec7412ea8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_3": {
       "inputs": {
         "nixpkgs-lib": [
           "neovim",
@@ -379,7 +400,7 @@
     },
     "hercules-ci-effects": {
       "inputs": {
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts_3",
         "nixpkgs": [
           "neovim",
           "neovim-nightly-overlay",
@@ -476,6 +497,7 @@
         "cmp-nvim-lsp": "cmp-nvim-lsp",
         "cmp-path": "cmp-path",
         "cmp_luasnip": "cmp_luasnip",
+        "flake-parts": "flake-parts",
         "friendly-snippets": "friendly-snippets",
         "git-conflict-nvim": "git-conflict-nvim",
         "gitsigns-nvim": "gitsigns-nvim",
@@ -505,11 +527,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1718399758,
-        "narHash": "sha256-6UqahlurbN5zHYp9vCvVwOUhcdd0Ulk3CKQIGOh+/KE=",
+        "lastModified": 1718530298,
+        "narHash": "sha256-i5smO4SWh1GzxCaOCE8hwc9gW4l7ZVXkHfZqFCfupL8=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "1dd74f544dce26cf4e8443b4afc4824a1bb875d1",
+        "rev": "de0e97d5a9fd7a70049358126fd24d3640c4b9b2",
         "type": "github"
       },
       "original": {
@@ -521,7 +543,7 @@
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-compat": "flake-compat_2",
-        "flake-parts": "flake-parts",
+        "flake-parts": "flake-parts_2",
         "git-hooks": "git-hooks",
         "hercules-ci-effects": "hercules-ci-effects",
         "neovim-src": "neovim-src",
