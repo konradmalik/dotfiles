@@ -36,140 +36,12 @@
     neovim.url = "github:konradmalik/neovim-flake";
     baywatch.url = "github:konradmalik/baywatch";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
   };
-
-  outputs =
-    { self, ... }@inputs:
-    let
-      nixpkgsFor =
-        system:
-        (import inputs.nixpkgs {
-          localSystem = {
-            inherit system;
-          };
-        });
-
-      forAllSystems =
-        function:
-        inputs.nixpkgs.lib.genAttrs [
-          "x86_64-linux"
-          "aarch64-linux"
-          "x86_64-darwin"
-        ] (system: function (nixpkgsFor system));
-
-      specialArgs = {
-        inherit inputs;
-        customArgs = {
-          inherit (self) homeManagerModules nixosModules overlays;
-          files = ./files;
-        };
-      };
-    in
-    {
-      devShells = forAllSystems (
-        pkgs:
-        let
-          darwinPackages = builtins.attrValues (
-            builtins.removeAttrs inputs.darwin.packages.${pkgs.system} [ "default" ]
-          );
-        in
-        {
-          default = pkgs.mkShell {
-            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
-
-            name = "dotfiles";
-            packages =
-              (with pkgs; [
-                manix
-                nmap
-                age
-                git
-                home-manager
-                sops
-                ssh-to-age
-              ])
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;
-          };
-        }
-      );
-      packages = forAllSystems (
-        pkgs:
-        pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
-          let
-            rpiSdCard = "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
-            # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243
-            missingKernelModulesFix = {
-              nixpkgs.overlays = [
-                (final: prev: { makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; }); })
-              ];
-            };
-            modules = [
-              rpiSdCard
-              missingKernelModulesFix
-            ];
-          in
-          {
-            installer-iso = import ./pkgs/special/installer-iso { inherit pkgs specialArgs; };
-            rpi4-1-sd-image =
-              (self.nixosConfigurations.rpi4-1.extendModules { inherit modules; }).config.system.build.sdImage;
-            rpi4-2-sd-image =
-              (self.nixosConfigurations.rpi4-2.extendModules { inherit modules; }).config.system.build.sdImage;
-          }
-        )
-      );
-
-      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
-
-      templates = import ./templates;
-
-      darwinConfigurations = {
-        mbp13 = inputs.darwin.lib.darwinSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/mbp13 ];
-        };
-      };
-
-      nixosConfigurations = {
-        m3800 = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/m3800 ];
-        };
-        xps12 = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/xps12 ];
-        };
-        vaio = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/vaio ];
-        };
-        rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/rpi4-1 ];
-        };
-        rpi4-2 = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/rpi4-2 ];
-        };
-      };
-
-      homeConfigurations = {
-        "konrad@generic" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgsFor "x86_64-linux";
-          extraSpecialArgs = specialArgs;
-          modules = [ ./home/konrad/generic.nix ];
-        };
-      };
-
-      checks = {
-        x86_64-darwin = {
-          mbp13 = self.darwinConfigurations.mbp13.system;
-        };
-      };
-    };
 
   nixConfig = {
     extra-substituters = [
@@ -181,4 +53,15 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs"
     ];
   };
+
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+      ];
+      imports = [ ./flake ];
+    };
 }
