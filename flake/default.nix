@@ -1,4 +1,4 @@
-{ getSystem, inputs, ... }:
+{ inputs, ... }:
 let
   specialArgs = {
     inherit inputs;
@@ -49,7 +49,7 @@ in
 
     homeConfigurations = {
       "konrad@generic" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = (getSystem "x86_64-linux").packages;
+        pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = specialArgs;
         modules = [ ./home/konrad/generic.nix ];
       };
