@@ -4,8 +4,8 @@ let
 in
 {
   imports = [
-    ./common/presets/nixos.nix
-    ./common/optional/desktop/hyprland
+    ./common/nixos.nix
+    ./common/modules/desktop/hyprland
   ];
 
   fontProfiles.enable = true;

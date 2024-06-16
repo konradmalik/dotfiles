@@ -1,1 +1,1 @@
-{ imports = [ ./common/presets/nixos.nix ]; }
+{ imports = [ ./common/nixos.nix ]; }

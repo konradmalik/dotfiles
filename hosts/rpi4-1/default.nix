@@ -2,7 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./../common/presets/nixos.nix
+    ./../common/nixos.nix
   ];
 
   networking.hostName = "rpi4-1";

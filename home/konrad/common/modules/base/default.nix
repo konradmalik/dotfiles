@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  customArgs,
-  ...
-}:
+{ config, lib, ... }:
 {
   imports = [
     ./atuin.nix
@@ -17,17 +12,22 @@
     ./glow.nix
     ./gpg.nix
     ./k9s.nix
-    ./modules.nix
     ./neovim.nix
     ./nix-index.nix
     ./packages.nix
     ./readline.nix
-    ./shells.nix
+    ./rtorrent.nix
+    ./shells
     ./sops.nix
     ./ssh-keys.nix
     ./starship.nix
     ./tealdeer.nix
-  ] ++ (builtins.attrValues customArgs.homeManagerModules);
+  ] ++ builtins.attrValues (import ./../../options);
+
+  konrad.programs = {
+    tmux.enable = true;
+    ssh-egress.enable = true;
+  };
 
   programs.home-manager.enable = true;
 

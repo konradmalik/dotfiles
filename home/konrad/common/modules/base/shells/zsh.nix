@@ -143,25 +143,6 @@ let
   '';
 in
 {
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    historyControl = [
-      "ignoredups"
-      "ignorespace"
-    ];
-  };
-
-  programs.eza = {
-    enable = true;
-    git = true;
-    icons = true;
-  };
-
-  programs.zoxide.enable = true;
-
-  programs.carapace.enable = true;
-
   home.activation = {
     inherit zcompdumpRemoval;
   };

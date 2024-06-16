@@ -12,7 +12,7 @@
     fsType = "ext4";
   };
 
-  # remove after it's solved here nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix
+  # TODO: remove after it's solved here nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix
   nixpkgs.overlays = [
     (final: super: {
       zfs = super.zfs.overrideAttrs (_: {

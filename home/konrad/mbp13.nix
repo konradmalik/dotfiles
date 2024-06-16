@@ -3,7 +3,7 @@ let
   obsidianPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
 in
 {
-  imports = [ ./common/presets/darwin.nix ];
+  imports = [ ./common/darwin.nix ];
 
   home.homeDirectory = "/Users/${config.home.username}";
 

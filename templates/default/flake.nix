@@ -6,7 +6,7 @@
   };
 
   outputs =
-    { ... }@inputs:
+    inputs:
     let
       forAllSystems =
         function:

@@ -3,7 +3,6 @@
   pkgs,
   lib,
   inputs,
-  customArgs,
   ...
 }:
 let
@@ -15,21 +14,21 @@ in
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
 
-    ./../global/docker/linux.nix
-    ./../global/home-manager.nix
-    ./../global/locale.nix
-    ./../global/locate.nix
-    ./../global/memory.nix
-    ./../global/nix/nixos.nix
-    ./../global/openssh.nix
-    ./../global/tailscale.nix
+    ./modules/docker/linux.nix
+    ./modules/home-manager.nix
+    ./modules/locale.nix
+    ./modules/locate.nix
+    ./modules/memory.nix
+    ./modules/nix/nixos.nix
+    ./modules/openssh.nix
+    ./modules/tailscale.nix
 
-    ./../users/konrad/nixos.nix
+    ./users/konrad/nixos.nix
 
     # TODO: remove once fixed in .NET
     # https://github.com/NixOS/nixpkgs/issues/315574
     ./hack.nix
-  ] ++ (builtins.attrValues (import ./../modules)) ++ (builtins.attrValues customArgs.nixosModules);
+  ] ++ (builtins.attrValues (import ./options));
 
   boot = {
     # clean tmp after reboot
@@ -39,7 +38,7 @@ in
 
   # shared sops config
   sops = {
-    defaultSopsFile = ./../secrets.yaml;
+    defaultSopsFile = ./secrets.yaml;
     age.sshKeyPaths = [ key.path ];
   };
 

@@ -1,7 +1,5 @@
 {
-  imports = [
-    ./common/presets/nixos.nix
+  imports = [ ./common/nixos.nix ];
 
-    ./common/optional/rtorrent.nix
-  ];
+  programs.rtorrent.enable = true;
 }

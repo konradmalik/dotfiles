@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ ./../global ];
+  imports = [ ./modules/base ];
 
   programs.zsh = {
     shellAliases = {

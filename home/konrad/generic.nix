@@ -1,6 +1,7 @@
 {
   imports = [
-    ../../hosts/common/global/nix/linux.nix
-    ./common/presets/generic.nix
+    # nix settings applied via home-manager
+    ../../hosts/common/modules/nix/linux.nix
+    ./common/nixos.nix
   ];
 }

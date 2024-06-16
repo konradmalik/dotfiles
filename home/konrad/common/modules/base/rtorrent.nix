@@ -1,7 +1,8 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   programs.rtorrent = {
-    enable = true;
+    # on demand
+    enable = lib.mkDefault false;
     extraConfig = ''
       #############################################################################
       # A minimal rTorrent configuration that provides the basic features

@@ -8,9 +8,9 @@
 {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-    ./../../../hosts/common/global/nix/nixos.nix
-    ./../../../modules/home-manager/ssh-keys.nix
-    ./../../../home/konrad/common/global/ssh-keys.nix
+    ./../../../hosts/common/modules/nix/nixos.nix
+    ./../../../home/konrad/common/options/ssh-keys.nix
+    ./../../../home/konrad/common/modules/base/ssh-keys.nix
   ];
 
   nixpkgs = {

@@ -3,21 +3,22 @@
   pkgs,
   lib,
   inputs,
-  customArgs,
   ...
 }:
 {
   nixpkgs = {
     overlays = [
-      customArgs.overlays.modifications
-      customArgs.overlays.additions
-
-      (final: prev: {
-        stable = import inputs.nixpkgs-stable {
-          system = final.system;
-          config = final.config;
-        };
-      })
+      (
+        final: prev:
+        (import ../../../../pkgs/installable { pkgs = final; })
+        // {
+          baywatch = inputs.baywatch.packages.${final.system}.bwatch;
+          stable = import inputs.nixpkgs-stable {
+            system = final.system;
+            config = final.config;
+          };
+        }
+      )
     ];
     config = {
       allowUnfree = true;

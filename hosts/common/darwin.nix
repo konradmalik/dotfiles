@@ -1,11 +1,11 @@
 { lib, ... }:
 {
   imports = [
-    ./../global/docker/darwin.nix
-    ./../global/nix/darwin.nix
-    ./../global/home-manager.nix
+    ./modules/docker/darwin.nix
+    ./modules/nix/darwin.nix
+    ./modules/home-manager.nix
 
-    ./../users/konrad/darwin.nix
+    ./users/konrad/darwin.nix
   ];
 
   # packages installed in system profile

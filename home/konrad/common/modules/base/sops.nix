@@ -10,7 +10,7 @@
 
   # shared sops config
   sops = {
-    defaultSopsFile = ./../secrets.yaml;
+    defaultSopsFile = ./../../secrets.yaml;
     age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
   };
 

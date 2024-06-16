@@ -1,10 +1,9 @@
 { pkgs, ... }:
 {
   imports = [
-    ./../global
-    # selectively import desktop modules
-    ./../optional/desktop/common/font.nix
-    ./../optional/desktop/common/mpv.nix
+    ./modules/base
+    ./modules/desktop/common/font.nix
+    ./modules/desktop/common/mpv.nix
   ];
 
   home = {
