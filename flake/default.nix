@@ -15,35 +15,35 @@ in
   ];
 
   flake = {
-    templates = import ./templates;
+    templates = import ./../templates;
 
     darwinConfigurations = {
       mbp13 = inputs.darwin.lib.darwinSystem {
         inherit specialArgs;
-        modules = [ ./hosts/mbp13 ];
+        modules = [ ./../hosts/mbp13 ];
       };
     };
 
     nixosConfigurations = {
       m3800 = inputs.nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [ ./hosts/m3800 ];
+        modules = [ ./../hosts/m3800 ];
       };
       xps12 = inputs.nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [ ./hosts/xps12 ];
+        modules = [ ./../hosts/xps12 ];
       };
       vaio = inputs.nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [ ./hosts/vaio ];
+        modules = [ ./../hosts/vaio ];
       };
       rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [ ./hosts/rpi4-1 ];
+        modules = [ ./../hosts/rpi4-1 ];
       };
       rpi4-2 = inputs.nixpkgs.lib.nixosSystem {
         inherit specialArgs;
-        modules = [ ./hosts/rpi4-2 ];
+        modules = [ ./../hosts/rpi4-2 ];
       };
     };
 
@@ -51,7 +51,7 @@ in
       "konrad@generic" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = specialArgs;
-        modules = [ ./home/konrad/generic.nix ];
+        modules = [ ./../home/konrad/generic.nix ];
       };
     };
   };
