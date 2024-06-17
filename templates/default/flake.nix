@@ -3,37 +3,26 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs =
     inputs:
-    let
-      forAllSystems =
-        function:
-        inputs.nixpkgs.lib.genAttrs
-          [
-            "x86_64-linux"
-            "aarch64-linux"
-            "x86_64-darwin"
-            "aarch64-darwin"
-          ]
-          (
-            system:
-            function (
-              import inputs.nixpkgs {
-                inherit system;
-                config.allowUnfree = true;
-              }
-            )
-          );
-    in
-    {
-      devShells = forAllSystems (pkgs: {
-        default = pkgs.mkShell {
-          name = "Shell for this project";
-          packages = [ ];
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem =
+        { pkgs, ... }:
+        {
+          devShells.default = {
+            name = "Shell for this project";
+            packages = [ pkgs.hello ];
+          };
+          formatter = pkgs.nixfmt-rfc-style;
         };
-      });
-      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
     };
 }
