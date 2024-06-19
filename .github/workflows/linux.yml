@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup
-        uses: "./.github/actions/setup"
+      - uses: cachix/install-nix-action@v27
         with:
-          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extra_nix_config: |
+            accept-flake-config = true
       - name: Flake check
         run: nix flake check
 
@@ -23,10 +23,15 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v4
-      - name: Setup
-        uses: "./.github/actions/setup"
+      - uses: cachix/install-nix-action@v27
         with:
-          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extra_nix_config: |
+            accept-flake-config = true
+      - if: ${{ !github.event.pull_request.head.repo.fork }}
+        uses: cachix/cachix-action@v15
+        with:
+          name: "konradmalik"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Shell build
         run: nix build .#devShells.x86_64-linux.default
 
@@ -40,10 +45,15 @@ jobs:
         with:
           tool-cache: true
       - uses: actions/checkout@v4
-      - name: Setup
-        uses: "./.github/actions/setup"
+      - uses: cachix/install-nix-action@v27
         with:
-          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extra_nix_config: |
+            accept-flake-config = true
+      - if: ${{ !github.event.pull_request.head.repo.fork }}
+        uses: cachix/cachix-action@v15
+        with:
+          name: "konradmalik"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake build m3800
         run: nix build .#nixosConfigurations.m3800.config.system.build.toplevel
 
@@ -57,9 +67,14 @@ jobs:
         with:
           tool-cache: true
       - uses: actions/checkout@v4
-      - name: Setup
-        uses: "./.github/actions/setup"
+      - uses: cachix/install-nix-action@v27
         with:
-          cachix-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extra_nix_config: |
+            accept-flake-config = true
+      - if: ${{ !github.event.pull_request.head.repo.fork }}
+        uses: cachix/cachix-action@v15
+        with:
+          name: "konradmalik"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake build generic linux
         run: nix build .#homeConfigurations.konrad@generic.activationPackage
