@@ -39,10 +39,8 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
     # https://nixos.wiki/wiki/Accelerated_Video_Playback
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
