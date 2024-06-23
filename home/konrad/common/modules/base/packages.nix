@@ -16,7 +16,6 @@
       wget
       zip
 
-      ast-grep
       fd
       fpp
       ripgrep
