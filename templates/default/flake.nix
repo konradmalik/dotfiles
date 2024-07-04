@@ -18,7 +18,7 @@
       perSystem =
         { pkgs, ... }:
         {
-          devShells.default = {
+          devShells.default = pkgs.mkShell {
             name = "Shell for this project";
             packages = [ pkgs.hello ];
           };
