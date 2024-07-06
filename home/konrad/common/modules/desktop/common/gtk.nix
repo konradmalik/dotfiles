@@ -10,7 +10,7 @@ in
 rec {
   home.pointerCursor = {
     name = "Adwaita";
-    package = pkgs.gnome.adwaita-icon-theme;
+    package = pkgs.adwaita-icon-theme;
     gtk.enable = true;
     x11.enable = true;
   };
