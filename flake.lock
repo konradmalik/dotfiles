@@ -945,11 +945,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1720214755,
-        "narHash": "sha256-dSKYkEilxuMnTmTGXWLL5al7T0Mz/DD8PwGShYrOQis=",
+        "lastModified": 1720369616,
+        "narHash": "sha256-/teIC3pOhtIhegn4RWP+f5Hj7k3ZLIPH4oO1W8pxB40=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "472139c92368122832c99cc5dcfb000f51af5bb7",
+        "rev": "759d3a01e0a123d4ca84dba937c36feb7dde6019",
         "type": "github"
       },
       "original": {
