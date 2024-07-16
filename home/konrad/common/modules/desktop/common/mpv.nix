@@ -40,8 +40,7 @@
     "video/x-theora+ogg" = [ "mpv.desktop" ];
   };
   programs.mpv = {
-    # TODO #50 build failure
-    enable = !pkgs.stdenv.isDarwin;
+    enable = true;
     package = pkgs.mpv-unwrapped.wrapper {
       mpv = pkgs.mpv-unwrapped;
       youtubeSupport = true;
