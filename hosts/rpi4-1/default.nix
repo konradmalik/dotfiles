@@ -37,11 +37,6 @@
     };
   };
 
-  # Enable basic sound
-  # only alsa, spotifyd and shairport-sync work best with it
-  # however remember that you need to be in "audio" group to work with alsamixer and the rest
-  sound.enable = true;
-
   services.spotifyd = {
     enable = true;
     settings = {
