@@ -8,7 +8,7 @@
     ./direnv.nix
     ./earthly.nix
     ./fzf.nix
-    ./git.nix
+    ./git
     ./glow.nix
     ./gpg.nix
     ./k9s.nix

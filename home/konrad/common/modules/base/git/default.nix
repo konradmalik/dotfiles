@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   customArgs,
   ...
 }:
@@ -51,6 +52,7 @@
       last = "log --name-status HEAD^..HEAD";
       conflicts = "diff --name-only --diff-filter=U";
       whatadded = "log --diff-filter=A";
+      clone-worktree = "!${lib.getExe' (pkgs.callPackage ./git-clone-worktree { }) "git-clone-worktree"}";
 
       a = "add";
       ap = "add -p";
