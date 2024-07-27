@@ -56,32 +56,46 @@
 
       a = "add";
       ap = "add -p";
+
+      # list local branches sorted by last modified
+      bl = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(authoremail)%(objectname:short)%09%(refname:short)' refs/heads";
+      bls = "!git for-each-ref --sort='-authordate' --format='%(refname:short)' refs/heads";
+      # same but remote
+      br = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(authoremail)%(objectname:short)%09%(refname:short)' refs/remotes/origin";
+      brs = "!git for-each-ref --sort='-authordate' --format='%(refname:short)' refs/remotes/origin";
+
       c = "commit --verbose";
-      ca = "commit -a --verbose";
+      ca = "commit --all --verbose";
       cm = "commit -m";
-      cam = "commit -a -m";
+      cam = "commit --all -m";
       m = "commit --amend --verbose";
 
       d = "diff";
-      ds = "diff --stat";
       dc = "diff --cached";
       dl = "diff HEAD^..HEAD";
+      ds = "diff --staged";
+      dt = "diff --stat";
 
       g = "graph";
       l = "log";
 
       f = "fetch";
       p = "push";
+      pf = "push --force-with-lease";
       pl = "pull";
 
-      s = "status -s";
+      ri = "rebase --interactive";
+      rim = "!git rebase --interactive $(git remote show origin | sed -n '/HEAD branch/s/.*: /origin/\//p')";
+      rir = "!git rebase --interactive $(git rev-parse --abbrev-ref --symbolic-full-name @{u})";
+
+      s = "status --short --branch";
+
       co = "checkout";
       cob = "checkout -b";
 
-      mainbranch = "!git remote show origin | sed -n '/HEAD branch/s/.*: //p'";
+      mainbranch = "!git remote show origin | sed -n '/HEAD branch/s/.*: /origin\\//p'";
+      remotebranch = "!git rev-parse --abbrev-ref --symbolic-full-name @{u}";
 
-      # list branches sorted by last modified
-      b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'";
       # list aliases
       la = "--list-cmds=alias";
       # gitignore.io
