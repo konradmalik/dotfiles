@@ -924,6 +924,7 @@
         "neo-tree-nvim": "neo-tree-nvim",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_8",
+        "nixpkgs-extra": "nixpkgs-extra",
         "nui-nvim": "nui-nvim",
         "nvim-cmp": "nvim-cmp",
         "nvim-dap": "nvim-dap",
@@ -945,11 +946,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1722151343,
-        "narHash": "sha256-LShz0Hb+p+240vvB4PBobyegHtXFklYqRLgdpw1Vc6c=",
+        "lastModified": 1722171908,
+        "narHash": "sha256-5fpyMQCBN+eg1i5EhKku7bCOOV34v4lUU5sjz3NPHME=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "2726eef9f18fcb2a75ef1f9f33d9152a794cc3a8",
+        "rev": "de0c67bd04ee54a320dc65f6f04325252426d5a9",
         "type": "github"
       },
       "original": {
@@ -1106,6 +1107,24 @@
         "type": "github"
       }
     },
+    "nixpkgs-extra": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_9"
+      },
+      "locked": {
+        "lastModified": 1722171597,
+        "narHash": "sha256-0YEASFMrW0SMfernq5o3H713sh0PoA7+tx0K75ZaSIo=",
+        "owner": "konradmalik",
+        "repo": "nixpkgs-extra",
+        "rev": "05f24df165724cd214c6ed7791b6ed44c5ded524",
+        "type": "github"
+      },
+      "original": {
+        "owner": "konradmalik",
+        "repo": "nixpkgs-extra",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1719876945,
@@ -1213,6 +1232,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_10": {
+      "locked": {
+        "lastModified": 1722062969,
+        "narHash": "sha256-QOS0ykELUmPbrrUGmegAUlpmUFznDQeR4q7rFhl8eQg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b73c2221a46c13557b1b3be9c2070cc42cf01eb3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1331,16 +1366,16 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1722062969,
-        "narHash": "sha256-QOS0ykELUmPbrrUGmegAUlpmUFznDQeR4q7rFhl8eQg=",
+        "lastModified": 1722141560,
+        "narHash": "sha256-Ul3rIdesWaiW56PS/Ak3UlJdkwBrD4UcagCmXZR9Z7Y=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b73c2221a46c13557b1b3be9c2070cc42cf01eb3",
+        "rev": "038fb464fcfa79b4f08131b07f2d8c9a6bcc4160",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1571,7 +1606,7 @@
         "nix-colors": "nix-colors",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_9",
+        "nixpkgs": "nixpkgs_10",
         "nixpkgs-stable": "nixpkgs-stable_3",
         "sops-nix": "sops-nix"
       }
