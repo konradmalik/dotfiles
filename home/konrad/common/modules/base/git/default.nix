@@ -85,7 +85,7 @@
       pl = "pull";
 
       ri = "rebase --interactive";
-      rim = "!git rebase --interactive $(git remote show origin | sed -n '/HEAD branch/s/.*: /origin/\//p')";
+      rim = "!git rebase --interactive $(git remote show origin | sed -n '/HEAD branch/s/.*: /origin\\//p')";
       rir = "!git rebase --interactive $(git rev-parse --abbrev-ref --symbolic-full-name @{u})";
 
       s = "status --short --branch";
