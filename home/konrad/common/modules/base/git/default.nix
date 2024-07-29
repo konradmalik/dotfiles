@@ -84,14 +84,19 @@
       pf = "push --force-with-lease";
       pl = "pull";
 
+      r = "rebase";
+      rc = "rebase --continue";
       ri = "rebase --interactive";
       rim = "!git rebase --interactive $(git remote show origin | sed -n '/HEAD branch/s/.*: /origin\\//p')";
       rir = "!git rebase --interactive $(git rev-parse --abbrev-ref --symbolic-full-name @{u})";
 
       s = "status --short --branch";
 
-      co = "checkout";
-      cob = "checkout -b";
+      x = "reset";
+      xh = "reset --hard";
+
+      co = "switch";
+      cob = "switch -c";
 
       mainbranch = "!git remote show origin | sed -n '/HEAD branch/s/.*: /origin\\//p'";
       remotebranch = "!git rev-parse --abbrev-ref --symbolic-full-name @{u}";
