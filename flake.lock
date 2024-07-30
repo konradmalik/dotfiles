@@ -50,6 +50,22 @@
         "type": "github"
       }
     },
+    "bigfile-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1699279791,
+        "narHash": "sha256-fabA2mVZAZg5Qot4ED9cJ1YMZ4wX4OvURNhIvKltFtA=",
+        "owner": "LunarVim",
+        "repo": "bigfile.nvim",
+        "rev": "33eb067e3d7029ac77e081cfe7c45361887a311a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LunarVim",
+        "repo": "bigfile.nvim",
+        "type": "github"
+      }
+    },
     "boole-nvim": {
       "flake": false,
       "locked": {
@@ -909,6 +925,7 @@
     "neovim": {
       "inputs": {
         "SchemaStore-nvim": "SchemaStore-nvim",
+        "bigfile-nvim": "bigfile-nvim",
         "boole-nvim": "boole-nvim",
         "cmp-buffer": "cmp-buffer",
         "cmp-nvim-lsp": "cmp-nvim-lsp",
@@ -937,6 +954,7 @@
         "nvim-treesitter-textobjects": "nvim-treesitter-textobjects",
         "nvim-web-devicons": "nvim-web-devicons",
         "plenary-nvim": "plenary-nvim",
+        "roslyn-nvim": "roslyn-nvim",
         "telescope-fzf-native-nvim": "telescope-fzf-native-nvim",
         "telescope-nvim": "telescope-nvim",
         "telescope-ui-select-nvim": "telescope-ui-select-nvim",
@@ -946,11 +964,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1722171908,
-        "narHash": "sha256-5fpyMQCBN+eg1i5EhKku7bCOOV34v4lUU5sjz3NPHME=",
+        "lastModified": 1722374863,
+        "narHash": "sha256-vM5u4FnHGwIHhZwi9jNmeXyxKKJnisyy3LUHRf4AAkE=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "de0c67bd04ee54a320dc65f6f04325252426d5a9",
+        "rev": "aadfc823fcbcbe7c91a75867e86a64360df13148",
         "type": "github"
       },
       "original": {
@@ -1609,6 +1627,22 @@
         "nixpkgs": "nixpkgs_10",
         "nixpkgs-stable": "nixpkgs-stable_3",
         "sops-nix": "sops-nix"
+      }
+    },
+    "roslyn-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1722374745,
+        "narHash": "sha256-NXV3oRlom4i2WTJl0YiAx2kDuTu9knmxrKJCTXz08q0=",
+        "owner": "konradmalik",
+        "repo": "roslyn.nvim",
+        "rev": "b37c4d9495de2b5db5a0df9aea797a8eabddc436",
+        "type": "github"
+      },
+      "original": {
+        "owner": "konradmalik",
+        "repo": "roslyn.nvim",
+        "type": "github"
       }
     },
     "sops-nix": {
