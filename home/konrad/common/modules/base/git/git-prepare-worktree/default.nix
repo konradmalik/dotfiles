@@ -5,8 +5,8 @@
   makeWrapper,
 }:
 let
-  name = "git-clone-worktree";
-  script = (writeScriptBin name (builtins.readFile ./git-clone-worktree.sh)).overrideAttrs (old: {
+  name = "git-prepare-worktree";
+  script = (writeScriptBin name (builtins.readFile ./git-prepare-worktree.sh)).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });
   deps = [ git ];

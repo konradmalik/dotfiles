@@ -52,7 +52,9 @@
       last = "log --name-status HEAD^..HEAD";
       conflicts = "diff --name-only --diff-filter=U";
       whatadded = "log --diff-filter=A";
-      clone-worktree = "!${lib.getExe' (pkgs.callPackage ./git-clone-worktree { }) "git-clone-worktree"}";
+      prepare-worktree = "!${
+        lib.getExe' (pkgs.callPackage ./git-prepare-worktree { }) "git-prepare-worktree"
+      }";
 
       a = "add";
       ap = "add -p";
