@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [ ./shared.nix ];
   nix = {
@@ -12,9 +12,9 @@
       };
     };
     linux-builder = {
+      # sudo ssh linux-builder
       enable = false;
       ephemeral = true;
-      package = pkgs.darwin.linux-builder;
     };
   };
   services.nix-daemon.enable = true;
