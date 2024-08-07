@@ -50,6 +50,7 @@
       up
 
       rfv
+      realize-symlink
     ]
     ++ lib.optionals pkgs.stdenvNoCC.isLinux [
       psmisc
