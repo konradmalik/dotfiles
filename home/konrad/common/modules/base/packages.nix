@@ -55,6 +55,6 @@
     ++ lib.optionals pkgs.stdenvNoCC.isLinux [
       psmisc
       trace-cmd
-    ]
-    ++ lib.optionals pkgs.stdenvNoCC.isDarwin [ lima-bin ];
+    ];
+    # ++ lib.optionals pkgs.stdenvNoCC.isDarwin [ lima-bin ];
 }
