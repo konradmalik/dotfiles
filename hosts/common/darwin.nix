@@ -39,6 +39,7 @@
       "firefox"
       "gimp"
       "keepingyouawake"
+      "microsoft-auto-update"
       "microsoft-office"
       "microsoft-teams"
       "netnewswire"
