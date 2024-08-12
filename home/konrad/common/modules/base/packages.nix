@@ -52,9 +52,8 @@
       rfv
       realize-symlink
     ]
-    ++ lib.optionals pkgs.stdenvNoCC.isLinux [
+    ++ lib.optionals stdenvNoCC.isLinux [
       psmisc
       trace-cmd
-    ]
-    ++ lib.optionals pkgs.stdenvNoCC.isDarwin [ lima-bin ];
+    ];
 }
