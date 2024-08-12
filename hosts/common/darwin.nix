@@ -33,7 +33,6 @@
       upgrade = true;
       cleanup = "zap";
     };
-    brews = [ "lima" ];
     casks = [
       "alacritty"
       "calibre"

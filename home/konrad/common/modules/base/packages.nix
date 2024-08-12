@@ -55,5 +55,6 @@
     ++ lib.optionals stdenvNoCC.isLinux [
       psmisc
       trace-cmd
-    ];
+    ]
+    ++ lib.optionals stdenvNoCC.isDarwin [ colima ];
 }
