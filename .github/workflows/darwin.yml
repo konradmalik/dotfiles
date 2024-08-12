@@ -23,7 +23,8 @@ jobs:
         run: nix flake check
 
   build-shell:
-    runs-on: macos-latest
+    # the latest one for x86_64-darwin
+    runs-on: macos-13
     needs:
       - flake-check
     steps:
@@ -41,7 +42,8 @@ jobs:
         run: nix build .#devShells.x86_64-darwin.default
 
   build-mbp13:
-    runs-on: macos-latest
+    # the latest one for x86_64-darwin
+    runs-on: macos-13
     needs:
       - flake-check
     steps:
