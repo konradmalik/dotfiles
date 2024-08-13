@@ -87,3 +87,7 @@
   # alacritty specifics
   set -ga terminal-overrides ",alacritty:Tc"
 ''
++ lib.optionalString config.konrad.programs.wezterm.enable ''
+  # wezterm specifics
+  set -ga terminal-overrides ",wezterm:Tc"
+''
