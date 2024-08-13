@@ -22,7 +22,6 @@
       ripgrep-all
       sad
       sd
-      urlscan
 
       baywatch
       hyperfine

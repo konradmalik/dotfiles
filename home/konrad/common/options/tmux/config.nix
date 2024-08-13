@@ -74,9 +74,6 @@
   # facebook pathpicker
   bind-key F run-shell -b "${tmuxTextProcessor} '${pkgs.fpp}/bin/fpp -nfc' '#{pane_id}' '#{pane_current_path}'"
 
-  # urlscan
-  bind-key U run-shell -b "${tmuxTextProcessor} '${pkgs.urlscan}/bin/urlscan' '#{pane_id}' '#{pane_current_path}'"
-
   # tmux session switcher
   bind-key r run-shell -b "${tmux-switcher}/bin/tmux-switcher"
 
