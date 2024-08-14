@@ -963,11 +963,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1723190820,
-        "narHash": "sha256-Cs2CI067qhU4lMaaEN7gqcZIf2HkUDy3j/DipOJhJ40=",
+        "lastModified": 1723653401,
+        "narHash": "sha256-5/Wu655I8vZtrR669GhzcY9BlBceAZl33JPa6nuBSLs=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "fec5529546de94e188c5c71a5f113de1cd42dd5c",
+        "rev": "2a58504e25343b7998eed04ffecee8585863ecab",
         "type": "github"
       },
       "original": {
