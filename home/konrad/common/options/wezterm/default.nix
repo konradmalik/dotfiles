@@ -55,6 +55,13 @@ in
       home = {
         packages = lib.optional (cfg.package != null) cfg.package;
         sessionVariables.TERMINAL = mkIf cfg.makeDefault "wezterm";
+
+        file.".terminfo" = {
+          enable = cfg.package == null;
+          source = "${pkgs.wezterm.passthru.terminfo}/share/terminfo";
+          target = ".terminfo";
+          recursive = true;
+        };
       };
 
       xdg.configFile.wezterm = {
