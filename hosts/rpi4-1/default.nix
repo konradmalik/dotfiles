@@ -69,6 +69,7 @@
     "/mnt" = {
       device = "/dev/sda2";
       fsType = "ext4";
+      options = [ "nofail" ];
     };
   };
 }
