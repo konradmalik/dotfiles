@@ -42,7 +42,10 @@ in
     age.sshKeyPaths = [ key.path ];
   };
 
-  services.fwupd.enable = true;
+  services = {
+    fwupd.enable = true;
+    fstrim.enable = true;
+  };
 
   environment = {
     systemPackages = with pkgs; [ pciutils ];
