@@ -3,6 +3,13 @@ local fonts = require("fonts")
 
 local config = wezterm.config_builder()
 
+-- tmp fix until https://github.com/wez/wezterm/issues/5103 is solved in nixpkgs' wezterm version
+if os.getenv("XDG_CURRENT_DESKTOP") == "Hyprland" then
+    config.enable_wayland = false
+else
+    config.enable_wayland = true
+end
+
 fonts.setup(config)
 
 config.colors = require("colors")
