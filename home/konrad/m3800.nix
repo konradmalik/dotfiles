@@ -11,6 +11,10 @@ in
   fontProfiles.enable = true;
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
+  konrad.programs.wezterm = {
+    makeDefault = false;
+    enable = true;
+  };
   programs.neovim-pde = {
     systemLua = # lua
       ''
