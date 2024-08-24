@@ -6,8 +6,8 @@ local config = wezterm.config_builder()
 -- tmp fix until https://github.com/wez/wezterm/issues/5103 is solved in nixpkgs' wezterm version
 if os.getenv("XDG_CURRENT_DESKTOP") == "Hyprland" then
     config.enable_wayland = false
-else
-    config.enable_wayland = true
+    -- tmp fix until https://github.com/wez/wezterm/issues/5990
+    config.front_end = "WebGpu"
 end
 
 fonts.setup(config)
