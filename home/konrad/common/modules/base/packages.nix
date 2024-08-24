@@ -50,6 +50,7 @@
 
       rfv
       realize-symlink
+      terminal-testdrive
     ]
     ++ lib.optionals stdenvNoCC.isLinux [
       psmisc
