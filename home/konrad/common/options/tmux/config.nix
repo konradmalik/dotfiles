@@ -8,15 +8,6 @@
   # tmux messages are displayed for 4 seconds
   set-option -g display-time 4000
 
-  # overrides for the host terminal
-  # RGB color
-  set -as terminal-features ",*:RGB"
-  # colored undercurls
-  # https://ryantravitz.com/blog/2023-02-18-pull-of-the-undercurl/
-  # https://github.com/tmux/tmux/issues/3444
-  # https://github.com/alacritty/alacritty/pull/6803
-  set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
-
   # focus events enabled for terminals that support them
   set-option -g focus-events on
   # refresh interval

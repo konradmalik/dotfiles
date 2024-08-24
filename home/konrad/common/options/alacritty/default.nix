@@ -61,5 +61,11 @@ in
       xdg.configFile."alacritty/alacritty.toml".text = lib.concatStringsSep "\n" (
         [ baseConfig ] ++ lib.optional (cfg.colorscheme != null) colorConfig
       );
+
+      programs.tmux.extraConfig = ''
+        # overrides for the alacritty (host) terminal features
+        # to print the detected ones (including set ones): tmux display -p '#{client_termfeatures}'
+        set -as terminal-features ",alacritty*:RGB:hyperlinks:strikethrough:usstyle"
+      '';
     };
 }
