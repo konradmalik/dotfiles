@@ -1,20 +1,22 @@
 {
-  config,
   tmux-switcher,
   tmuxTextProcessor,
   pkgs,
-  lib,
 }:
 ''
   ## KONRAD's SENSIBLE DEFAULTS
   # tmux messages are displayed for 4 seconds
   set-option -g display-time 4000
-  # true color
-  set -ga terminal-overrides ",*256col*:Tc"
-  # TODO: for some reason tmux does not color undercurls (yet?)
-  # probably connected with upsteam tmux-256color term
-  # fix underscore colours
+
+  # overrides for the host terminal
+  # RGB color
+  set -as terminal-features ",*:RGB"
+  # colored undercurls
+  # https://ryantravitz.com/blog/2023-02-18-pull-of-the-undercurl/
+  # https://github.com/tmux/tmux/issues/3444
+  # https://github.com/alacritty/alacritty/pull/6803
   set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
+
   # focus events enabled for terminals that support them
   set-option -g focus-events on
   # refresh interval
@@ -66,11 +68,6 @@
   # enable mouse by default, useful for resizing
   set-option -g mouse on
 
-  # when nested tmux session,
-  # C-a will send the prefix directly to the remote session
-  # C-A clashes with C-A in neovim!
-  #bind-key -n C-a send-prefix
-
   # facebook pathpicker
   bind-key F run-shell -b "${tmuxTextProcessor} '${pkgs.fpp}/bin/fpp -nfc' '#{pane_id}' '#{pane_current_path}'"
 
@@ -82,12 +79,4 @@
 
   # toggle last session
   bind-key S switch-client -l
-''
-+ lib.optionalString config.konrad.programs.alacritty.enable ''
-  # alacritty specifics
-  set -ga terminal-overrides ",alacritty:Tc"
-''
-+ lib.optionalString config.konrad.programs.wezterm.enable ''
-  # wezterm specifics
-  set -ga terminal-overrides ",wezterm:Tc"
 ''
