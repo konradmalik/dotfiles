@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  name = "tmux-sessionizer";
+  name = "tms";
   script = (pkgs.writeScriptBin name (builtins.readFile ./tmux-sessionizer.sh)).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });

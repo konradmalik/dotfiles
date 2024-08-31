@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  name = "tmux-switcher";
+  name = "tmr";
   script = (pkgs.writeScriptBin name (builtins.readFile ./tmux-switcher.sh)).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });

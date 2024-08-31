@@ -11,7 +11,9 @@ let
   tmux-sessionizer = pkgs.callPackage ./tmux-sessionizer { };
   tmux-switcher = pkgs.callPackage ./tmux-switcher { };
   tmux-windowizer = pkgs.callPackage ./tmux-windowizer { };
-  baseConfig = pkgs.callPackage ./config.nix { inherit tmuxTextProcessor tmux-switcher; };
+  baseConfig = pkgs.callPackage ./config.nix {
+    inherit tmuxTextProcessor tmux-switcher tmux-sessionizer;
+  };
   themeConfig = import ./theme.nix { inherit (cfg) colorscheme; };
 in
 {
@@ -50,26 +52,10 @@ in
 
     programs.fzf.tmux.enableShellIntegration = true;
 
-    programs.zsh = {
-      initExtra = ''
-        # tmux baby
-        # (this cannot be a zsh widget unfortunately, tmux attach can only attach to a terminal,
-        # but zsh widgets do not allocate/reuse current terminal)
-        __txs() { ${tmux-sessionizer}/bin/tmux-sessionizer }
-        bindkey -s '^F' '^u__txs^M'
-
-        # fix for ssh socket and display env var in tmux
-        # run after attaching to a remote session for a 2+ time if you need it
-        tmux-refresh() {
-            eval "$(tmux show-environment -s SSH_AUTH_SOCK)"
-            eval "$(tmux show-environment -s DISPLAY)"
-        }
-      '';
-      shellAliases = {
-        txs = "${tmux-sessionizer}/bin/tmux-sessionizer";
-        txw = "${tmux-windowizer}/bin/tmux-windowizer";
-        txr = "${tmux-switcher}/bin/tmux-switcher";
-      };
-    };
+    home.packages = [
+      tmux-sessionizer
+      tmux-windowizer
+      tmux-switcher
+    ];
   };
 }

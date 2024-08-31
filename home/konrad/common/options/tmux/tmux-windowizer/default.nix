@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  name = "tmux-windowizer";
+  name = "tmw";
   script = (pkgs.writeScriptBin name (builtins.readFile ./tmux-windowizer.sh)).overrideAttrs (old: {
     buildCommand = "${old.buildCommand}\n patchShebangs $out";
   });

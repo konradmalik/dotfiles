@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 active_sessions=$(tmux list-sessions 2>/dev/null || echo "")
 if [[ -z $active_sessions ]]; then
     echo "no active sessions"

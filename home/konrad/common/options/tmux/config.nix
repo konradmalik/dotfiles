@@ -1,7 +1,9 @@
 {
+  tmux-sessionizer,
   tmux-switcher,
   tmuxTextProcessor,
   pkgs,
+  lib,
 }:
 ''
   ## KONRAD's SENSIBLE DEFAULTS
@@ -59,11 +61,14 @@
   # enable mouse by default, useful for resizing
   set-option -g mouse on
 
+  # tmux sessionizer
+  bind-key C-o run-shell -b "${tmux-sessionizer}/bin/tms"
+
   # facebook pathpicker
-  bind-key F run-shell -b "${tmuxTextProcessor} '${pkgs.fpp}/bin/fpp -nfc' '#{pane_id}' '#{pane_current_path}'"
+  bind-key F run-shell -b "${tmuxTextProcessor} '${lib.getExe pkgs.fpp} -nfc' '#{pane_id}' '#{pane_current_path}'"
 
   # tmux session switcher
-  bind-key r run-shell -b "${tmux-switcher}/bin/tmux-switcher"
+  bind-key C-s run-shell -b "${tmux-switcher}/bin/tmr"
 
   # toggle last window
   bind-key W last-window
