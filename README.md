@@ -7,7 +7,8 @@ My NixOS and Nix-Darwin configurations.
 
 ## Commands
 
-Note: in all commands flake location can be one of the following:
+> [!NOTE]
+> in all commands flake location can be one of the following:
 
 ```bash
 # github repo
@@ -36,7 +37,8 @@ $ nix build .#nixosConfigurations.$(hostname -s).config.system.build.toplevel
 
 #### Build and enable config on remote:
 
-> **Note:** this will fail because of [this bug](https://github.com/NixOS/nixpkgs/issues/118655).
+> [!NOTE]
+> This will fail because of [this bug](https://github.com/NixOS/nixpkgs/issues/118655).
 > Workaround is to use root ssh access, but I don't want to do that
 
 ```bash
@@ -68,18 +70,17 @@ Flash directly to the card:
 $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 ```
 
-> NOTE:
-
-The filesystem won't be complete, it will miss `etc` and more. NixOS will populate those dirs on first boot.
-
-So if you need to modify something on the card (like read host keys or add `wpa_supplicant.conf`) then the steps are:
-
--   boot rpi with the newly flashed card once
--   wait a minute or two
--   poweroff rpi and mount the card on your PC
--   filesystem will be complete
-
-In my case, Wi-Fi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
+> [!NOTE]
+> The filesystem won't be complete, it will miss `etc` and more. NixOS will populate those dirs on first boot.
+>
+> So if you need to modify something on the card (like read host keys or add `wpa_supplicant.conf`) then the steps are:
+>
+> -   boot rpi with the newly flashed card once
+> -   wait a minute or two
+> -   poweroff rpi and mount the card on your PC
+> -   filesystem will be complete
+>
+> In my case, Wi-Fi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
 
 #### Build minimal ISO with ssh access for root:
 
