@@ -16,6 +16,8 @@ in
         final: prev:
         (import ../../../../pkgs/installable { pkgs = final; })
         // {
+          # until it's fixed on darwin
+          bitwarden-cli = final.stable.bitwarden-cli;
           stable = import inputs.nixpkgs-stable {
             system = final.system;
             config = final.config;
@@ -30,7 +32,7 @@ in
   };
   nix = {
     package = pkgs.nixVersions.latest;
-    # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
+    # make `nix run nixpkgs#something` use the same nixpkgs as the one used by this flake.
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
       nixpkgs-stable.flake = inputs.nixpkgs-stable;
