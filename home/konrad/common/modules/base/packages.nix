@@ -23,7 +23,7 @@
       sad
       sd
 
-      baywatch
+      entr
       hyperfine
       noti
       spacer

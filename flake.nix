@@ -36,7 +36,6 @@
     nix-colors.url = "github:misterio77/nix-colors";
 
     neovim.url = "github:konradmalik/neovim-flake";
-    baywatch.url = "github:konradmalik/baywatch";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-compat = {

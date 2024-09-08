@@ -16,7 +16,6 @@ in
         final: prev:
         (import ../../../../pkgs/installable { pkgs = final; })
         // {
-          baywatch = inputs.baywatch.packages.${final.system}.bwatch;
           stable = import inputs.nixpkgs-stable {
             system = final.system;
             config = final.config;
