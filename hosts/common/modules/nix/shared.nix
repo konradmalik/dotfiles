@@ -32,15 +32,11 @@ in
   };
   nix = {
     package = pkgs.nixVersions.latest;
-    # make `nix run nixpkgs#something` use the same nixpkgs as the one used by this flake.
     registry = {
-      nixpkgs.flake = inputs.nixpkgs;
+      # Setting only non standards here. Eg. "nixpkgs" is set by default.
       nixpkgs-stable.flake = inputs.nixpkgs-stable;
     };
     settings = {
-      # NIX_PATH is still used by many useful tools, so we set it to the same value as the one used by this flake.
-      # https://github.com/NixOS/nix/issues/9574
-      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
       auto-optimise-store = lib.mkDefault true;
       experimental-features = [
         "nix-command"
