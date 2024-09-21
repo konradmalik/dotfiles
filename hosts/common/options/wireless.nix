@@ -22,20 +22,20 @@ in
       "1.0.0.1"
     ];
 
-    sops.secrets."wireless.env" = {
+    sops.secrets."wireless.conf" = {
       mode = "0644";
     };
 
     networking.wireless = {
       enable = true;
       # Declarative
-      environmentFile = config.sops.secrets."wireless.env".path;
+      secretsFile = config.sops.secrets."wireless.conf".path;
       networks = {
-        "UPC7335283".psk = "@PSK_UPC7335283@";
-        "UPC8795410".psk = "@PSK_UPC8795410@";
-        "MALIK_E_DOM".psk = "@PSK_MALIK_E_DOM";
-        "TP-LINK_FD1F".psk = "@PSK_TP_LINK_FD1F";
-        "Konrad's iPhone".psk = "@PSK_KONRADS_IPHONE";
+        "UPC7335283".pskRaw = "ext:psk_UPC7335283";
+        "UPC8795410".pskRaw = "ext:psk_UPC8795410";
+        "MALIK_E_DOM".pskRaw = "ext:psk_MALIK_E_DOM";
+        "TP-LINK_FD1F".pskRaw = "ext:psk_TP_LINK_FD1F";
+        "Konrad's iPhone".pskRaw = "ext:psk_KONRADS_IPHONE";
       };
       # Imperative
       allowAuxiliaryImperativeNetworks = true;
