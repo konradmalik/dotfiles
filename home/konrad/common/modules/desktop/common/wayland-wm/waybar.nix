@@ -22,7 +22,7 @@ let
   terminal = "${pkgs.alacritty}/bin/alacritty";
   terminal-spawn = cmd: "${terminal} -e $SHELL -i -c \"${cmd}\"";
 
-  calendar = terminal-spawn "${cal} && sleep infinity";
+  calendar = terminal-spawn "${cal} -3 && sleep infinity";
   systemMonitor = terminal-spawn btm;
 
   # Function to simplify making waybar outputs
