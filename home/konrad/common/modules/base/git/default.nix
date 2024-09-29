@@ -8,8 +8,9 @@
 {
   home.packages = with pkgs; [
     difftastic
-    git-extras
+    git-absorb
     git-crypt
+    git-extras
   ];
 
   programs.git =
