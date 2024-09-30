@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@V28
+      - uses: cachix/install-nix-action@v29
         with:
           extra_nix_config: |
             accept-flake-config = true
@@ -23,7 +23,7 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@V28
+      - uses: cachix/install-nix-action@v29
         with:
           extra_nix_config: |
             accept-flake-config = true
@@ -45,7 +45,7 @@ jobs:
         with:
           tool-cache: true
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@V28
+      - uses: cachix/install-nix-action@v29
         with:
           extra_nix_config: |
             accept-flake-config = true
@@ -67,7 +67,7 @@ jobs:
         with:
           tool-cache: true
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@V28
+      - uses: cachix/install-nix-action@v29
         with:
           extra_nix_config: |
             accept-flake-config = true
