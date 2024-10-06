@@ -30,11 +30,8 @@
     lidSwitchDocked = "ignore";
   };
 
-  # FIXME some bug in either hyprland or somewhere else
-  # suspends even if not idle after that time
   services.logind.extraConfig = ''
-    #IdleAction=suspend
-    IdleAction=ignore
+    IdleAction=suspend
     IdleActionSec=30min
   '';
 }
