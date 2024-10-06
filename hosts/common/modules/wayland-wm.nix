@@ -39,16 +39,7 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  hardware.graphics = {
-    enable = true;
-    # https://nixos.wiki/wiki/Accelerated_Video_Playback
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
+  hardware.graphics.enable = true;
 
   # Optional, hint electron apps to use wayland:
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
