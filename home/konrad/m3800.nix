@@ -16,13 +16,7 @@ in
     enable = true;
   };
   programs.neovim-pde = {
-    systemLua = # lua
-      ''
-        return {
-          repository_path = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake";
-          notes_path = "${obsidianPath}/Personal";
-        }
-      '';
+    obsidianPath = "${obsidianPath}/Personal";
   };
   konrad.programs.restic = {
     enable = true;
