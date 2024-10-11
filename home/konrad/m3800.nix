@@ -17,7 +17,7 @@ in
   };
   programs.neovim-pde = {
     notesPath = "${obsidianPath}/Personal";
-    spellPath = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files";
+    spellPath = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";
   };
   konrad.programs.restic = {
     enable = true;
