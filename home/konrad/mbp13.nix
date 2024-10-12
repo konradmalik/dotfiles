@@ -1,5 +1,6 @@
 { config, ... }:
 let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
   obsidianPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
 in
 {
@@ -24,8 +25,8 @@ in
     package = null;
   };
   programs.neovim-pde = {
-    notesPath = "${obsidianPath}/Personal";
-    spellPath = "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";
+    notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
+    spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";
   };
   konrad.programs.restic = {
     enable = true;
