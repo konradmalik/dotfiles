@@ -32,7 +32,8 @@ in
     programs.tmux = {
       enable = true;
       aggressiveResize = true;
-      sensibleOnTop = true;
+      # there's a bug, and my settings are sensible for me
+      sensibleOnTop = false;
       # tmux-256color is the proper one to enable italics, undercurls etc.
       # just ensure you have that terminfo
       # screen-256color works properly everywhere but does not have many features
