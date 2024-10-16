@@ -55,6 +55,10 @@
   # Setup P (capital) to paste after the prefix keys, JUST LIKE VIM
   bind P paste-buffer
 
+  # easier switching between next/prev window
+  bind-key C-p previous-window
+  bind-key C-n next-window
+
   # Use m to toggle mouse mode
   unbind m
   bind-key m setw mouse
