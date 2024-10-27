@@ -5,6 +5,7 @@
   lib,
 }:
 ''
+  [general]
   live_config_reload = false
 
   [cursor.style]
