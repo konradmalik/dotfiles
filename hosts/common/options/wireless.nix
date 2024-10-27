@@ -31,6 +31,7 @@ in
       # Declarative
       secretsFile = config.sops.secrets."wireless.conf".path;
       networks = {
+        "pozdrawiamhipstera".pskRaw = "ext:psk_pozdrawiamhipstera";
         "UPC7335283".pskRaw = "ext:psk_UPC7335283";
         "UPC8795410".pskRaw = "ext:psk_UPC8795410";
         "MALIK_E_DOM".pskRaw = "ext:psk_MALIK_E_DOM";
