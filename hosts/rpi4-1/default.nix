@@ -7,11 +7,6 @@
 
   networking.hostName = "rpi4-1";
 
-  konrad.networking.wireless = {
-    enable = true;
-    interfaces = [ "wlan0" ];
-  };
-
   networking.firewall.enable = false;
 
   konrad.services = {

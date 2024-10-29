@@ -12,7 +12,7 @@
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
   konrad.networking.wireless = {
-    enable = true;
+    enable = false;
     interfaces = [ "wlp6s0" ];
   };
   konrad.services = {
