@@ -36,8 +36,23 @@ in
       # Setting only non standards here. Eg. "nixpkgs" is set by default.
       nixpkgs-stable.flake = inputs.nixpkgs-stable;
     };
+    optimise =
+      {
+        automatic = true;
+      }
+      // lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) {
+        dates = [ "Fri *-*-* 10:00:00" ];
+      }
+      // lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
+        interval = [
+          {
+            Hour = 10;
+            Minute = 0;
+            Weekday = 5;
+          }
+        ];
+      };
     settings = {
-      auto-optimise-store = lib.mkDefault true;
       experimental-features = [
         "nix-command"
         "flakes"
