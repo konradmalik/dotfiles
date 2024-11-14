@@ -1,6 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./../common/modules/blocky.nix
     ./../common/nixos.nix
   ];
 

@@ -2,12 +2,15 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./../common/modules/blocky.nix
     ./../common/nixos.nix
   ];
 
   networking.hostName = "rpi4-1";
 
   networking.firewall.enable = false;
+
+  services.blocky.enable = true;
 
   konrad.services = {
     autoupgrade = {
