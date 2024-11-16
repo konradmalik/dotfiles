@@ -24,13 +24,13 @@ in
         size = 3
         passes = 1
     }
-
-    drop_shadow = false
-    shadow_ignore_window = true
-    shadow_offset = 0 5
-    shadow_range = 50
-    shadow_render_power = 3
-    col.shadow = rgba(00000099)
+    shadow {
+      ignore_window = true
+      offset = 0 5
+      range = 50
+      render_power = 3
+      color = rgba(00000099)
+    }
   }
   animations {
     enabled = false
