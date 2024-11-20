@@ -18,8 +18,6 @@ in
         // {
           # FIXME until it's fixed on darwin
           bitwarden-cli = final.stable.bitwarden-cli;
-          # FIXME until it's fixed
-          calibre = final.stable.calibre;
           stable = import inputs.nixpkgs-stable {
             system = final.system;
             config = final.config;
