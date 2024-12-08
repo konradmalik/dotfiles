@@ -16,8 +16,13 @@ in
         final: prev:
         (import ../../../../pkgs/installable { pkgs = final; })
         // {
-          # FIXME until it's fixed on darwin
-          bitwarden-cli = final.stable.bitwarden-cli;
+          # FIXME once fixed on unstable
+          inherit
+            ((builtins.getFlake "github:NixOS/nixpkgs/3cf437fb2e3a4a8e4d28c89699b084636a48b979")
+              .legacyPackages.${pkgs.system}
+            )
+            bitwarden-cli
+            ;
           stable = import inputs.nixpkgs-stable {
             system = final.system;
             config = final.config;
