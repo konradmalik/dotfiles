@@ -4,7 +4,7 @@
     enable = true;
     monospace = {
       family = "Hack Nerd Font";
-      package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+      package = pkgs.nerd-fonts.hack;
       size = lib.mkDefault 13;
     };
     regular = {
