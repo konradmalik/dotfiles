@@ -12,6 +12,7 @@
     ./glow.nix
     ./gpg.nix
     ./k9s.nix
+    ./lazygit.nix
     ./neovim.nix
     ./nix-index.nix
     ./packages.nix
