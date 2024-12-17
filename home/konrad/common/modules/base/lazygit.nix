@@ -3,9 +3,11 @@
     enable = true;
     settings = {
       gui = {
+        filterMode = "fuzzy";
         mouseEvents = false;
         nerdFontsVersion = "3";
-        filterMode = "fuzzy";
+        promptToReturnFromSubprocess = false;
+        showNumstatInFilesView = true;
       };
       update.method = "never";
     };
