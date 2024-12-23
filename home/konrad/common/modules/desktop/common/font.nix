@@ -3,8 +3,8 @@
   fontProfiles = {
     enable = true;
     monospace = {
-      family = "Hack Nerd Font";
-      package = pkgs.nerd-fonts.hack;
+      family = "JetBrainsMono Nerd Font";
+      package = pkgs.nerd-fonts.jetbrains-mono;
       size = lib.mkDefault 13;
     };
     regular = {
