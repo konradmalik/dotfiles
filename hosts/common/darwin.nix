@@ -50,7 +50,6 @@
       "slack"
       "spotify"
       "syncthing"
-      "wezterm"
       "zoom"
     ];
 

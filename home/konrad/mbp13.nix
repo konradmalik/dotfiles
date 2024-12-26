@@ -18,12 +18,6 @@ in
     # installed via homebrew
     package = null;
   };
-  konrad.programs.wezterm = {
-    enable = true;
-    makeDefault = false;
-    # installed via homebrew
-    package = null;
-  };
   programs.neovim-pde = {
     notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
     spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";

@@ -12,10 +12,6 @@ in
   fontProfiles.enable = true;
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty.enable = true;
-  konrad.programs.wezterm = {
-    makeDefault = false;
-    enable = true;
-  };
   programs.neovim-pde = {
     notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
     spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";
