@@ -8,9 +8,6 @@
   [general]
   live_config_reload = false
 
-  [cursor.style]
-  shape = "Block"
-
   [font]
   size = ${toString fontSize}
 
