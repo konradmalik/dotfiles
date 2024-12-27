@@ -1,6 +1,7 @@
 {
   alacritty = import ./alacritty;
   bitwarden = import ./bitwarden.nix;
+  ghostty = import ./ghostty;
   fonts = import ./fonts.nix;
   monitors = import ./monitors.nix;
   restic = import ./restic;

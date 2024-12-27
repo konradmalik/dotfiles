@@ -10,10 +10,16 @@ in
 
   fontProfiles = {
     enable = true;
-    monospace.size = 16.0;
+    monospace.size = 15.0;
   };
   konrad.programs.bitwarden.enable = true;
   konrad.programs.alacritty = {
+    makeDefault = false;
+    enable = true;
+    # installed via homebrew
+    package = null;
+  };
+  konrad.programs.ghostty = {
     enable = true;
     # installed via homebrew
     package = null;

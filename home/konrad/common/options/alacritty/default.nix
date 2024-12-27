@@ -32,15 +32,15 @@ in
       description = "Font Family to use. If null, alacritty will set it automatically.";
     };
 
-    package = lib.mkOption {
-      type = lib.types.nullOr lib.types.package;
+    package = mkOption {
+      type = types.nullOr types.package;
       default = pkgs.alacritty;
       description = "Package for alacritty. If null, it won't be installed.";
       example = "pkgs.alacritty";
     };
 
-    colorscheme = lib.mkOption {
-      type = lib.types.nullOr lib.types.attrs;
+    colorscheme = mkOption {
+      type = types.nullOr types.attrs;
       default = config.colorscheme;
       description = "Colorscheme attrset compatible with nix-colors format.";
       example = "config.colorscheme";

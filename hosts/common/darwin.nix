@@ -37,6 +37,7 @@
       "alacritty"
       "calibre"
       "firefox"
+      "ghostty"
       "gimp"
       "keepingyouawake"
       "microsoft-auto-update"
