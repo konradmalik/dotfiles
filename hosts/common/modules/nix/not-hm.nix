@@ -10,13 +10,14 @@
     nrBuildUsers = 16;
 
     optimise =
-      {
+      lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) {
         automatic = true;
-      }
-      // lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) {
         dates = [ "Fri *-*-* 10:00:00" ];
       }
       // lib.optionalAttrs (pkgs.stdenvNoCC.isDarwin) {
+        # TODO problems with sysctld high cpu usage?
+        # just disable this
+        automatic = false;
         interval = [
           {
             Hour = 10;

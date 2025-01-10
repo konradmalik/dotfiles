@@ -14,11 +14,6 @@ in
       persistent = true;
     };
 
-    optimise = {
-      automatic = true;
-      dates = [ "daily" ];
-    };
-
     sshServe = {
       enable = true;
       keys = lib.flatten (theirAuthorizedKeys (ifTheyExist [ "konrad" ]));

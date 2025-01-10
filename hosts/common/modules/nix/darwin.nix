@@ -11,16 +11,6 @@
         Minute = 0;
       };
     };
-    optimise = {
-      automatic = true;
-      interval = [
-        {
-          Hour = 4;
-          Minute = 15;
-          Weekday = 7;
-        }
-      ];
-    };
     linux-builder = {
       # sudo ssh linux-builder
       enable = false;
