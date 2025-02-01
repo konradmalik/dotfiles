@@ -36,7 +36,6 @@
       jc
       jo
       jq
-      xsv
       yq-go
 
       du-dust
