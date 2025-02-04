@@ -133,7 +133,7 @@ Then install nix following the official guidelines and installer.
 Then build and enable config locally:
 
 ```bash
-$ darwin-rebuild switch --flake .#$(hostname -s)
+$ darwin-rebuild switch --flake .
 ```
 
 To just build (for example for a test):
