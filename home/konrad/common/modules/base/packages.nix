@@ -28,7 +28,6 @@
       noti
       spacer
       viddy
-      yazi
 
       age
       fq
