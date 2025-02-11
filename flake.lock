@@ -765,22 +765,6 @@
         "type": "github"
       }
     },
-    "neo-tree-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1738747847,
-        "narHash": "sha256-y2VUxsv5ynhtbRj8oaWiE3ZdDkxolaqrmXlGtUDPoTs=",
-        "owner": "nvim-neo-tree",
-        "repo": "neo-tree.nvim",
-        "rev": "9f0c96720559461530a51d3e1c170519345941da",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-neo-tree",
-        "repo": "neo-tree.nvim",
-        "type": "github"
-      }
-    },
     "neorocks": {
       "inputs": {
         "flake-compat": "flake-compat_4",
@@ -822,11 +806,9 @@
         "incomplete-nvim": "incomplete-nvim",
         "kanagawa-nvim": "kanagawa-nvim",
         "mini-icons": "mini-icons",
-        "neo-tree-nvim": "neo-tree-nvim",
         "neorocks": "neorocks",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_3",
-        "nui-nvim": "nui-nvim",
         "nvim-dap": "nvim-dap",
         "nvim-dap-ui": "nvim-dap-ui",
         "nvim-dap-virtual-text": "nvim-dap-virtual-text",
@@ -846,11 +828,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1739202486,
-        "narHash": "sha256-nve6nRlRSnA9z+SeA6XbgVXpf4axZxEdfKUOAAayp54=",
+        "lastModified": 1739260320,
+        "narHash": "sha256-gCwxycaQ9KzjV6xe6H2onFc6yFkC+/VqgIS3NrA0D3A=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "3650746c75b7da604137305bf63fd299eb23b5ce",
+        "rev": "ae3a28933665647cc90185b8ba97e18774604d84",
         "type": "github"
       },
       "original": {
@@ -1129,22 +1111,6 @@
         "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nui-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1733856815,
-        "narHash": "sha256-6U7E/i5FuNXQy+sF4C5DVxuTPqNKD5wxUgFohpOjm9Q=",
-        "owner": "MunifTanjim",
-        "repo": "nui.nvim",
-        "rev": "53e907ffe5eedebdca1cd503b00aa8692068ca46",
-        "type": "github"
-      },
-      "original": {
-        "owner": "MunifTanjim",
-        "repo": "nui.nvim",
         "type": "github"
       }
     },
