@@ -11,24 +11,7 @@ let
       };
     in
     "${pkg}/${name}.yazi";
-  mkYaziPluginGithub =
-    x:
-    pkgs.stdenvNoCC.mkDerivation {
-      name = x.repo;
-      dontBuild = true;
-      installPhase = ''
-        mkdir -p $out
-        cp -r $src/* $out
-      '';
-      src = pkgs.fetchFromGitHub {
-        inherit (x)
-          owner
-          repo
-          rev
-          hash
-          ;
-      };
-    };
+  mkYaziPluginGithub = x: pkgs.fetchFromGitHub x;
 
   plugins = {
     git = mkYaziPlugin "git";
