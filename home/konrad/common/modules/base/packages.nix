@@ -49,6 +49,7 @@
       rfv
       realize-symlink
       terminal-testdrive
+      uniq-exts
     ]
     ++ lib.optionals stdenvNoCC.isLinux [
       psmisc
