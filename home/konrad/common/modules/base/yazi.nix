@@ -51,7 +51,6 @@ in
     settings = {
       manager = {
         linemode = "size";
-        show_hidden = true;
         show_symlink = true;
       };
 
