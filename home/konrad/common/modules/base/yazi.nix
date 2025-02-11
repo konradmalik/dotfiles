@@ -1,27 +1,25 @@
 { config, pkgs, ... }:
 let
-  mkYaziPlugin =
-    name:
+  mkYaziPluginGithub = x: pkgs.fetchFromGitHub x;
+
+  plugins =
     let
-      pkg = mkYaziPluginGithub {
+      yazi-plugins = mkYaziPluginGithub {
         owner = "yazi-rs";
         repo = "plugins";
         rev = "02d18be03812415097e83c6a912924560e4cec6d";
         hash = "sha256-1FZ8wcf2VVp6ZWY27vm1dUU1KAL32WwoYbNA/8RUAog=";
       };
     in
-    "${pkg}/${name}.yazi";
-  mkYaziPluginGithub = x: pkgs.fetchFromGitHub x;
-
-  plugins = {
-    git = mkYaziPlugin "git";
-    kanagawa = mkYaziPluginGithub {
-      owner = "dangooddd";
-      repo = "kanagawa.yazi";
-      rev = "d98f0c3e27299f86ee080294df2722c5a634495a";
-      hash = "sha256-Z/lyXNCSqX0wvCQd39ZedxOGlhRzQ+M0hqzkBEcpxEE=";
+    {
+      git = "${yazi-plugins}/git.yazi";
+      kanagawa = mkYaziPluginGithub {
+        owner = "dangooddd";
+        repo = "kanagawa.yazi";
+        rev = "d98f0c3e27299f86ee080294df2722c5a634495a";
+        hash = "sha256-Z/lyXNCSqX0wvCQd39ZedxOGlhRzQ+M0hqzkBEcpxEE=";
+      };
     };
-  };
 in
 {
   programs.yazi = {
