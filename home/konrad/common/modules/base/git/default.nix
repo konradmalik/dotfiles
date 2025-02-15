@@ -32,6 +32,11 @@
         };
       };
 
+      signing = {
+        signByDefault = true;
+        format = "ssh";
+      };
+
       includes = [
         {
           condition = "gitdir/i:~/Code/";
@@ -144,7 +149,6 @@
         };
 
         commit = {
-          gpgSign = true;
           verbose = true;
         };
 
@@ -217,10 +221,6 @@
         rerere = {
           enabled = true;
           autoUpdate = true;
-        };
-
-        tag = {
-          gpgSign = true;
         };
 
         transfer = {
