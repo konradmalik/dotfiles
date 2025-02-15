@@ -8,10 +8,10 @@
       file
       inetutils
       moreutils
+      ouch
       progress
       tree
       trurl
-      unar
       unixtools.xxd
       wget
       zip
