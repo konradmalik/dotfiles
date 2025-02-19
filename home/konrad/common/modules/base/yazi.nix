@@ -7,8 +7,8 @@ let
       yazi-plugins = mkYaziPluginGithub {
         owner = "yazi-rs";
         repo = "plugins";
-        rev = "02d18be03812415097e83c6a912924560e4cec6d";
-        hash = "sha256-1FZ8wcf2VVp6ZWY27vm1dUU1KAL32WwoYbNA/8RUAog=";
+        rev = "beb586aed0d41e6fdec5bba7816337fdad905a33";
+        hash = "sha256-enIt79UvQnKJalBtzSEdUkjNHjNJuKUWC4L6QFb3Ou4=";
       };
     in
     {
