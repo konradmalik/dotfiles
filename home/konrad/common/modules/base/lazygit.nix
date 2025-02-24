@@ -2,6 +2,9 @@
   programs.lazygit = {
     enable = true;
     settings = {
+      git = {
+        overrideGpg = true;
+      };
       gui = {
         filterMode = "fuzzy";
         mouseEvents = false;
