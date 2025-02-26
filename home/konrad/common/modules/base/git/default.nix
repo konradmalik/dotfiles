@@ -153,9 +153,11 @@
         };
 
         diff = {
-          algotithm = "histogram";
-          colormoved = "default";
+          algorithm = "histogram";
+          colormoved = "plain";
           colormovedws = "allow-indentation-change";
+          mnemonicPrefix = true;
+          renames = true;
           tool = "difftastic";
         };
 
@@ -174,6 +176,7 @@
         };
 
         fetch = {
+          all = true;
           fsckobjects = true;
           prune = true;
           pruneTags = true;
@@ -205,11 +208,13 @@
         push = {
           default = "tracking";
           autoSetupRemote = true;
+          followTags = true;
           gpgSign = "if-asked";
         };
 
         rebase = {
-          autosquash = true;
+          autoStash = true;
+          autoSquash = true;
           rebaseMerges = true;
           updateRefs = true;
         };
@@ -221,6 +226,10 @@
         rerere = {
           enabled = true;
           autoUpdate = true;
+        };
+
+        tag = {
+          sort = "version:refname";
         };
 
         transfer = {
