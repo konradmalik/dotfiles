@@ -77,7 +77,7 @@
   };
 
   # allow sudo with touchID
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   system = {
     # Used for backwards compatibility, please read the changelog before changing.
