@@ -16,10 +16,7 @@ in
 {
   programs = {
     light.enable = true;
-    hyprland = {
-      enable = anyHyprlandEnabled;
-      package = pkgs.hyprland;
-    };
+    hyprland.enable = anyHyprlandEnabled;
   };
 
   # otherwise swaylock won't be able to unlock

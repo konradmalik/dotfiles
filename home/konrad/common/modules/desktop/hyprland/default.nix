@@ -24,7 +24,9 @@
     enable = true;
     xwayland.enable = true;
     systemd.enable = true;
-    package = pkgs.hyprland;
+    # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
+    package = null;
+    portalPackage = null;
     extraConfig =
       (import ./monitors.nix {
         inherit lib;
