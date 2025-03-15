@@ -2,8 +2,12 @@
   services.blocky = {
     enable = true;
     settings = {
+      prometheus = {
+        enable = false;
+      };
       ports = {
         dns = 53;
+        tls = 853;
         http = 4000;
       };
       upstreams = {
@@ -20,6 +24,8 @@
           ads = [
             "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
             "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+            "http://sysctl.org/cameleon/hosts"
+            "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
           ];
           fakenews = [
             "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts"
