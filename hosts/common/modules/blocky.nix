@@ -11,6 +11,7 @@
         http = 4000;
       };
       upstreams = {
+        init.strategy = "failOnError";
         groups = {
           default = [
             "1.1.1.1"
@@ -36,6 +37,9 @@
             "ads"
             "fakenews"
           ];
+        };
+        loading = {
+          strategy = "failOnError";
         };
       };
     };
