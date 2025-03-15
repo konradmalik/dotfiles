@@ -21,7 +21,6 @@
       signal-desktop
       slack
       spotify
-      tdesktop
       # for xdg-open in 'gx' in vim for example
       xdg-utils
       zathura
