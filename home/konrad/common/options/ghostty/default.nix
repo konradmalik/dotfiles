@@ -42,7 +42,7 @@ in
 
     package = mkOption {
       type = types.nullOr types.package;
-      default = inputs.ghostty.packages.${pkgs.system}.default;
+      default = pkgs.ghostty;
       description = "Package for ghostty. If null, it won't be installed.";
       example = "pkgs.ghostty";
     };
