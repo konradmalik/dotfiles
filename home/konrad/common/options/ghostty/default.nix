@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 with lib;
@@ -52,12 +51,16 @@ in
     let
       baseConfig = pkgs.callPackage ./config.nix { inherit (cfg) fontFamily fontSize theme; };
     in
-    mkIf cfg.enable {
-      home = {
-        packages = lib.optional (cfg.package != null) cfg.package;
-        sessionVariables.TERMINAL = mkIf cfg.makeDefault "ghostty";
-      };
-
-      xdg.configFile."ghostty/config".text = baseConfig;
-    };
+    mkMerge [
+      (mkIf cfg.enable {
+        home = {
+          sessionVariables.TERMINAL = mkIf cfg.makeDefault "ghostty";
+          packages = lib.optional (cfg.package != null) cfg.package;
+        };
+        xdg.configFile."ghostty/config".text = baseConfig;
+      })
+      (mkIf (!cfg.enable) {
+        home.packages = lib.optional (cfg.package != null) cfg.package.terminfo;
+      })
+    ];
 }
