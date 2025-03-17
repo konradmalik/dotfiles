@@ -110,4 +110,38 @@
       };
     };
   };
+
+  # dhcp
+  services.dnsmasq = {
+    enable = true;
+    # very important, we dont run dns, just dhcp
+    resolveLocalQueries = false;
+    settings = {
+      interface = "end0";
+      port = 0;
+      dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
+      dhcp-option = [
+        "option:router,192.168.100.1"
+        "option:dns-server,192.168.100.2,192.168.100.3"
+      ];
+    };
+  };
+
+  # Ensure the network interface has a static IP (required for DHCP server)
+  networking = {
+    defaultGateway = "192.168.100.1";
+    nameservers = [
+      "1.1.1.1"
+      "9.9.9.9"
+    ];
+    interfaces.end0 = {
+      useDHCP = false;
+      ipv4.addresses = [
+        {
+          address = "192.168.100.3";
+          prefixLength = 24;
+        }
+      ];
+    };
+  };
 }
