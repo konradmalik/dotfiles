@@ -78,7 +78,7 @@
         static_configs = [
           (
             let
-              ip = "192.168.68.55";
+              ip = "192.168.100.2";
             in
             {
               targets = [
