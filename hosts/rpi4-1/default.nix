@@ -89,6 +89,8 @@
   # dhcp
   services.dnsmasq = {
     enable = true;
+    # very important, we dont run dns, just dhcp
+    resolveLocalQueries = false;
     settings = {
       interface = "end0";
       port = 0;
