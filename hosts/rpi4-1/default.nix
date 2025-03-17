@@ -70,4 +70,19 @@
       options = [ "nofail" ];
     };
   };
+
+  # monitoring agents
+  services.prometheus = {
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [ "systemd" ];
+        port = 9100;
+      };
+      systemd = {
+        enable = true;
+        port = 9558;
+      };
+    };
+  };
 }

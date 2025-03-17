@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       prometheus = {
-        enable = false;
+        enable = true;
       };
       ports = {
         dns = 53;
