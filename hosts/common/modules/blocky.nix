@@ -2,9 +2,6 @@
   services.blocky = {
     enable = true;
     settings = {
-      prometheus = {
-        enable = true;
-      };
       ports = {
         dns = 53;
         tls = 853;

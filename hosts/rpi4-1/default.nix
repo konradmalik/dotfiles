@@ -2,8 +2,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./../common/modules/blocky.nix
     ./../common/nixos.nix
+    ./../common/modules/blocky.nix
+    ./../common/modules/monitoring/agents.nix
   ];
 
   networking.hostName = "rpi4-1";
@@ -68,21 +69,6 @@
       device = "/dev/sda2";
       fsType = "ext4";
       options = [ "nofail" ];
-    };
-  };
-
-  # monitoring agents
-  services.prometheus = {
-    exporters = {
-      node = {
-        enable = true;
-        enabledCollectors = [ "systemd" ];
-        port = 9100;
-      };
-      systemd = {
-        enable = true;
-        port = 9558;
-      };
     };
   };
 
