@@ -12,6 +12,10 @@
         enable = true;
         port = 9558;
       };
+      unbound = {
+        enable = true;
+        port = 9167;
+      };
     };
   };
 }

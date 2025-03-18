@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ./../common/nixos.nix
     ./../common/modules/blocky.nix
+    ./../common/modules/unbound.nix
     ./../common/modules/monitoring/agents.nix
   ];
 
@@ -70,6 +71,8 @@
               "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}"
               # blocky
               "127.0.0.1:${toString config.services.blocky.settings.ports.http}"
+              # unbound
+              "127.0.0.1:${toString config.services.prometheus.exporters.unbound.port}"
             ];
           }
         ];
@@ -89,6 +92,8 @@
                 "${ip}:${toString config.services.prometheus.exporters.systemd.port}"
                 # blocky
                 "${ip}:${toString config.services.blocky.settings.ports.http}"
+                # unbound
+                "${ip}:${toString config.services.prometheus.exporters.unbound.port}"
               ];
             }
           )

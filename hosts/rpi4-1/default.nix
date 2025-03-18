@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ./../common/nixos.nix
     ./../common/modules/blocky.nix
+    ./../common/modules/unbound.nix
     ./../common/modules/monitoring/agents.nix
   ];
 
@@ -79,6 +80,7 @@
     resolveLocalQueries = false;
     settings = {
       interface = "end0";
+      # disable dns
       port = 0;
       dhcp-range = "192.168.100.4,192.168.100.125,255.255.255.0,24h";
       dhcp-option = [
