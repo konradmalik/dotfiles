@@ -57,5 +57,9 @@ in
     ];
   };
 
-  system.stateVersion = lib.mkDefault "25.05";
+  system = {
+    switch.enableNg = true;
+    rebuild.enableNg = true;
+    stateVersion = lib.mkDefault "25.05";
+  };
 }
