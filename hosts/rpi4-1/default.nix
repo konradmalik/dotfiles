@@ -81,11 +81,10 @@
       interface = "end0";
       # disable dns
       port = 0;
-      dhcp-range = "192.168.100.4,192.168.100.125,255.255.255.0,24h";
+      dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
       dhcp-option = [
         "option:router,192.168.100.1"
-        "option:dns-server,192.168.100.2"
-        "option:dns-server,192.168.100.3"
+        "option:dns-server,192.168.100.2,192.168.100.3"
       ];
     };
   };
