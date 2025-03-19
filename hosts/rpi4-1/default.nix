@@ -4,7 +4,6 @@
     ./hardware-configuration.nix
     ./../common/nixos.nix
     ./../common/modules/blocky.nix
-    ./../common/modules/unbound.nix
     ./../common/modules/monitoring/agents.nix
   ];
 
