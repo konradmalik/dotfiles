@@ -9,8 +9,11 @@
       upstreams = {
         init.strategy = "failOnError";
         groups.default = [
-          "https://one.one.one.one/dns-query"
+          "https://cloudflare-dns.com/dns-query"
           "https://dns.quad9.net/dns-query"
+          "https://doh.mullvad.net/dns-query"
+          "https://mozilla.cloudflare-dns.com/dns-query"
+          "https://dns.google/dns-query"
         ];
       };
       bootstrapDns = [
