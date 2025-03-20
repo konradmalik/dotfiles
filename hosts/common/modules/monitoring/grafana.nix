@@ -1,6 +1,5 @@
 { config, lib, ... }:
 {
-  # monitoring stack
   services.grafana = {
     enable = true;
     settings = {

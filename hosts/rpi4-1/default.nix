@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -19,12 +19,12 @@
     dhcp = {
       enable = true;
       defaultGateway = "192.168.100.1";
-      staticIP = "192.168.100.2";
+      staticIP = config.konrad.homelab.rpi4-1.localIP;
       interface = "end0";
       dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
       dhcp-dns = [
-        "192.168.100.2"
-        "192.168.100.3"
+        config.konrad.homelab.rpi4-1.localIP
+        config.konrad.homelab.rpi4-2.localIP
       ];
     };
     syncthing = {
