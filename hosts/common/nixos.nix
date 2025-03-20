@@ -16,7 +16,6 @@ in
 
     ./modules/docker/linux.nix
     ./modules/home-manager.nix
-    ./modules/homelab.nix
     ./modules/locale.nix
     ./modules/locate.nix
     ./modules/memory.nix
