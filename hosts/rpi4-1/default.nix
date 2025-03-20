@@ -10,8 +10,6 @@
 
   networking.hostName = "rpi4-1";
 
-  networking.firewall.enable = false;
-
   services.blocky.enable = true;
 
   konrad.services = {
