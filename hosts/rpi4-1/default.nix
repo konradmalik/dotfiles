@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ./../common/nixos.nix
     ./../common/modules/blocky.nix
+    ./../common/modules/spotifyd.nix
     ./../common/modules/monitoring/agents.nix
   ];
 
@@ -16,6 +17,17 @@
   konrad.services = {
     autoupgrade = {
       enable = true;
+    };
+    dhcp = {
+      enable = true;
+      defaultGateway = "192.168.100.1";
+      staticIP = "192.168.100.2";
+      interface = "end0";
+      dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
+      dhcp-dns = [
+        "192.168.100.2"
+        "192.168.100.3"
+      ];
     };
     syncthing = {
       enable = true;
@@ -36,27 +48,10 @@
     };
   };
 
-  services.spotifyd = {
-    enable = true;
-    settings = {
-      global = {
-        backend = "alsa";
-        bitrate = 320;
-        max_cache_size = 5000000000; # 5 GB
-        initial_volume = "50"; # %
-        volume_normalisation = true;
-        device_name = "rpi4-1";
-        device_type = "speaker";
-        use_keyring = false;
-        use_mpris = false;
-      };
-    };
-  };
-
-  # shairport sync requires avahi
   services.shairport-sync = {
     enable = true;
     arguments = "-a rpi4-1 -v -o alsa";
+    openFirewall = true;
   };
 
   services.plex = {
@@ -69,41 +64,6 @@
       device = "/dev/sda2";
       fsType = "ext4";
       options = [ "nofail" ];
-    };
-  };
-
-  # dhcp
-  services.dnsmasq = {
-    enable = true;
-    # very important, we dont run dns, just dhcp
-    resolveLocalQueries = false;
-    settings = {
-      interface = "end0";
-      # disable dns
-      port = 0;
-      dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
-      dhcp-option = [
-        "option:router,192.168.100.1"
-        "option:dns-server,192.168.100.2,192.168.100.3"
-      ];
-    };
-  };
-
-  # Ensure the network interface has a static IP (required for DHCP server)
-  networking = {
-    defaultGateway = "192.168.100.1";
-    nameservers = [
-      "1.1.1.1"
-      "9.9.9.9"
-    ];
-    interfaces.end0 = {
-      useDHCP = false;
-      ipv4.addresses = [
-        {
-          address = "192.168.100.2";
-          prefixLength = 24;
-        }
-      ];
     };
   };
 }

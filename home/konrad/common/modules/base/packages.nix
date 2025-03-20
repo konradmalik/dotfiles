@@ -7,6 +7,7 @@
       dnsutils
       file
       inetutils
+      lsof
       moreutils
       ouch
       progress
