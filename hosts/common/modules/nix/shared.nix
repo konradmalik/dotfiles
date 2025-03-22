@@ -16,13 +16,6 @@ in
         final: prev:
         (import ../../../../pkgs/installable { pkgs = final; })
         // {
-          # FIXME once fixed on unstable
-          inherit
-            ((builtins.getFlake "github:NixOS/nixpkgs/3cf437fb2e3a4a8e4d28c89699b084636a48b979")
-              .legacyPackages.${pkgs.system}
-            )
-            bitwarden-cli
-            ;
           stable = import inputs.nixpkgs-stable {
             system = final.system;
             config = final.config;
@@ -50,7 +43,8 @@ in
       keep-outputs = true;
       trusted-users =
         [ "root" ]
-        ++ lib.optional pkgs.stdenvNoCC.isLinux "@wheel" ++ lib.optional pkgs.stdenvNoCC.isDarwin "@admin";
+        ++ lib.optional pkgs.stdenvNoCC.isLinux "@wheel"
+        ++ lib.optional pkgs.stdenvNoCC.isDarwin "@admin";
       extra-substituters = [
         "https://konradmalik.cachix.org"
         "https://nix-community.cachix.org"
