@@ -9,7 +9,7 @@ let
   cfg = config.konrad.programs.bitwarden;
   # helper to unlock bw and export session automatically
   jq = "${pkgs.jq}/bin/jq";
-  bw = "${pkgs.bitwarden-cli}/bin/bw";
+  bw = "${cfg.package}/bin/bw";
   # this needs to be a shell function due to 'export'
   bwuFunc = ''
     function bwu() {
@@ -38,11 +38,17 @@ in
 {
   options.konrad.programs.bitwarden = {
     enable = mkEnableOption "Enables bitwarden cli client through home-manager";
+    package = mkOption {
+      type = types.package;
+      default = pkgs.bitwarden-cli;
+      description = "Package for cli";
+      example = "pkgs.bitwarden-cli";
+    };
   };
 
   config = mkIf cfg.enable {
     programs.zsh.initExtra = bwuFunc;
     programs.bash.initExtra = bwuFunc;
-    home.packages = [ pkgs.bitwarden-cli ];
+    home.packages = [ cfg.package ];
   };
 }

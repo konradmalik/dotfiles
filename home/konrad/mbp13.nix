@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   obsidianPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
@@ -12,7 +12,13 @@ in
     enable = true;
     monospace.size = 15.0;
   };
-  konrad.programs.bitwarden.enable = true;
+  konrad.programs.bitwarden = {
+    enable = true;
+    # TODO until fixed on unstable
+    package =
+      (builtins.getFlake "github:NixOS/nixpkgs/3cf437fb2e3a4a8e4d28c89699b084636a48b979")
+      .legacyPackages.${pkgs.system}.bitwarden-cli;
+  };
   konrad.programs.alacritty = {
     makeDefault = false;
     enable = true;
