@@ -11,6 +11,7 @@
     git-absorb
     git-crypt
     git-extras
+    git-who
   ];
 
   programs.git =
