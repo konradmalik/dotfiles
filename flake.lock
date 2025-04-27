@@ -808,11 +808,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1745618161,
-        "narHash": "sha256-UHVrl/1gU32qUnqn7giILd3AxDFA98Is6fP/fZ1bgNs=",
+        "lastModified": 1745756812,
+        "narHash": "sha256-3gtXt0urtY48hh4BH9Y2OIAj7Ov6MbKnIJM50GMxnJw=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "6382f5249321af789e4d05592a2cae78f7c178e6",
+        "rev": "a743c8191933f394a55f7daab6729cebc26900b3",
         "type": "github"
       },
       "original": {
@@ -1119,15 +1119,15 @@
     "nvim-lspconfig": {
       "flake": false,
       "locked": {
-        "lastModified": 1745615241,
-        "narHash": "sha256-FMDnWDRa1OX7dCzbpyA+njcxvpgXYZm4/oPRB12Fz3w=",
-        "owner": "konradmalik",
+        "lastModified": 1745748932,
+        "narHash": "sha256-JfEzCMWuQ/3QUavBqUPOfed6I4MsSV9t95d+YU+kOmo=",
+        "owner": "neovim",
         "repo": "nvim-lspconfig",
-        "rev": "424880926fd01b9b1c7d157d28eb0d7ee145053e",
+        "rev": "48f4475eb71638b69c984557169dc3826603d37e",
         "type": "github"
       },
       "original": {
-        "owner": "konradmalik",
+        "owner": "neovim",
         "repo": "nvim-lspconfig",
         "type": "github"
       }
