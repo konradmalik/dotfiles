@@ -5,7 +5,7 @@
   ...
 }:
 let
-  zshInitExtra =
+  zshInitContent =
     ''
       # beeping is annoying
       unsetopt beep
@@ -184,7 +184,7 @@ in
       save = 100000;
       size = 100000;
     };
-    initExtra = zshInitExtra;
+    initContent = zshInitContent;
     completionInit = zshCompletionInit;
   };
 }

@@ -47,7 +47,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.zsh.initExtra = bwuFunc;
+    programs.zsh.initContent = bwuFunc;
     programs.bash.initExtra = bwuFunc;
     home.packages = [ cfg.package ];
   };
