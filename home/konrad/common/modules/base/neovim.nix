@@ -1,5 +1,7 @@
 {
   inputs,
+  pkgs,
+  lib,
   ...
 }:
 {
@@ -7,5 +9,9 @@
   programs.neovim-pde = {
     enable = true;
     cleanLspLog = true;
+  };
+
+  home.sessionVariables = {
+    MANPAGER = "${lib.getExe pkgs.neovim} --clean +Man!";
   };
 }
