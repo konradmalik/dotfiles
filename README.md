@@ -75,10 +75,10 @@ $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 >
 > So if you need to modify something on the card (like read host keys or add `wpa_supplicant.conf`) then the steps are:
 >
-> -   boot rpi with the newly flashed card once
-> -   wait a minute or two
-> -   poweroff rpi and mount the card on your PC
-> -   filesystem will be complete
+> - boot rpi with the newly flashed card once
+> - wait a minute or two
+> - poweroff rpi and mount the card on your PC
+> - filesystem will be complete
 >
 > In my case, Wi-Fi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
 
@@ -133,7 +133,7 @@ Then install nix following the official guidelines and installer.
 Then build and enable config locally:
 
 ```bash
-$ darwin-rebuild switch --flake .
+$ sudo darwin-rebuild switch --flake .
 ```
 
 To just build (for example for a test):
@@ -150,8 +150,8 @@ It is useful to have a Linux builder on a macOS machine to build linux-specific 
 
 NixOS has a great support for this. We need to:
 
--   set up a remote builder
--   configure nix.buildMachines to use it
+- set up a remote builder
+- configure nix.buildMachines to use it
 
 We can have either a truly remote machine (local PC, cloud VM etc. etc.) or a 'local remote builder' which is just a qemu virtual machine with
 NixOS inside. This 'local remote builder' is very handy to have either way, very easy to deploy and very lightweight
@@ -189,9 +189,9 @@ We use `age`, it's way easier and more straightforward than `gpg`.
 
 Strategy with keys:
 
--   `age` derived from host ssh key for host-wide secrets
--   `age` derived from personal ssh key for personal secrets
--   one global `age` key per person that is kept secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
+- `age` derived from host ssh key for host-wide secrets
+- `age` derived from personal ssh key for personal secrets
+- one global `age` key per person that is kept secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
 
 Create `age` directory for sops:
 
