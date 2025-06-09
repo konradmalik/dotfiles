@@ -45,16 +45,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1748961602,
-        "narHash": "sha256-2SgvWveJzYdsPRWnxMDi9QBuwQhID/Il6AkApwzvSUo=",
+        "lastModified": 1748811571,
+        "narHash": "sha256-DStGEt9gaZ54pEQkpEqm9Diky2nKdgI6X5NXO4jTK2c=",
         "owner": "Saghen",
         "repo": "blink.cmp",
-        "rev": "86239578da58dff5ca43c3ebc992f184ee64354f",
+        "rev": "02d5e15a5fe3d1ea505052a782dc6f1f0671f5ec",
         "type": "github"
       },
       "original": {
         "owner": "Saghen",
         "repo": "blink.cmp",
+        "rev": "02d5e15a5fe3d1ea505052a782dc6f1f0671f5ec",
         "type": "github"
       }
     },
@@ -808,11 +809,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1749192405,
-        "narHash": "sha256-mnr0gH7WNLTqR6+DDP3JaWuX6UKh/QkTJJnYCIce7pY=",
+        "lastModified": 1749467756,
+        "narHash": "sha256-xdseALIMxEMGePh1dWksQLaoI7PDCRNBh3o924OdRlU=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "5af97eda0278c70d0db0a667fedd62e0232f25c9",
+        "rev": "4969a86acd1054b9cc16687e608ce0a83d2ba3c8",
         "type": "github"
       },
       "original": {
