@@ -40,7 +40,7 @@ in
     };
 
     settings = {
-      manager = {
+      mgr = {
         linemode = "size";
         show_symlink = true;
       };
