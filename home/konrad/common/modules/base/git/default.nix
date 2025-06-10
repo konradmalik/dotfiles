@@ -38,28 +38,37 @@
         format = "ssh";
       };
 
-      includes = [
-        {
-          condition = "gitdir/i:~/Code/";
-          contents = {
+      includes =
+        let
+          personal = {
             user = {
               email = "konrad.malik@gmail.com";
               name = "Konrad Malik";
               signingKey = "${config.home.homeDirectory}/.ssh/personal.pub";
             };
           };
-        }
-        {
-          condition = "gitdir/i:~/Code/gitlab.cerebredev.com/";
-          contents = {
+          work = {
             user = {
               email = "konrad@cerebre.io";
               name = "Konrad Malik";
               signingKey = "${config.home.homeDirectory}/.ssh/cerebre.pub";
             };
           };
-        }
-      ];
+        in
+        [
+          {
+            condition = "gitdir/i:~/Code/";
+            contents = personal;
+          }
+          {
+            condition = "gitdir/i:~/Code/github.com/cerebre-ai/";
+            contents = work;
+          }
+          {
+            condition = "gitdir/i:~/Code/gitlab.cerebredev.com/";
+            contents = work;
+          }
+        ];
 
       aliases = {
         graph = "log --graph --oneline --decorate --abbrev-commit";
