@@ -808,11 +808,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1750423390,
-        "narHash": "sha256-yDc0Pnd5NGbYgetwmnC0eGaj/TFcs1jxqjowihzByaY=",
+        "lastModified": 1750709558,
+        "narHash": "sha256-lPdrQJ9ocOG0phUQTIFvuE23tAhHMTGBbTP392cbdPo=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "2f67592472fbc86b335c1d971e1358014ad4af13",
+        "rev": "5cbc25f8a421ce7596807fb6566b9a542cb10132",
         "type": "github"
       },
       "original": {
