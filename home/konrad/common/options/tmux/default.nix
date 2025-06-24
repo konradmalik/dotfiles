@@ -46,7 +46,12 @@ in
         baseConfig
         themeConfig
       ];
-      plugins = [ ];
+      plugins = with pkgs; [
+        {
+          plugin = tmuxPlugins.extrakto;
+          extraConfig = "set -g @extrakto_grab_area 'window recent'";
+        }
+      ];
     };
 
     programs.git.ignores = [ ".tmux.sh" ];
