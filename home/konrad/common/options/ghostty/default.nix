@@ -36,7 +36,7 @@ in
       type = types.nullOr types.str;
       default = config.colorscheme.name;
       example = "JetBrains Dracula";
-      description = "Theme to use. See 'ghosty +list-themes'";
+      description = "Theme to use. See 'ghostty +list-themes'";
     };
 
     package = mkOption {
