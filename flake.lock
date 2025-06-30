@@ -797,7 +797,6 @@
         "nvim-nio": "nvim-nio",
         "nvim-treesitter": "nvim-treesitter",
         "nvim-treesitter-context": "nvim-treesitter-context",
-        "nvim-treesitter-textobjects": "nvim-treesitter-textobjects",
         "oil-nvim": "oil-nvim",
         "plenary-nvim": "plenary-nvim",
         "telescope-fzf-native-nvim": "telescope-fzf-native-nvim",
@@ -808,11 +807,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1751274440,
-        "narHash": "sha256-csYY2T/Ybm7G/faYQY8CBmLxctHWuuESo77U5gtz8aI=",
+        "lastModified": 1751286485,
+        "narHash": "sha256-I/Xgt3V1/00TR40DX1a5U6zc3YSqV/48yvn4CEJEYFs=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "5a44f953db336260a12067974e92cc9738fa1afe",
+        "rev": "3b4fb10fedb98ce0bdc8bb0b5d0b54dcd5ec939c",
         "type": "github"
       },
       "original": {
@@ -1194,23 +1193,6 @@
       "original": {
         "owner": "nvim-treesitter",
         "repo": "nvim-treesitter-context",
-        "type": "github"
-      }
-    },
-    "nvim-treesitter-textobjects": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740735786,
-        "narHash": "sha256-sJdKVaGNXW4HEi6NXEqUhelr8T7/M216m7bPKHAd1do=",
-        "owner": "nvim-treesitter",
-        "repo": "nvim-treesitter-textobjects",
-        "rev": "fa32a45fdbab9c9c3bda9ecec9b12dddb221b927",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-treesitter",
-        "ref": "main",
-        "repo": "nvim-treesitter-textobjects",
         "type": "github"
       }
     },
