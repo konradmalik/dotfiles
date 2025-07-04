@@ -60,9 +60,11 @@ in
         margin-right = 10;
         height = 30;
         position = "top";
-        modules-center = (lib.optionals config.wayland.windowManager.hyprland.enable [ "wlr/workspaces" ]);
+        modules-center = (
+          lib.optionals config.wayland.windowManager.hyprland.enable [ "hyprland/workspaces" ]
+        );
 
-        "wlr/workspaces" = {
+        "hyprland/workspaces" = {
           format = "{icon}";
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
@@ -83,7 +85,7 @@ in
             "custom/menu"
             "idle_inhibitor"
           ]
-          ++ (optionals config.wayland.windowManager.hyprland.enable [ "wlr/workspaces" ])
+          ++ (optionals config.wayland.windowManager.hyprland.enable [ "hyprland/workspaces" ])
           ++ [
             "custom/currentplayer"
             "custom/player"
@@ -104,7 +106,7 @@ in
           "custom/hostname"
         ];
 
-        "wlr/workspaces" = {
+        "hyprland/workspaces" = {
           format = "{icon}";
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
