@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 let
@@ -28,7 +27,7 @@ in
   services.gnome.gnome-keyring.enable = anyGnomeKeyringEnabled;
 
   # for nightlight
-  services.geoclue2.enable = lib.mkDefault true;
+  services.geoclue2.enable = true;
 
   xdg.portal = {
     enable = true;

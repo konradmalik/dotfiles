@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -19,7 +18,7 @@ let
   wofi = "${pkgs.wofi}/bin/wofi";
   cal = "${pkgs.util-linux}/bin/cal";
 
-  terminal = "${pkgs.alacritty}/bin/alacritty";
+  terminal = "$TERMINAL";
   terminal-spawn = cmd: "${terminal} -e $SHELL -i -c \"${cmd}\"";
 
   calendar = terminal-spawn "${cal} -3 && sleep infinity";
@@ -52,26 +51,6 @@ in
   programs.waybar = {
     enable = true;
     settings = {
-      secondary = {
-        output = builtins.map (m: m.name) (builtins.filter (m: !m.isPrimary) config.monitors);
-        layer = "top";
-        margin-top = 10;
-        margin-left = 10;
-        margin-right = 10;
-        height = 30;
-        position = "top";
-        modules-center = (
-          lib.optionals config.wayland.windowManager.hyprland.enable [ "hyprland/workspaces" ]
-        );
-
-        "hyprland/workspaces" = {
-          format = "{icon}";
-          on-scroll-up = "hyprctl dispatch workspace e+1";
-          on-scroll-down = "hyprctl dispatch workspace e-1";
-          on-click = "activate";
-        };
-      };
-
       primary = {
         output = builtins.map (m: m.name) (builtins.filter (m: m.isPrimary) config.monitors);
         layer = "top";

@@ -16,11 +16,9 @@
     pavucontrol # audio gui
     playerctl # control audio players system-wide
     slurp # screenshots
-    waypipe # forward wayland through ssh
     wl-clipboard
     wl-mirror # screen mirroring
     wlr-randr # xrandr for wayland
-    ydotool # UI automation
   ];
 
   home.sessionVariables = {

@@ -16,6 +16,7 @@
     };
     settings = {
       general.adjustment-method = "wayland";
+      wayland.output = "*";
     };
   };
 }

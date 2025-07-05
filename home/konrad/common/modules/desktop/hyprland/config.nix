@@ -16,13 +16,12 @@ in
   cursor {
     inactive_timeout=5
   }
+
   decoration {
     rounding = 10
 
     blur {
-        enabled = false
-        size = 3
-        passes = 1
+      enabled = false
     }
     shadow {
       ignore_window = true
@@ -32,20 +31,22 @@ in
       color = rgba(00000099)
     }
   }
+
   animations {
     enabled = false
   }
+
   dwindle {
     # keep floating dimentions while tiling
     pseudotile = true
     preserve_split = true
   }
+
   misc {
-    # disable auto polling for config file changes
     disable_autoreload = true
-    # disable dragging animation
     animate_mouse_windowdragging = false
   }
+
   input {
     kb_layout=us,pl
     # left-to-right:
@@ -64,33 +65,41 @@ in
       tap-to-click=true
     }
   }
+
   device {
     name = elan-touchscreen
     enabled=false
   }
+
   gestures {
     workspace_swipe=true
   }
+
   # Startup
   exec=swaybg -i ${wallpaper} --mode fill
   exec-once=waybar
   exec-once=mako
   exec-once=swayidle -w
+
   # Mouse binding
   bindm=SUPER,mouse:272,movewindow
   bindm=SUPER,mouse:273,resizewindow
+
   # Keyboard alt behavior
   bind=SUPER,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch
   bind=SUPERSHIFT,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps
+
   # Program bindings
   bind=SUPER,return,exec,$TERMINAL
   bind=SUPER,w,exec,makoctl dismiss
   bind=SUPER,b,exec,$BROWSER
   bind=SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%
   bind=SUPER,space,exec,wofi -S run
+
   # Screenshots
   bind=SUPER,p,exec,grim -g "$(slurp -d)" - | wl-copy -t image/png
   bind=SUPERSHIFT,p,exec,grim -g "$(slurp -d)" /tmp/$(date +'%H:%M:%S.png')
+
   # Keyboard controls (brightness, media, sound, etc)
   bind=,XF86MonBrightnessUp,exec,light -A 10
   bind=,XF86MonBrightnessDown,exec,light -U 10
@@ -106,6 +115,7 @@ in
   bind=,XF86AudioMute,exec,pactl set-sink-mute @DEFAULT_SINK@ toggle
   bind=SHIFT,XF86AudioMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle
   bind=,XF86AudioMicMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
   # Window manager controls
   bind=SUPERSHIFT,q,killactive
   bind=SUPERSHIFT,e,exit
@@ -116,11 +126,13 @@ in
   bind=SUPERSHIFT,minus,splitratio,-0.3333333
   bind=SUPER,equal,splitratio,0.25
   bind=SUPERSHIFT,equal,splitratio,0.3333333
+
   # dwindle
   bind=SUPER,s,pseudo
   bind=SUPER,g,togglegroup
   bind=SUPER,apostrophe,changegroupactive,f
   bind=SUPERSHIFT,apostrophe,changegroupactive,b
+
   # rest
   bind=SUPER,left,movefocus,l
   bind=SUPER,right,movefocus,r
@@ -189,5 +201,4 @@ in
   bind=SUPERSHIFT,8,movetoworkspacesilent,08
   bind=SUPERSHIFT,9,movetoworkspacesilent,09
   bind=SUPERSHIFT,0,movetoworkspacesilent,10
-  blurls=waybar
 ''
