@@ -1,6 +1,7 @@
 { lib, ... }:
 {
   imports = [
+    ./modules/aerospace.nix
     ./modules/docker/darwin.nix
     ./modules/nix/darwin.nix
     ./modules/home-manager.nix
