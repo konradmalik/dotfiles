@@ -14,17 +14,21 @@
   xdg.configFile."mimeapps.list".force = true;
 
   home = {
-    packages = with pkgs; [
-      bitwarden
-      calibre
-      obsidian
-      signal-desktop
-      slack
-      spotify
-      # for xdg-open in 'gx' in vim for example
-      xdg-utils
-      zathura
-    ];
+    packages =
+      with pkgs;
+      [
+        bitwarden
+        calibre
+        obsidian
+        signal-desktop
+        slack
+        spotify
+        zathura
+      ]
+      ++ lib.optionals (stdenvNoCC.isLinux) [
+        # for xdg-open in 'gx' in vim for example
+        xdg-utils
+      ];
   };
 
   konrad.wallpaper = "${customArgs.files}/wallpapers/bishal-mishra.jpg";
