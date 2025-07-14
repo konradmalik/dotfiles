@@ -10,4 +10,6 @@
   font-size = ${toString fontSize}
   mouse-hide-while-typing = true
   theme = ${theme}
+  shell-integration = detect
+  shell-integration-features = true
 ''
