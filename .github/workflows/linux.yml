@@ -10,10 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            accept-flake-config = true
+      - uses: wimpysworld/nothing-but-nix@v6
+      - uses: DeterminateSystems/nix-installer-action@v18
       - name: Flake check
         run: nix flake check
 
@@ -23,10 +21,8 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            accept-flake-config = true
+      - uses: wimpysworld/nothing-but-nix@v6
+      - uses: DeterminateSystems/nix-installer-action@v18
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
         with:
@@ -40,15 +36,9 @@ jobs:
     needs:
       - flake-check
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: true
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            accept-flake-config = true
+      - uses: wimpysworld/nothing-but-nix@v6
+      - uses: DeterminateSystems/nix-installer-action@v18
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
         with:
@@ -62,15 +52,9 @@ jobs:
     needs:
       - flake-check
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: true
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            accept-flake-config = true
+      - uses: wimpysworld/nothing-but-nix@v6
+      - uses: DeterminateSystems/nix-installer-action@v18
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
         with:
