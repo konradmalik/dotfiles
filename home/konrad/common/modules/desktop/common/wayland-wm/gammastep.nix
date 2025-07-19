@@ -14,6 +14,7 @@
       day = 6000;
       night = 4600;
     };
+    enableVerboseLogging = true;
     settings = {
       general.adjustment-method = "wayland";
       wayland.output = "*";
