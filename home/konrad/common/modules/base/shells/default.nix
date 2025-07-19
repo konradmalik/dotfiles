@@ -4,6 +4,8 @@
     ./zsh.nix
   ];
 
+  home.shell.enableShellIntegration = true;
+
   programs = {
     carapace.enable = true;
 
