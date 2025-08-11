@@ -48,10 +48,7 @@ in
       ];
       plugins = [
         {
-          # TODO until fixed
-          plugin =
-            (builtins.getFlake "github:konradmalik/nixpkgs/1d5d07c2310be18f6c74955bc5fec7bc97894198")
-            .legacyPackages.${pkgs.system}.tmuxPlugins.extrakto;
+          plugin = pkgs.tmuxPlugins.extrakto;
           extraConfig = "set -g @extrakto_grab_area 'window recent'";
         }
       ];
