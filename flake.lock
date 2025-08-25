@@ -134,11 +134,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1755875334,
-        "narHash": "sha256-02sGmp8SVbeSVK5cDUnQJSOe/Eh5xiveO8tspsRx3wY=",
+        "lastModified": 1756110148,
+        "narHash": "sha256-jgDzCa5YWFgHd/sczlGol0enzU+URwnQFs2BiJGLxYQ=",
         "owner": "konradmalik",
         "repo": "efm-langserver",
-        "rev": "732bdc74a819fba707320553f03848957d6ff1c6",
+        "rev": "5e2a39fd32483c44075f40b808e676accaf94360",
         "type": "github"
       },
       "original": {
@@ -808,11 +808,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1755875446,
-        "narHash": "sha256-7x4w7WsFLACx5aAq7OF5RT+wRetm6DmkWti42i6dw7c=",
+        "lastModified": 1756129934,
+        "narHash": "sha256-cbZpztzV+PHPrBQ7OwOtPWrGzU80UREaX2gzjJcHb+E=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "1b93cd60c4673dc63411dce241a7d47e0f047653",
+        "rev": "c47822b18b705451d9679f96b4ae1cfe9f4bb980",
         "type": "github"
       },
       "original": {
