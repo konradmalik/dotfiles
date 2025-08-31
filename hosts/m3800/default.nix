@@ -25,16 +25,10 @@
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "ignore";
+  services.logind.settings.Login = {
+    IdleAction = "ignore";
+    IdleActionSec = "30min";
+    LidSwitch = "suspend";
+    LidSwitchDocked = "ignore";
   };
-
-  # FIXME some bug in either hyprland or somewhere else
-  # suspends even if not idle after that time
-  services.logind.extraConfig = ''
-    #IdleAction=suspend
-    IdleAction=ignore
-    IdleActionSec=30min
-  '';
 }
