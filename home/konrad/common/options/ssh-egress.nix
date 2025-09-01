@@ -12,19 +12,25 @@ in
     {
       programs.ssh = {
         enable = true;
-        addKeysToAgent = "yes";
-        compression = true;
-        controlMaster = "auto";
-        controlPath = "/tmp/%r@%h:%p";
-        controlPersist = "1m";
-        serverAliveCountMax = 6;
-        serverAliveInterval = 15;
+        enableDefaultConfig = false;
         extraConfig = ''
           IgnoreUnknown UseKeychain
           UseKeychain yes
         '';
         includes = [ "config.d/*" ];
         matchBlocks = {
+          "*" = {
+            forwardAgent = false;
+            addKeysToAgent = "yes";
+            compression = true;
+            serverAliveInterval = 15;
+            serverAliveCountMax = 6;
+            hashKnownHosts = false;
+            userKnownHostsFile = "~/.ssh/known_hosts";
+            controlMaster = "auto";
+            controlPath = "/tmp/%r@%h:%p";
+            controlPersist = "1m";
+          };
           git = {
             host = "github.com gitlab.com bitbucket.org";
             user = "git";
