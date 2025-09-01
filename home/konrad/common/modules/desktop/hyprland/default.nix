@@ -1,14 +1,13 @@
 {
   lib,
   config,
-  pkgs,
   osConfig,
   ...
 }:
 {
   imports = [
     ../common
-    ../common/wayland-wm
+    ../wayland-wm
   ];
 
   assertions = [
@@ -18,8 +17,7 @@
     }
   ];
 
-  home.packages = with pkgs; [ swaybg ];
-
+  services.hyprpolkitagent.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -33,7 +31,6 @@
         inherit (config) monitors;
       })
       + (import ./config.nix {
-        inherit (config.konrad) wallpaper;
         inherit (config) colorscheme;
       });
   };

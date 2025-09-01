@@ -1,4 +1,4 @@
-{ colorscheme, wallpaper }:
+{ colorscheme }:
 let
   c = colorscheme.palette;
 in
@@ -13,6 +13,7 @@ in
     col.nogroup_border=0xff${c.base04}
     layout=dwindle
   }
+
   cursor {
     inactive_timeout=5
   }
@@ -74,12 +75,6 @@ in
   gestures {
     workspace_swipe=true
   }
-
-  # Startup
-  exec=swaybg -i ${wallpaper} --mode fill
-  exec-once=waybar
-  exec-once=mako
-  exec-once=swayidle -w
 
   # Mouse binding
   bindm=SUPER,mouse:272,movewindow

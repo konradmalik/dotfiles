@@ -1,11 +1,19 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   imports = [
     ./gammastep.nix
     ./imv.nix
     ./mako.nix
+    (import ./swaybg.nix {
+      inherit (config.konrad) wallpaper;
+      inherit (pkgs) swaybg;
+    })
     ./swayidle.nix
-    ./swaylock.nix
     ./waybar.nix
     ./wofi.nix
   ];

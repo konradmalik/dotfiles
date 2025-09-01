@@ -3,6 +3,8 @@ let
   c = config.colorscheme;
 in
 {
+  wayland.windowManager.hyprland.settings.exec-once = [ "mako" ];
+
   services.mako = {
     enable = true;
     settings = {

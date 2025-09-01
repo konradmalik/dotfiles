@@ -48,6 +48,8 @@ let
     ''}/bin/waybar-${name}";
 in
 {
+  wayland.windowManager.hyprland.settings.exec-once = [ "waybar" ];
+
   programs.waybar = {
     enable = true;
     settings = {
@@ -59,16 +61,15 @@ in
         margin-left = 10;
         margin-right = 10;
         height = 30;
-        modules-left =
-          [
-            "custom/menu"
-            "idle_inhibitor"
-          ]
-          ++ (optionals config.wayland.windowManager.hyprland.enable [ "hyprland/workspaces" ])
-          ++ [
-            "custom/currentplayer"
-            "custom/player"
-          ];
+        modules-left = [
+          "custom/menu"
+          "idle_inhibitor"
+        ]
+        ++ (optionals config.wayland.windowManager.hyprland.enable [ "hyprland/workspaces" ])
+        ++ [
+          "custom/currentplayer"
+          "custom/player"
+        ];
         modules-center = [
           "cpu"
           "memory"
