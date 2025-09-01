@@ -29,6 +29,12 @@ in
   # for nightlight
   services.geoclue2.enable = true;
 
+  # Initial login experience
+  services.greetd = {
+    enable = true;
+    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+  };
+
   xdg.portal = {
     enable = true;
     # gtk portal needed to make gtk apps happy
