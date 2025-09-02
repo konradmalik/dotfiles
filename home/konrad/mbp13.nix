@@ -25,11 +25,7 @@ in
     # installed via homebrew
     package = null;
   };
-  konrad.programs.ghostty = {
-    enable = true;
-    # installed via homebrew
-    package = null;
-  };
+  programs.ghostty.package = null;
   programs.neovim-pde = {
     notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
     spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";

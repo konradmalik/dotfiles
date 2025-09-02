@@ -1,0 +1,65 @@
+{
+  lib,
+  config,
+  ...
+}:
+let
+  palette = config.colorscheme.palette;
+  fontSize = config.fontProfiles.monospace.size;
+  fontFamily = config.fontProfiles.monospace.family;
+in
+{
+  sessionVariables.TERMINAL = lib.mkIf config.programs.ghostty.enable "ghostty";
+  home.packages = lib.optional (
+    !config.programs.ghostty.enable
+  ) config.programs.ghostty.package.terminfo;
+
+  programs.ghostty = {
+    enable = false;
+    settings = {
+      font-family = fontFamily;
+      font-size = fontSize;
+
+      confirm-close-surface = false;
+      gtk-single-instance = false;
+      gtk-titlebar = false;
+      mouse-hide-while-typing = true;
+      shell-integration-features = true;
+
+      theme = "konradmalik";
+    };
+    themes = {
+      konradmalik = {
+        background = "#${palette.base00}";
+        foreground = "#${palette.base05}";
+
+        selection-background = "#${palette.base02}";
+        selection-foreground = "#${palette.base00}";
+        palette = [
+          "0=#${palette.base00}"
+          "1=#${palette.base08}"
+          "2=#${palette.base0B}"
+          "3=#${palette.base0A}"
+          "4=#${palette.base0D}"
+          "5=#${palette.base0E}"
+          "6=#${palette.base0C}"
+          "7=#${palette.base05}"
+          "8=#${palette.base03}"
+          "9=#${palette.base08}"
+          "10=#${palette.base0B}"
+          "11=#${palette.base0A}"
+          "12=#${palette.base0D}"
+          "13=#${palette.base0E}"
+          "14=#${palette.base0C}"
+          "15=#${palette.base07}"
+          "16=#${palette.base09}"
+          "17=#${palette.base0F}"
+          "18=#${palette.base01}"
+          "19=#${palette.base02}"
+          "20=#${palette.base04}"
+          "21=#${palette.base06}"
+        ];
+      };
+    };
+  };
+}
