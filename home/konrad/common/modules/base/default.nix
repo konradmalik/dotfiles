@@ -9,6 +9,7 @@
     ./earthly.nix
     ./fzf.nix
     ./git
+    ./ghostty.nix
     ./glow.nix
     ./gpg.nix
     ./k9s.nix
@@ -24,7 +25,8 @@
     ./starship.nix
     ./tealdeer.nix
     ./yazi.nix
-  ] ++ builtins.attrValues (import ./../../options);
+  ]
+  ++ builtins.attrValues (import ./../../options);
 
   konrad.programs = {
     tmux.enable = true;

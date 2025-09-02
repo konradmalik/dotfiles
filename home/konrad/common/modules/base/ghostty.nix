@@ -7,15 +7,16 @@ let
   palette = config.colorscheme.palette;
   fontSize = config.fontProfiles.monospace.size;
   fontFamily = config.fontProfiles.monospace.family;
+  cfg = config.programs.ghostty;
 in
 {
-  sessionVariables.TERMINAL = lib.mkIf config.programs.ghostty.enable "ghostty";
-  home.packages = lib.optional (
-    !config.programs.ghostty.enable
-  ) config.programs.ghostty.package.terminfo;
+  home.sessionVariables = lib.mkIf cfg.enable {
+    TERMINAL = "ghostty";
+  };
+  home.packages = lib.optional (!cfg.enable && cfg.package != null) cfg.package.terminfo;
 
   programs.ghostty = {
-    enable = false;
+    enable = lib.mkDefault false;
     settings = {
       font-family = fontFamily;
       font-size = fontSize;
