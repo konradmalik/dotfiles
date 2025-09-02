@@ -10,15 +10,13 @@ let
   fontFamily = config.fontProfiles.monospace.family;
 in
 {
-  home.sessionVariables.TERMINAL = lib.mkIf config.programs.alacritty.enable "alacritty";
-
   programs.tmux.extraConfig = ''
     # overrides for the alacritty (host) terminal features
     set -as terminal-features ",alacritty*:RGB:hyperlinks:strikethrough:usstyle"
   '';
 
   programs.alacritty = {
-    enable = false;
+    enable = true;
 
     settings = {
       general.live_config_reload = false;
@@ -55,7 +53,7 @@ in
           y = 6;
         };
       }
-      // lib.optionalAttr pkgs.stdenv.isDarwin {
+      // lib.optionalAttrs pkgs.stdenv.isDarwin {
         "option_as_alt" = "Both";
       };
 

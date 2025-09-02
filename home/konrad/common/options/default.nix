@@ -1,5 +1,4 @@
 {
-  alacritty = import ./alacritty;
   bitwarden = import ./bitwarden.nix;
   fonts = import ./fonts.nix;
   monitors = import ./monitors.nix;

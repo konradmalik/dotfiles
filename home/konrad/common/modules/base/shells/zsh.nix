@@ -92,11 +92,6 @@ let
     rfv-widget() { export VISUAL=nvim && ${pkgs.rfv}/bin/rfv }
     zle -N rfv-widget
     bindkey '^G' rfv-widget
-  ''
-  + lib.optionalString (pkgs.stdenvNoCC.isDarwin && config.konrad.programs.alacritty.enable) ''
-    # alacritty icon jumping
-    # https://github.com/alacritty/alacritty/issues/2950#issuecomment-706610878
-    printf "\e[?1042l"
   '';
 
   zcompdumpRemoval = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
