@@ -10,5 +10,4 @@
   syncthing = import ./syncthing.nix;
   tmux = import ./tmux;
   wallpaper = import ./wallpaper.nix;
-  wezterm = import ./wezterm;
 }
