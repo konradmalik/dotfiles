@@ -8,6 +8,11 @@
   imports = [
     ../common
     ../wayland-wm
+
+    ./bindings.nix
+    ./envs.nix
+    ./input.nix
+    ./looknfeel.nix
   ];
 
   assertions = [
@@ -25,13 +30,11 @@
     # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
     package = null;
     portalPackage = null;
-    extraConfig =
-      (import ./monitors.nix {
+    extraConfig = (
+      import ./monitors.nix {
         inherit lib;
         inherit (config) monitors;
-      })
-      + (import ./config.nix {
-        inherit (config) colorscheme;
-      });
+      }
+    );
   };
 }

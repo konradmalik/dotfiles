@@ -39,6 +39,5 @@
     QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
     SDL_VIDEODRIVER = "wayland";
     CLUTTER_BACKEND = "wayland";
-    XDG_SESSION_DESKTOP = "Hyprland";
   };
 }
