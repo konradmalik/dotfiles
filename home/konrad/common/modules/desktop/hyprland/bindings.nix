@@ -11,9 +11,9 @@
       "SUPERSHIFT,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps"
 
       # Program bindings
-      "SUPER,return,exec,$TERMINAL"
+      "SUPER,return,exec,$terminal"
       "SUPER,w,exec,makoctl dismiss"
-      "SUPER,b,exec,$BROWSER"
+      "SUPER,b,exec,$browser"
       "SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%"
       "SUPER,space,exec,wofi -S run"
 

@@ -9,7 +9,6 @@
     ./earthly.nix
     ./fzf.nix
     ./git
-    ./ghostty.nix
     ./glow.nix
     ./gpg.nix
     ./k9s.nix

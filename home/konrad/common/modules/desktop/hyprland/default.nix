@@ -30,6 +30,10 @@
     # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
     package = null;
     portalPackage = null;
+    settings = {
+      "$terminal" = lib.mkDefault "ghostty";
+      "$browser" = lib.mkDefault "firefox";
+    };
     extraConfig = (
       import ./monitors.nix {
         inherit lib;

@@ -2,7 +2,9 @@
 {
   imports = [
     ./modules/base
+    ./modules/desktop/common/alacritty.nix
     ./modules/desktop/common/font.nix
+    ./modules/desktop/common/ghostty.nix
     ./modules/desktop/common/mpv.nix
   ];
 

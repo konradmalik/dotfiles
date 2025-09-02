@@ -16,7 +16,7 @@ in
   '';
 
   programs.alacritty = {
-    enable = true;
+    enable = lib.mkDefault true;
 
     settings = {
       general.live_config_reload = false;

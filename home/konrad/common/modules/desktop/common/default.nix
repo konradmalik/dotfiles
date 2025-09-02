@@ -2,6 +2,7 @@
 {
   imports = [
     ./alacritty.nix
+    ./ghostty.nix
     ./firefox.nix
     ./font.nix
     ./gnome-keyring.nix
@@ -27,8 +28,6 @@
       zathura
     ];
   };
-
-  programs.ghostty.enable = true;
 
   konrad.wallpaper = "${customArgs.files}/wallpapers/bishal-mishra.jpg";
 }

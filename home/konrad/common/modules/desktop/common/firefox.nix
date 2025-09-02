@@ -17,8 +17,5 @@
     "x-scheme-handler/https" = [ "firefox.desktop" ];
     "x-scheme-handler/unknown" = [ "firefox.desktop" ];
   };
-  home = {
-    sessionVariables.BROWSER = "firefox";
-    packages = [ pkgs.firefox ];
-  };
+  home.packages = [ pkgs.firefox ];
 }

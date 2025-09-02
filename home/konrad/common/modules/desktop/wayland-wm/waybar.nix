@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 
@@ -18,8 +19,7 @@ let
   wofi = "${pkgs.wofi}/bin/wofi";
   cal = "${pkgs.util-linux}/bin/cal";
 
-  terminal = "$TERMINAL";
-  terminal-spawn = cmd: "${terminal} -e $SHELL -i -c \"${cmd}\"";
+  terminal-spawn = cmd: "${lib.getExe pkgs.alacritty} -e /bin/sh -c \"${cmd}\"";
 
   calendar = terminal-spawn "${cal} -3 && sleep infinity";
   systemMonitor = terminal-spawn btm;
@@ -197,7 +197,6 @@ in
         };
         "custom/hostname" = {
           exec = "echo $USER@$(hostname)";
-          on-click = terminal;
         };
         "custom/gammastep" = {
           interval = 5;

@@ -7,16 +7,10 @@ let
   palette = config.colorscheme.palette;
   fontSize = config.fontProfiles.monospace.size;
   fontFamily = config.fontProfiles.monospace.family;
-  cfg = config.programs.ghostty;
 in
 {
-  home.sessionVariables = lib.mkIf cfg.enable {
-    TERMINAL = "ghostty";
-  };
-  home.packages = lib.optional (!cfg.enable && cfg.package != null) cfg.package.terminfo;
-
   programs.ghostty = {
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
     settings = {
       font-family = fontFamily;
       font-size = fontSize;
