@@ -1,5 +1,6 @@
 {
   config,
+  ...
 }:
 let
   c = config.colorscheme.palette;
