@@ -21,10 +21,10 @@ in
       mouse-hide-while-typing = true;
       shell-integration-features = true;
 
-      theme = "konradmalik";
+      theme = "custom";
     };
     themes = {
-      konradmalik = {
+      custom = {
         background = "#${palette.base00}";
         foreground = "#${palette.base05}";
 
