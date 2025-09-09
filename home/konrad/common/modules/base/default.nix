@@ -6,7 +6,6 @@
     ./bottom.nix
     ./colors.nix
     ./direnv.nix
-    ./earthly.nix
     ./fzf.nix
     ./git
     ./glow.nix
