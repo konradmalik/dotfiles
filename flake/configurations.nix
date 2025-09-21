@@ -22,10 +22,6 @@
           inherit specialArgs;
           modules = [ ./../hosts/m3800 ];
         };
-        xps12 = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./../hosts/xps12 ];
-        };
         vaio = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./../hosts/vaio ];
