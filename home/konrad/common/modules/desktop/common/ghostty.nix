@@ -21,7 +21,7 @@ in
       mouse-hide-while-typing = true;
       shell-integration-features = true;
 
-      theme = "custom";
+      theme = config.colorscheme.name;
     };
     themes = {
       custom = {
