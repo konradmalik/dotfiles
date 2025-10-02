@@ -185,8 +185,15 @@ in
           onclick = "";
         };
         network = {
+          format-icons = [
+            "󰤯"
+            "󰤟"
+            "󰤢"
+            "󰤥"
+            "󰤨"
+          ];
           interval = 3;
-          format-wifi = "  {essid}";
+          format-wifi = "{icon} {essid}";
           format-ethernet = "󰈀 ";
           format-disconnected = "󰖪 ";
           format-linked = "  {ifname} (No IP)";
