@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  config,
   ...
 }:
 {
@@ -11,11 +10,9 @@
     ./gammastep.nix
     ./hyprland
     ./mako.nix
-    (import ./swaybg.nix {
-      inherit (config.konrad) wallpaper;
-      inherit (pkgs) swaybg;
-    })
-    ./swayidle.nix
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./hyprpaper.nix
     ./waybar.nix
     ./wofi.nix
   ];
