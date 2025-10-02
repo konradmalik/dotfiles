@@ -41,6 +41,7 @@
       "ghostty"
       "gimp"
       "keepingyouawake"
+      "localsend"
       "microsoft-auto-update"
       "microsoft-excel"
       "microsoft-outlook"

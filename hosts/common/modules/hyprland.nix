@@ -26,6 +26,7 @@ in
 
   programs = {
     light.enable = true;
+    localsend.enable = true;
     hyprland.enable = anyHyprlandEnabled;
   };
 
