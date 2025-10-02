@@ -6,10 +6,7 @@
 
   networking.hostName = "vaio";
 
-  konrad.networking.wireless = {
-    enable = true;
-    interfaces = [ "wlp2s0" ];
-  };
+  konrad.network.wireless.enable = true;
 
   konrad.services.autoupgrade = {
     enable = true;

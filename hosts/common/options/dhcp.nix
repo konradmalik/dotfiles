@@ -8,7 +8,7 @@ let
 in
 {
   options.konrad.services.dhcp = {
-    enable = lib.mkEnableOption "Enables the bluetooth with keychron fixes";
+    enable = lib.mkEnableOption "Enables dhcp server";
 
     defaultGateway = lib.mkOption {
       type = lib.types.str;

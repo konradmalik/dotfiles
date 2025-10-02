@@ -1,44 +1,38 @@
 {
+  pkgs,
   lib,
   config,
-  osConfig,
   ...
 }:
 {
   imports = [
     ../common
-    ../wayland-wm
 
-    ./bindings.nix
-    ./envs.nix
-    ./input.nix
-    ./looknfeel.nix
+    ./gammastep.nix
+    ./hyprland
+    ./mako.nix
+    (import ./swaybg.nix {
+      inherit (config.konrad) wallpaper;
+      inherit (pkgs) swaybg;
+    })
+    ./swayidle.nix
+    ./waybar.nix
+    ./wofi.nix
   ];
 
-  assertions = [
-    {
-      assertion = osConfig.programs.hyprland.enable;
-      message = "make sure to enable hyprland on the host for required dependencies like xdg-desktop portal etc.";
-    }
+  home.packages = with pkgs; [
+    hyprshot
   ];
 
-  services.hyprpolkitagent.enable = true;
-  wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    systemd.enable = true;
-    # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
-    package = null;
-    portalPackage = null;
-    settings = {
-      "$terminal" = lib.mkDefault "ghostty";
-      "$browser" = lib.mkDefault "firefox";
-    };
-    extraConfig = (
-      import ./monitors.nix {
-        inherit lib;
-        inherit (config) monitors;
-      }
-    );
+  home.sessionVariables = {
+    #  https://wiki.hyprland.org/Configuring/Environment-variables/
+    LIBSEAT_BACKEND = "logind";
+    GDK_BACKEND = "wayland,x11,*";
+    QT_QPA_PLATFORM = "wayland;xcb";
+    QT_QPA_PLATFORMTHEME = lib.mkForce "qt5ct";
+    QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
+    SDL_VIDEODRIVER = "wayland";
+    CLUTTER_BACKEND = "wayland";
   };
 }

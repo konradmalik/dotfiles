@@ -13,15 +13,27 @@ let
   ) allHmUsers;
 in
 {
+  environment.systemPackages = with pkgs; [
+    hyprshot
+    libnotify
+    nautilus
+    pamixer
+    playerctl
+    pavucontrol
+    wl-clipboard
+    wl-mirror
+    wlr-randr
+
+    gnome-themes-extra
+  ];
+
   programs = {
     light.enable = true;
     hyprland.enable = anyHyprlandEnabled;
   };
 
-  # otherwise swaylock won't be able to unlock
-  security.pam.services = {
-    swaylock = { };
-  };
+  # gtk portal needed to make gtk apps happy
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # enables necessary pam stuff thus allowing to unlock per user keyring during login
   services.gnome.gnome-keyring.enable = anyGnomeKeyringEnabled;
@@ -35,14 +47,8 @@ in
     settings.default_session.command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
   };
 
-  xdg.portal = {
-    enable = true;
-    # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-
   hardware.graphics.enable = true;
 
-  # Optional, hint electron apps to use wayland:
+  # hint electron apps to use wayland:
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }

@@ -80,6 +80,7 @@ in
         ];
         modules-right = [
           "tray"
+          "bluetooth"
           "network"
           "battery"
           "hyprland/language"

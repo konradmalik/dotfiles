@@ -1,7 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./../common/modules/wayland-wm.nix
+    ./../common/modules/hyprland.nix
     ./../common/nixos.nix
   ];
 
@@ -11,10 +11,7 @@
 
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
-  konrad.networking.wireless = {
-    enable = false;
-    interfaces = [ "wlp6s0" ];
-  };
+  konrad.network.wireless.enable = true;
   konrad.services = {
     autoupgrade = {
       enable = true;

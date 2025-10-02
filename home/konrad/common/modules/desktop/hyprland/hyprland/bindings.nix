@@ -17,8 +17,8 @@
       "SUPER,space,exec,wofi --show drun --sort-order=alphabetical"
 
       # Screenshots
-      "SUPER,p,exec,grim -g ''\"$(slurp -d)''\" - | wl-copy -t image/png"
-      "SUPERSHIFT,p,exec,grim -g ''\"$(slurp -d)''\" /tmp/$(date +'%H:%M:%S.png')"
+      "SUPER,p,exec,hyprshot --mode region --output /tmp"
+      "SUPERSHIFT,p,exec,hyprshot --freeze --mode region --output /tmp"
 
       # Keyboard controls (brightness, media, sound, etc)
       ",XF86MonBrightnessUp,exec,light -A 10"

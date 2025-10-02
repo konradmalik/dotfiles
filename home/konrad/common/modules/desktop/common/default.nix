@@ -7,6 +7,7 @@
     ./font.nix
     ./gnome-keyring.nix
     ./gtk.nix
+    ./imv.nix
     ./mpv.nix
     ./qt.nix
   ];
