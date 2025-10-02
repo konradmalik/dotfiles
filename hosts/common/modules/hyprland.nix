@@ -22,8 +22,6 @@ in
     playerctl
     pavucontrol
     wl-clipboard
-    wl-mirror
-    wlr-randr
   ];
 
   programs = {
