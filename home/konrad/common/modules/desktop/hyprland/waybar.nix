@@ -186,7 +186,7 @@ in
             {ipaddr}/{cidr}
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
-          on-click = "";
+          on-click = "impala";
         };
         "custom/menu" = {
           return-type = "json";

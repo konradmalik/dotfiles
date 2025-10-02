@@ -15,6 +15,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     hyprshot
+    impala
     libnotify
     nautilus
     pamixer
