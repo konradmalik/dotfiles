@@ -18,6 +18,7 @@ let
   btm = "${pkgs.bottom}/bin/btm";
   wofi = "${pkgs.wofi}/bin/wofi";
   cal = "${pkgs.util-linux}/bin/cal";
+  impala = "${pkgs.impala}/bin/impala";
 
   terminal-spawn = cmd: "${lib.getExe pkgs.alacritty} -e /bin/sh -c \"${cmd}\"";
 
@@ -74,7 +75,7 @@ in
           "cpu"
           "memory"
           "clock"
-          "pulseaudio"
+          "wireplumber"
           "backlight"
           "custom/gammastep"
         ];
@@ -93,6 +94,13 @@ in
           on-scroll-down = "hyprctl dispatch workspace e-1";
           on-click = "activate";
         };
+        bluetooth = {
+          format = "";
+          format-disabled = "󰂲";
+          format-connected = "";
+          tooltip-format = "Devices connected: {num_connections}";
+          on-click = "blueman-manager";
+        };
         clock = {
           format = "{:%d/%m %H:%M}";
           tooltip-format = ''
@@ -109,7 +117,7 @@ in
           interval = 5;
           on-click = systemMonitor;
         };
-        pulseaudio = {
+        wireplumber = {
           format = "{icon} {volume}% {format_source}";
           format-muted = "  {icon} 0%";
           format-bluetooth = "{icon} {volume}% {format_source}";
@@ -130,6 +138,7 @@ in
             ];
           };
           on-click = pavucontrol;
+          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
         idle_inhibitor = {
           format = "{icon}";
@@ -178,15 +187,15 @@ in
         network = {
           interval = 3;
           format-wifi = "  {essid}";
-          format-ethernet = "󰈀 Connected";
-          format-disconnected = "󰖪 Disconnected";
+          format-ethernet = "󰈀 ";
+          format-disconnected = "󰖪 ";
           format-linked = "  {ifname} (No IP)";
           tooltip-format = ''
             {ifname}
             {ipaddr}/{cidr}
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
-          on-click = "impala";
+          on-click = terminal-spawn impala;
         };
         "custom/menu" = {
           return-type = "json";
@@ -298,13 +307,13 @@ in
           opacity: 0.95;
           padding: 0;
           background-color: #${c.base00};
-          border: 2px solid #${c.base0C};
+          border: 2px solid #${c.base0D};
           border-radius: 10px;
         }
         window#waybar.bottom {
           opacity: 0.90;
           background-color: #${c.base00};
-          border: 2px solid #${c.base0C};
+          border: 2px solid #${c.base0D};
           border-radius: 10px;
         }
         window#waybar {
@@ -321,11 +330,11 @@ in
         }
         #workspaces button.focused,
         #workspaces button.active {
-          background-color: #${c.base0A};
+          background-color: #${c.base09};
           color: #${c.base00};
         }
         #clock {
-          background-color: #${c.base0C};
+          background-color: #${c.base0D};
           color: #${c.base00};
           padding-left: 15px;
           padding-right: 15px;
@@ -334,7 +343,7 @@ in
           border-radius: 10px;
         }
         #custom-menu {
-          background-color: #${c.base0C};
+          background-color: #${c.base0D};
           color: #${c.base00};
           padding-left: 15px;
           padding-right: 22px;
@@ -345,7 +354,7 @@ in
           border-radius: 10px;
         }
         #custom-hostname {
-          background-color: #${c.base0C};
+          background-color: #${c.base0D};
           color: #${c.base00};
           padding-left: 15px;
           padding-right: 18px;
