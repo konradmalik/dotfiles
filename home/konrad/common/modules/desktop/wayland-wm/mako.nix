@@ -10,6 +10,7 @@ in
     settings = {
       background-color = "#${c.palette.base00}dd";
       border-color = "#${c.palette.base03}dd";
+      progress-color = "#${c.palette.base0D}";
       text-color = "#${c.palette.base05}dd";
 
       icon-path =
