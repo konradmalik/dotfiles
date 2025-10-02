@@ -7,8 +7,6 @@
 
 let
   c = config.colorscheme.palette;
-
-  pactl = "${pkgs.pulseaudio}/bin/pactl";
   pgrep = "${pkgs.procps}/bin/pgrep";
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
 
@@ -34,9 +32,7 @@ in
   ''
   +
     # After 10 seconds of locked, mute mic
-    (mkEvent 10 "${pactl} set-source-mute @DEFAULT_SOURCE@ yes"
-      "${pactl} set-source-mute @DEFAULT_SOURCE@ no"
-    )
+    (mkEvent 10 "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1" "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0")
   +
     # Hyprland - Turn off screen (DPMS)
     lib.optionalString config.wayland.windowManager.hyprland.enable (

@@ -5,6 +5,21 @@
       "SUPER,mouse:272,movewindow"
       "SUPER,mouse:273,resizewindow"
     ];
+    bindel = [
+      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ",XF86MonBrightnessUp, exec, light -A 10"
+      ",XF86MonBrightnessDown, exec, light -U 10"
+    ];
+    bindl = [
+      ",XF86AudioNext,exec,playerctl next"
+      ",XF86AudioPause,exec,playerctl play-pause"
+      ",XF86AudioPlay,exec,playerctl play-pause"
+      ",XF86AudioPrev,exec,playerctl previous"
+      ",XF86AudioStop,exec,playerctl stop"
+    ];
     bind = [
       # Keyboard alt behavior
       "SUPER,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch"
@@ -19,22 +34,6 @@
       # Screenshots
       "SUPER,p,exec,hyprshot --mode region --output /tmp"
       "SUPERSHIFT,p,exec,hyprshot --freeze --mode region --output /tmp"
-
-      # Keyboard controls (brightness, media, sound, etc)
-      ",XF86MonBrightnessUp,exec,light -A 10"
-      ",XF86MonBrightnessDown,exec,light -U 10"
-      ",XF86AudioNext,exec,playerctl next"
-      ",XF86AudioPrev,exec,playerctl previous"
-      ",XF86AudioPlay,exec,playerctl play-pause"
-      ",XF86AudioStop,exec,playerctl stop"
-      "ALT,XF86AudioNext,exec,playerctld shift"
-      "ALT,XF86AudioPrev,exec,playerctld unshift"
-      "ALT,XF86AudioPlay,exec,systemctl --user restart playerctld"
-      ",XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +5%"
-      ",XF86AudioLowerVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ -5%"
-      ",XF86AudioMute,exec,pactl set-sink-mute @DEFAULT_SINK@ toggle"
-      "SHIFT,XF86AudioMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle"
-      ",XF86AudioMicMute,exec,pactl set-source-mute @DEFAULT_SOURCE@ toggle"
 
       # Window manager controls
       "SUPERSHIFT,q,killactive"
