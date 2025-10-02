@@ -17,15 +17,13 @@ in
     hyprshot
     impala
     libnotify
-    nautilus
+    nemo
     pamixer
     playerctl
     pavucontrol
     wl-clipboard
     wl-mirror
     wlr-randr
-
-    gnome-themes-extra
   ];
 
   programs = {
