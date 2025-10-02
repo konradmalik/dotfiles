@@ -14,8 +14,7 @@
       "SUPER,return,exec,$terminal"
       "SUPER,w,exec,makoctl dismiss"
       "SUPER,b,exec,$browser"
-      "SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%"
-      "SUPER,space,exec,wofi -S run"
+      "SUPER,space,exec,wofi --show drun --sort-order=alphabetical"
 
       # Screenshots
       "SUPER,p,exec,grim -g ''\"$(slurp -d)''\" - | wl-copy -t image/png"
