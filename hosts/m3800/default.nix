@@ -23,7 +23,7 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   services.logind.settings.Login = {
-    IdleAction = "ignore";
+    IdleAction = "suspend";
     IdleActionSec = "30min";
     LidSwitch = "suspend";
     LidSwitchDocked = "ignore";
