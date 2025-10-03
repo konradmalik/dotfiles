@@ -1,13 +1,9 @@
 {
-  config,
   pkgs,
   lib,
   inputs,
   ...
 }:
-let
-  key = builtins.elemAt (builtins.filter (k: k.type == "ed25519") config.services.openssh.hostKeys) 0;
-in
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -24,18 +20,13 @@ in
     ./modules/tailscale.nix
 
     ./users/konrad/nixos.nix
-  ] ++ (builtins.attrValues (import ./options));
+  ]
+  ++ (builtins.attrValues (import ./options));
 
   boot = {
     # clean tmp after reboot
     tmp.cleanOnBoot = true;
     kernel.sysctl."fs.inotify.max_user_instances" = 524288;
-  };
-
-  # shared sops config
-  sops = {
-    defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [ key.path ];
   };
 
   services = {
