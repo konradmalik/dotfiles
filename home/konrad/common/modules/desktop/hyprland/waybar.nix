@@ -163,38 +163,58 @@ in
           on-scroll-down = "light -U 1";
         };
         battery = {
-          bat = "BAT1";
-          interval = 20;
-          format-icons = [
-            " "
-            " "
-            " "
-            " "
-            " "
-          ];
           format = "{icon} {capacity}%";
-          format-charging = "󰂄 {capacity}%";
-          format-plugged = "󰚥 {capacity}% ";
+          format-icons = {
+            plugged = "";
+            charging = [
+              "󰢜 "
+              "󰂆 "
+              "󰂇 "
+              "󰂈 "
+              "󰢝 "
+              "󰂉 "
+              "󰢞 "
+              "󰂊 "
+              "󰂋 "
+              "󰂅 "
+            ];
+            full = "󰂄";
+            default = [
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+              "󰁹"
+            ];
+          };
+          tooltip-format-discharging = "{power:>1.0f}W↓ {capacity}% {timeTo}";
+          tooltip-format-charging = "{power:>1.0f}W↑ {capacity}% {timeTo}";
+          interval = 10;
+          on-click = "";
           states = {
             full = 95;
             good = 50;
             warning = 30;
             critical = 15;
           };
-          onclick = "";
         };
         network = {
           format-icons = [
-            "󰤯"
-            "󰤟"
-            "󰤢"
-            "󰤥"
-            "󰤨"
+            "󰤯 "
+            "󰤟 "
+            "󰤢 "
+            "󰤥 "
+            "󰤨 "
           ];
-          interval = 3;
+          interval = 5;
           format-wifi = "{icon} {essid}";
           format-ethernet = "󰈀 ";
-          format-disconnected = "󰖪 ";
+          format-disconnected = "󰤭 ";
           format-linked = "  {ifname} (No IP)";
           tooltip-format = ''
             {ifname}
