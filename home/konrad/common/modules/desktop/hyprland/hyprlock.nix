@@ -41,9 +41,9 @@ in
         font_color = foregroundRgb;
 
         placeholder_color = foregroundMutedRgb;
-        placeholder_text = "  Enter Password 󰈷 ";
+        placeholder_text = "   Screen locked";
         check_color = "rgba(131, 192, 146, 1.0)";
-        fail_text = "Wrong";
+        fail_text = "   Wrong ";
 
         rounding = 0;
         shadow_passes = 0;
