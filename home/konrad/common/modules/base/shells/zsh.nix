@@ -167,6 +167,10 @@ in
       # faster navigation
       ".." = "cd ..";
       "..." = "cd ../..";
+
+      pbcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
+      pbpaste = "${pkgs.wl-clipboard}/bin/wl-paste";
+      open = "${pkgs.xdg-utils}/bin/xdg-open";
     };
     history = {
       path = "${config.xdg.dataHome}/zsh/zsh_history";

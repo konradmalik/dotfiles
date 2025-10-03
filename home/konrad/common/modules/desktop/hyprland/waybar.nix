@@ -9,7 +9,6 @@ let
   inherit (pkgs.lib) optionals;
 
   # Dependencies
-  jq = "${pkgs.jq}/bin/jq";
   systemctl = "${pkgs.systemd}/bin/systemctl";
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
@@ -39,7 +38,7 @@ let
     "${pkgs.writeShellScriptBin "waybar-${name}" ''
       set -euo pipefail
       ${pre}
-      ${jq} -cn \
+      ${pkgs.jq}/bin/jq -cn \
         --arg text "${text}" \
         --arg tooltip "${tooltip}" \
         --arg alt "${alt}" \
@@ -85,7 +84,7 @@ in
           "network"
           "battery"
           "hyprland/language"
-          "custom/hostname"
+          "user"
         ];
 
         "hyprland/workspaces" = {
@@ -212,8 +211,11 @@ in
           };
           on-click = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
         };
-        "custom/hostname" = {
-          exec = "echo $USER@$(hostname)";
+        user = {
+          format = "{user}";
+          interval = 120;
+          icon = true;
+          avatar = "${config.home.homeDirectory}/.face";
         };
         "custom/gammastep" = {
           interval = 5;
@@ -360,7 +362,7 @@ in
           margin-bottom: 0;
           border-radius: 10px;
         }
-        #custom-hostname {
+        #user {
           background-color: #${c.base0D};
           color: #${c.base00};
           padding-left: 15px;
