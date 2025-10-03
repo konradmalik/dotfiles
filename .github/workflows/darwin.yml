@@ -7,8 +7,7 @@ on:
 name: x86_64-darwin
 jobs:
   flake-check:
-    # the latest one for x86_64-darwin
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
@@ -23,8 +22,7 @@ jobs:
         run: nix flake check
 
   build-shell:
-    # the latest one for x86_64-darwin
-    runs-on: macos-13
+    runs-on: macos-15-intel
     needs:
       - flake-check
     steps:
@@ -42,8 +40,7 @@ jobs:
         run: nix build .#devShells.x86_64-darwin.default
 
   build-mbp13:
-    # the latest one for x86_64-darwin
-    runs-on: macos-13
+    runs-on: macos-15-intel
     needs:
       - flake-check
     steps:
