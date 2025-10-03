@@ -21,7 +21,10 @@
     };
   };
 
-  # Passwordless sudo when SSH'ing with keys
+  # Allow to authenticate users using only ssh keys
   # from "/etc/ssh/authorized_keys.d/%u"
   security.pam.sshAgentAuth.enable = true;
+  # Passwordless sudo when SSH'ing with keys
+  # from "/etc/ssh/authorized_keys.d/%u"
+  security.pam.services.sudo.sshAgentAuth = true;
 }
