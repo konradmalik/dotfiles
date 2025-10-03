@@ -25,7 +25,6 @@ in
       ]
       ++ ifTheyExist [
         "docker"
-        "networkmanager"
       ];
     };
   };
