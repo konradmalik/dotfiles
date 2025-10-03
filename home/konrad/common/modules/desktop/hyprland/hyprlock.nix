@@ -20,9 +20,6 @@ in
         disable_loading_bar = true;
         no_fade_in = false;
       };
-      auth = {
-        fingerprint.enabled = true;
-      };
       background = {
         monitor = "";
         path = config.konrad.wallpaper;
