@@ -167,7 +167,8 @@ in
       # faster navigation
       ".." = "cd ..";
       "..." = "cd ../..";
-
+    }
+    // pkgs.lib.optionalAttrs pkgs.stdenvNoCC.isLinux {
       pbcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
       pbpaste = "${pkgs.wl-clipboard}/bin/wl-paste";
       open = "${pkgs.xdg-utils}/bin/xdg-open";
