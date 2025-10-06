@@ -61,7 +61,6 @@ in
         margin-top = 10;
         margin-left = 10;
         margin-right = 10;
-        height = 30;
         modules-left = [
           "custom/menu"
           "idle_inhibitor"
@@ -86,6 +85,7 @@ in
           "battery"
           "hyprland/language"
           "user"
+          "custom/powermenu"
         ];
 
         "hyprland/workspaces" = {
@@ -225,14 +225,19 @@ in
         "custom/menu" = {
           return-type = "json";
           exec = jsonOutput "menu" {
-            text = "";
+            text = " ";
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
-          on-click = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
+          on-click = "${wofi} --show drun -x 10 -y 10 -W 25% -H 60%";
+        };
+        "custom/powermenu" = {
+          format = " ";
+          tooltip-format = "{}";
+          exec = "${pkgs.procps}/bin/uptime --pretty";
+          on-click = "wofi-power-menu";
         };
         user = {
           format = "{user}";
-          interval = 120;
           icon = true;
           avatar = "${config.home.homeDirectory}/.face";
         };
@@ -326,26 +331,16 @@ in
           padding: 0 8px;
         }
         .modules-right {
-          margin-right: -15px;
+          margin-right: -16px;
         }
         .modules-left {
-          margin-left: -15px;
-        }
-        window#waybar.top {
-          opacity: 0.95;
-          padding: 0;
-          background-color: #${c.base00};
-          border: 2px solid #${c.base0D};
-          border-radius: 10px;
-        }
-        window#waybar.bottom {
-          opacity: 0.90;
-          background-color: #${c.base00};
-          border: 2px solid #${c.base0D};
-          border-radius: 10px;
+          margin-left: -16px;
         }
         window#waybar {
+          padding: 0;
           color: #${c.base05};
+          background-color: #${c.base00};
+          border-radius: 5px;
         }
         #workspaces button {
           background-color: #${c.base01};
@@ -368,28 +363,39 @@ in
           padding-right: 15px;
           margin-top: 0;
           margin-bottom: 0;
-          border-radius: 10px;
+          border-radius: 5px;
         }
         #custom-menu {
           background-color: #${c.base0D};
           color: #${c.base00};
           padding-left: 15px;
-          padding-right: 22px;
+          padding-right: 10px;
           margin-left: 0;
           margin-right: 10px;
           margin-top: 0;
           margin-bottom: 0;
-          border-radius: 10px;
+          border-radius: 5px;
+        }
+        #custom-powermenu {
+          background-color: #${c.base08};
+          color: #${c.base00};
+          padding-left: 10px;
+          padding-right: 5px;
+          margin-left: 0;
+          margin-right: 0px;
+          margin-top: 0;
+          margin-bottom: 0;
+          border-radius: 5px;
         }
         #user {
           background-color: #${c.base0D};
           color: #${c.base00};
-          padding-left: 15px;
-          padding-right: 18px;
+          padding-left: 5px;
+          padding-right: 5px;
           margin-right: 0;
           margin-top: 0;
           margin-bottom: 0;
-          border-radius: 10px;
+          border-radius: 5px;
         }
         #tray {
           color: #${c.base05};
