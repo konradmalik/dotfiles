@@ -101,10 +101,8 @@ in
           on-click = "blueman-manager";
         };
         clock = {
-          format = "{:%d/%m %H:%M}";
-          tooltip-format = ''
-            <big>{:%Y %B}</big>
-            <tt><small>{calendar}</small></tt>'';
+          format = "{:L%d %B %H:%M}";
+          tooltip-format = "<tt>{calendar}</tt>";
           on-click = calendar;
         };
         cpu = {
