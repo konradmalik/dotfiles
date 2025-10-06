@@ -5,9 +5,11 @@ let
     apps:
     lib.genAttrs apps (name: {
       name = name;
-      hidden = true;
+      noDisplay = true;
     });
 in
 {
-  xdg.desktopEntries = hideApps [ ];
+  # hm: /etc/profiles/per-user/konrad/share/applications
+  # system: ?
+  xdg.desktopEntries = hideApps [ "gammastep-indicator" ];
 }
