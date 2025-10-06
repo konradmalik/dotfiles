@@ -18,6 +18,7 @@ let
   wofi = "${pkgs.wofi}/bin/wofi";
   cal = "${pkgs.util-linux}/bin/cal";
   impala = "${pkgs.impala}/bin/impala";
+  bluetui = "${pkgs.bluetui}/bin/bluetui";
 
   terminal-spawn = cmd: "${lib.getExe pkgs.alacritty} -e /bin/sh -c \"${cmd}\"";
 
@@ -98,7 +99,7 @@ in
           format-disabled = "󰂲";
           format-connected = "";
           tooltip-format = "Devices connected: {num_connections}";
-          on-click = "blueman-manager";
+          on-click = terminal-spawn bluetui;
         };
         clock = {
           format = "{:L%d %B %H:%M}";

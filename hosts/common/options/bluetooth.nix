@@ -27,9 +27,6 @@ in
   };
 
   config = mkIf cfg.enable {
-
-    services.blueman.enable = true;
-
     hardware.bluetooth = {
       enable = true;
       package = cfg.package;
@@ -45,7 +42,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      bluez-tools # for bluetoothctl and other stuff
+      bluetui
     ];
   };
 }
