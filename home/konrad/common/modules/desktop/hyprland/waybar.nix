@@ -234,6 +234,7 @@ in
           format = " ";
           tooltip-format = "{}";
           exec = "${pkgs.procps}/bin/uptime --pretty";
+          interval = 60;
           on-click = "wofi-power-menu";
         };
         user = {
