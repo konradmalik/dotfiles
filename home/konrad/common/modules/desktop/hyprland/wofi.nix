@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 {
@@ -23,4 +24,17 @@
       gtk_dark = config.colorscheme.variant == "dark";
     };
   };
+
+  xdg.configFile."wofi-power-menu.toml".text =
+    # toml
+    ''
+      [wofi]
+        path = "${config.programs.wofi.package}/bin/wofi"
+      [menu.hibernate]
+        enabled = "false"
+
+      [menu.logout]
+        enabled = "false"
+    '';
+  home.packages = [ pkgs.wofi-power-menu ];
 }
