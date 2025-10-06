@@ -9,11 +9,7 @@ let
   fontFamily = config.fontProfiles.monospace.family;
 in
 {
-  wayland.windowManager.hyprland.settings = {
-    env = [
-      "TERMINAL,ghostty"
-    ];
-  };
+  home.sessionVariables.TERMINAL = "ghostty";
 
   programs.ghostty = {
     enable = lib.mkDefault true;

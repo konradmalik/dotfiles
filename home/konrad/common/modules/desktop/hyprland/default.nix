@@ -20,6 +20,7 @@
     hyprshot
   ];
 
+  # TODO move to hyprland.settings.env ?
   home.sessionVariables = {
     #  https://wiki.hyprland.org/Configuring/Environment-variables/
     LIBSEAT_BACKEND = "logind";
