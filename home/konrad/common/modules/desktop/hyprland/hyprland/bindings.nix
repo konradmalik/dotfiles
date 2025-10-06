@@ -26,9 +26,9 @@
       "SUPERSHIFT,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps"
 
       # Program bindings
-      "SUPER,return,exec,$terminal"
+      "SUPER,return,exec,$TERMINAL"
       "SUPER,w,exec,makoctl dismiss"
-      "SUPER,b,exec,$browser"
+      "SUPER,b,exec,$BROWSER"
       "SUPER,space,exec,wofi --show drun --sort-order=alphabetical"
 
       # Screenshots

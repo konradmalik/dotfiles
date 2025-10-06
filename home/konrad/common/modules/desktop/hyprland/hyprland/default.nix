@@ -22,10 +22,6 @@
   services.hyprpolkitagent.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
-    settings = {
-      "$terminal" = lib.mkDefault "ghostty";
-      "$browser" = lib.mkDefault "firefox";
-    };
     extraConfig = (
       import ./monitors.nix {
         inherit lib;

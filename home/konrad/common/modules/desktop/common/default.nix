@@ -3,6 +3,7 @@
   imports = [
     ./alacritty.nix
     ./ghostty.nix
+    ./hidden.nix
     ./firefox.nix
     ./font.nix
     ./gnome-keyring.nix
