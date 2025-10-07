@@ -8,10 +8,6 @@ in
 
   home.homeDirectory = "/Users/${config.home.username}";
 
-  fontProfiles = {
-    enable = true;
-    monospace.size = 15.0;
-  };
   konrad.programs.bitwarden = {
     enable = true;
     # TODO until fixed on unstable

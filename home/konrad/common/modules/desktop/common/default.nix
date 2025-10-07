@@ -1,11 +1,10 @@
-{ pkgs, customArgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./alacritty.nix
     ./ghostty.nix
     ./hidden.nix
     ./firefox.nix
-    ./font.nix
     ./gnome-keyring.nix
     ./gtk.nix
     ./imv.nix
@@ -30,6 +29,4 @@
       zathura
     ];
   };
-
-  konrad.wallpaper = "${customArgs.files}/wallpapers/bishal-mishra.jpg";
 }

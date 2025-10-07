@@ -9,7 +9,6 @@ in
     ./common/modules/desktop/hyprland
   ];
 
-  fontProfiles.enable = true;
   konrad.programs.bitwarden.enable = true;
   programs.neovim-pde = {
     notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";

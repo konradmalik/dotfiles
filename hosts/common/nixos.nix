@@ -6,9 +6,10 @@
 }:
 {
   imports = [
+    inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
-    inputs.disko.nixosModules.disko
+    inputs.stylix.nixosModules.stylix
 
     ./modules/docker/linux.nix
     ./modules/home-manager.nix
@@ -17,6 +18,7 @@
     ./modules/memory.nix
     ./modules/nix/nixos.nix
     ./modules/openssh.nix
+    ./modules/stylix.nix
     ./modules/tailscale.nix
 
     ./users/konrad/nixos.nix

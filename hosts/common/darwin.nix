@@ -1,12 +1,15 @@
-{ lib, ... }:
+{ lib, inputs, ... }:
 {
   imports = [
     ./modules/aerospace.nix
     ./modules/docker/darwin.nix
     ./modules/nix/darwin.nix
     ./modules/home-manager.nix
+    ./modules/stylix.nix
 
     ./users/konrad/darwin.nix
+
+    inputs.stylix.darwinModules.stylix
   ];
 
   # packages installed in system profile

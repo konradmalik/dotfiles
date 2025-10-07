@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -15,24 +13,5 @@
     ];
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     changeDirWidgetOptions = [ "--preview '${pkgs.tree}/bin/tree -C {} | head -200'" ];
-    colors =
-      let
-        c = config.colorscheme.palette;
-      in
-      with lib;
-      {
-        "bg+" = "#${toLower c.base01}";
-        "bg" = "#${toLower c.base00}";
-        "fg+" = "#${toLower c.base06}";
-        "fg" = "#${toLower c.base04}";
-        "hl+" = "#${toLower c.base0D}";
-        "hl" = "#${toLower c.base0D}";
-        "header" = "#${toLower c.base0D}";
-        "info" = "#${toLower c.base0A}";
-        "pointer" = "#${toLower c.base0C}";
-        "marker" = "#${toLower c.base0C}";
-        "spinner" = "#${toLower c.base0C}";
-        "prompt" = "#${toLower c.base0A}";
-      };
   };
 }

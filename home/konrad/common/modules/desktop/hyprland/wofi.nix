@@ -21,7 +21,6 @@
       insensitive = true;
       allow_images = true;
       image_size = 40;
-      gtk_dark = config.colorscheme.variant == "dark";
     };
   };
 

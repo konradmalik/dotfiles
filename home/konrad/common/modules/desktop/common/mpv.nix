@@ -50,7 +50,6 @@
       hwdec = "auto";
       video-sync = "display-resample";
       sub-auto = "fuzzy";
-      sub-font = config.fontProfiles.regular.family;
       sub-bold = "yes";
       ytdl-format = "bestvideo+bestaudio";
     };

@@ -14,21 +14,17 @@ let
   baseConfig = pkgs.callPackage ./config.nix {
     inherit tmuxTextProcessor tmux-switcher tmux-sessionizer;
   };
-  themeConfig = import ./theme.nix { inherit (cfg) colorscheme; };
+  themeConfig = import ./theme.nix { inherit config; };
 in
 {
   options.konrad.programs.tmux = {
     enable = mkEnableOption "Enables personalized tmux through home-manager";
-
-    colorscheme = lib.mkOption {
-      type = lib.types.nullOr lib.types.attrs;
-      default = config.colorscheme;
-      description = "Colorscheme attrset compatible with nix-colors format.";
-      example = "config.colorscheme";
-    };
   };
 
   config = mkIf cfg.enable {
+    # ./theme.nix instead
+    stylix.targets.tmux.enable = false;
+
     programs.tmux = {
       enable = true;
       aggressiveResize = true;

@@ -4,7 +4,6 @@
     ./atuin.nix
     ./bat.nix
     ./bottom.nix
-    ./colors.nix
     ./direnv.nix
     ./fzf.nix
     ./git

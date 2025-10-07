@@ -1,28 +1,9 @@
 {
-  config,
-  ...
-}:
-let
-  c = config.colorscheme.palette;
-
-  hexToRgba =
-    hex: alpha:
-    let
-    in
-    "rgba(${hex}${alpha})";
-
-  inactiveBorder = hexToRgba c.base09 "aa";
-  activeBorder = hexToRgba c.base0D "aa";
-in
-{
   wayland.windowManager.hyprland.settings = {
     general = {
       gaps_in = 5;
       gaps_out = 10;
       border_size = 2;
-
-      "col.active_border" = activeBorder;
-      "col.inactive_border" = inactiveBorder;
 
       resize_on_border = false;
       allow_tearing = false;

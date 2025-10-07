@@ -8,7 +8,6 @@
 let
   inherit (pkgs.lib) optionals;
 
-  # Dependencies
   systemctl = "${pkgs.systemd}/bin/systemctl";
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
@@ -50,6 +49,7 @@ let
 in
 {
   wayland.windowManager.hyprland.settings.exec-once = [ "waybar" ];
+  stylix.targets.waybar.addCss = false;
 
   programs.waybar = {
     enable = true;
@@ -88,16 +88,10 @@ in
           "custom/powermenu"
         ];
 
-        "hyprland/workspaces" = {
-          format = "{icon}";
-          on-scroll-up = "hyprctl dispatch workspace e+1";
-          on-scroll-down = "hyprctl dispatch workspace e-1";
-          on-click = "activate";
-        };
         bluetooth = {
-          format = "";
-          format-disabled = "󰂲";
-          format-connected = "";
+          format = "󰂯 ";
+          format-disabled = "󰂲 ";
+          format-connected = "󰂱 ";
           tooltip-format = "Devices connected: {num_connections}";
           on-click = terminal-spawn bluetui;
         };
@@ -117,11 +111,11 @@ in
         };
         wireplumber = {
           format = "{icon} {volume}% {format_source}";
-          format-muted = "  {icon} 0%";
-          format-bluetooth = "{icon} {volume}% {format_source}";
-          format-bluetooth-muted = "  {icon} 0% {format_source}";
+          format-muted = "  -%";
+          format-bluetooth = "{icon}󰂯 {volume}% {format_source}";
+          format-bluetooth-muted = " 󰂯 -% {format_source}";
           format-source = "  {volume}%";
-          format-source-muted = "  0%";
+          format-source-muted = "  -%";
           format-icons = {
             headphone = " ";
             headset = "󰋎 ";
@@ -241,6 +235,9 @@ in
           format = "{user}";
           icon = true;
           avatar = "${config.home.homeDirectory}/.face";
+          tooltip-format = "{}";
+          exec = "groups";
+          interval = 60;
         };
         "custom/gammastep" = {
           interval = 5;
@@ -291,7 +288,7 @@ in
           };
           format = "{icon}{}";
           format-icons = {
-            "No player active" = " ";
+            "No player active" = "󰝛 ";
             "spotify" = " ";
             "firefox" = " ";
             "discord" = "󰙯 ";
@@ -321,86 +318,52 @@ in
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
     style =
-      let
-        c = config.colorscheme.palette;
-      in
-      # css
-      ''
-        * {
-          font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
-          font-size: ${toString (builtins.floor config.fontProfiles.regular.size)}pt;
-          padding: 0 8px;
-        }
-        .modules-right {
-          margin-right: -16px;
-        }
-        .modules-left {
-          margin-left: -16px;
-        }
-        window#waybar {
-          padding: 0;
-          color: #${c.base05};
-          background-color: #${c.base00};
-          border-radius: 5px;
-        }
-        #workspaces button {
-          background-color: #${c.base01};
-          color: #${c.base05};
-          margin: 4px;
-        }
-        #workspaces button.hidden {
-          background-color: #${c.base00};
-          color: #${c.base04};
-        }
-        #workspaces button.focused,
-        #workspaces button.active {
-          background-color: #${c.base09};
-          color: #${c.base00};
-        }
-        #clock {
-          background-color: #${c.base0D};
-          color: #${c.base00};
-          padding-left: 15px;
-          padding-right: 15px;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 5px;
-        }
-        #custom-menu {
-          background-color: #${c.base0D};
-          color: #${c.base00};
-          padding-left: 15px;
-          padding-right: 10px;
-          margin-left: 0;
-          margin-right: 10px;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 5px;
-        }
-        #custom-powermenu {
-          background-color: #${c.base08};
-          color: #${c.base00};
-          padding-left: 10px;
-          padding-right: 5px;
-          margin-left: 0;
-          margin-right: 0px;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 5px;
-        }
-        #user {
-          background-color: #${c.base0D};
-          color: #${c.base00};
-          padding-left: 5px;
-          padding-right: 5px;
-          margin-right: 0;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 5px;
-        }
-        #tray {
-          color: #${c.base05};
-        }
-      '';
+      lib.mkAfter
+        # css
+        ''
+          * {
+            padding: 0 8px;
+          }
+          .modules-right {
+            margin-right: -16px;
+          }
+          .modules-left {
+            margin-left: -16px;
+          }
+          window#waybar {
+            border-radius: 5px;
+          }
+          #workspaces button.active {
+            background-color: @base09;
+            color: @base00;
+          }
+          #clock {
+            background-color: @base0D;
+            color: @base00;
+            padding: 0 16px;
+            margin: 0 16px;
+            border-radius: 5px;
+          }
+          #custom-menu {
+            background-color: @base0D;
+            color: @base00;
+            padding-left: 15px;
+            padding-right: 10px;
+            border-radius: 5px;
+            margin-right: 10px;
+          }
+          #custom-powermenu {
+            background-color: @base08;
+            padding-left: 10px;
+            padding-right: 5px;
+            border-radius: 5px;
+          }
+          #user {
+            background-color: @base0D;
+            color: @base00;
+            padding: 0 5px;
+            border-radius: 5px;
+          }
+        '';
   };
 }
