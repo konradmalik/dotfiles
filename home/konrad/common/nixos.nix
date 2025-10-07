@@ -1,5 +1,7 @@
 {
-  imports = [ ./modules/base ];
+  imports = [
+    ./hm.nix
 
-  home.file.".face".source = ../../../files/avatar.png;
+    ./hacks/stylix.nix
+  ];
 }

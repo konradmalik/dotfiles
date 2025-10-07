@@ -8,6 +8,6 @@
     inputs.stylix.homeModules.stylix
     ../../hosts/common/modules/stylix
 
-    ./common/nixos.nix
+    ./common/hm.nix
   ];
 }
