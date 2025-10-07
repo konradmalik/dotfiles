@@ -12,6 +12,7 @@
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
+    ./rofi.nix
     ./waybar.nix
     ./wofi.nix
   ];
