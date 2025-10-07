@@ -3,7 +3,7 @@
   lib,
   ...
 }:
-lib.mkIf (osConfig != null) {
+lib.mkIf (osConfig ? stylix.icons) {
   # https://github.com/nix-community/stylix/issues/1933
   stylix.icons = osConfig.stylix.icons;
 }

@@ -9,16 +9,10 @@
     enable = true;
     autoEnable = true;
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-    polarity = "dark";
-
     image = "${customArgs.files}/wallpapers/bishal-mishra.jpg";
 
-    cursor = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-      size = lib.mkDefault 8;
-    };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    polarity = "dark";
 
     fonts = rec {
       serif = sansSerif;
@@ -43,13 +37,6 @@
         desktop = lib.mkDefault 10;
         terminal = lib.mkDefault 13;
       };
-    };
-
-    icons = {
-      enable = true;
-      package = pkgs.papirus-icon-theme;
-      dark = "Papirus-Dark";
-      light = "Papirus-Light";
     };
   };
 }

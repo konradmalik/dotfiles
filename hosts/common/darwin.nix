@@ -5,7 +5,7 @@
     ./modules/docker/darwin.nix
     ./modules/nix/darwin.nix
     ./modules/home-manager.nix
-    ./modules/stylix.nix
+    ./modules/stylix/shared.nix
 
     ./users/konrad/darwin.nix
 

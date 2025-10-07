@@ -6,7 +6,7 @@
 
     # stylix because without nixos it's not applied automatically
     inputs.stylix.homeModules.stylix
-    ../../hosts/common/modules/stylix.nix
+    ../../hosts/common/modules/stylix
 
     ./common/nixos.nix
   ];

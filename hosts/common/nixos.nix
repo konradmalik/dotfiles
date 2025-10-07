@@ -18,7 +18,7 @@
     ./modules/memory.nix
     ./modules/nix/nixos.nix
     ./modules/openssh.nix
-    ./modules/stylix.nix
+    ./modules/stylix
     ./modules/tailscale.nix
 
     ./users/konrad/nixos.nix
