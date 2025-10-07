@@ -19,6 +19,7 @@
     ./shells
     ./sops.nix
     ./ssh-keys.nix
+    ./stylix.nix
     ./starship.nix
     ./tealdeer.nix
     ./yazi.nix

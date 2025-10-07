@@ -1,3 +1,7 @@
+{ config, ... }:
+let
+  icons = config.stylix.icons;
+in
 {
   wayland.windowManager.hyprland.settings.exec-once = [ "mako" ];
 
@@ -6,6 +10,13 @@
     settings = {
       anchor = "top-center";
       layer = "overlay";
+
+      icons = 1;
+      icon-path =
+        if config.stylix.polarity == "dark" then
+          "${icons.package}/share/icons/${icons.dark}"
+        else
+          "${icons.package}/share/icons/${icons.light}";
 
       width = 400;
       height = 150;

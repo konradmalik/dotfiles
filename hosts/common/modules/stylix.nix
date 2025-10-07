@@ -8,7 +8,9 @@
   stylix = {
     enable = true;
     autoEnable = true;
+
     base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    polarity = "dark";
 
     image = "${customArgs.files}/wallpapers/bishal-mishra.jpg";
 
@@ -45,14 +47,9 @@
 
     icons = {
       enable = true;
-      dark = {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
-      };
-      light = {
-        name = "Papirus-Light";
-        package = pkgs.papirus-icon-theme;
-      };
+      package = pkgs.papirus-icon-theme;
+      dark = "Papirus-Dark";
+      light = "Papirus-Light";
     };
   };
 }
