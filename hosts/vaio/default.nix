@@ -20,5 +20,5 @@
     max-jobs = 4;
   };
 
-  services.logind.lidSwitch = "ignore";
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
 }
