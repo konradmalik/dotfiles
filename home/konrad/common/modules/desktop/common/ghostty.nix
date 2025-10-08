@@ -3,8 +3,11 @@
   lib,
   ...
 }:
+let
+  pkg = config.programs.ghostty.package;
+in
 {
-  home.sessionVariables.TERMINAL = lib.getExe config.programs.ghostty.package;
+  home.sessionVariables.TERMINAL = if pkg != null then lib.getExe pkg else "ghostty";
 
   programs.ghostty = {
     enable = lib.mkDefault true;
