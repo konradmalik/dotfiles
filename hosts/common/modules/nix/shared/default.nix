@@ -9,7 +9,7 @@
     overlays = [
       (
         final: prev:
-        (import ../../../../pkgs/installable { pkgs = final; })
+        (import ../../../../../pkgs/installable { pkgs = final; })
         // {
           stable = import inputs.nixpkgs-stable {
             system = final.system;
