@@ -1,6 +1,9 @@
 { ... }:
 {
-  imports = [ ./shared.nix ];
+  imports = [
+    ./shared
+    ./shared/not-hm.nix
+  ];
   nix = {
     gc = {
       automatic = true;

@@ -7,6 +7,6 @@ let
   nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 in
 {
-  imports = [ ./shared.nix ];
+  imports = [ ./shared ];
   home.sessionVariables.NIX_PATH = "${lib.concatStringsSep ":" nixPath}$\{NIX_PATH:+:$NIX_PATH}";
 }

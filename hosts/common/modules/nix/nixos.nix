@@ -5,7 +5,11 @@ let
     users: builtins.map (user: config.users.users.${user}.openssh.authorizedKeys.keys) users;
 in
 {
-  imports = [ ./shared.nix ];
+  imports = [
+    ./shared
+    ./shared/not-hm.nix
+  ];
+
   nix = {
     gc = {
       automatic = true;

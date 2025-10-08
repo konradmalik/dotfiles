@@ -6,6 +6,7 @@
 {
   imports = [ ./shared.nix ];
 
+  # not supported by nix-darwin
   stylix = {
     cursor = {
       name = "Adwaita";

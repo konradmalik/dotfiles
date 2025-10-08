@@ -18,9 +18,7 @@
       gnused
     ];
 
-    sessionVariables = {
-      XDG_RUNTIME_DIR = "$TMPDIR";
-    };
+    sessionVariables.XDG_RUNTIME_DIR = "$TMPDIR";
   };
 
   programs.zsh = {

@@ -6,7 +6,7 @@ in
 {
   imports = [
     ./common/nixos.nix
-    ./common/modules/desktop/hyprland
+    ./common/modules/desktop
   ];
 
   konrad.programs.bitwarden.enable = true;
