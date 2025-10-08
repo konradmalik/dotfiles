@@ -1,23 +1,30 @@
 {
+  config,
   pkgs,
+  lib,
   ...
 }:
 {
-  home.packages = with pkgs; [
-    rofi-power-menu
-  ];
-  # NOTE: rofi-sensible-terminal reads $TERMINAL env variable
   programs.rofi = {
     enable = true;
     plugins = with pkgs; [
-      rofi-calc
       rofi-emoji
     ];
+    terminal = config.home.sessionVariables.TERMINAL;
     location = "center";
     modes = [
+      "combi"
       "drun"
-      "calc"
       "emoji"
+      "power-menu:${lib.getExe pkgs.rofi-power-menu}"
     ];
+    extraConfig = {
+      combi-modi = "window,emoji,power-menu";
+      cycle = true;
+      hide-scrollbar = true;
+      show-icons = true;
+      sidebar-mode = true;
+      sort = true;
+    };
   };
 }

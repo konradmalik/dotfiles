@@ -14,7 +14,6 @@ let
   playerctld = "${pkgs.playerctl}/bin/playerctld";
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
   btm = "${pkgs.bottom}/bin/btm";
-  wofi = "${pkgs.wofi}/bin/wofi";
   cal = "${pkgs.util-linux}/bin/cal";
   impala = "${pkgs.impala}/bin/impala";
   bluetui = "${pkgs.bluetui}/bin/bluetui";
@@ -222,14 +221,14 @@ in
             text = " ";
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
-          on-click = "${wofi} --show drun -x 10 -y 10 -W 25% -H 60%";
+          on-click = "rofi -show drun -location 1";
         };
         "custom/powermenu" = {
           format = " ";
           tooltip-format = "{}";
           exec = "${pkgs.procps}/bin/uptime --pretty";
           interval = 60;
-          on-click = "wofi-power-menu";
+          on-click = "rofi -show power-menu";
         };
         user = {
           format = "{user}";

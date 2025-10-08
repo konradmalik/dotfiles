@@ -1,10 +1,10 @@
 {
-  lib,
   config,
+  lib,
   ...
 }:
 {
-  home.sessionVariables.TERMINAL = "ghostty";
+  home.sessionVariables.TERMINAL = lib.getExe config.programs.ghostty.package;
 
   programs.ghostty = {
     enable = lib.mkDefault true;

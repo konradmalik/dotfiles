@@ -36,6 +36,7 @@
         applications = lib.mkDefault 10;
         desktop = lib.mkDefault 10;
         terminal = lib.mkDefault 13;
+        popups = lib.mkDefault 15;
       };
     };
   };

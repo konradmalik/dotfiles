@@ -12,7 +12,6 @@
     ./hyprpaper.nix
     ./rofi.nix
     ./waybar.nix
-    ./wofi.nix
   ];
 
   home.packages = with pkgs; [

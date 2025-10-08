@@ -29,7 +29,8 @@
       "SUPER,return,exec,$TERMINAL"
       "SUPER,w,exec,makoctl dismiss"
       "SUPER,b,exec,$BROWSER"
-      "SUPER,space,exec,wofi --show drun --sort-order=alphabetical"
+      "SUPER,space,exec,rofi -show drun"
+      "SUPER,e,exec,rofi -show combi"
 
       # Screenshots
       "SUPER,p,exec,hyprshot --mode region --output /tmp"
