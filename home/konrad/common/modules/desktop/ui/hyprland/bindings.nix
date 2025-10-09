@@ -33,8 +33,8 @@
       "SUPER,e,exec,rofi -show combi"
 
       # Screenshots
-      "SUPER,p,exec,hyprshot --mode region --output /tmp"
-      "SUPERSHIFT,p,exec,hyprshot --freeze --mode region --output /tmp"
+      "SUPER,p,exec,hyprshot --mode region --output /tmp/screenshots"
+      "SUPERSHIFT,p,exec,hyprshot --freeze --mode region --output /tmp/screenshots"
 
       # Window manager controls
       "SUPERSHIFT,q,killactive"
