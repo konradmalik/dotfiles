@@ -1,6 +1,4 @@
 {
-  lib,
-  config,
   osConfig,
   ...
 }:
@@ -22,11 +20,9 @@
   services.hyprpolkitagent.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
-    extraConfig = (
-      import ./monitors.nix {
-        inherit lib;
-        inherit (config) monitors;
-      }
-    );
+    settings = {
+      # fallback rule for any monitor not matching other rules
+      monitor = [ ", preferred, auto, 1" ];
+    };
   };
 }

@@ -6,8 +6,6 @@
 }:
 
 let
-  inherit (pkgs.lib) optionals;
-
   systemctl = "${pkgs.systemd}/bin/systemctl";
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
@@ -54,7 +52,6 @@ in
     enable = true;
     settings = {
       primary = {
-        output = builtins.map (m: m.name) (builtins.filter (m: m.isPrimary) config.monitors);
         layer = "top";
         position = "top";
         margin-top = 10;
@@ -64,8 +61,8 @@ in
           "custom/menu"
           "idle_inhibitor"
         ]
-        ++ (optionals config.wayland.windowManager.hyprland.enable [ "hyprland/workspaces" ])
         ++ [
+          "hyprland/workspaces"
           "custom/currentplayer"
           "custom/player"
         ];

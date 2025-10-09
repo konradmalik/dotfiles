@@ -26,7 +26,6 @@
       };
 
       label = {
-        monitor = "";
         text = "\$FPRINTPROMPT";
         text_align = "center";
         position = "0, -100";

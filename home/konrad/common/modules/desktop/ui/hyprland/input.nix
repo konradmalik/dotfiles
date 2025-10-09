@@ -17,11 +17,6 @@
       };
     };
 
-    device = {
-      name = "elan-touchscreen";
-      enabled = false;
-    };
-
     gesture = [ "3, horizontal, workspace" ];
   };
 }

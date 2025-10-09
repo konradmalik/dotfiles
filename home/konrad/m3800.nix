@@ -29,26 +29,12 @@ in
     install = true;
   };
 
-  monitors = [
-    {
-      name = "eDP-1";
+  wayland.windowManager.hyprland.settings = {
+    exec-once = [ "hyprctl dispatch dpms off 'eDP-1'" ];
+    monitor = [ "eDP-1, disable" ];
+    device = {
+      name = "elan-touchscreen";
       enabled = false;
-      width = 3840;
-      height = 2160;
-      isPrimary = true;
-      refreshRate = 59.997;
-      scale = 2;
-      x = 0;
-    }
-    {
-      name = "HDMI-A-1";
-      enabled = true;
-      width = 3440;
-      height = 1440;
-      isPrimary = true;
-      refreshRate = 29.993;
-      scale = 1;
-      x = 0;
-    }
-  ];
+    };
+  };
 }

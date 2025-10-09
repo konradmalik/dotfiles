@@ -1,6 +1,5 @@
 {
   bitwarden = import ./bitwarden.nix;
-  monitors = import ./monitors.nix;
   restic = import ./restic;
   ssh-egress = import ./ssh-egress.nix;
   ssh-keys = import ./ssh-keys.nix;
