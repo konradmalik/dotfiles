@@ -18,6 +18,10 @@
       };
 
       nixosConfigurations = {
+        framework = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./../hosts/framework ];
+        };
         m3800 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./../hosts/m3800 ];
