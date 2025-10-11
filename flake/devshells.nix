@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, inputs', ... }:
     {
       devShells =
         let
@@ -16,15 +16,16 @@
             name = "dotfiles";
             packages =
               (with pkgs; [
-                manix
-                nmap
                 age
                 git
                 home-manager
+                manix
+                nmap
                 sops
                 ssh-to-age
               ])
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages;
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isLinux [ inputs'.disko.packages.disko ];
           };
         };
     };
