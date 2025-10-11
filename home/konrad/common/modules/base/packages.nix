@@ -12,7 +12,6 @@
       ouch
       progress
       tree
-      trurl
       unixtools.xxd
       wget
       zip
@@ -22,7 +21,7 @@
       ripgrep
       ripgrep-all
       sad
-      sd
+      scooter
 
       entr
       hyperfine
@@ -45,7 +44,6 @@
       croc
       gh
       glab
-      up
 
       rfv
       realize-symlink
