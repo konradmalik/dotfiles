@@ -11,12 +11,8 @@ in
   home-manager.users.konrad = import ./../../../../home/konrad/${config.networking.hostName}.nix;
 
   users = {
-    # NOTE: disable this when installing on a new machine
-    # to set `passwd konrad`
-    mutableUsers = false;
     users.konrad = {
       openssh.authorizedKeys.keys = config.home-manager.users.konrad.sshKeys.personal.keys;
-      hashedPasswordFile = config.sops.secrets.konrad-password.path;
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Konrad";
@@ -33,11 +29,6 @@ in
 
   # required if users use zsh
   programs.zsh.enable = true;
-
-  sops.secrets.konrad-password = {
-    sopsFile = ./secrets.yaml;
-    neededForUsers = true;
-  };
 
   # Syncthing ports
   networking.firewall = {
