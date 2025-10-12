@@ -11,13 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - run: |
-          DEBIAN_FRONTEND=noninteractive
-          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: "arm64,arm"
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
-          extra_nix_config: |
-            system-features = aarch64-linux
+          extra-conf: |
+            system-features = aarch64-linux arm-linux
+            extra-platforms = aarch64-linux arm-linux
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Flake check
         run: nix flake check
@@ -53,13 +54,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - run: |
-          DEBIAN_FRONTEND=noninteractive
-          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: "arm64,arm"
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
-          extra_nix_config: |
-            system-features = aarch64-linux
+          extra-conf: |
+            system-features = aarch64-linux arm-linux
+            extra-platforms = aarch64-linux arm-linux
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
