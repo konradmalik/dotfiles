@@ -11,11 +11,12 @@ in
   home-manager.users.konrad = import ./../../../../home/konrad/${config.networking.hostName}.nix;
 
   users = {
-    # mutableUsers = false;
-    mutableUsers = true;
+    # NOTE: disable this when installing on a new machine
+    # to set `passwd konrad`
+    mutableUsers = false;
     users.konrad = {
       openssh.authorizedKeys.keys = config.home-manager.users.konrad.sshKeys.personal.keys;
-      # hashedPasswordFile = config.sops.secrets.konrad-password.path;
+      hashedPasswordFile = config.sops.secrets.konrad-password.path;
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Konrad";
