@@ -4,14 +4,20 @@ on:
       - main
   pull_request:
 
-name: x86_64-linux
+name: linux
 jobs:
   flake-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
+      - run: |
+          DEBIAN_FRONTEND=noninteractive
+          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
       - uses: DeterminateSystems/nix-installer-action@v20
+        with:
+          extra_nix_config: |
+            system-features = aarch64-linux
       - name: Flake check
         run: nix flake check
 
@@ -31,39 +37,36 @@ jobs:
       - name: Shell build
         run: nix build .#devShells.x86_64-linux.default
 
-  build-m3800:
+  build-nixos:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        hostname:
+          - m3800
+          - framework
+          - rpi4-1
+          - rpi4-2
     needs:
       - flake-check
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
+      - run: |
+          DEBIAN_FRONTEND=noninteractive
+          sudo apt-get update -q -y && sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
       - uses: DeterminateSystems/nix-installer-action@v20
+        with:
+          extra_nix_config: |
+            system-features = aarch64-linux
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
         with:
           name: "konradmalik"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Flake build m3800
-        run: nix build .#nixosConfigurations.m3800.config.system.build.toplevel
+      - name: Flake build ${{ matrix.hostname }}
+        run: nix build .#nixosConfigurations.${{ matrix.hostname }}.config.system.build.toplevel
 
-  build-framework:
-    runs-on: ubuntu-latest
-    needs:
-      - flake-check
-    steps:
-      - uses: actions/checkout@v5
-      - uses: wimpysworld/nothing-but-nix@v6
-      - uses: DeterminateSystems/nix-installer-action@v20
-      - if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: cachix/cachix-action@v16
-        with:
-          name: "konradmalik"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Flake build framework
-        run: nix build .#nixosConfigurations.framework.config.system.build.toplevel
-
-  build-generic:
+  build-homemanager:
     runs-on: ubuntu-latest
     needs:
       - flake-check
