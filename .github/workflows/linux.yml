@@ -43,6 +43,7 @@ jobs:
   build-nixos:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         hostname:
           - m3800
