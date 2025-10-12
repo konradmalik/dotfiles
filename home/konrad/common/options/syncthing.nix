@@ -33,7 +33,7 @@ in
 
     tray = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
       description = "whether to enable tray icon support";
     };
   };
