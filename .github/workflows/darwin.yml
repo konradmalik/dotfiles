@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@v20
+        with:
+          extra-conf: |
+            accept-flake-config = true
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Flake check
         env:
@@ -26,6 +29,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@v20
+        with:
+          extra-conf: |
+            accept-flake-config = true
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
@@ -42,6 +48,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@v20
+        with:
+          extra-conf: |
+            accept-flake-config = true
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16

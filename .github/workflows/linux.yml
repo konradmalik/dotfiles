@@ -7,30 +7,29 @@ on:
 name: linux
 jobs:
   flake-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - uses: docker/setup-qemu-action@v3
-        with:
-          platforms: "arm64,arm"
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
           extra-conf: |
-            system-features = aarch64-linux arm-linux
-            extra-platforms = aarch64-linux arm-linux
+            accept-flake-config = true
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Flake check
-        run: nix flake check
+        run: nix flake check --all-systems
 
   build-shell:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - flake-check
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
       - uses: DeterminateSystems/nix-installer-action@v20
+        with:
+          extra-conf: |
+            accept-flake-config = true
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
         with:
@@ -41,50 +40,44 @@ jobs:
         run: nix build .#devShells.x86_64-linux.default
 
   build-nixos:
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        hostname:
-          - m3800
-          - framework
-          - rpi4-1
-          - rpi4-2
+        host:
+          - { hostname: m3800, os: ubuntu-24.04 }
+          - { hostname: framework, os: ubuntu-24.04 }
+          - { hostname: rpi4-1, os: ubuntu-24.04-arm }
+          - { hostname: rpi4-2, os: ubuntu-24.04-arm }
+    runs-on: ${{ matrix.host.os }}
     needs:
       - flake-check
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - uses: docker/setup-qemu-action@v3
-        with:
-          platforms: "arm64,arm"
       - uses: DeterminateSystems/nix-installer-action@v20
         with:
           extra-conf: |
-            system-features = aarch64-linux arm-linux
-            extra-platforms = aarch64-linux arm-linux
+            accept-flake-config = true
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
         with:
           name: "konradmalik"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Flake build ${{ matrix.hostname }}
-        run: nix build .#nixosConfigurations.${{ matrix.hostname }}.config.system.build.toplevel
+      - name: Flake build ${{ matrix.host.hostname }}
+        run: nix build .#nixosConfigurations.${{ matrix.host.hostname }}.config.system.build.toplevel
 
   build-homemanager:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - flake-check
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
       - uses: DeterminateSystems/nix-installer-action@v20
-      - uses: DeterminateSystems/magic-nix-cache-action@v13
-      - if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: cachix/cachix-action@v16
         with:
-          name: "konradmalik"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extra-conf: |
+            accept-flake-config = true
+      - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Flake build generic linux
         run: nix build .#homeConfigurations.konrad@generic.activationPackage
