@@ -2,20 +2,11 @@
   lib,
   pkgs,
   modulesPath,
-  inputs,
   ...
 }:
 
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
-    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-
-    (modulesPath + "/installer/scan/not-detected.nix")
-
-    ./disko.nix
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 

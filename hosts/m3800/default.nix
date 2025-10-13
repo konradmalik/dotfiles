@@ -1,6 +1,13 @@
+{ inputs, ... }:
 {
   imports = [
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+
     ./hardware-configuration.nix
+    ./disko.nix
+
     ./../common/modules/hyprland.nix
     ./../common/nixos.nix
   ];

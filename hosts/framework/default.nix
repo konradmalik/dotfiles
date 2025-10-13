@@ -1,6 +1,11 @@
+{ inputs, ... }:
 {
   imports = [
+    inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
+
     ./hardware-configuration.nix
+    ./disko.nix
+
     ./../common/modules/hyprland.nix
     ./../common/nixos.nix
   ];

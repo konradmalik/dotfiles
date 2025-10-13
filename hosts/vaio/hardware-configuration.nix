@@ -2,19 +2,11 @@
   lib,
   pkgs,
   modulesPath,
-  inputs,
   ...
 }:
 
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
-
-    (modulesPath + "/installer/scan/not-detected.nix")
-
-    ./disko.nix
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.kernelPackages = pkgs.linuxPackages;
 

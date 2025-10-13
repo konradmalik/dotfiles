@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+
     ./../common/nixos.nix
     ./../common/modules/blocky.nix
     ./../common/modules/spotifyd.nix
