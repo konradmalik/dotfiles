@@ -13,10 +13,6 @@
   networking.hostName = "framework";
 
   boot = {
-    tmp = {
-      cleanOnBoot = false;
-      useTmpfs = true;
-    };
     supportedFilesystems = [ "ntfs" ];
   };
 
