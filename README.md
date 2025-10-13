@@ -27,29 +27,14 @@ I'll use the local version for brevity.
 
 ```bash
 $ sudo nixos-rebuild --flake . switch
+# or
+$ sudo nixos-rebuild --flake . boot
 ```
 
 To just build (for example for a test):
 
 ```bash
-$ nix build .#nixosConfigurations.$(hostname -s).config.system.build.toplevel
-```
-
-#### Build and enable config on remote:
-
-> [!NOTE]
-> This will fail because of [this bug](https://github.com/NixOS/nixpkgs/issues/118655).
-> Workaround is to use root ssh access, but I don't want to do that
-
-```bash
-$ TARGET=rpi4-1 nixos-rebuild --flake .#$TARGET --target-host $TARGET --build-host $TARGET --use-remote-sudo boot
-```
-
-Instead, this will work for now. I may create a wrapper for that:
-
-```bash
-
-$ TARGET=rpi4-1 ssh $TARGET -- sudo nixos-rebuild --flake github:konradmalik/dotfiles#$TARGET boot
+$ nix build .#nixosConfigurations.m3800.config.system.build.toplevel
 ```
 
 #### Build sd-image:
@@ -73,62 +58,81 @@ $ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
 > [!NOTE]
 > The filesystem won't be complete, it will miss `etc` and more. NixOS will populate those dirs on first boot.
 >
-> So if you need to modify something on the card (like read host keys or add `wpa_supplicant.conf`) then the steps are:
+> So if you need to modify something on the card (like read host keys) then the steps are:
 >
 > - boot rpi with the newly flashed card once
 > - wait a minute or two
 > - poweroff rpi and mount the card on your PC
 > - filesystem will be complete
->
-> In my case, Wi-Fi (`wpa_supplicant.conf`) is symlinked from `sops`, but you may still need to add appropriate host key to `.sops.yaml`.
 
-#### Build minimal ISO with ssh access for root:
+#### Install/reinstall/rebuild NixOS from ISO
 
-Useful for installing any nixos-config through ssh.
+In NixOS ISO:
 
-```bash
-$ nix build .#installer-iso
-```
-
-Flash iso to a pendrive
+Clone this repo
 
 ```bash
-$ sudo dd if=installer.iso of=/dev/sdX bs=4096 conv=fsync status=progress
+$ git clone https://github.com/konradmalik/dotfiles
 ```
 
-Boot, find the ip and ssh connect as root.
-
-Consider using nmap for discovery:
+Enter shell
 
 ```bash
-$ sudo nmap -p 22 --open -sV 192.168.178.0/24
+$ nix-shell
 ```
 
-Format, partition the drive etc.
-
-Then you can install the system from flake directly:
+Use disko to format and mount:
 
 ```bash
-$ sudo nixos-install --flake github:konradmalik/dotfiles#m3800 --root /mnt --no-bootloader
+$ sudo disko --mode destroy,format,mount ./hosts/m3800/disko.nix
 ```
 
-Tip: `nixos-enter` is also very handy if you have a working system but need to fix something, e.g. change your password.
+Generate hardware configuration:
 
-Tip2: I use `--no-bootloader` because I don't want grub (either way it will fail if there is systemd already defined I think,
-it will say something like '/boot/efi is not at the root'). My flake has already all the needed hardware and booloader configs for the machines I use.
-In order to install on a new machine, just generate hardware-configuration.nix on that machine and add a new entry in this flake.
+```bash
+$ nixos-generate-config --no-filesystems --root /mnt
+```
+
+Generate/add sops keys (if required for the configuration). Do this later only if no critical services rely on them (like user passwords).
+Host ones will be picked up automatically. Add user ones to `/home/USER/.config/sops.keys.txt`.
+For details refer to [sops-nix](#sops-nix) section.
+
+Finally, use hardware-configuration and disko to install nixos:
+
+```bash
+$ sudo nixos-install --flake .#m3800 --root /mnt
+```
+
+#### Fix something on NixOS from ISO
+
+In NixOS ISO:
+
+Clone this repo
+
+```bash
+$ git clone https://github.com/konradmalik/dotfiles
+```
+
+Enter shell
+
+```bash
+$ nix-shell
+```
+
+Use disko to mount:
+
+```bash
+$ sudo disko --mode mount ./hosts/m3800/disko.nix
+```
+
+Enter your system
+
+```bash
+$ cd /mnt
+$ nixos-enter
+```
 
 ### nix-darwin:
-
-Disable gatekeeper or however it's called:
-
-```bash
-$ sudo spctl --master-disable
-```
-
-Go to Settings → Security and Privacy and allow apps from "Anywhere".
-
-Then install nix following the official guidelines and installer.
 
 Then build and enable config locally:
 
@@ -139,9 +143,9 @@ $ sudo darwin-rebuild switch --flake .
 To just build (for example for a test):
 
 ```bash
-$ nix build .#darwinConfigurations.$(hostname -s).config.system.build.toplevel
+$ nix build .#darwinConfigurations.mbp13.config.system.build.toplevel
 # or shortened by nix-darwin
-$ nix build .#darwinConfigurations.$(hostname -s).system
+$ nix build .#darwinConfigurations.mbp13.system
 ```
 
 #### Linux builder
@@ -178,20 +182,35 @@ $ home-manager switch --flake .
 To just build (for example for a test):
 
 ```bash
-$ nix build .#homeConfigurations.$(whoami)@$(hostname -s).activationPackage
+$ nix build .#homeConfigurations.konrad@generic.activationPackage
 ```
 
 ### sops-nix
 
 #### system-wide (Linux only)
 
-We use `age`, it's way easier and more straightforward than `gpg`.
-
 Strategy with keys:
 
+- none of the keys block new machines. If they're missing, they'll just fail to decrypt on runtime.
 - `age` derived from host ssh key for host-wide secrets
 - `age` derived from personal ssh key for personal secrets
 - one global `age` key per person that is kept secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
+
+##### Host keys
+
+To get age key for the machine, use:
+
+```bash
+$ /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
+```
+
+Add this key to `.sops.yaml` and propagate re-encryption to all secrets:
+
+```bash
+$ for file in $(grep -lr "^sops:$"); do sops updatekeys -y $file; done
+```
+
+##### User keys
 
 Create `age` directory for sops:
 
@@ -215,8 +234,7 @@ $ ssh-to-age -private-key -i ~/.ssh/personal > "$XDG_CONFIG_HOME/sops/age/keys.t
 Add this key to `.sops.yaml` and propagate re-encryption to all secrets:
 
 ```bash
-# adjust this command, glob may not work!
-$ sops updatekeys secrets/*.yaml
+$ for file in $(grep -lr "^sops:$"); do sops updatekeys -y $file; done
 ```
 
 #### home-manager
