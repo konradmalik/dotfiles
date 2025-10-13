@@ -26,8 +26,7 @@
   ++ (builtins.attrValues (import ./options));
 
   boot = {
-    # clean tmp after reboot
-    tmp.cleanOnBoot = true;
+    tmp.cleanOnBoot = lib.mkDefault true;
     kernel.sysctl."fs.inotify.max_user_instances" = 524288;
   };
 

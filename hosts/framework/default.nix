@@ -12,7 +12,13 @@
 
   networking.hostName = "framework";
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot = {
+    tmp = {
+      cleanOnBoot = false;
+      useTmpfs = true;
+    };
+    supportedFilesystems = [ "ntfs" ];
+  };
 
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
