@@ -27,6 +27,8 @@ in
     };
   };
 
+  sops.defaultSopsFile = ./secrets.yaml;
+
   # required if users use zsh
   programs.zsh.enable = true;
 
