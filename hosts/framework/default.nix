@@ -17,10 +17,6 @@
 
   networking.hostName = "framework";
 
-  boot = {
-    supportedFilesystems = [ "ntfs" ];
-  };
-
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
   konrad.network.wireless.enable = true;
