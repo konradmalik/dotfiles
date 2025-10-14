@@ -1,4 +1,9 @@
-{ config, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
@@ -47,6 +52,9 @@
   };
 
   sops.secrets.framework-borg = { };
+  sops.secrets."ntfy/topic/problem" = { };
+  sops.secrets."ntfy/topic/info" = { };
+  sops.secrets."ntfy/token" = { };
 
   services.borgbackup.jobs = {
     home = {
@@ -87,4 +95,48 @@
       paths = [ "/home/konrad/" ];
     };
   };
+
+  systemd.services.borgbackup-job-home.unitConfig = {
+    RequiresMountsFor = "/mnt/borg";
+    OnSuccess = "notify-info@%i.service";
+    OnFailure = "notify-problem@%i.service";
+  };
+
+  # TODO extract
+  systemd.services = {
+    "notify-problem@" = {
+      enable = true;
+      environment.SERVICE = "%i";
+      script = ''
+        NTFY_TOKEN="$(cat ${config.sops.secrets."ntfy/token".path})"
+        ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+          -H "Authorization: Bearer $NTFY_TOKEN" \
+          -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
+          -H "tags:warning" \
+          -H "prio:high" \
+          -d "Failed!\nRun journalctl -u $SERVICE for details" \
+          https://ntfy.sh/$(<${config.sops.secrets."ntfy/topic/problem".path})
+      '';
+    };
+    "notify-info@" = {
+      enable = true;
+      environment.SERVICE = "%i";
+      script = ''
+        NTFY_TOKEN="$(cat ${config.sops.secrets."ntfy/token".path})"
+        ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+          -H "Authorization: Bearer $NTFY_TOKEN" \
+          -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
+          -H "prio:min" \
+          -d "Succeeded!\nRun journalctl -u $SERVICE for details" \
+          https://ntfy.sh/$(<${config.sops.secrets."ntfy/topic/info".path})
+      '';
+    };
+  };
+
+  # // lib.flip lib.mapAttrs' config.services.borgbackup.jobs (
+  #   name: _value:
+  #   lib.nameValuePair "borgbackup-job-${name}" {
+  #     unitConfig.OnFailure = "notify-problems@%i.service";
+  #   }
+  # );
 }
