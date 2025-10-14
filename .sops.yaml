@@ -4,22 +4,24 @@ keys:
   # personal ssh
   - &admin_konrad_ssh age1n2saguuqjaea7szgcy45nuzg0kwh7h9c979wtnf4yt65jv3n4v6qkt37mh
   # host ssh
+  - &host_framework age1p8r7cg58ytvv8c4tzdm3eg3rm2x3gu6qu5885r6satxa2jeuyugsn8enh5
   - &host_m3800 age1s9xeq5c22a9t8escdep5zryz5ug56tsqc9j7wvaw4rkdregue3tqa6c2gz
   - &host_mbp13 age1nyqqwhp6pecz47qmdskagyldlwm69ngu8ec7wyua99lrk28a8pkqaw0dtg
-  - &host_vaio age1mxn8et6dnkhfw8arv9p09u7zmc58vplwshmrxjah7jpemuxqmqws2d34ym
   - &host_rpi4-1 age19xc24qqy5wuham8knmsfaw4ug65k4eqqvsxr7v65q3wem4nkgpxs42g5rf
   - &host_rpi4-2 age1j4rv4r86uj2cqhtwdq0fhcu2hquz670kqp6wjec9hmf6v4t5g55qm55s5g
+  - &host_vaio age1mxn8et6dnkhfw8arv9p09u7zmc58vplwshmrxjah7jpemuxqmqws2d34ym
 creation_rules:
   - path_regex: hosts/common/users/konrad/secrets\.yaml$
     key_groups:
       - age:
           - *admin_konrad
           - *admin_konrad_ssh
-          - *host_mbp13
+          - *host_framework
           - *host_m3800
-          - *host_vaio
+          - *host_mbp13
           - *host_rpi4-1
           - *host_rpi4-2
+          - *host_vaio
   - path_regex: home/konrad/common/secrets\.yaml$
     key_groups:
       - age:
