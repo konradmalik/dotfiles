@@ -28,13 +28,4 @@ in
     enable = true;
     install = true;
   };
-
-  wayland.windowManager.hyprland.settings = {
-    # exec-once = [ "hyprctl dispatch dpms off 'eDP-1'" ];
-    # monitor = [ "eDP-1, disable" ];
-    device = {
-      name = "elan-touchscreen";
-      enabled = false;
-    };
-  };
 }
