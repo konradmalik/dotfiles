@@ -78,16 +78,6 @@ let
       fi
     }
 
-    ntfy() {
-      local topic="$1"
-      local message="$2"
-      if [ -z "$topic" ] || [ -z "$message" ]; then
-          echo "usage: $0 <topic> <message>"
-          exit 1
-      fi
-      curl -d "$message" "ntfy.sh/$topic"
-    }
-
     # rfv keybind
     rfv-widget() { export VISUAL=nvim && ${pkgs.rfv}/bin/rfv }
     zle -N rfv-widget

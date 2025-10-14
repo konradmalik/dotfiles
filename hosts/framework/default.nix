@@ -114,7 +114,7 @@
           -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
           -H "tags:warning" \
           -H "prio:high" \
-          -d "Failed!\nRun journalctl -u $SERVICE for details" \
+          -d "Failed!" \
           https://ntfy.sh/$(<${config.sops.secrets."ntfy/topic/problem".path})
       '';
     };
@@ -127,16 +127,9 @@
           -H "Authorization: Bearer $NTFY_TOKEN" \
           -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
           -H "prio:min" \
-          -d "Succeeded!\nRun journalctl -u $SERVICE for details" \
+          -d "Succeeded." \
           https://ntfy.sh/$(<${config.sops.secrets."ntfy/topic/info".path})
       '';
     };
   };
-
-  # // lib.flip lib.mapAttrs' config.services.borgbackup.jobs (
-  #   name: _value:
-  #   lib.nameValuePair "borgbackup-job-${name}" {
-  #     unitConfig.OnFailure = "notify-problems@%i.service";
-  #   }
-  # );
 }

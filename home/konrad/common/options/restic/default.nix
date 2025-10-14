@@ -19,11 +19,9 @@ in
       default = "0035814e69b653f0000000006";
     };
 
-    b2ApplicationKeySopsRef = mkOption {
+    b2ApplicationKeyFile = mkOption {
       type = types.str;
-      example = "restic/b2_application_key";
-      default = "restic/b2_application_key";
-      description = "sops nix reference containing backblaze account key";
+      description = "file containing backblaze account key";
     };
 
     b2Bucket = mkOption {
@@ -31,20 +29,6 @@ in
       example = "somebucket";
       description = "b2 bucket to use for the restic repo";
       default = "backups-km";
-    };
-
-    passwordFileSopsRef = mkOption {
-      type = types.str;
-      description = "sops nix reference containing restic password";
-      example = "restic/password";
-      default = "restic/password";
-    };
-
-    ntfyPathFileRef = mkOption {
-      type = types.str;
-      description = "sops nix reference containing ntfy.sh url path for notifications";
-      example = "restic/ntfy_restic_path";
-      default = "restic/ntfy_restic_path";
     };
 
     package = lib.mkOption {
@@ -83,18 +67,21 @@ in
   config =
     let
       repostiory = "b2:${cfg.b2Bucket}";
-      b2ApplicationKeyFile = config.sops.secrets.${cfg.b2ApplicationKeySopsRef}.path;
-      passwordFile = config.sops.secrets.${cfg.passwordFileSopsRef}.path;
       restic = cfg.package;
 
       baker = pkgs.callPackage ./baker.nix {
         inherit
-          b2ApplicationKeyFile
           repostiory
-          passwordFile
           restic
           ;
-        inherit (cfg) includes excludes b2ApplicationId;
+        inherit (cfg)
+          includes
+          excludes
+          b2ApplicationId
+          ;
+
+        passwordFile = config.sops.secrets."restic/password".path;
+        b2ApplicationKeyFile = config.sops.secrets."restic/b2_application_key".path;
       };
 
       mkUnit = command: script: {
@@ -138,25 +125,55 @@ in
         };
       };
 
-      ntfyPath = config.sops.secrets.${cfg.ntfyPathFileRef}.path;
-      command = name: cmd: pkgs.callPackage ./cmd.nix { inherit name cmd ntfyPath; };
+      command =
+        name: cmd:
+        let
+          ntfyTokenFile = config.sops.secrets."ntfy/token".path;
+          ntfyErrorTopicFile = config.sops.secrets."ntfy/topic/problem".path;
+          ntfyInfoTopicFile = config.sops.secrets."ntfy/topic/info".path;
+        in
+        pkgs.writeShellScript "${name}.sh"
+          # bash
+          ''
+            echo "${name}"
+            ${pkgs.coreutils}/bin/date
+            ${cmd}
+            code=$?
+            if [[ "$code" == 0 ]]; then
+              ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+                --header "Authorization: Bearer $(<${ntfyTokenFile})" \
+                --header "Title: [$(${pkgs.inetutils}/bin/hostname)] Baker status" \
+                --header prio:min \
+                --data "${name} succeeded" \
+                ntfy.sh/$(<${ntfyInfoTopicFile}) > /dev/null
+            else
+              ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
+                --header "Authorization: Bearer $(<${ntfyTokenFile})" \
+                --header "Title: [$(${pkgs.inetutils}/bin/hostname)] Baker status" \
+                --header tags:warning \
+                --header prio:high \
+                --data "${name} failed" \
+                ntfy.sh/$(<${ntfyErrorTopicFile}) > /dev/null
+            fi
+            echo
+          '';
 
       resticBackup = command "restic-backup" "${baker}/bin/baker b2 backup";
       resticForget = command "restic-forget" "${baker}/bin/baker b2 forget-prune";
       resticCheck = command "restic-check" "${baker}/bin/restic-b2 check";
     in
     mkIf cfg.enable {
-      sops.secrets = {
-        ${cfg.b2ApplicationKeySopsRef} = {
-          path = "${config.xdg.dataHome}/restic/envs/b2/application_key";
+      sops.secrets =
+        let
+          sopsFile = ../../../../../hosts/common/users/konrad/secrets.yaml;
+        in
+        {
+          "restic/b2_application_key" = { };
+          "restic/password" = { };
+          "ntfy/token" = { inherit sopsFile; };
+          "ntfy/topic/problem" = { inherit sopsFile; };
+          "ntfy/topic/info" = { inherit sopsFile; };
         };
-        ${cfg.passwordFileSopsRef} = {
-          path = "${config.xdg.dataHome}/restic/password";
-        };
-        ${cfg.ntfyPathFileRef} = {
-          path = "${config.xdg.dataHome}/restic/ntfy_restic_path";
-        };
-      };
 
       home.packages = [ baker ];
 

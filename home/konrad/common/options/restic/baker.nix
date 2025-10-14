@@ -21,7 +21,7 @@ let
       # bash
       ''
         export B2_ACCOUNT_ID="${b2ApplicationId}"
-        export B2_ACCOUNT_KEY="''$(<${b2ApplicationKeyFile})"
+        export B2_ACCOUNT_KEY="$(<${b2ApplicationKeyFile})"
 
         export RESTIC_REPOSITORY="${repostiory}"
         export RESTIC_PASSWORD_FILE="${passwordFile}"
@@ -46,7 +46,7 @@ let
     # The repo is the first argument
     case ''$1 in
       b2)
-        echo "Running command using B2, repository: ''$RESTIC_REPOSITORY"
+        echo "Running command using B2, repository: $RESTIC_REPOSITORY"
         ;;
       *)
         echo "The first argument is the repository to use for the backup, the options are..."
