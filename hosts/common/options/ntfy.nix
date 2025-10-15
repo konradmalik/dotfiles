@@ -52,8 +52,8 @@ in
           ntfyTopicFile = ntfyErrorTopicFile;
           priority = "high";
           tags = "warning";
-          title = "$SERVICE status";
-          text = "failed";
+          title = "$SERVICE";
+          text = "Status: failed";
         };
 
         notifierInfo = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix {
@@ -61,8 +61,8 @@ in
           ntfyHost = cfg.server;
           ntfyTopicFile = ntfyInfoTopicFile;
           priority = "min";
-          title = "$SERVICE status";
-          text = "succeeded";
+          title = "$SERVICE";
+          text = "Status: succeeded";
         };
       in
       {

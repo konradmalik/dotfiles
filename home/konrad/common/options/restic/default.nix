@@ -137,7 +137,7 @@ in
             ntfyTopicFile = ntfyErrorTopicFile;
             priority = "high";
             tags = "warning";
-            title = "Baker status";
+            title = "baker";
             text = "${name} failed";
           };
 
@@ -145,7 +145,7 @@ in
             inherit ntfyTokenFile;
             ntfyTopicFile = ntfyInfoTopicFile;
             priority = "min";
-            title = "Baker status";
+            title = "baker";
             text = "${name} succeeded";
           };
         in
