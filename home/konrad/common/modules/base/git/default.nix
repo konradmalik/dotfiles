@@ -180,7 +180,7 @@
         gpg = {
           format = "ssh";
           ssh = {
-            allowedSignersFile = ../../../../../../files/allowed_signers;
+            allowedSignersFile = "${../../../../../../files/allowed_signers}";
           };
         };
 
