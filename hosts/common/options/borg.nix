@@ -17,19 +17,19 @@ in
     };
 
     repoPath = lib.mkOption {
-      type = lib.types.str;
+      type = lib.types.path;
       example = "/mnt/borg/somerepo";
       description = "Path to the borg backups repository";
     };
 
     passwordFile = lib.mkOption {
-      type = lib.types.str;
+      type = lib.types.path;
       example = "/tmp/pass.txt";
       description = "Path to the borg password file";
     };
 
     paths = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
+      type = lib.types.listOf lib.types.path;
       example = ''[ "/home/konrad" "/var/mydatabase" ]'';
       description = "paths to backup";
     };

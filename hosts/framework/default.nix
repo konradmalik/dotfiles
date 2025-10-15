@@ -38,4 +38,6 @@
     OnSuccess = "${config.konrad.services.ntfy.infoServiceName}@%i.service";
     OnFailure = "${config.konrad.services.ntfy.problemServiceName}@%i.service";
   };
+
+  konrad.services.hd-idle.enable = true;
 }

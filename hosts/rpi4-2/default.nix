@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -34,17 +33,7 @@
     openFirewall = true;
   };
 
-  systemd.services.hd-idle = {
-    description = "External HD spin down daemon";
-    wantedBy = [ "multi-user.target" ];
-    environment.SHELL = "/bin/sh";
-    serviceConfig = {
-      # never spin down all disks, but spin down sda after 300 secs
-      ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a sda -i 300";
-      Restart = "always";
-      RestartSec = 12;
-    };
-  };
+  konrad.services.hd-idle.enable = true;
 
   fileSystems = {
     "/mnt" = {

@@ -4,6 +4,7 @@
   bluetooth = import ./bluetooth.nix;
   borg = import ./borg.nix;
   dhcp = import ./dhcp.nix;
+  hd-idle = import ./hd-idle.nix;
   ntfy = import ./ntfy.nix;
   offdisp = import ./offdisp.nix;
   rtcwake = import ./rtcwake.nix;
