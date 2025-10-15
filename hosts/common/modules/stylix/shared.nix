@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  customArgs,
   ...
 }:
 {
@@ -9,7 +8,7 @@
     enable = true;
     autoEnable = true;
 
-    image = "${customArgs.files}/wallpapers/bishal-mishra.jpg";
+    image = lib.mkDefault ../../../../files/wallpapers/nature-landscape-forest-path-wallpaper.jpg;
 
     base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
     polarity = "dark";

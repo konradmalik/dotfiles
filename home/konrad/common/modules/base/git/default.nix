@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  customArgs,
   ...
 }:
 {
@@ -181,7 +180,7 @@
         gpg = {
           format = "ssh";
           ssh = {
-            allowedSignersFile = "${customArgs.files}/allowed_signers";
+            allowedSignersFile = ../../../../../../files/allowed_signers;
           };
         };
 

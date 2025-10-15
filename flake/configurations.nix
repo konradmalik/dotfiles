@@ -4,9 +4,6 @@
     let
       specialArgs = {
         inherit inputs;
-        customArgs = {
-          files = ./../files;
-        };
       };
     in
     {

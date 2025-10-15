@@ -1,4 +1,4 @@
-{ inputs, customArgs, ... }:
+{ inputs, ... }:
 
 {
   imports = [ inputs.home-manager.darwinModules.home-manager ];
@@ -7,7 +7,7 @@
     useUserPackages = true;
     useGlobalPkgs = true;
     extraSpecialArgs = {
-      inherit inputs customArgs;
+      inherit inputs;
     };
   };
 }
