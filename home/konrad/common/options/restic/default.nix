@@ -128,13 +128,8 @@ in
       command =
         name: cmd:
         let
-          ntfyTokenFile = config.sops.secrets."ntfy/token".path;
-          ntfyErrorTopicFile = config.sops.secrets."ntfy/topic/problem".path;
-          ntfyInfoTopicFile = config.sops.secrets."ntfy/topic/info".path;
-
           notifierError = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
-            inherit ntfyTokenFile;
-            ntfyTopicFile = ntfyErrorTopicFile;
+            inherit config;
             priority = "high";
             tags = "warning";
             title = "baker";
@@ -142,8 +137,7 @@ in
           };
 
           notifierInfo = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
-            inherit ntfyTokenFile;
-            ntfyTopicFile = ntfyInfoTopicFile;
+            inherit config;
             priority = "min";
             title = "baker";
             text = "${name} succeeded";
@@ -177,8 +171,7 @@ in
           "restic/b2_application_key" = { };
           "restic/password" = { };
           "ntfy/token" = { inherit sopsFile; };
-          "ntfy/topic/problem" = { inherit sopsFile; };
-          "ntfy/topic/info" = { inherit sopsFile; };
+          "ntfy/topic" = { inherit sopsFile; };
         };
 
       home.packages = [ baker ];

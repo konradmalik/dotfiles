@@ -11,13 +11,6 @@ in
   options.konrad.services.ntfy = {
     enable = lib.mkEnableOption "Enables ntfy services";
 
-    server = lib.mkOption {
-      type = lib.types.str;
-      example = "https://ntfy.example.sh";
-      default = "https://ntfy.sh";
-      description = "server to use";
-    };
-
     problemServiceName = lib.mkOption {
       type = lib.types.str;
       default = "notify-problem";
@@ -35,21 +28,14 @@ in
 
   config = lib.mkIf cfg.enable {
     sops.secrets = {
-      "ntfy/topic/problem" = { };
-      "ntfy/topic/info" = { };
+      "ntfy/topic" = { };
       "ntfy/token" = { };
     };
 
     systemd.services =
       let
-        ntfyTokenFile = config.sops.secrets."ntfy/token".path;
-        ntfyErrorTopicFile = config.sops.secrets."ntfy/topic/problem".path;
-        ntfyInfoTopicFile = config.sops.secrets."ntfy/topic/info".path;
-
         notifierError = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix {
-          inherit ntfyTokenFile;
-          ntfyHost = cfg.server;
-          ntfyTopicFile = ntfyErrorTopicFile;
+          inherit config;
           priority = "high";
           tags = "warning";
           title = "$SERVICE";
@@ -57,9 +43,7 @@ in
         };
 
         notifierInfo = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix {
-          inherit ntfyTokenFile;
-          ntfyHost = cfg.server;
-          ntfyTopicFile = ntfyInfoTopicFile;
+          inherit config;
           priority = "min";
           title = "$SERVICE";
           text = "Status: succeeded";

@@ -2,14 +2,16 @@
   writeShellScript,
   curl,
   inetutils,
-  ntfyTokenFile,
-  ntfyHost ? "https://ntfy.sh",
-  ntfyTopicFile,
+  config,
   priority ? "default",
   tags ? "",
   title,
   text,
 }:
+let
+  ntfyTokenFile = config.sops.secrets."ntfy/token".path;
+  ntfyTopicFile = config.sops.secrets."ntfy/topic".path;
+in
 # https://docs.ntfy.sh/publish/
 writeShellScript "ntfy-sender.sh" ''
   ${curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
@@ -18,5 +20,5 @@ writeShellScript "ntfy-sender.sh" ''
     --header prio:${priority} \
     --header tags:${tags} \
     --data "${text}" \
-    ${ntfyHost}/$(<${ntfyTopicFile}) > /dev/null
+    https://ntfy.sh/$(<${ntfyTopicFile}) > /dev/null
 ''
