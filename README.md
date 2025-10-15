@@ -5,6 +5,13 @@
 
 My NixOS and Nix-Darwin configurations.
 
+## Naming
+
+- modules - something that's imported on-demand and does not support explicitly enabling
+- options - something that's always imported but requires explicit enable. It's also configurable via some abstraction.
+- systems - prepared modules for specific systems like nixos, darwin etc.
+- profiles - prepared modules for a specific use-case like desktop, server, laptop, etc.
+
 ## Commands
 
 > [!NOTE]

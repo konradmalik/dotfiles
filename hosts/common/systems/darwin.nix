@@ -1,33 +1,24 @@
 { lib, inputs, ... }:
 {
   imports = [
-    ./modules/aerospace.nix
-    ./modules/docker/darwin.nix
-    ./modules/nix/darwin.nix
-    ./modules/home-manager.nix
-    ./modules/stylix/shared.nix
+    ./../modules/aerospace.nix
+    ./../modules/docker/darwin.nix
+    ./../modules/nix/darwin.nix
+    ./../modules/home-manager.nix
+    ./../modules/stylix/shared.nix
 
-    ./users/konrad/darwin.nix
+    ./../users/konrad/darwin.nix
 
     inputs.stylix.darwinModules.stylix
   ];
 
   # packages installed in system profile
-  environment = {
-    pathsToLink = [
-      "Applications"
-      "/bin"
-      "/lib"
-      "/man"
-      "/share"
-    ];
-    etc = {
-      "ssh/sshd_config.d/99-nix.conf".text = ''
-        PermitRootLogin no
-        PasswordAuthentication no
-        ChallengeResponseAuthentication no
-      '';
-    };
+  environment.etc = {
+    "ssh/sshd_config.d/99-nix.conf".text = ''
+      PermitRootLogin no
+      PasswordAuthentication no
+      ChallengeResponseAuthentication no
+    '';
   };
 
   homebrew = {

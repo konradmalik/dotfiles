@@ -6,7 +6,6 @@
   };
 
   services.blocky = {
-    enable = true;
     settings = {
       ports = {
         dns = 53;

@@ -1,12 +1,10 @@
-{ ... }:
 {
   imports = [
     ./hardware-configuration.nix
 
-    ./../common/nixos.nix
-    ./../common/modules/blocky.nix
-    ./../common/modules/spotifyd.nix
-    ./../common/modules/monitoring/agents.nix
+    ../common/profiles/rpi4.nix
+
+    ../common/modules/spotifyd.nix
   ];
 
   networking.hostName = "rpi4-1";
@@ -14,9 +12,6 @@
   services.blocky.enable = true;
 
   konrad.services = {
-    autoupgrade = {
-      enable = true;
-    };
     dhcp =
       let
         ip = "192.168.100.2";
@@ -32,11 +27,6 @@
           "192.168.100.3"
         ];
       };
-    syncthing = {
-      enable = true;
-      user = "konrad";
-      bidirectional = false;
-    };
   };
 
   services.shairport-sync = {

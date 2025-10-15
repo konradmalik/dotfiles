@@ -1,1 +1,0 @@
-{ imports = [ ./common/nixos.nix ]; }

@@ -1,0 +1,3 @@
+{
+  imports = [ ../systems/nixos.nix ];
+}

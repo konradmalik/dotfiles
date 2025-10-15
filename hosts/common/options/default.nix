@@ -1,5 +1,6 @@
 {
   autoupgrade = import ./autoupgrade.nix;
+  blocky = import ./blocky.nix;
   bluetooth = import ./bluetooth.nix;
   borg = import ./borg.nix;
   dhcp = import ./dhcp.nix;

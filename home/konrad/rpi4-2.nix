@@ -1,1 +1,3 @@
-{ imports = [ ./common/nixos.nix ]; }
+{
+  imports = [ ./common/profiles/server.nix ];
+}

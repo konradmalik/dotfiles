@@ -2,9 +2,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./../common/nixos.nix
-    ./../common/modules/blocky.nix
-    ./../common/modules/monitoring/agents.nix
+
+    ./../common/profiles/rpi4.nix
+
     ./../common/modules/monitoring/grafana.nix
     ./../common/modules/monitoring/prometheus.nix
   ];
@@ -13,31 +13,21 @@
 
   services.blocky.enable = true;
 
-  konrad.services = {
-    autoupgrade = {
+  konrad.services.dhcp =
+    let
+      ip = "192.168.100.3";
+    in
+    {
       enable = true;
+      defaultGateway = "192.168.100.1";
+      staticIP = ip;
+      interface = "end0";
+      dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
+      dhcp-dns = [
+        "192.168.100.2"
+        ip
+      ];
     };
-    dhcp =
-      let
-        ip = "192.168.100.3";
-      in
-      {
-        enable = true;
-        defaultGateway = "192.168.100.1";
-        staticIP = ip;
-        interface = "end0";
-        dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
-        dhcp-dns = [
-          "192.168.100.2"
-          ip
-        ];
-      };
-    syncthing = {
-      enable = true;
-      user = "konrad";
-      bidirectional = false;
-    };
-  };
 
   services.plex = {
     enable = true;
