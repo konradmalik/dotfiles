@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   inputs,
   ...
 }:
@@ -36,9 +35,6 @@
     IdleActionSec = "30min";
   };
 
-  # TODO refactor, extract, reuse
-  # TODO nice systemd ntfy https://github.com/ascandella/dotfiles/blob/main/modules/nixos/roles/backups.nix and libnotify
-  # TODO directly use secrets in restic
   fileSystems = {
     "/mnt/borg" = {
       device = "/dev/disk/by-partlabel/framework-borg";
@@ -48,84 +44,18 @@
   };
 
   sops.secrets.framework-borg = { };
-  sops.secrets."ntfy/topic/problem" = { };
-  sops.secrets."ntfy/topic/info" = { };
-  sops.secrets."ntfy/token" = { };
-
-  services.borgbackup.jobs = {
-    home = {
-      encryption = {
-        mode = "repokey-blake2";
-        passCommand = "cat ${config.sops.secrets.framework-borg.path}";
-      };
-      extraCreateArgs = "--verbose --stats --checkpoint-interval 600";
-      repo = "/mnt/borg/home";
-      compression = "zstd,1";
-      startAt = "hourly";
-      prune.keep = {
-        within = "1d"; # Keep all archives from the last day
-        daily = 7;
-        weekly = 4;
-        monthly = -1; # Keep at least one archive for each month
-      };
-      exclude = [
-        "*.o"
-        "*.pyc"
-        "*/node_modules/*"
-
-        "/home/*/.cache"
-        "/home/*/.cargo"
-        "/home/*/.clangd"
-        "/home/*/.direnv"
-        "/home/*/.go"
-        "/home/*/.gradle"
-        "/home/*/.m2"
-        "/home/*/.mozilla/firefox/*/storage"
-        "/home/*/.npm"
-        "/home/*/.nuget"
-        "/home/*/.opam"
-        "/home/*/.pnpm"
-        "/home/*/Downloads"
-
-      ];
-      paths = [ "/home/konrad/" ];
-    };
+  konrad.services.borg = {
+    enable = true;
+    name = "home";
+    repoPath = "/mnt/borg/home";
+    passwordFile = config.sops.secrets.framework-borg.path;
+    paths = [ "/home/konrad" ];
   };
+  konrad.services.ntfy.enable = true;
 
-  systemd.services.borgbackup-job-home.unitConfig = {
+  systemd.services.${config.konrad.services.borg.systemdName}.unitConfig = {
     RequiresMountsFor = "/mnt/borg";
-    OnSuccess = "notify-info@%i.service";
-    OnFailure = "notify-problem@%i.service";
-  };
-
-  # TODO extract
-  systemd.services = {
-    "notify-problem@" = {
-      enable = true;
-      environment.SERVICE = "%i";
-      script = ''
-        NTFY_TOKEN="$(cat ${config.sops.secrets."ntfy/token".path})"
-        ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
-          -H "Authorization: Bearer $NTFY_TOKEN" \
-          -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
-          -H "tags:warning" \
-          -H "prio:high" \
-          -d "Failed!" \
-          https://ntfy.sh/$(<${config.sops.secrets."ntfy/topic/problem".path})
-      '';
-    };
-    "notify-info@" = {
-      enable = true;
-      environment.SERVICE = "%i";
-      script = ''
-        NTFY_TOKEN="$(cat ${config.sops.secrets."ntfy/token".path})"
-        ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
-          -H "Authorization: Bearer $NTFY_TOKEN" \
-          -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
-          -H "prio:min" \
-          -d "Succeeded." \
-          https://ntfy.sh/$(<${config.sops.secrets."ntfy/topic/info".path})
-      '';
-    };
+    OnSuccess = "${config.konrad.services.ntfy.infoServiceName}@%i.service";
+    OnFailure = "${config.konrad.services.ntfy.problemServiceName}@%i.service";
   };
 }
