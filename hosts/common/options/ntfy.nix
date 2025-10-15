@@ -40,34 +40,42 @@ in
       "ntfy/token" = { };
     };
 
-    systemd.services = {
-      "${cfg.problemServiceName}@" = {
-        enable = true;
-        environment.SERVICE = "%i";
-        script = ''
-          NTFY_TOKEN="$(cat ${config.sops.secrets."ntfy/token".path})"
-          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
-            -H "Authorization: Bearer $NTFY_TOKEN" \
-            -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
-            -H "tags:warning" \
-            -H "prio:high" \
-            -d "Failed!" \
-            ${cfg.server}/$(<${config.sops.secrets."ntfy/topic/problem".path})
-        '';
+    systemd.services =
+      let
+        ntfyTokenFile = config.sops.secrets."ntfy/token".path;
+        ntfyErrorTopicFile = config.sops.secrets."ntfy/topic/problem".path;
+        ntfyInfoTopicFile = config.sops.secrets."ntfy/topic/info".path;
+
+        notifierError = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix {
+          inherit ntfyTokenFile;
+          ntfyHost = cfg.server;
+          ntfyTopicFile = ntfyErrorTopicFile;
+          priority = "high";
+          tags = "warning";
+          title = "$SERVICE status";
+          text = "failed";
+        };
+
+        notifierInfo = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix {
+          inherit ntfyTokenFile;
+          ntfyHost = cfg.server;
+          ntfyTopicFile = ntfyInfoTopicFile;
+          priority = "min";
+          title = "$SERVICE status";
+          text = "succeeded";
+        };
+      in
+      {
+        "${cfg.problemServiceName}@" = {
+          enable = true;
+          environment.SERVICE = "%i";
+          script = "${notifierError}";
+        };
+        "${cfg.infoServiceName}@" = {
+          enable = true;
+          environment.SERVICE = "%i";
+          script = "${notifierInfo}";
+        };
       };
-      "${cfg.infoServiceName}@" = {
-        enable = true;
-        environment.SERVICE = "%i";
-        script = ''
-          NTFY_TOKEN="$(cat ${config.sops.secrets."ntfy/token".path})"
-          ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
-            -H "Authorization: Bearer $NTFY_TOKEN" \
-            -H "Title: [$(${pkgs.inetutils}/bin/hostname)] $SERVICE status" \
-            -H "prio:min" \
-            -d "Succeeded." \
-            ${cfg.server}/$(<${config.sops.secrets."ntfy/topic/info".path})
-        '';
-      };
-    };
   };
 }

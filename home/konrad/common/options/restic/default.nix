@@ -131,6 +131,23 @@ in
           ntfyTokenFile = config.sops.secrets."ntfy/token".path;
           ntfyErrorTopicFile = config.sops.secrets."ntfy/topic/problem".path;
           ntfyInfoTopicFile = config.sops.secrets."ntfy/topic/info".path;
+
+          notifierError = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
+            inherit ntfyTokenFile;
+            ntfyTopicFile = ntfyErrorTopicFile;
+            priority = "high";
+            tags = "warning";
+            title = "Baker status";
+            text = "${name} failed";
+          };
+
+          notifierInfo = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
+            inherit ntfyTokenFile;
+            ntfyTopicFile = ntfyInfoTopicFile;
+            priority = "min";
+            title = "Baker status";
+            text = "${name} succeeded";
+          };
         in
         pkgs.writeShellScript "${name}.sh"
           # bash
@@ -140,20 +157,9 @@ in
             ${cmd}
             code=$?
             if [[ "$code" == 0 ]]; then
-              ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
-                --header "Authorization: Bearer $(<${ntfyTokenFile})" \
-                --header "Title: [$(${pkgs.inetutils}/bin/hostname)] Baker status" \
-                --header prio:min \
-                --data "${name} succeeded" \
-                ntfy.sh/$(<${ntfyInfoTopicFile}) > /dev/null
+              ${notifierInfo}
             else
-              ${pkgs.curl}/bin/curl --silent --show-error --max-time 10 --retry 5 \
-                --header "Authorization: Bearer $(<${ntfyTokenFile})" \
-                --header "Title: [$(${pkgs.inetutils}/bin/hostname)] Baker status" \
-                --header tags:warning \
-                --header prio:high \
-                --data "${name} failed" \
-                ntfy.sh/$(<${ntfyErrorTopicFile}) > /dev/null
+              ${notifierError}
             fi
             echo
           '';
