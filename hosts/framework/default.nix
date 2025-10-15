@@ -14,6 +14,7 @@
   ];
 
   networking.hostName = "framework";
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   fileSystems = {
     "/mnt/borg" = {

@@ -16,8 +16,6 @@
     };
   };
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
   services.logind.settings.Login = {
     SleepOperation = "suspend";
     IdleAction = "suspend";

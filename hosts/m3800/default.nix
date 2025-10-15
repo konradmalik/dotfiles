@@ -8,8 +8,9 @@
     ./hardware-configuration.nix
     ./disko.nix
 
-    ../common/profiles/desktop.nix
+    ../common/profiles/laptop.nix
   ];
 
   networking.hostName = "m3800";
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }
