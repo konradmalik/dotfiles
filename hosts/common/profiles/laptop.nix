@@ -1,5 +1,5 @@
 {
-  imports = [ ./desktop.nix ];
+  imports = [ ./shared/workstation.nix ];
 
   programs.light.enable = true;
   services.thermald.enable = true;
