@@ -1,6 +1,7 @@
 {
   imports = [ ./desktop.nix ];
 
+  programs.light.enable = true;
   services.thermald.enable = true;
   services.tlp.enable = true;
 

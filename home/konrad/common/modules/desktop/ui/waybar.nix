@@ -1,4 +1,5 @@
 {
+  osConfig,
   config,
   pkgs,
   lib,
@@ -6,8 +7,8 @@
 }:
 
 let
-  systemctl = "${pkgs.systemd}/bin/systemctl";
-  journalctl = "${pkgs.systemd}/bin/journalctl";
+  isLaptop = osConfig.programs.light.enable;
+
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
@@ -60,8 +61,6 @@ in
         modules-left = [
           "custom/menu"
           "idle_inhibitor"
-        ]
-        ++ [
           "hyprland/workspaces"
           "custom/currentplayer"
           "custom/player"
@@ -71,14 +70,15 @@ in
           "memory"
           "clock"
           "wireplumber"
-          "backlight"
-          "custom/gammastep"
-        ];
+        ]
+        ++ (lib.optionals isLaptop [ "backlight" ])
+        ++ [ "custom/gammastep" ];
         modules-right = [
           "tray"
           "bluetooth"
           "network"
-          "battery"
+        ]
+        ++ (lib.optionals isLaptop [ "battery" ]) [
           "hyprland/language"
           "user"
           "custom/powermenu"
@@ -240,8 +240,8 @@ in
           return-type = "json";
           exec = jsonOutput "gammastep" {
             pre = ''
-              if unit_status="$(${systemctl} --user is-active gammastep)"; then
-                status="$unit_status ($(${journalctl} --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))"
+              if unit_status="$(systemctl --user is-active gammastep)"; then
+                status="$unit_status ($(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))"
               else
                 status="$unit_status"
               fi
@@ -263,7 +263,7 @@ in
             "active (Transition (Day)" = " ";
             "active (Transition (Daytime)" = " ";
           };
-          on-click = "${systemctl} --user is-active gammastep && ${systemctl} --user stop gammastep || ${systemctl} --user start gammastep";
+          on-click = "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep";
         };
         "custom/currentplayer" = {
           interval = 2;

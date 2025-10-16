@@ -1,3 +1,7 @@
+{ osConfig, lib, ... }:
+let
+  isLaptop = osConfig.programs.light.enable;
+in
 {
   wayland.windowManager.hyprland.settings = {
     # Mouse bindings
@@ -10,6 +14,8 @@
       ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+    ]
+    ++ lib.optionals isLaptop [
       ",XF86MonBrightnessUp, exec, light -A 10"
       ",XF86MonBrightnessDown, exec, light -U 10"
     ];
