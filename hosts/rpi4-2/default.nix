@@ -12,6 +12,10 @@
 
   services.blocky.enable = true;
 
+  sops.secrets.healthcheck = {
+    key = "healthchecks/rpi4-2";
+  };
+
   konrad.services.dhcp =
     let
       ip = "192.168.100.3";

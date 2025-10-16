@@ -11,6 +11,10 @@
 
   services.blocky.enable = true;
 
+  sops.secrets.healthcheck = {
+    key = "healthchecks/rpi4-1";
+  };
+
   konrad.services = {
     dhcp =
       let
