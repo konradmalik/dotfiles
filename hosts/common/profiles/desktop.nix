@@ -17,10 +17,13 @@
   };
 
   services.logind.settings.Login = {
-    SleepOperation = "suspend";
+    HandlePowerKey = "suspend";
+    HandlePowerKeyLongPress = "poweroff";
     IdleAction = "suspend";
-    IdleActionSec = "30min";
-    LidSwitch = "suspend";
-    LidSwitchDocked = "ignore";
+    IdleActionSec =
+      let
+        minutes = 30;
+      in
+      "${toString (60 * minutes)}";
   };
 }

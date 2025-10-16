@@ -4,5 +4,10 @@
   konrad.network.wireless.enable = true;
   konrad.services.autoupgrade.enable = true;
 
-  services.logind.settings.Login.HandleLidSwitch = "ignore";
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowSuspendThenHibernate=no
+    AllowHybridSleep=no
+  '';
 }
