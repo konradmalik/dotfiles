@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -12,9 +13,8 @@
 
   services.blocky.enable = true;
 
-  sops.secrets.healthcheck = {
-    key = "healthchecks/rpi4-2";
-  };
+  sops.secrets.healthcheck.key = "healthchecks/rpi4-2";
+  konrad.services.healthcheck.urlFile = config.sops.secrets.healthcheck.path;
 
   konrad.services.dhcp =
     let

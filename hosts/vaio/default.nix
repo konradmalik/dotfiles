@@ -11,6 +11,7 @@
   ];
 
   networking.hostName = "vaio";
+  konrad.services.healthcheck.enable = false;
 
   # avoid overheat
   nix.settings = {
