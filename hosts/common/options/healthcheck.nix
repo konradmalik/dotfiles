@@ -37,7 +37,10 @@ in
       description = "Ping Healthchecks.io endpoint";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${cfg.curlPackage}/bin/curl --fail --silent --show-error --max-time 10 --retry 5 $(<${cfg.urlFile})";
+        ExecStart = pkgs.writeShellScript "healthcheck" ''
+          url="$(cat ${cfg.urlFile})"
+          ${cfg.curlPackage}/bin/curl --fail --silent --show-error --max-time 10 --retry 5 "$url"
+        '';
       };
     };
 
