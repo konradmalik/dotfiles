@@ -78,7 +78,8 @@ in
           "bluetooth"
           "network"
         ]
-        ++ (lib.optionals isLaptop [ "battery" ]) [
+        ++ (lib.optionals isLaptop [ "battery" ])
+        ++ [
           "hyprland/language"
           "user"
           "custom/powermenu"
