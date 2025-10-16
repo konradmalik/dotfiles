@@ -1,4 +1,7 @@
 { ... }:
+let
+  minutes = m: builtins.floor (m * 60);
+in
 {
   services.hypridle = {
     enable = true;
@@ -7,15 +10,14 @@
         lock_cmd = "pidof hyprlock || hyprlock";
         before_sleep_cmd = "loginctl lock-session";
         after_sleep_cmd = "hyprctl dispatch dpms on";
-        inhibit_sleep = 3; # wait until screen is locked
       };
       listener = [
         {
-          timeout = 300;
+          timeout = minutes 5;
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 330;
+          timeout = minutes 5.5;
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
