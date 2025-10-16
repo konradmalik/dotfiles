@@ -52,7 +52,7 @@ in
         extraCreateArgs = "--verbose --stats --checkpoint-interval 600";
         repo = cfg.repoPath;
         compression = "zstd,1";
-        startAt = "hourly";
+        startAt = "*-*-* *:30:00";
         prune.keep = {
           within = "1d"; # Keep all archives from the last day
           daily = 7;
