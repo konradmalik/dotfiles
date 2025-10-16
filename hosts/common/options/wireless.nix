@@ -18,7 +18,7 @@ in
       impala
     ];
 
-    services.resolved.enable = true;
+    services.resolved.enable = !config.services.blocky.enable;
     networking = {
       wireless.iwd = {
         enable = true;
