@@ -19,11 +19,6 @@
   services.logind.settings.Login = {
     HandlePowerKey = "suspend";
     HandlePowerKeyLongPress = "poweroff";
-    IdleAction = "suspend";
-    IdleActionSec =
-      let
-        minutes = 30;
-      in
-      "${toString (60 * minutes)}";
+    # NOTE: idle does not seem to work when using hypridle, so define it there instead
   };
 }
