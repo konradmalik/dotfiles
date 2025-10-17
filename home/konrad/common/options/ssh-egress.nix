@@ -45,7 +45,7 @@ in
             identitiesOnly = true;
           };
           framework = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.83.43.115"; };
-          m3800 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.108.89.62"; };
+          m3800 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.108.54.78"; };
           mbp13 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.70.57.115"; };
           rpi4-1 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.99.159.110"; };
           rpi4-2 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.78.182.5"; };
