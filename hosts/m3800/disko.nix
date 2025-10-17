@@ -68,7 +68,6 @@
               name = "cryptedhome";
               settings = {
                 allowDiscards = true;
-                keyFile = "/.cryptedhome.key";
               };
               content = {
                 type = "btrfs";
