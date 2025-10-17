@@ -1,45 +1,88 @@
 {
   disko.devices.disk = {
-    sdb = {
+    # Devices will be mounted and formatted in alphabetical order
+    # our home relies on key on root, so names matter!
+    disk1 = {
       device = "/dev/sdb";
       type = "disk";
       content = {
         type = "gpt";
         partitions = {
-          esp = {
-            start = "1MiB";
-            end = "500MiB";
+          ESP = {
+            size = "512M";
+            type = "EF00";
             content = {
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
+              mountOptions = [ "umask=0077" ];
             };
           };
-          root = {
-            start = "500MiB";
-            end = "100%";
+          luks = {
+            size = "100%";
             content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
+              type = "luks";
+              name = "cryptedroot";
+              settings = {
+                allowDiscards = true;
+              };
+              content = {
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "/root" = {
+                    mountpoint = "/";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                  };
+                  "/nix" = {
+                    mountpoint = "/nix";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                  };
+                  "/swap" = {
+                    mountpoint = "/.swapvol";
+                    swap.swapfile.size = "8G";
+                  };
+                };
+              };
             };
           };
         };
       };
     };
-    sda = {
+    disk2 = {
       device = "/dev/sda";
       type = "disk";
       content = {
         type = "gpt";
         partitions = {
-          home = {
-            start = "1MiB";
-            end = "100%";
+          luks = {
+            size = "100%";
             content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/home";
+              type = "luks";
+              name = "cryptedhome";
+              settings = {
+                allowDiscards = true;
+                keyFile = "/.cryptedhome.key";
+              };
+              content = {
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "/home" = {
+                    mountpoint = "/home";
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                  };
+                };
+              };
             };
           };
         };
