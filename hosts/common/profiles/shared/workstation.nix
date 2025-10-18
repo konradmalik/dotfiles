@@ -1,6 +1,7 @@
 {
   imports = [
     ../../modules/hyprland.nix
+    ../../modules/fontconfig.nix
 
     ../../systems/nixos.nix
   ];
