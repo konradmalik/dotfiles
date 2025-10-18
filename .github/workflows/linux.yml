@@ -15,7 +15,6 @@ jobs:
         with:
           extra-conf: |
             accept-flake-config = true
-      - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Flake check
         run: nix flake check --all-systems
 
@@ -35,7 +34,6 @@ jobs:
         with:
           name: "konradmalik"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Shell build
         run: nix build .#devShells.x86_64-linux.default
 
@@ -58,7 +56,6 @@ jobs:
         with:
           extra-conf: |
             accept-flake-config = true
-      - uses: DeterminateSystems/magic-nix-cache-action@v13
       - if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: cachix/cachix-action@v16
         with:
@@ -78,6 +75,5 @@ jobs:
         with:
           extra-conf: |
             accept-flake-config = true
-      - uses: DeterminateSystems/magic-nix-cache-action@v13
       - name: Flake build generic linux
         run: nix build .#homeConfigurations.konrad@generic.activationPackage
