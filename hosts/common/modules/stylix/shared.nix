@@ -17,8 +17,8 @@
       serif = sansSerif;
 
       sansSerif = {
-        package = pkgs.fira;
-        name = "Fira Sans";
+        package = pkgs.ubuntu-sans;
+        name = "Ubuntu Sans";
       };
 
       monospace = {
