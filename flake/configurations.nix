@@ -23,10 +23,6 @@
           inherit specialArgs;
           modules = [ ./../hosts/m3800 ];
         };
-        vaio = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./../hosts/vaio ];
-        };
         rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./../hosts/rpi4-1 ];
