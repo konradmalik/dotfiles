@@ -3,8 +3,15 @@
   imports = [ ../systems/nixos.nix ];
 
   konrad.network.wireless.enable = true;
-  konrad.services.autoupgrade.enable = true;
-  konrad.services.healthcheck.enable = lib.mkDefault true;
+
+  konrad.services = {
+    autoupgrade.enable = true;
+    healthcheck.enable = lib.mkDefault true;
+    syncthing = {
+      enable = true;
+      bidirectional = false;
+    };
+  };
 
   systemd.sleep.extraConfig = ''
     AllowSuspend=no

@@ -25,9 +25,4 @@ in
       obsidianPath
     ];
   };
-
-  konrad.services.syncthing = {
-    enable = true;
-    install = true;
-  };
 }

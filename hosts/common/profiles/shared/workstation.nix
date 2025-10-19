@@ -15,6 +15,11 @@
       allowReboot = false;
       operation = "boot";
     };
+
+    syncthing = {
+      enable = true;
+      bidirectional = true;
+    };
   };
 
   services.logind.settings.Login = {
