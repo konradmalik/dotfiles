@@ -31,5 +31,8 @@
         "option_as_alt" = "Both";
       };
     };
+  }
+  // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    package = null;
   };
 }

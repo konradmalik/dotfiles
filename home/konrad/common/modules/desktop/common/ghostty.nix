@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -18,5 +19,8 @@ in
       mouse-hide-while-typing = true;
       shell-integration-features = true;
     };
+  }
+  // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    package = null;
   };
 }

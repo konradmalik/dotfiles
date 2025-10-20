@@ -16,11 +16,6 @@ in
       .legacyPackages.${pkgs.system}.bitwarden-cli;
   };
 
-  # installed via homebrew
-  programs.alacritty.package = null;
-  # installed via homebrew
-  programs.ghostty.package = null;
-
   programs.neovim-pde = {
     notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
     spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";
