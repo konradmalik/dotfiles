@@ -4,8 +4,6 @@
     ./hardware-configuration.nix
 
     ../common/profiles/rpi4.nix
-
-    ../common/modules/spotifyd.nix
   ];
 
   networking.hostName = "rpi4-1";
@@ -31,11 +29,5 @@
           "192.168.100.3"
         ];
       };
-  };
-
-  services.shairport-sync = {
-    enable = true;
-    arguments = "-a rpi4-1 -v -o alsa";
-    openFirewall = true;
   };
 }
