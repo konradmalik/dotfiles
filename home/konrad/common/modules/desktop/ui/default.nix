@@ -4,13 +4,14 @@
 }:
 {
   imports = [
+    ./fuzzel.nix
     ./gammastep.nix
     ./hyprland
     ./mako.nix
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
-    ./rofi.nix
+    ./nwg-bar.nix
     ./waybar.nix
   ];
 

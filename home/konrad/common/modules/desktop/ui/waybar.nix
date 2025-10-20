@@ -219,14 +219,14 @@ in
             text = " ";
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
-          on-click = "rofi -show drun -location 1";
+          on-click = "fuzzel";
         };
         "custom/powermenu" = {
           format = " ";
           tooltip-format = "{}";
           exec = "${pkgs.procps}/bin/uptime --pretty";
           interval = 60;
-          on-click = "rofi -show power-menu";
+          on-click = "nwg-bar -t hyprland.json";
         };
         user = {
           format = "{user}";
