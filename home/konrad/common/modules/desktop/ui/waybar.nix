@@ -283,7 +283,7 @@ in
             tooltip = "$player ($count available)";
             text = "$more";
           };
-          format = "{icon}{}";
+          format = "{icon}{text}";
           format-icons = {
             "No player active" = "󰝛 ";
             "spotify" = " ";
@@ -299,7 +299,7 @@ in
           return-type = "json";
           interval = 2;
           max-length = 30;
-          format = "{icon} {}";
+          format = "{icon} {text}";
           format-icons = {
             "Playing" = " ";
             "Paused" = " ";
