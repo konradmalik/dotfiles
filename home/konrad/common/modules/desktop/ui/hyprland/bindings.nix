@@ -35,8 +35,7 @@ in
       "SUPER,return,exec,$TERMINAL"
       "SUPER,w,exec,makoctl dismiss"
       "SUPER,b,exec,$BROWSER"
-      "SUPER,space,exec,rofi -show drun"
-      "SUPER,e,exec,rofi -show combi"
+      "SUPER,space,exec,fuzzel"
 
       # Screenshots
       "SUPER,p,exec,hyprshot --mode region --output /tmp/screenshots"
