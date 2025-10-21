@@ -8,9 +8,6 @@ let
   anyHyprlandEnabled = builtins.any (
     user: config.home-manager.users.${user}.wayland.windowManager.hyprland.enable
   ) allHmUsers;
-  anyGnomeKeyringEnabled = builtins.any (
-    user: config.home-manager.users.${user}.services.gnome-keyring.enable
-  ) allHmUsers;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -31,9 +28,6 @@ in
 
   # gtk portal needed to make gtk apps happy
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  # enables necessary pam stuff thus allowing to unlock per user keyring during login
-  services.gnome.gnome-keyring.enable = anyGnomeKeyringEnabled;
 
   # for nightlight
   services.geoclue2.enable = true;

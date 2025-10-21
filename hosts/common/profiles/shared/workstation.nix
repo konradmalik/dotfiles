@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [
     ../../modules/hyprland.nix
@@ -26,5 +27,13 @@
     HandlePowerKey = "suspend";
     HandlePowerKeyLongPress = "poweroff";
     # NOTE: idle does not seem to work when using hypridle, so define it there instead
+  };
+
+  # start ssh-agent per user to remember ssh private keys
+  programs.ssh = {
+    startAgent = true;
+    agentTimeout = null;
+    askPassword = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
+    enableAskPassword = true;
   };
 }
