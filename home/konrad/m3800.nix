@@ -1,5 +1,5 @@
 {
-  imports = [ ./common/profiles/desktop.nix ];
+  imports = [ ./common/profiles/laptop.nix ];
 
   wayland.windowManager.hyprland.settings = {
     # exec-once = [ "hyprctl dispatch dpms off 'eDP-1'" ];
