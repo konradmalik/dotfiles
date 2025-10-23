@@ -5,10 +5,8 @@
     ./ghostty.nix
     ./hidden.nix
     ./firefox.nix
-    ./gtk.nix
     ./imv.nix
     ./mpv.nix
-    ./qt.nix
   ];
 
   xdg.mimeApps.enable = true;
@@ -28,4 +26,7 @@
       zathura
     ];
   };
+
+  gtk.enable = true;
+  qt.enable = true;
 }
