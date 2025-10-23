@@ -1,4 +1,3 @@
-{ ... }:
 let
   minutes = m: builtins.floor (m * 60);
 in

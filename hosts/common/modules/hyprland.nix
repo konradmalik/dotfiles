@@ -29,9 +29,6 @@ in
   # gtk portal needed to make gtk apps happy
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  # for nightlight
-  services.geoclue2.enable = true;
-
   # Initial login experience
   services.greetd = {
     enable = true;

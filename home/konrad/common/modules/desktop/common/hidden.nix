@@ -11,5 +11,5 @@ in
 {
   # hm: /etc/profiles/per-user/konrad/share/applications
   # system: ?
-  xdg.desktopEntries = hideApps [ "gammastep-indicator" ];
+  xdg.desktopEntries = hideApps [ ];
 }

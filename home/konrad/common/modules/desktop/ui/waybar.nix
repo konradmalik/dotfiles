@@ -72,7 +72,7 @@ in
           "wireplumber"
         ]
         ++ (lib.optionals isLaptop [ "backlight" ])
-        ++ [ "custom/gammastep" ];
+        ++ [ "custom/hyprsunset" ];
         modules-right = [
           "tray"
           "bluetooth"
@@ -236,35 +236,28 @@ in
           exec = "groups";
           interval = 60;
         };
-        "custom/gammastep" = {
+        "custom/hyprsunset" = {
           interval = 5;
           return-type = "json";
-          exec = jsonOutput "gammastep" {
+          exec = jsonOutput "hyprsunset" {
             pre = ''
-              if unit_status="$(systemctl --user is-active gammastep)"; then
-                status="$unit_status ($(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))"
-              else
-                status="$unit_status"
-              fi
+              status="$(systemctl --user is-active hyprsunset)";
             '';
             alt = "\${status:-inactive}";
-            tooltip = "Gammastep is $status";
+            tooltip = "hyprsunset is $status";
           };
           format = "{icon}";
           format-icons = {
-            "activating" = "󰖛 ";
-            "deactivating" = "󰖜 ";
-            "inactive" = "? ";
-            "active (Night)" = " ";
-            "active (Nighttime)" = " ";
-            "active (Transition (Night)" = " ";
-            "active (Transition (Nighttime)" = " ";
-            "active (Day)" = " ";
-            "active (Daytime)" = " ";
-            "active (Transition (Day)" = " ";
-            "active (Transition (Daytime)" = " ";
+            "inactive" = "󱓤 ";
+            "active" = "󱁞 ";
+            "failed" = " ";
+            "activating" = " ";
+            "deactivating" = " ";
+            "maintenance" = "󱤴 ";
+            "reloading" = "󰑓 ";
+            "refreshing" = "󰑓 ";
           };
-          on-click = "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep";
+          on-click = "systemctl --user is-active hyprsunset && systemctl --user stop hyprsunset || systemctl --user start hyprsunset";
         };
         "custom/currentplayer" = {
           interval = 2;
