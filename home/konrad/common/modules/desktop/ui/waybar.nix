@@ -74,6 +74,7 @@ in
         ++ (lib.optionals isLaptop [ "backlight" ])
         ++ [ "custom/hyprsunset" ];
         modules-right = [
+          "privacy"
           "tray"
           "bluetooth"
           "network"
@@ -344,6 +345,7 @@ in
           }
           #custom-powermenu {
             background-color: @base08;
+            color: @base00;
             padding-left: 10px;
             padding-right: 5px;
             border-radius: 5px;
@@ -352,6 +354,11 @@ in
             background-color: @base0D;
             color: @base00;
             padding: 0 5px;
+            border-radius: 5px;
+          }
+          #privacy {
+            background-color: @base08;
+            color: @base00;
             border-radius: 5px;
           }
         '';
