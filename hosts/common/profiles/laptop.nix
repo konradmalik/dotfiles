@@ -1,9 +1,11 @@
 {
-  imports = [ ./shared/workstation.nix ];
+  imports = [
+    ./shared/workstation.nix
+    ../modules/tlp.nix
+  ];
 
   programs.light.enable = true;
   services.thermald.enable = true;
-  services.tlp.enable = true;
 
   services.logind.settings.Login = {
     HandleLidSwitch = "suspend";
