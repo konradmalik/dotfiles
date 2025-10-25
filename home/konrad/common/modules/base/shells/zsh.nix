@@ -24,59 +24,6 @@ let
     autoload -Uz edit-command-line
     zle -N edit-command-line
     bindkey -M vicmd '^v' edit-command-line
-
-    #### Functions
-    take() {
-      mkdir -p "$1" && cd "$1"
-    }
-
-    groot() {
-      cd "$(git rev-parse --show-toplevel 2>/dev/null)"
-    }
-
-    tmp() {
-      case "$1" in
-        help|h|-h|--help)
-          echo "use 'tmp view' to see tmp folders; without arguments it'll create a new one"
-          ;;
-        view|list|ls)
-          cd /tmp/workspaces && cd $(ls --sort=modified --reverse | ${pkgs.fzf}/bin/fzf --preview 'ls -A {}') && return 0
-          ;;
-        *)
-          r="/tmp/workspaces/$(${pkgs.unixtools.xxd}/bin/xxd -l3 -ps /dev/urandom)"
-          mkdir -p "$r" && pushd "$r"
-          ;;
-      esac
-    }
-
-    weather() {
-      local param="$1"
-      if [ -z "$param" ]; then
-        curl "wttr.in/?F"
-      else
-        curl "wttr.in/''${param}?F"
-      fi
-    }
-
-    flakify() {
-      if [ ! -e flake.nix ]; then
-        nix flake new -t github:konradmalik/dotfiles#default .
-      fi
-    }
-
-    # credit to https://github.com/MatthewCroughan/nixcfg
-    flash-to() {
-      if [ $(${pkgs.file}/bin/file $1 --mime-type -b) == "application/zstd" ]; then
-        echo "Flashing zst using zstdcat | dd"
-        ( set -x; ${pkgs.zstd}/bin/zstdcat $1 | sudo dd of=$2 status=progress iflag=fullblock oflag=direct conv=fsync,noerror bs=64k )
-      elif [ $(${pkgs.file}/bin/file $2 --mime-type -b) == "application/xz" ]; then
-        echo "Flashing xz using xzcat | dd"
-        ( set -x; ${pkgs.xz}/bin/xzcat $1 | sudo dd of=$2 status=progress iflag=fullblock oflag=direct conv=fsync,noerror bs=64k )
-      else
-        echo "Flashing arbitrary file $1 to $2"
-        sudo dd if=$1 of=$2 status=progress conv=sync,noerror bs=64k
-      fi
-    }
   '';
 
   zcompdumpRemoval = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -135,21 +82,15 @@ in
     dotDir = "${config.xdg.configHome}/zsh";
     defaultKeymap = "viins";
     shellAliases = {
-      # cat on steroids
-      cat = "bat";
-      # git (use for example g add instead of git add)
-      g = "git";
-      # colorize stuff
-      grep = "grep --color=auto";
-      ip = "ip --color";
-      # safety measures
-      mv = "mv -i";
-      rm = "rm -i";
-      # modern watch
-      watch = "viddy";
       # For a full list of active aliases, run `alias`.
       # to run command that is shadowed by an alias run (for example): \ls or command ls
-      # faster navigation
+      cat = "bat";
+      g = "git";
+      grep = "grep --color=auto";
+      ip = "ip --color";
+      mv = "mv -i";
+      rm = "rm -i";
+      watch = "viddy";
       ".." = "cd ..";
       "..." = "cd ../..";
     }

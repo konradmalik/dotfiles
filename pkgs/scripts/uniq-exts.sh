@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 wd="${1}"
 if [ $# -lt 1 ]; then

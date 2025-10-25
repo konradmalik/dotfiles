@@ -25,7 +25,6 @@
 
       entr
       hyperfine
-      noti
       spacer
       viddy
 
@@ -44,11 +43,8 @@
       croc
       gh
       glab
-
-      realize-symlink
-      terminal-testdrive
-      uniq-exts
     ]
+    ++ (builtins.attrValues (import ../../../../../pkgs/scripts { inherit pkgs; }))
     ++ lib.optionals stdenvNoCC.isLinux [
       psmisc
       trace-cmd

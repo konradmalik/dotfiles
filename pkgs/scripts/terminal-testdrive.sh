@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eu
 
 echo "# 24-bit (true-color)"
 # based on: https://gist.github.com/XVilka/8346728

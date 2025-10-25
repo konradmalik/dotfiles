@@ -7,16 +7,12 @@
 {
   nixpkgs = {
     overlays = [
-      (
-        final: prev:
-        (import ../../../../../pkgs/scripts { pkgs = final; })
-        // {
-          stable = import inputs.nixpkgs-stable {
-            system = final.system;
-            config = final.config;
-          };
-        }
-      )
+      (final: prev: {
+        stable = import inputs.nixpkgs-stable {
+          system = final.system;
+          config = final.config;
+        };
+      })
     ];
     config = {
       allowUnfree = true;

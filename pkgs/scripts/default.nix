@@ -41,8 +41,50 @@ let
 in
 scriptsToAttr [
   {
+    file = ./flakify.sh;
+  }
+  {
+    file = ./flash-to.sh;
+    deps = with pkgs; [
+      zstd
+      xz
+      file
+    ];
+  }
+  {
+    file = ./httpstatus.sh;
+    deps = with pkgs; [ gnugrep ];
+  }
+  {
+    file = ./iso8601.sh;
+  }
+  {
+    file = ./jwt.sh;
+    deps = with pkgs; [
+      jc
+      jq
+    ];
+  }
+  {
+    file = ./line.sh;
+  }
+  {
+    file = ./mkcd.sh;
+  }
+  {
+    file = ./notify.sh;
+    deps = with pkgs; [ python3 ];
+  }
+  {
     file = ./realize-symlink.sh;
-    deps = [ pkgs.coreutils ];
+    deps = with pkgs; [ coreutils ];
+  }
+  {
+    file = ./scratch.sh;
+  }
+  {
+    file = ./serveit.sh;
+    deps = with pkgs; [ python3 ];
   }
   {
     file = ./terminal-testdrive.sh;
@@ -52,11 +94,29 @@ scriptsToAttr [
     ];
   }
   {
+    file = ./tryna.sh;
+  }
+  {
+    file = ./tmp.sh;
+    deps = with pkgs; [
+      fzf
+      xxd
+    ];
+  }
+  {
     file = ./uniq-exts.sh;
     deps = with pkgs; [
       coreutils
       findutils
       perl
     ];
+  }
+  {
+    file = ./uuid.sh;
+    deps = with pkgs; [ python3 ];
+  }
+  {
+    file = ./weather.sh;
+    deps = with pkgs; [ curl ];
   }
 ]

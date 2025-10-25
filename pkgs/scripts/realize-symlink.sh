@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # https://kokada.capivaras.dev/blog/quick-bits-realise-nix-symlinks/
-set -e
+set -eu
 
 for file in "$@"; do
     if [[ -L "$file" ]]; then
