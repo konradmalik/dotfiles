@@ -9,7 +9,7 @@
     { pkgs, ... }:
     {
       packages =
-        (import ../pkgs/installable { inherit pkgs; })
+        (import ../pkgs/scripts { inherit pkgs; })
         // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
           let
             rpiSdCard = "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
