@@ -16,7 +16,9 @@
   home = {
     packages = with pkgs; [
       bitwarden
-      calibre
+      # TODO until fix lands in nixos-unstable
+      (builtins.getFlake "github:NixOS/nixpkgs/c72d8b90a6c97b239c3ae16a54e05840dea7a59d")
+      .legacyPackages.${pkgs.system}.calibre
       obsidian
       signal-desktop
       slack
