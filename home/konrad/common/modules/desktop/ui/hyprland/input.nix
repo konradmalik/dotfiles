@@ -18,5 +18,7 @@
     };
 
     gesture = [ "3, horizontal, workspace" ];
+
+    cursor.inactive_timeout = 5;
   };
 }
