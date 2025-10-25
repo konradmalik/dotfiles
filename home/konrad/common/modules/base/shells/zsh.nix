@@ -40,7 +40,7 @@ let
           echo "use 'tmp view' to see tmp folders; without arguments it'll create a new one"
           ;;
         view|list|ls)
-          cd /tmp/workspaces && cd $(${pkgs.eza}/bin/exa --sort=modified --reverse | ${pkgs.fzf}/bin/fzf --preview 'ls -A {}') && return 0
+          cd /tmp/workspaces && cd $(ls --sort=modified --reverse | ${pkgs.fzf}/bin/fzf --preview 'ls -A {}') && return 0
           ;;
         *)
           r="/tmp/workspaces/$(${pkgs.unixtools.xxd}/bin/xxd -l3 -ps /dev/urandom)"
@@ -77,11 +77,6 @@ let
         sudo dd if=$1 of=$2 status=progress conv=sync,noerror bs=64k
       fi
     }
-
-    # rfv keybind
-    rfv-widget() { export VISUAL=nvim && ${pkgs.rfv}/bin/rfv }
-    zle -N rfv-widget
-    bindkey '^G' rfv-widget
   '';
 
   zcompdumpRemoval = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

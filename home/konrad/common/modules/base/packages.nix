@@ -45,7 +45,6 @@
       gh
       glab
 
-      rfv
       realize-symlink
       terminal-testdrive
       uniq-exts
