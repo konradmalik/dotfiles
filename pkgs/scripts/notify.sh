@@ -16,6 +16,9 @@ def notify(title, description):
     if exec_command("notify-send", "-u","normal","-i", "dialog-information", title, description):
         return
 
+    # NOTE: in order for this to work, you need to first approve notifications in macos
+    # open script editor, paste this script, run it, should ask for permission.
+    # from then on, notify will work
     js = f"""
     var app = Application.currentApplication();
     app.includeStandardAdditions = true;
