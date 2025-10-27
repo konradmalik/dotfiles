@@ -71,7 +71,7 @@
         ];
 
       settings = {
-        aliase = {
+        alias = {
           graph = "log --graph --oneline --decorate --abbrev-commit";
           root = "rev-parse --show-toplevel";
           unstage = "reset HEAD --";
