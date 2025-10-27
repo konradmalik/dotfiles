@@ -41,6 +41,18 @@ let
 in
 scriptsToAttr [
   {
+    file = ./cbcopy.sh;
+  }
+  {
+    file = ./cbpaste.sh;
+  }
+  {
+    file = ./cpwd.sh;
+  }
+  {
+    file = ./cptmp.sh;
+  }
+  {
     file = ./flakify.sh;
   }
   {
@@ -50,6 +62,9 @@ scriptsToAttr [
       xz
       file
     ];
+  }
+  {
+    file = ./google.sh;
   }
   {
     file = ./httpstatus.sh;
@@ -95,6 +110,9 @@ scriptsToAttr [
   }
   {
     file = ./tryna.sh;
+  }
+  {
+    file = ./trynafail.sh;
   }
   {
     file = ./tmp.sh;

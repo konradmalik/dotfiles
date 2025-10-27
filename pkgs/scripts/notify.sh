@@ -8,12 +8,12 @@ def exec_command(*args):
     try:
         proc = subprocess.run(args)
         return proc.returncode == 0
-    except FileNotFoundError:
+    except:
         return False
 
 
 def notify(title, description):
-    if exec_command("notify-send", "--expire-time=5000", title, description):
+    if exec_command("notify-send", "-u","normal","-i", "dialog-information", title, description):
         return
 
     js = f"""
@@ -29,8 +29,8 @@ def notify(title, description):
 
 
 def main():
-    title = sys.argv[1] if len(sys.argv) > 1 else "Notify"
-    description = sys.argv[2] if len(sys.argv) > 2 else datetime.now().isoformat()
+    title = sys.argv[1] if len(sys.argv) > 1 else "notify"
+    description = " ".join(sys.argv[2:]) if len(sys.argv) > 2 else "Tiggered via terminal"
     notify(title, description)
 
 
