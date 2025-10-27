@@ -16,6 +16,11 @@
             "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-lock-screen.svg"
           },
           {
+            "label": "Suspend",
+            "exec": "systemctl suspend",
+            "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-suspend.svg"
+          },
+          {
             "label": "Exit",
             "exec": "hyprctl dispatch exit",
             "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-log-out.svg"
@@ -26,14 +31,14 @@
             "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-reboot.svg"
           },
           {
-            "label": "Shutdown",
-            "exec": "systemctl -i poweroff",
-            "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-shutdown.svg"
-          },
-          {
             "label": "Reboot into firmware setup",
             "exec": "systemctl reboot --firmware-setup",
             "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-reboot.svg"
+          },
+          {
+            "label": "Shutdown",
+            "exec": "systemctl -i poweroff",
+            "icon": "${pkgs.nwg-bar}/share/nwg-bar/images/system-shutdown.svg"
           }
         ]
       '';
