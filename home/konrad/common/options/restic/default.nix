@@ -57,6 +57,7 @@ in
         "**/.stfolder"
       ];
       default = [
+        "**/node_modules/"
         "**/.DS_Store"
         "**/.direnv"
       ];

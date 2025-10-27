@@ -67,6 +67,7 @@ in
           "/home/*/.cache"
           "/home/*/.cargo"
           "/home/*/.clangd"
+          "/home/*/.config/Slack"
           "/home/*/.direnv"
           "/home/*/.go"
           "/home/*/.gradle"
