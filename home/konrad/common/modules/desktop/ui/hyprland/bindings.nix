@@ -38,8 +38,8 @@ in
       "SUPER,space,exec,fuzzel"
 
       # Screenshots
-      "SUPER,p,exec,hyprshot --mode region --output /tmp/screenshots"
-      "SUPERSHIFT,p,exec,hyprshot --freeze --mode region --output /tmp/screenshots"
+      "SUPER,p,exec,hyprshot --freeze --mode region --output /tmp/screenshots"
+      "SUPERSHIFT,p,exec,hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"
 
       # Window manager controls
       "SUPERSHIFT,q,killactive"
