@@ -24,6 +24,23 @@ let
     autoload -Uz edit-command-line
     zle -N edit-command-line
     bindkey -M vicmd '^v' edit-command-line
+
+    # must be a function, otherwise it won't be able to change the dir
+    tmp() {
+      case "$1" in
+      help | h | -h | --help)
+          echo "use 'tmp view' to see tmp folders; without arguments it'll create a new one"
+          ;;
+      view | list | ls)
+          cd /tmp/workspaces && cd "$(${lib.getExe pkgs.eza} --sort=modified --reverse | ${lib.getExe pkgs.fzf} --preview 'ls -A {}')" && return 0
+          ;;
+      *)
+          r="/tmp/workspaces/$(${lib.getExe pkgs.xxd} -l3 -ps /dev/urandom)"
+          mkdir -p "$r" && pushd "$r"
+          ;;
+      esac
+    }
+
   '';
 
   zcompdumpRemoval = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

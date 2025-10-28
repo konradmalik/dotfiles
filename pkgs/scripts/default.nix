@@ -118,13 +118,6 @@ scriptsToAttr [
     file = ./trynafail.sh;
   }
   {
-    file = ./tmp.sh;
-    deps = with pkgs; [
-      fzf
-      xxd
-    ];
-  }
-  {
     file = ./uniq-exts.sh;
     deps = with pkgs; [
       coreutils
