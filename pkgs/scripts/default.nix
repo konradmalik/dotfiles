@@ -41,6 +41,9 @@ let
 in
 scriptsToAttr [
   {
+    file = ./bb.sh;
+  }
+  {
     file = ./cbcopy.sh;
   }
   {
@@ -104,6 +107,9 @@ scriptsToAttr [
     deps = with pkgs; [ coreutils ];
   }
   {
+    file = ./remind.sh;
+  }
+  {
     file = ./scratch.sh;
   }
   {
@@ -116,6 +122,9 @@ scriptsToAttr [
       bc
       gawk
     ];
+  }
+  {
+    file = ./timer.sh;
   }
   {
     file = ./tryna.sh;
