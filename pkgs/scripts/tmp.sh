@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-case "$1" in
+cmd="${1:-}"
+
+case "$cmd" in
 help | h | -h | --help)
     echo "use 'tmp view' to see tmp folders; without arguments it'll create a new one"
     ;;
