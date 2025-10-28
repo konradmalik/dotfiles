@@ -50,10 +50,16 @@ scriptsToAttr [
     file = ./copypasta.sh;
   }
   {
-    file = ./cpwd.sh;
+    file = ./cpgb.sh;
+  }
+  {
+    file = ./cpgc.sh;
   }
   {
     file = ./cptmp.sh;
+  }
+  {
+    file = ./cpwd.sh;
   }
   {
     file = ./flakify.sh;
