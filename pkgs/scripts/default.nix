@@ -47,6 +47,9 @@ scriptsToAttr [
     file = ./cbpaste.sh;
   }
   {
+    file = ./copypasta.sh;
+  }
+  {
     file = ./cpwd.sh;
   }
   {
