@@ -15,5 +15,5 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # as long as scale in hyprland is 2, this makes sense
-  stylix.cursor.size = 16;
+  stylix.cursor.size = 24;
 }
