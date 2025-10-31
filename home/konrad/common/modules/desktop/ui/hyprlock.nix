@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   programs.hyprlock = {
     enable = true;
@@ -14,6 +15,12 @@
 
         rounding = 4;
         fade_on_empty = false;
+      };
+
+      image = {
+        path = "${config.home.homeDirectory}/${config.home.file.".face".target}";
+        size = "150,150";
+        position = "0, 150";
       };
     };
   };
