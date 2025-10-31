@@ -2,6 +2,7 @@
 {
   imports = [
     ./alacritty.nix
+    ./audio.nix
     ./ghostty.nix
     ./hidden.nix
     ./firefox.nix
