@@ -36,7 +36,7 @@
       jq
       yq-go
 
-      du-dust
+      dust
       duf
       procs
 
