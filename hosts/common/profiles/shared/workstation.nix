@@ -7,6 +7,8 @@
     ../../systems/nixos.nix
   ];
 
+  environment.systemPackages = with pkgs; [ bashmount ];
+
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
   konrad.network.wireless.enable = true;
