@@ -8,6 +8,7 @@
     ./firefox.nix
     ./imv.nix
     ./mpv.nix
+    ./wezterm
   ];
 
   xdg.mimeApps.enable = true;

@@ -1,5 +1,5 @@
 local wezterm = require("wezterm")
-local fonts = require("fonts")
+local stylix = require("stylix")
 
 local config = wezterm.config_builder()
 
@@ -10,9 +10,7 @@ if os.getenv("XDG_CURRENT_DESKTOP") == "Hyprland" then
     config.front_end = "WebGpu"
 end
 
-fonts.setup(config)
-
-config.colors = require("colors")
+stylix.setup(config)
 
 config.hide_tab_bar_if_only_one_tab = true
 config.window_close_confirmation = "NeverPrompt"
@@ -26,8 +24,6 @@ config.window_padding = {
     bottom = "0.5cell",
 }
 
-config.window_background_opacity = 0.9
-config.macos_window_background_blur = 30
 config.window_decorations = "RESIZE | INTEGRATED_BUTTONS"
 
 config.ssh_domains = require("ssh_domains")
