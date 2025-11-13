@@ -84,32 +84,6 @@
         "type": "github"
       }
     },
-    "blink-cmp": {
-      "inputs": {
-        "fenix": "fenix",
-        "flake-parts": [
-          "neovim",
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "neovim",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1762359884,
-        "narHash": "sha256-0+KyxOh7WUm6rRLfb936X48qBhYL5aRYn2OBEj4G1/s=",
-        "owner": "Saghen",
-        "repo": "blink.cmp",
-        "rev": "40380e711b616a28affb0f4086a2f7de2f2a556b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Saghen",
-        "repo": "blink.cmp",
-        "type": "github"
-      }
-    },
     "boole-nvim": {
       "flake": false,
       "locked": {
@@ -212,29 +186,6 @@
       "original": {
         "owner": "creativenull",
         "repo": "efmls-configs-nvim",
-        "type": "github"
-      }
-    },
-    "fenix": {
-      "inputs": {
-        "nixpkgs": [
-          "neovim",
-          "blink-cmp",
-          "nixpkgs"
-        ],
-        "rust-analyzer-src": "rust-analyzer-src"
-      },
-      "locked": {
-        "lastModified": 1761028747,
-        "narHash": "sha256-UqCbRuqnsVURCB0hLZL9SwFNDNftIE1Zxj7Ykf1aRj4=",
-        "owner": "nix-community",
-        "repo": "fenix",
-        "rev": "1dd37dd710195936f675eb0d36cf284806f99a94",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "fenix",
         "type": "github"
       }
     },
@@ -789,7 +740,6 @@
     "neovim": {
       "inputs": {
         "SchemaStore-nvim": "SchemaStore-nvim",
-        "blink-cmp": "blink-cmp",
         "boole-nvim": "boole-nvim",
         "efm-langserver": "efm-langserver",
         "efmls-configs-nvim": "efmls-configs-nvim",
@@ -823,11 +773,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1762532428,
-        "narHash": "sha256-Eo4FGRnNpk+gX2HPx4z77ulAiWPQczXBzK7uML97qyA=",
+        "lastModified": 1763040522,
+        "narHash": "sha256-DCpNoMFHfyzALel33nRjf9lsjuwZJ1Sg5FbR+37Gfho=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "00c1ec73e06d0d18db42725bbad7125f77364c53",
+        "rev": "d50bcb4ad49583cf19e86cccf4232dfd1655378a",
         "type": "github"
       },
       "original": {
@@ -1278,23 +1228,6 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "sops-nix": "sops-nix",
         "stylix": "stylix"
-      }
-    },
-    "rust-analyzer-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1760976639,
-        "narHash": "sha256-v+teOfOLbR9UFLuaMfbsd/L5ckJBcQJyeFj23V3lz8g=",
-        "owner": "rust-lang",
-        "repo": "rust-analyzer",
-        "rev": "4a305f565ab964caf22dc72980a44b2970a9c2f1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rust-lang",
-        "ref": "nightly",
-        "repo": "rust-analyzer",
-        "type": "github"
       }
     },
     "sops-nix": {
