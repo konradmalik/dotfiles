@@ -1,10 +1,11 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   programs.hyprlock = {
     enable = true;
     settings = {
       background = {
-        blur_passes = 1;
+        blur_passes = 2;
+        path = lib.mkForce "screenshot";
       };
 
       input-field = {
