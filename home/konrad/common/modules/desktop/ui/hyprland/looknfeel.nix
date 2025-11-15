@@ -13,7 +13,6 @@
 
     decoration = {
       rounding = 4;
-
       shadow.enabled = false;
       blur.enabled = false;
     };
@@ -23,7 +22,7 @@
     dwindle = {
       pseudotile = true;
       preserve_split = true;
-      force_split = 2;
+      force_split = 0;
     };
 
     misc = {
@@ -31,6 +30,7 @@
       disable_autoreload = true;
       disable_hyprland_logo = true;
       disable_splash_rendering = true;
+      vfr = true;
     };
   };
 }
