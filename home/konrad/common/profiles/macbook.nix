@@ -10,10 +10,8 @@ in
 
   konrad.programs.bitwarden = {
     enable = true;
-    # TODO until fixed on unstable
-    package =
-      (builtins.getFlake "github:NixOS/nixpkgs/3cf437fb2e3a4a8e4d28c89699b084636a48b979")
-      .legacyPackages.${pkgs.system}.bitwarden-cli;
+    # FIXME until fixed on unstable
+    package = pkgs.stable.bitwarden-cli;
   };
 
   programs.neovim-pde = {
