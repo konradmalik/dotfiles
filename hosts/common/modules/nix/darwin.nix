@@ -4,12 +4,6 @@
     ./shared
     ./shared/not-hm.nix
   ];
-  nixpkgs.overlays = [
-    # FIXME after https://github.com/NixOS/nixpkgs/issues/461406
-    (final: prev: {
-      inherit (final.stable) fish;
-    })
-  ];
   nix = {
     gc = {
       automatic = true;
