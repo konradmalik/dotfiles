@@ -7,12 +7,7 @@
   nixpkgs.overlays = [
     # FIXME after https://github.com/NixOS/nixpkgs/issues/461406
     (final: prev: {
-      inherit
-        ((builtins.getFlake "github:NixOS/nixpkgs/133519eaef82388d4ed61dd65b1ae3abc895bd1b")
-          .legacyPackages.${prev.system}
-        )
-        fish
-        ;
+      inherit (final.stable) fish;
     })
   ];
   nix = {
