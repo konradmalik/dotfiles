@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
             accept-flake-config = true
@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
             accept-flake-config = true
@@ -52,7 +52,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
             accept-flake-config = true
@@ -71,7 +71,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: wimpysworld/nothing-but-nix@v6
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
             accept-flake-config = true
