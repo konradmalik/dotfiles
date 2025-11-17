@@ -3,7 +3,7 @@
     # Devices will be mounted and formatted in alphabetical order
     # our home relies on key on root, so names matter!
     disk1 = {
-      device = "/dev/sda";
+      device = "/dev/disk/by-id/ata-LITEONIT_LMT-128M6M_mSATA_128GB_TW0T8MRJ5508534O0614";
       type = "disk";
       content = {
         type = "gpt";
@@ -56,7 +56,7 @@
       };
     };
     disk2 = {
-      device = "/dev/sdb";
+      device = "/dev/disk/by-id/ata-SAMSUNG_SSD_SM841_2.5__7mm_256GB_S12LNSAD801799";
       type = "disk";
       content = {
         type = "gpt";
