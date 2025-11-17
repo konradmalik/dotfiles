@@ -3,7 +3,7 @@
     # Devices will be mounted and formatted in alphabetical order
     # our home relies on key on root, so names matter!
     disk1 = {
-      device = "/dev/sdb";
+      device = "/dev/sda";
       type = "disk";
       content = {
         type = "gpt";
@@ -56,7 +56,7 @@
       };
     };
     disk2 = {
-      device = "/dev/sda";
+      device = "/dev/sdb";
       type = "disk";
       content = {
         type = "gpt";
