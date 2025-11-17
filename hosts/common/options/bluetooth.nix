@@ -35,8 +35,6 @@ in
       settings = {
         General = {
           FastConnectable = true;
-          ReconnectAttempts = 5;
-          ReconnectIntervals = "1, 2, 3";
         };
       };
     };
