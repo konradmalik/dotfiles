@@ -208,7 +208,7 @@ Strategy with keys:
 To get age key for the machine, use:
 
 ```bash
-$ /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
+$ cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
 ```
 
 Add this key to `.sops.yaml` and propagate re-encryption to all secrets:
