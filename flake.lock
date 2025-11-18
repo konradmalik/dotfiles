@@ -269,22 +269,6 @@
         "type": "github"
       }
     },
-    "flake-compat_5": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1751685974,
-        "narHash": "sha256-NKw96t+BgHIYzHUjkTK95FqYRVKB8DHpVhefWSz/kTw=",
-        "ref": "refs/heads/main",
-        "rev": "549f2762aebeff29a2e5ece7a7dc0f955281a1d1",
-        "revCount": 92,
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/flake-compat"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/flake-compat"
-      }
-    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -520,11 +504,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1762868777,
-        "narHash": "sha256-QqS72GvguP56oKDNUckWUPNJHjsdeuXh5RyoKz0wJ+E=",
+        "lastModified": 1763319842,
+        "narHash": "sha256-YG19IyrTdnVn0l3DvcUYm85u3PaqBt6tI6VvolcuHnA=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "c5c3147730384576196fb5da048a6e45dee10d56",
+        "rev": "7275fa67fbbb75891c16d9dee7d88e58aea2d761",
         "type": "github"
       },
       "original": {
@@ -726,15 +710,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1763011932,
-        "narHash": "sha256-hEImzdg9HQvgdRE3XrWqFXS1IaY0ekFSAhm8h3DLXsQ=",
-        "owner": "nvim-neorocks",
+        "lastModified": 1763443895,
+        "narHash": "sha256-cnxwzqDb4Y8V7Ku92qaHCRwHGawSkgoZjGS9n30B4/0=",
+        "owner": "lumen-oss",
         "repo": "neorocks",
-        "rev": "a2c998c9ad8d2588e627de0d33374fd9fd43f439",
+        "rev": "262c87ac6ec4c80189cb624416126749c7d3a142",
         "type": "github"
       },
       "original": {
-        "owner": "nvim-neorocks",
+        "owner": "lumen-oss",
         "repo": "neorocks",
         "type": "github"
       }
@@ -770,16 +754,15 @@
         "telescope-live-grep-args-nvim": "telescope-live-grep-args-nvim",
         "telescope-nvim": "telescope-nvim",
         "telescope-ui-select-nvim": "telescope-ui-select-nvim",
-        "tree-sitter-grammars": "tree-sitter-grammars",
         "vim-fugitive": "vim-fugitive",
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1763307777,
-        "narHash": "sha256-66/bGAqtC6pWT63qNwl2C9xeCck21Ry8uDYjRRbzJrc=",
+        "lastModified": 1763481999,
+        "narHash": "sha256-ydrWH3oM2AG8x9LrGkJUuzdCK/m41mnV1TIsUCgVNNs=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "f412b4201d1992069d7460a910df82933aa3f1a3",
+        "rev": "38a29317fe6bd5e538deca0e03e11d40bb26bd57",
         "type": "github"
       },
       "original": {
@@ -999,22 +982,6 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1751792365,
-        "narHash": "sha256-J1kI6oAj25IG4EdVlg2hQz8NZTBNYvIS0l4wpr9KcUo=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "1fd8bada0b6117e6c7eb54aad5813023eed37ccb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_6": {
-      "locked": {
         "lastModified": 1762977756,
         "narHash": "sha256-4PqRErxfe+2toFJFgcRKZ0UI9NSIOJa+7RXVtBhy4KE=",
         "owner": "NixOS",
@@ -1151,19 +1118,24 @@
       }
     },
     "nvim-treesitter": {
-      "flake": false,
+      "inputs": {
+        "nixpkgs": [
+          "neovim",
+          "nixpkgs"
+        ],
+        "nvim-treesitter": "nvim-treesitter_2"
+      },
       "locked": {
-        "lastModified": 1763076034,
-        "narHash": "sha256-d4/m0XPguQ+HQBYgXd2PQSuid0sXNBDNGNp9Cfq5qYc=",
-        "owner": "nvim-treesitter",
-        "repo": "nvim-treesitter",
-        "rev": "2144e88dacd193cc92a01f622e56feca4a5922f6",
+        "lastModified": 1763481949,
+        "narHash": "sha256-iMSVl953PRHZAGJ3cmGGcxAxje7s4iJkZCSGKmQ6zvM=",
+        "owner": "konradmalik",
+        "repo": "nvim-treesitter-nix",
+        "rev": "53aa1c496d8edf8bad9d873a59c3b62ea911c18d",
         "type": "github"
       },
       "original": {
-        "owner": "nvim-treesitter",
-        "ref": "main",
-        "repo": "nvim-treesitter",
+        "owner": "konradmalik",
+        "repo": "nvim-treesitter-nix",
         "type": "github"
       }
     },
@@ -1180,6 +1152,23 @@
       "original": {
         "owner": "nvim-treesitter",
         "repo": "nvim-treesitter-context",
+        "type": "github"
+      }
+    },
+    "nvim-treesitter_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763374633,
+        "narHash": "sha256-HwQTSSEW2yW3T0XbongCaOL+/STOuaAZhLkII/evoKM=",
+        "owner": "nvim-treesitter",
+        "repo": "nvim-treesitter",
+        "rev": "c682a239a9404ce5f90a2d0da34790eff1ed2932",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-treesitter",
+        "ref": "main",
+        "repo": "nvim-treesitter",
         "type": "github"
       }
     },
@@ -1226,7 +1215,7 @@
         "neovim": "neovim",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_6",
+        "nixpkgs": "nixpkgs_5",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "sops-nix": "sops-nix",
         "stylix": "stylix"
@@ -1443,25 +1432,6 @@
       "original": {
         "owner": "tinted-theming",
         "repo": "base16-zed",
-        "type": "github"
-      }
-    },
-    "tree-sitter-grammars": {
-      "inputs": {
-        "flake-compat": "flake-compat_5",
-        "nixpkgs": "nixpkgs_5"
-      },
-      "locked": {
-        "lastModified": 1763008262,
-        "narHash": "sha256-ua5vtv5BvFOdnWvJyIyWZQWd1M32F4Dth1l/84R3a/s=",
-        "owner": "marsam",
-        "repo": "tree-sitter-grammars",
-        "rev": "a72521c396a533d3e04fd797f163d26c74c41b61",
-        "type": "github"
-      },
-      "original": {
-        "owner": "marsam",
-        "repo": "tree-sitter-grammars",
         "type": "github"
       }
     },
