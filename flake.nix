@@ -56,13 +56,130 @@
   };
 
   outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-      ];
-      imports = [ ./flake ];
+    { self, ... }@inputs:
+    let
+      forAllSystems =
+        function:
+        inputs.nixpkgs.lib.genAttrs
+          [
+            "x86_64-linux"
+            "aarch64-linux"
+            "x86_64-darwin"
+          ]
+          (
+            system:
+            function (
+              import inputs.nixpkgs {
+                inherit system;
+                overlays = [
+                ];
+              }
+            )
+          );
+
+      specialArgs = {
+        inherit inputs;
+      };
+    in
+    {
+      devShells = forAllSystems (
+        pkgs:
+        let
+          getSystem = attr: attr.${pkgs.stdenvNoCC.hostPlatform.system};
+          darwinPackages = builtins.attrValues (
+            builtins.removeAttrs (getSystem inputs.darwin.packages) [ "default" ]
+          );
+        in
+        {
+          default = pkgs.mkShell {
+            NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+
+            name = "dotfiles";
+            packages =
+              (with pkgs; [
+                age
+                git
+                home-manager
+                manix
+                nmap
+                sops
+                ssh-to-age
+              ])
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isLinux [ (getSystem inputs.disko.packages).disko ];
+          };
+        }
+      );
+
+      darwinConfigurations = {
+        mbp13 = inputs.darwin.lib.darwinSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/mbp13 ];
+        };
+      };
+
+      nixosConfigurations = {
+        framework = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/framework ];
+        };
+        m3800 = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/m3800 ];
+        };
+        rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/rpi4-1 ];
+        };
+        rpi4-2 = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/rpi4-2 ];
+        };
+      };
+
+      homeConfigurations = {
+        "konrad@generic" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
+          extraSpecialArgs = specialArgs;
+          modules = [ ./home/konrad/generic.nix ];
+        };
+      };
+
+      packages = forAllSystems (
+        pkgs:
+        (import ./pkgs/scripts { inherit pkgs; })
+        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
+          let
+            rpiSdCard = "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
+            # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243
+            missingKernelModulesFix = {
+              nixpkgs.overlays = [
+                (final: prev: { makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; }); })
+              ];
+            };
+            modules = [
+              rpiSdCard
+              missingKernelModulesFix
+            ];
+          in
+          {
+            installer-iso = import ./pkgs/special/installer-iso { inherit pkgs specialArgs; };
+            rpi4-1-sd-image =
+              (self.nixosConfigurations.rpi4-1.extendModules { inherit modules; }).config.system.build.sdImage;
+            rpi4-2-sd-image =
+              (self.nixosConfigurations.rpi4-2.extendModules { inherit modules; }).config.system.build.sdImage;
+          }
+        )
+      );
+
+      checks = {
+        x86_64-darwin = {
+          mbp13 = self.darwinConfigurations.mbp13.system;
+        };
+      };
+
+      templates = import ./templates;
+
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
     };
 }
