@@ -172,12 +172,6 @@
         )
       );
 
-      checks = {
-        x86_64-darwin = {
-          mbp13 = self.darwinConfigurations.mbp13.system;
-        };
-      };
-
       templates = import ./templates;
 
       formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
