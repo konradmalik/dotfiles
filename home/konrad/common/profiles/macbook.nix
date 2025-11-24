@@ -18,7 +18,7 @@ in
 
   konrad.programs.nvim = {
     notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
-    spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/files/spell";
+    spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/state/spell";
   };
 
   konrad.programs.restic = {
