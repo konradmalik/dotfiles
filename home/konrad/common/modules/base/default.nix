@@ -1,4 +1,10 @@
-{ config, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 {
   imports = [
     ./atuin.nix
@@ -11,7 +17,6 @@
     ./gpg.nix
     ./k9s.nix
     ./lazygit.nix
-    ./neovim.nix
     ./nix-index.nix
     ./packages.nix
     ./readline.nix
@@ -28,6 +33,10 @@
   konrad.programs = {
     tmux.enable = true;
     ssh-egress.enable = true;
+    nvim = {
+      enable = true;
+      package = inputs.neovim.packages.${pkgs.system}.default;
+    };
   };
 
   programs.home-manager.enable = true;

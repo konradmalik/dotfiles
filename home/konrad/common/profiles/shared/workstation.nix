@@ -11,7 +11,7 @@ in
 
   konrad.programs.bitwarden.enable = true;
 
-  programs.neovim-pde = {
+  konrad.programs.nvim = {
     notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
     spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/state/spell";
   };
