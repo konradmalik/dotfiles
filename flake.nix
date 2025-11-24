@@ -37,7 +37,6 @@
 
     neovim.url = "github:konradmalik/neovim-flake";
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
