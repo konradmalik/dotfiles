@@ -12,6 +12,10 @@
           system = final.system;
           config = final.config;
         };
+        custom = {
+          scripts = (import ../../../../../pkgs/scripts { inherit pkgs; });
+          fonts = (import ../../../../../pkgs/fonts { inherit pkgs; });
+        };
       })
     ];
     config = {

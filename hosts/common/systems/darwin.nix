@@ -51,7 +51,9 @@
     ];
 
     masApps = {
+      "Grammarly for Safari" = 1462114288;
       Bitwarden = 1352778147;
+      GoodNotes = 1444383602;
       Tailscale = 1475387142;
     };
   };

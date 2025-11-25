@@ -22,8 +22,8 @@
       };
 
       monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font";
+        package = pkgs.custom.fonts.iosemka;
+        name = "Iosemka Nerd Font";
       };
 
       emoji = {

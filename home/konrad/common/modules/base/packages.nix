@@ -44,7 +44,7 @@
       gh
       glab
     ]
-    ++ (builtins.attrValues (import ../../../../../pkgs/scripts { inherit pkgs; }))
+    ++ (builtins.attrValues custom.scripts)
     ++ lib.optionals stdenvNoCC.isLinux [
       psmisc
       trace-cmd
