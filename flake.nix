@@ -59,11 +59,24 @@
     let
       forAllSystems =
         function:
-        inputs.nixpkgs.lib.genAttrs [
-          "x86_64-linux"
-          "aarch64-linux"
-          "x86_64-darwin"
-        ] (system: function inputs.nixpkgs.legacyPackages.${system});
+        inputs.nixpkgs.lib.genAttrs
+          [
+            "x86_64-linux"
+            "aarch64-linux"
+            "x86_64-darwin"
+          ]
+          (
+            system:
+            function (
+              import inputs.nixpkgs {
+                inherit system;
+                overlays = [
+                  (import ./pkgs/fonts)
+                  (import ./pkgs/scripts)
+                ];
+              }
+            )
+          );
 
       specialArgs = {
         inherit inputs;
@@ -135,7 +148,9 @@
 
       packages = forAllSystems (
         pkgs:
-        pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
+        pkgs.fonts
+        // pkgs.scripts
+        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
           let
             rpiSdCard = "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
             # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243

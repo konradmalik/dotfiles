@@ -22,8 +22,7 @@
             function (
               import inputs.nixpkgs {
                 inherit system;
-                overlays = [
-                ];
+                overlays = [ ];
               }
             )
           );
