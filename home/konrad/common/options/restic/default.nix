@@ -96,7 +96,8 @@ in
 
         Service = {
           Type = "oneshot";
-          ExecStart = "${script}";
+          ExecStartPre = "${lib.getExe pkgs.flock} --exclusive --timeout 60 /tmp/baker.lock echo acquired lock";
+          ExecStart = script;
         };
       };
 
@@ -118,7 +119,14 @@ in
         enable = true;
         config = {
           ProcessType = "Background";
-          Program = "${script}";
+          ProgramArguments = [
+            "${lib.getExe pkgs.flock}"
+            "--exclusive"
+            "--timeout"
+            "60"
+            "/tmp/baker.lock"
+            script
+          ];
           RunAtLoad = false;
           StandardOutPath = "/tmp/restic/${command}/stdout";
           StandardErrorPath = "/tmp/restic/${command}/stderr";
