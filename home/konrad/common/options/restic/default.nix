@@ -125,7 +125,7 @@ in
             "--timeout"
             "60"
             "/tmp/baker.lock"
-            script
+            (toString script)
           ];
           RunAtLoad = false;
           StandardOutPath = "/tmp/restic/${command}/stdout";
