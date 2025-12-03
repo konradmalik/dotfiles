@@ -96,8 +96,7 @@ in
 
         Service = {
           Type = "oneshot";
-          ExecStartPre = "${lib.getExe pkgs.flock} --exclusive --timeout 60 /tmp/baker.lock echo acquired lock";
-          ExecStart = script;
+          ExecStart = "${lib.getExe pkgs.flock} --exclusive --timeout 60 /tmp/baker.lock ${script}";
         };
       };
 
