@@ -72,6 +72,8 @@ in
           "/home/*/.direnv"
           "/home/*/.go"
           "/home/*/.gradle"
+          "/home/*/.local/share"
+          "/home/*/.local/state"
           "/home/*/.m2"
           "/home/*/.mozilla/firefox/*/storage"
           "/home/*/.npm"
@@ -79,7 +81,7 @@ in
           "/home/*/.opam"
           "/home/*/.pnpm"
           "/home/*/Downloads"
-
+          "/home/*/go"
         ];
         paths = cfg.paths;
       };
