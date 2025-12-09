@@ -63,6 +63,7 @@ in
           "*.o"
           "*.pyc"
           "*/node_modules/*"
+          "*.log"
 
           "/home/*/.cache"
           "/home/*/.cargo"
