@@ -38,8 +38,10 @@ in
       "SUPER,space,exec,fuzzel"
 
       # Screenshots
-      "SUPER,p,exec,hyprshot --freeze --mode region --output /tmp/screenshots"
-      "SUPERSHIFT,p,exec,hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"
+      # NOTE: killall is useful for occassional freezes of hyprpicker
+      # just try to screenshot again and it should unfreeze
+      "SUPER,p,exec,killall slurp grimp hyprpicker hyprshot ; hyprshot --freeze --mode region --output /tmp/screenshots"
+      "SUPERSHIFT,p,exec,killall slurp grimp hyprpicker hyprshot ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"
 
       # Window manager controls
       "SUPERSHIFT,q,killactive"
