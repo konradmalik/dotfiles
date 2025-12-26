@@ -16,9 +16,7 @@ iosevka.override {
       inherits = "ss14";
     };
 
-    ligations = {
-      inherits = "dlig";
-    };
+    noLigation = true;
 
     weights = {
       Regular = {
