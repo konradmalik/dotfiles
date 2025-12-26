@@ -102,7 +102,6 @@
                 age
                 git
                 home-manager
-                manix
                 nmap
                 sops
                 ssh-to-age
