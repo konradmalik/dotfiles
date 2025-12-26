@@ -12,13 +12,17 @@
     inputs.stylix.darwinModules.stylix
   ];
 
-  # packages installed in system profile
-  environment.etc = {
-    "ssh/sshd_config.d/99-nix.conf".text = ''
-      PermitRootLogin no
-      PasswordAuthentication no
-      ChallengeResponseAuthentication no
-    '';
+  environment = {
+    etc = {
+      "ssh/sshd_config.d/99-nix.conf".text = ''
+        PermitRootLogin no
+        PasswordAuthentication no
+        ChallengeResponseAuthentication no
+      '';
+    };
+
+    # zsh completion scripts
+    pathsToLink = [ "/share/zsh" ];
   };
 
   homebrew = {

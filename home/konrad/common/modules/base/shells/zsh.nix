@@ -5,7 +5,7 @@
   ...
 }:
 let
-  zshInitContent = ''
+  initContent = ''
     # beeping is annoying
     unsetopt beep
 
@@ -43,19 +43,13 @@ let
 
   '';
 
-  zcompdumpRemoval = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    $DRY_RUN_CMD rm -f ${config.programs.zsh.dotDir}/.zcompdump
-  '';
-
-  zshCompletionInit = ''
+  completionInit = ''
     # autocompletion
     # (-C makes it regenerate .zcompdump only if it does not exist)
     # (I delete .zcompdump in a script after each system rebuild)
     autoload -Uz compinit && compinit -C
     # bash-compatible mode
     autoload -Uz bashcompinit && bashcompinit
-    # Zsh can generate completion from looking at the output of --help
-    compdef _gnu_generic -default- -P '*'
     # use cache
     zstyle ':completion:*' use-cache on
     zstyle ':completion:*' cache-path "${config.xdg.cacheHome}/zsh/.zcompcache"
@@ -84,15 +78,21 @@ let
 in
 {
   home.activation = {
-    inherit zcompdumpRemoval;
+    zcompRemoval = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      $DRY_RUN_CMD rm -f ${config.programs.zsh.dotDir}/.zcompdump
+      $DRY_RUN_CMD rm -f ${config.xdg.cacheHome}/zsh/.zcompcache
+    '';
   };
 
   programs.zsh = {
+    inherit initContent completionInit;
+
     enable = true;
+    autocd = true;
     autosuggestion.enable = true;
     enableCompletion = true;
+    enableVteIntegration = true;
     syntaxHighlighting.enable = true;
-    autocd = true;
     dotDir = "${config.xdg.configHome}/zsh";
     defaultKeymap = "viins";
     shellAliases = {
@@ -123,7 +123,5 @@ in
       save = 100000;
       size = 100000;
     };
-    initContent = zshInitContent;
-    completionInit = zshCompletionInit;
   };
 }

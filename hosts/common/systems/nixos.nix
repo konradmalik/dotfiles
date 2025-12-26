@@ -35,7 +35,12 @@
     fstrim.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ pciutils ];
+  environment = {
+    systemPackages = with pkgs; [ pciutils ];
+
+    # zsh completion scripts
+    pathsToLink = [ "/share/zsh" ];
+  };
 
   system.stateVersion = lib.mkDefault "26.05";
 }
