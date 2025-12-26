@@ -7,8 +7,6 @@
   home.shell.enableShellIntegration = true;
 
   programs = {
-    carapace.enable = true;
-
     eza = {
       enable = true;
       git = true;
