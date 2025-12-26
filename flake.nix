@@ -64,6 +64,7 @@
             "x86_64-linux"
             "aarch64-linux"
             "x86_64-darwin"
+            "aarch64-darwin"
           ]
           (
             system:
@@ -116,6 +117,10 @@
         mbp13 = inputs.darwin.lib.darwinSystem {
           inherit specialArgs;
           modules = [ ./hosts/mbp13 ];
+        };
+        m4 = inputs.darwin.lib.darwinSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/m4 ];
         };
       };
 
