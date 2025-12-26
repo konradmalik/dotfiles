@@ -83,7 +83,7 @@
     configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog
-    stateVersion = lib.mkDefault 4;
+    stateVersion = lib.mkDefault 6;
 
     defaults = {
       dock = {
