@@ -88,9 +88,7 @@
         pkgs:
         let
           getSystem = attr: attr.${pkgs.stdenvNoCC.hostPlatform.system};
-          darwinPackages = builtins.attrValues (
-            builtins.removeAttrs (getSystem inputs.darwin.packages) [ "default" ]
-          );
+          darwinPackages = builtins.attrValues (removeAttrs (getSystem inputs.darwin.packages) [ "default" ]);
         in
         {
           default = pkgs.mkShell {
