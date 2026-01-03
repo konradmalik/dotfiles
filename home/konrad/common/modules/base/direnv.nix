@@ -1,16 +1,6 @@
-{ config, inputs,... }:
+{ config, ... }:
 {
-  imports = [ inputs.direnv-instant.homeModules.direnv-instant ];
-
   programs.git.ignores = [ ".direnv" ];
-
-  programs.direnv-instant ={
-    enable = true;
-    settings = {
-      mux_delay = 5;
-      debug_log = "/tmp/direnv-instant.log";
-    };
-  };
 
   programs.direnv = {
     enable = true;
