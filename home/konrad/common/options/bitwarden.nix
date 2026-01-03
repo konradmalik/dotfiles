@@ -11,29 +11,31 @@ let
   jq = "${pkgs.jq}/bin/jq";
   bw = "${cfg.package}/bin/bw";
   # this needs to be a shell function due to 'export'
-  bwuFunc = ''
-    function bwu() {
-      BW_STATUS=$(${bw} status | ${jq} -r .status)
-      case "$BW_STATUS" in
-      "unauthenticated")
-          echo "Logging into Bitwarden"
-          export BW_SESSION=$(${bw} login --raw)
-          ;;
-      "locked")
-          echo "Unlocking Vault"
-          export BW_SESSION=$(${bw} unlock --raw)
-          ;;
-      "unlocked")
-          echo "Vault is unlocked"
-          ;;
-      *)
-          echo "Unknown Login Status: $BW_STATUS"
-          return 1
-          ;;
-      esac
-      ${bw} sync
-    }
-  '';
+  bwuFunc =
+    # zsh
+    ''
+      function bwu() {
+        BW_STATUS=$(${bw} status | ${jq} -r .status)
+        case "$BW_STATUS" in
+        "unauthenticated")
+            echo "Logging into Bitwarden"
+            export BW_SESSION=$(${bw} login --raw)
+            ;;
+        "locked")
+            echo "Unlocking Vault"
+            export BW_SESSION=$(${bw} unlock --raw)
+            ;;
+        "unlocked")
+            echo "Vault is unlocked"
+            ;;
+        *)
+            echo "Unknown Login Status: $BW_STATUS"
+            return 1
+            ;;
+        esac
+        ${bw} sync
+      }
+    '';
 in
 {
   options.konrad.programs.bitwarden = {
