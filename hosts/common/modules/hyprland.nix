@@ -32,7 +32,7 @@ in
   # Initial login experience
   services.greetd = {
     enable = true;
-    settings.default_session.command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+    settings.default_session.command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
   };
 
   hardware.graphics.enable = true;
