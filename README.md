@@ -141,7 +141,16 @@ $ nixos-enter
 
 ### nix-darwin:
 
-Then build and enable config locally:
+First clone this repo to the machine.
+
+Then you need to install nix. `nix-darwin` manual suggests using [lix](https://lix.systems/install/) as the bootstrapper
+(it does not influence what implementation of nix is used later by the system).
+
+Next install [homebrew](https://brew.sh/).
+
+Enter the devshell from this repo.
+
+Finally, build and enable config locally:
 
 ```bash
 $ sudo darwin-rebuild switch --flake .
