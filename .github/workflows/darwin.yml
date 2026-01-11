@@ -39,24 +39,6 @@ jobs:
       - name: Shell build
         run: nix build .#devShells.aarch64-darwin.default
 
-  build-mbp13:
-    runs-on: macos-15-intel
-    needs:
-      - flake-check
-    steps:
-      - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@v21
-        with:
-          extra-conf: |
-            accept-flake-config = true
-      - if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: cachix/cachix-action@v16
-        with:
-          name: "konradmalik"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Flake build mbp13
-        run: nix build .#darwinConfigurations.mbp13.system
-
   build-m4:
     runs-on: macos-26
     needs:
@@ -72,5 +54,5 @@ jobs:
         with:
           name: "konradmalik"
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Flake build mbp13
+      - name: Flake build m4
         run: nix build .#darwinConfigurations.m4.system

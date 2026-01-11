@@ -111,10 +111,6 @@
       );
 
       darwinConfigurations = {
-        mbp13 = inputs.darwin.lib.darwinSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/mbp13 ];
-        };
         m4 = inputs.darwin.lib.darwinSystem {
           inherit specialArgs;
           modules = [ ./hosts/m4 ];

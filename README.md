@@ -150,9 +150,9 @@ $ sudo darwin-rebuild switch --flake .
 To just build (for example for a test):
 
 ```bash
-$ nix build .#darwinConfigurations.mbp13.config.system.build.toplevel
+$ nix build .#darwinConfigurations.m4.config.system.build.toplevel
 # or shortened by nix-darwin
-$ nix build .#darwinConfigurations.mbp13.system
+$ nix build .#darwinConfigurations.m4.system
 ```
 
 #### Linux builder

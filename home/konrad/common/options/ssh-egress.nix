@@ -38,7 +38,7 @@ in
             identitiesOnly = true;
           };
           tailscale = {
-            host = "framework m3800 mbp13 rpi4-1 rpi4-2";
+            host = "framework m3800 m4 rpi4-1 rpi4-2";
             user = "${config.home.username}";
             forwardAgent = true;
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
@@ -46,7 +46,7 @@ in
           };
           framework = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.83.43.115"; };
           m3800 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.108.54.78"; };
-          mbp13 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.70.57.115"; };
+          m4 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.77.207.57"; };
           rpi4-1 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.99.159.110"; };
           rpi4-2 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.78.182.5"; };
           work = {
