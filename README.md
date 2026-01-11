@@ -185,7 +185,7 @@ nix.linux-builder.enable = true;
 
 #### Docker on Darwin
 
-Use `darwin-docker` module.
+Use [container](https://github.com/apple/container).
 
 ### Linux (non-NixOS; home-manager):
 

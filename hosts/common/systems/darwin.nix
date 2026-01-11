@@ -1,7 +1,11 @@
-{ lib, inputs, ... }:
+{
+  lib,
+  inputs,
+  ...
+}:
 {
   imports = [
-    ./../modules/docker/darwin.nix
+    ./../modules/virtualisation/darwin.nix
     ./../modules/nix/darwin.nix
     ./../modules/home-manager.nix
     ./../modules/stylix/shared.nix

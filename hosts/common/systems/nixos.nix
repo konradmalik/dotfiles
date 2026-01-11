@@ -11,7 +11,6 @@
     inputs.sops-nix.nixosModules.sops
     inputs.stylix.nixosModules.stylix
 
-    ../modules/docker/linux.nix
     ../modules/home-manager.nix
     ../modules/locale.nix
     ../modules/locate.nix
@@ -20,6 +19,7 @@
     ../modules/openssh.nix
     ../modules/stylix
     ../modules/tailscale.nix
+    ../modules/virtualisation/linux.nix
 
     ../users/konrad/nixos.nix
   ]
