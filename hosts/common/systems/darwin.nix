@@ -71,6 +71,11 @@
       "1.1.1.1"
       "1.0.0.1"
     ];
+    applicationFirewall = {
+      enable = true;
+      allowSigned = true;
+      allowSignedApp = true;
+    };
   };
 
   programs = {
