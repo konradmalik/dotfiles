@@ -1,7 +1,6 @@
 { lib, inputs, ... }:
 {
   imports = [
-    ./../modules/aerospace.nix
     ./../modules/docker/darwin.nix
     ./../modules/nix/darwin.nix
     ./../modules/home-manager.nix
@@ -51,7 +50,6 @@
       "slack"
       "spotify"
       "syncthing-app"
-      "zoom"
     ];
 
     masApps = {
