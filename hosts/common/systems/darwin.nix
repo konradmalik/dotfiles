@@ -97,6 +97,7 @@
         show-recents = true;
       };
       finder = {
+        CreateDesktop = true;
         ShowStatusBar = true;
         ShowPathbar = true;
       };
