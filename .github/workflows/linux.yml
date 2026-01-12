@@ -46,6 +46,7 @@ jobs:
           - { hostname: framework, os: ubuntu-24.04 }
           - { hostname: rpi4-1, os: ubuntu-24.04-arm }
           - { hostname: rpi4-2, os: ubuntu-24.04-arm }
+          - { hostname: x1c6, os: ubuntu-24.04 }
     runs-on: ${{ matrix.host.os }}
     needs:
       - flake-check
