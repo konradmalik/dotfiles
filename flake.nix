@@ -133,6 +133,10 @@
           inherit specialArgs;
           modules = [ ./hosts/rpi4-2 ];
         };
+        x1c6 = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/x1c6 ];
+        };
       };
 
       homeConfigurations = {

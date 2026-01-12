@@ -8,6 +8,7 @@ keys:
   - &host_m3800 age12gvc63kjn266m5tqm9a6f90mwm2such3zhg4q35nf90l5q6e8flqca4h32
   - &host_rpi4-1 age19xc24qqy5wuham8knmsfaw4ug65k4eqqvsxr7v65q3wem4nkgpxs42g5rf
   - &host_rpi4-2 age1j4rv4r86uj2cqhtwdq0fhcu2hquz670kqp6wjec9hmf6v4t5g55qm55s5g
+  - &host_x1c6 age1sl8qjule7elwqxdemua5sydjm59xc8xg8ndc6c2sx8sd5ar4q9qqtxhzwd
 creation_rules:
   - path_regex: hosts/common/users/konrad/secrets\.yaml$
     key_groups:
@@ -18,6 +19,7 @@ creation_rules:
           - *host_m3800
           - *host_rpi4-1
           - *host_rpi4-2
+          - *host_x1c6
   - path_regex: home/konrad/common/secrets\.yaml$
     key_groups:
       - age:
