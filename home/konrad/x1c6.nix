@@ -3,7 +3,7 @@
 
   wayland.windowManager.hyprland.settings = {
     device = {
-      name = "elan-touchscreen";
+      name = "raydium-corporation-raydium-touch-system";
       enabled = false;
     };
   };
