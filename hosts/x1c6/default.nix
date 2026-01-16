@@ -11,4 +11,9 @@
 
   networking.hostName = "x1c6";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  services.tlp.settings = {
+    START_CHARGE_THRESH_BAT0 = 70;
+    STOP_CHARGE_THRESH_BAT0 = 80;
+  };
 }
