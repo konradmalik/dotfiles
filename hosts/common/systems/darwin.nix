@@ -94,7 +94,10 @@
     stateVersion = lib.mkDefault 6;
 
     defaults = {
+      # Show battery percentage in the menu bar
+      controlcenter.BatteryShowPercentage = true;
       dock = {
+        autohide = true;
         show-recents = true;
       };
       finder = {
@@ -120,6 +123,15 @@
         NSAutomaticPeriodSubstitutionEnabled = false;
         NSAutomaticQuoteSubstitutionEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
+      };
+      CustomUserPreferences = {
+        "com.apple.Siri" = {
+          "UAProfileCheckingStatus" = 0;
+          "siriEnabled" = 0;
+        };
+        "com.apple.AdLib" = {
+          allowApplePersonalizedAdvertising = false;
+        };
       };
     };
     keyboard = {
