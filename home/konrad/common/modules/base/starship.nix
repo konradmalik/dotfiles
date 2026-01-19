@@ -11,6 +11,7 @@
 
       battery.disabled = true;
       cmd_duration.disabled = true;
+      kubernetes.disabled = false;
       shell = {
         disabled = false;
         zsh_indicator = "";
