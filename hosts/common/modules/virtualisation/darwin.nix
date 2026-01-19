@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [
-    container
+  environment.systemPackages = [
+    # FIXME: fails to start with 'cannot find network plugin'
+    # pkgs.container
   ];
 }
