@@ -95,7 +95,7 @@ in
         };
         clock = {
           format = "{:L%d %B %H:%M}";
-          tooltip-format = "<tt>{calendar}</tt>";
+          tooltip-format = "<span>{calendar}</span>";
           on-click = calendar;
         };
         cpu = {
