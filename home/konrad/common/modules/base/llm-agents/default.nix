@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.llm-agents.opencode ];
+  home.packages = [ pkgs.opencode ];
 
   xdg.configFile."opencode/config.json".source = ./config.json;
 }
