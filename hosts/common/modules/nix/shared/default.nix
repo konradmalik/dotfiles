@@ -16,6 +16,8 @@
           ((import ../../../../../pkgs/scripts) final prev)
           // ((import ../../../../../pkgs/fonts) final prev);
       })
+
+      inputs.llm-agents.overlays.default
     ];
     config = {
       allowUnfree = true;

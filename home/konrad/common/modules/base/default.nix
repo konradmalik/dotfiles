@@ -17,6 +17,7 @@
     ./gpg.nix
     ./k9s.nix
     ./lazygit.nix
+    ./llm-agents
     ./nix-index.nix
     ./packages.nix
     ./readline.nix
