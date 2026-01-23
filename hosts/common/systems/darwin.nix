@@ -95,7 +95,10 @@
       controlcenter.BatteryShowPercentage = true;
       dock = {
         autohide = true;
+        expose-group-apps = true;
+        magnification = false;
         show-recents = true;
+        tilesize = 48;
       };
       finder = {
         CreateDesktop = true;
@@ -115,6 +118,8 @@
         "com.apple.sound.beep.feedback" = 1;
         "com.apple.swipescrolldirection" = true;
         "com.apple.trackpad.enableSecondaryClick" = true;
+        AppleMetricUnits = 1;
+        NSAutomaticInlinePredictionEnabled = true;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticPeriodSubstitutionEnabled = false;

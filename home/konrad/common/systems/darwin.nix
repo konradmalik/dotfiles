@@ -25,34 +25,7 @@
 
   programs.zsh = {
     shellAliases = {
-      touchbar-restart = "sudo pkill TouchBarServer";
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
-    };
-  };
-
-  targets.darwin = {
-    currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = true;
-    search = "Google";
-    defaults = {
-      NSGlobalDomain = {
-        AppleMeasurementUnits = "Centimeters";
-        AppleMetricUnits = true;
-        AppleTemperatureUnit = "Celsius";
-        NSAutomaticCapitalizationEnabled = false;
-        NSAutomaticDashSubstitutionEnabled = false;
-        NSAutomaticPeriodSubstitutionEnabled = false;
-        NSAutomaticQuoteSubstitutionEnabled = false;
-        NSAutomaticSpellingCorrectionEnabled = false;
-      };
-      "com.apple.desktopservices" = {
-        DSDontWriteNetworkStores = true;
-        DSDontWriteUSBStores = true;
-      };
-      "com.apple.dock" = {
-        expose-group-apps = true;
-        size-immutable = true;
-        tilesize = 48;
-      };
     };
   };
 }
