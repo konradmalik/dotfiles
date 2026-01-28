@@ -140,8 +140,8 @@ in
       file = ./uniq-exts.sh;
       deps = with pkgs; [
         coreutils
-        findutils
-        perl
+        fd
+        gnused
       ];
     }
     {
