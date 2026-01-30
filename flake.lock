@@ -575,11 +575,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768559078,
-        "narHash": "sha256-6Y3rl6nKisZZlZ25kuUO7cxkmKFLzS+xHC8bWntK454=",
+        "lastModified": 1769529199,
+        "narHash": "sha256-kNe8zAkcpboeTMb6XJW2Z8yfQBwWpqQS2Umhlif/Sck=",
         "owner": "konradmalik",
         "repo": "incomplete.nvim",
-        "rev": "0317e77ad8c93de0ebdf3e52e1cc00bcc467fbcf",
+        "rev": "8cb8ef54502479d85fe74fbb99c8f88c7d779488",
         "type": "github"
       },
       "original": {
@@ -696,11 +696,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1769375916,
-        "narHash": "sha256-dJXuYZrrexGwmdmAD56D5kjEh8xvnF0FFaPxKU2MewU=",
+        "lastModified": 1769529274,
+        "narHash": "sha256-vjyiUb4w15T2/Z2UbemIAryJLR4BsUsZn470JoskJDQ=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "5dba9c3685fba4798975be4d7be8c684bf2a3067",
+        "rev": "114366ce60402b8166a2a174714cefd1bc9a6d75",
         "type": "github"
       },
       "original": {
