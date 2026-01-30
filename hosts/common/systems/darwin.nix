@@ -37,7 +37,6 @@
     };
     casks = [
       "alacritty"
-      "battery"
       "calibre"
       "firefox"
       "ghostty"
