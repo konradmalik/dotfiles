@@ -35,6 +35,9 @@
       upgrade = true;
       cleanup = "zap";
     };
+    brews = [
+      "batt"
+    ];
     casks = [
       "alacritty"
       "calibre"
