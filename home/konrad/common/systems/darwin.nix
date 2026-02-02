@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  osConfig,
+  pkgs,
+  lib,
+  ...
+}:
 {
   imports = [
     ../modules/base
@@ -27,5 +32,8 @@
     shellAliases = {
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     };
+    initContent = lib.optionalString osConfig.homebrew.enable ''
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    '';
   };
 }
