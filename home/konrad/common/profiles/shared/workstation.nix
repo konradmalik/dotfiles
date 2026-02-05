@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   obsidianPath = "${config.home.homeDirectory}/obsidian";
@@ -24,4 +24,6 @@ in
       obsidianPath
     ];
   };
+
+  home.packages = [ pkgs.tuxguitar ];
 }

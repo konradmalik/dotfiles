@@ -51,6 +51,7 @@
       "slack"
       "spotify"
       "syncthing-app"
+      "tuxguitar"
     ];
 
     masApps = {
