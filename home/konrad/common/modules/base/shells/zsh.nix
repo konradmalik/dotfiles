@@ -87,7 +87,7 @@ in
         # bash
         ''
           $DRY_RUN_CMD rm -f ${config.programs.zsh.dotDir}/.zcompdump
-          $DRY_RUN_CMD rm -f ${config.xdg.cacheHome}/zsh/.zcompcache
+          $DRY_RUN_CMD rm -rf ${config.xdg.cacheHome}/zsh/.zcompcache
         '';
   };
 
