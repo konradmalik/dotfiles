@@ -11,7 +11,7 @@ in
   set -g window-status-activity-style "fg=#${c.base09}"
 
   set -g status-left "#[fg=#${c.base0D},bold]  #S "
-  set -g status-right "#[fg=#${c.base06},bold]%a %Y-%m-%d 󱑒 %H:%M"
+  set -g status-right "#[fg=#${c.base0A},bold]%a %Y-%m-%d 󱑒 %H:%M #[fg=#${c.base0E}] #H"
   set -g status-justify left
   set -g status-left-length 200     # increase length (from 10)
   set -g status-right-length 200    # increase length (from 10)
