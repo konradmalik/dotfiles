@@ -55,9 +55,10 @@ in
         # EDITOR = "nvim -u NONE -e";
         EDITOR = lib.mkDefault (lib.getExe nvim);
         VISUAL = lib.mkDefault (lib.getExe nvim);
-        GIT_EDITOR = lib.mkDefault "${lib.getExe nvim} --clean";
         MANPAGER = lib.mkDefault "${lib.getExe nvim} --clean +Man!";
       };
+
+      programs.git.settings.core.editor = lib.mkDefault "${lib.getExe nvim} --clean";
 
       xdg.stateFile."nvim/notes" = {
         enable = cfg.notesPath != null;
