@@ -51,8 +51,8 @@ in
 
   config =
     let
-      contents = builtins.map fetchKeys cfg.personal.remotes;
-      splits = flatten (builtins.map splitKeys contents);
+      contents = map fetchKeys cfg.personal.remotes;
+      splits = flatten (map splitKeys contents);
       filtered = filterLines splits;
     in
     {
