@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-      - uses: wimpysworld/nothing-but-nix@v9
+      - uses: wimpysworld/nothing-but-nix@v10
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
@@ -24,7 +24,7 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v6
-      - uses: wimpysworld/nothing-but-nix@v9
+      - uses: wimpysworld/nothing-but-nix@v10
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
@@ -52,7 +52,7 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v6
-      - uses: wimpysworld/nothing-but-nix@v9
+      - uses: wimpysworld/nothing-but-nix@v10
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
@@ -71,7 +71,7 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v6
-      - uses: wimpysworld/nothing-but-nix@v9
+      - uses: wimpysworld/nothing-but-nix@v10
       - uses: DeterminateSystems/nix-installer-action@v21
         with:
           extra-conf: |
