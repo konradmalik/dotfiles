@@ -90,6 +90,8 @@
     stateVersion = lib.mkDefault 6;
 
     defaults = {
+      # 6 is CPU History
+      ActivityMonitor.IconType = 6;
       # Show battery percentage in the menu bar
       controlcenter.BatteryShowPercentage = true;
       dock = {
