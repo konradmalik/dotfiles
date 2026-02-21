@@ -11,6 +11,7 @@
         # allows raw html and scripts in panels
         disable_sanitize_html = true;
       };
+      security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
     };
     provision = {
       enable = true;
