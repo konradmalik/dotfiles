@@ -72,11 +72,13 @@
 
       settings = {
         alias = {
-          graph = "log --graph --oneline --decorate --abbrev-commit";
-          root = "rev-parse --show-toplevel";
-          unstage = "reset HEAD --";
-          last = "log --name-status HEAD^..HEAD";
           conflicts = "diff --name-only --diff-filter=U";
+          graph = "log --graph --oneline --decorate --abbrev-commit";
+          last = "log --name-status HEAD^..HEAD";
+          root = "rev-parse --show-toplevel";
+          stats = "!git log --numstat | awk '/^[0-9-]+/{ print $NF}' | sort | uniq -c | sort -nr | head";
+          stats-recent = "!git log --since 6.months.ago --numstat | awk '/^[0-9-]+/{ print $NF}' | sort | uniq -c | sort -nr | head";
+          unstage = "reset HEAD --";
           whatadded = "log --diff-filter=A";
           prepare-worktree = "!${
             lib.getExe' (pkgs.callPackage ./git-prepare-worktree { }) "git-prepare-worktree"
