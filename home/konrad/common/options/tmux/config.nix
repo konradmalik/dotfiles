@@ -29,6 +29,13 @@
   set-option -g monitor-activity on
   set-option -g visual-activity off
 
+  # This allows applications running inside tmux to receive and process certain terminal escape sequences directly,
+  # improving compatibility with terminal features like OSC 52 clipboard integration, hyperlinks, and images.
+  set-option -g allow-passthrough on
+
+  # Enable OSC 52 clipboard
+  set-option -g set-clipboard on
+
   # vim splits
   bind-key v split-window -h
   bind-key g split-window -v
