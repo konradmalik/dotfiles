@@ -38,17 +38,17 @@ in
             identitiesOnly = true;
           };
           tailscale = {
-            host = "framework m3800 m4 rpi4-1 rpi4-2";
+            host = "framework m4 rpi4-1 rpi4-2 x1c6";
             user = "${config.home.username}";
             forwardAgent = true;
             identityFile = "${config.home.homeDirectory}/.ssh/personal";
             identitiesOnly = true;
           };
           framework = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.83.43.115"; };
-          m3800 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.108.54.78"; };
           m4 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.77.207.57"; };
           rpi4-1 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.99.159.110"; };
           rpi4-2 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.78.182.5"; };
+          x1c6 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.111.137.125"; };
           work = {
             host = "*.cerebredev.com";
             identityFile = "${config.home.homeDirectory}/.ssh/cerebre";

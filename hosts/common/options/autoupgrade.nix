@@ -33,7 +33,7 @@ in
     hostname = lib.mkOption {
       type = lib.types.str;
       default = config.networking.hostName;
-      example = "m3800";
+      example = "x1c6";
       description = "machine hostname target to update. will be used in #.. after the flake url";
     };
     dates = lib.mkOption {

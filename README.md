@@ -41,7 +41,7 @@ $ sudo nixos-rebuild --flake . boot
 To just build (for example for a test):
 
 ```bash
-$ nix build .#nixosConfigurations.m3800.config.system.build.toplevel
+$ nix build .#nixosConfigurations.x1c6.config.system.build.toplevel
 ```
 
 #### Build sd-image:
@@ -91,7 +91,7 @@ $ nix-shell
 Use disko to format and mount:
 
 ```bash
-$ sudo disko --mode destroy,format,mount ./hosts/m3800/disko.nix
+$ sudo disko --mode destroy,format,mount ./hosts/x1c6/disko.nix
 ```
 
 Generate hardware configuration:
@@ -107,7 +107,7 @@ For details refer to [sops-nix](#sops-nix) section.
 Finally, use hardware-configuration and disko to install nixos:
 
 ```bash
-$ sudo nixos-install --flake .#m3800 --root /mnt
+$ sudo nixos-install --flake .#x1c6 --root /mnt
 ```
 
 #### Fix something on NixOS from ISO
@@ -129,7 +129,7 @@ $ nix-shell
 Use disko to mount:
 
 ```bash
-$ sudo disko --mode mount ./hosts/m3800/disko.nix
+$ sudo disko --mode mount ./hosts/x1c6/disko.nix
 ```
 
 Enter your system

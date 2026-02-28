@@ -123,10 +123,6 @@
           inherit specialArgs;
           modules = [ ./hosts/framework ];
         };
-        m3800 = inputs.nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/m3800 ];
-        };
         rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./hosts/rpi4-1 ];
