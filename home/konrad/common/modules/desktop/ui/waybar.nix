@@ -7,7 +7,7 @@
 }:
 
 let
-  isLaptop = osConfig.programs.light.enable;
+  isLaptop = osConfig.services.upower.enable;
 
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
@@ -150,8 +150,8 @@ in
             " "
             " "
           ];
-          on-scroll-up = "light -A 1";
-          on-scroll-down = "light -U 1";
+          on-scroll-up = "brightnessctl set +1%";
+          on-scroll-down = "brightnessctl set 1%-";
         };
         battery = {
           format = "{icon} {capacity}%";

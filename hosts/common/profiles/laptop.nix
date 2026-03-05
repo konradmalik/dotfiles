@@ -1,10 +1,11 @@
+{ pkgs, ... }:
 {
   imports = [
     ./shared/workstation.nix
     ../modules/tlp.nix
   ];
 
-  programs.light.enable = true;
+  environment.systemPackages = [ pkgs.brightnessctl ];
   services.thermald.enable = true;
 
   services.logind.settings.Login = {
