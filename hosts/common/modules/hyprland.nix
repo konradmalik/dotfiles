@@ -17,7 +17,7 @@ in
     nemo
     pamixer
     playerctl
-    pavucontrol
+    wiremix
     wl-clipboard
   ];
 

@@ -11,7 +11,7 @@ let
 
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
-  pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
+  wiremix = "${pkgs.wiremix}/bin/wiremix";
   btm = "${pkgs.bottom}/bin/btm";
   cal = "${pkgs.util-linux}/bin/cal";
   impala = "${pkgs.impala}/bin/impala";
@@ -127,7 +127,7 @@ in
               " "
             ];
           };
-          on-click = pavucontrol;
+          on-click = wiremix;
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
         idle_inhibitor = {
