@@ -1,6 +1,6 @@
 { osConfig, lib, ... }:
 let
-  isLaptop = osConfig.programs.light.enable;
+  isLaptop = osConfig.services.upower.enable;
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -16,8 +16,8 @@ in
       ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
     ]
     ++ lib.optionals isLaptop [
-      ",XF86MonBrightnessUp, exec, light -A 10"
-      ",XF86MonBrightnessDown, exec, light -U 10"
+      ",XF86MonBrightnessUp, exec, brightnessctl set +10%"
+      ",XF86MonBrightnessDown, exec, brightnessctl set 10%-"
     ];
     bindl = [
       ",XF86AudioNext,exec,playerctl next"
