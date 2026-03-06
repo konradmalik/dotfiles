@@ -4,10 +4,17 @@
     "permission": {
         "bash": {
             "*": "ask",
+            "awk *": "allow",
+            "cat *": "allow",
+            "echo *": "allow",
             "git *": "allow",
             "git commit *": "ask",
             "grep *": "allow",
-            "ls *": "allow"
+            "head *": "allow",
+            "jq *": "allow",
+            "ls *": "allow",
+            "tail *": "allow",
+            "tr *": "allow"
         },
         "edit": "ask"
     }
