@@ -9,7 +9,7 @@
   imports = [
     ./atuin.nix
     ./bat.nix
-    ./bottom.nix
+    ./btop.nix
     ./direnv.nix
     ./fzf.nix
     ./git

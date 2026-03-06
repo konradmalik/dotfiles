@@ -12,7 +12,6 @@ let
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
   wiremix = "${pkgs.wiremix}/bin/wiremix";
-  btm = "${pkgs.bottom}/bin/btm";
   cal = "${pkgs.util-linux}/bin/cal";
   impala = "${pkgs.impala}/bin/impala";
   bluetui = "${pkgs.bluetui}/bin/bluetui";
@@ -20,7 +19,7 @@ let
   terminal-spawn = cmd: "${lib.getExe pkgs.alacritty} -e /bin/sh -c \"${cmd}\"";
 
   calendar = terminal-spawn "${cal} -3 && sleep infinity";
-  systemMonitor = terminal-spawn btm;
+  systemMonitor = terminal-spawn "${pkgs.btop}/bin/btop";
 
   # Function to simplify making waybar outputs
   jsonOutput =
