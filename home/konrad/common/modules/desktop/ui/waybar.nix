@@ -11,7 +11,6 @@ let
 
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
-  wiremix = "${pkgs.wiremix}/bin/wiremix";
   cal = "${pkgs.util-linux}/bin/cal";
   impala = "${pkgs.impala}/bin/impala";
   bluetui = "${pkgs.bluetui}/bin/bluetui";
@@ -20,6 +19,7 @@ let
 
   calendar = terminal-spawn "${cal} -3 && sleep infinity";
   systemMonitor = terminal-spawn "${pkgs.btop}/bin/btop";
+  wiremix = terminal-spawn "${pkgs.wiremix}/bin/wiremix";
 
   # Function to simplify making waybar outputs
   jsonOutput =
