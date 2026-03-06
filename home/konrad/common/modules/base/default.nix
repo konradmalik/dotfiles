@@ -17,8 +17,8 @@
     ./gpg.nix
     ./k9s.nix
     ./lazygit.nix
-    ./llm-agents
     ./nix-index.nix
+    ./opencode
     ./packages.nix
     ./readline.nix
     ./rtorrent.nix
