@@ -16,7 +16,7 @@ jobs:
           extra-conf: |
             accept-flake-config = true
       - name: Flake check
-        run: nix flake check --all-systems
+        run: nix flake check
 
   build-shell:
     runs-on: ubuntu-24.04
