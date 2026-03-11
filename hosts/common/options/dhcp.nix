@@ -51,8 +51,11 @@ in
         # disable dns
         port = 0;
         dhcp-option = [
-          "option:router,${cfg.defaultGateway}"
-          "option:dns-server,${lib.concatStringsSep "," cfg.dhcp-dns}"
+          # we use numeric as keywords sometimes cause issues (for me as well)
+          # 3 is router
+          "3,${cfg.defaultGateway}"
+          # 6 is dns-server
+          "6,${lib.concatStringsSep "," cfg.dhcp-dns}"
         ];
       };
     };
