@@ -37,6 +37,11 @@
     openFirewall = true;
   };
 
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
+
   konrad.services.hd-idle.enable = true;
 
   fileSystems = {
