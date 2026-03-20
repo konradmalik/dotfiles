@@ -44,11 +44,12 @@
       youtubeSupport = true;
     };
     config = {
-      profile = lib.mkDefault "fast";
       hwdec = "auto";
-      video-sync = "display-resample";
+      loop-playlist = "inf";
+      profile = lib.mkDefault "fast";
       sub-auto = "fuzzy";
       sub-bold = "yes";
+      video-sync = "display-resample";
       ytdl-format = "bestvideo+bestaudio";
     };
     profiles = {
