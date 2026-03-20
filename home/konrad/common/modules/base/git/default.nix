@@ -129,6 +129,7 @@
 
           x = "reset";
           xh = "reset --hard";
+          xhu = "reset --hard @{upstream}";
 
           co = "switch";
           cob = "switch -c";
