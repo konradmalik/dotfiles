@@ -1,9 +1,5 @@
-{ pkgs, ... }:
 {
-  programs.imv = {
-    enable = true;
-    package = pkgs.imv.override { withBackends = [ "libheif" ]; };
-  };
+  programs.imv.enable = true;
   xdg.desktopEntries.imv = {
     name = "Image Viewer";
     exec = "imv %F";
