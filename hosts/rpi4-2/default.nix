@@ -32,11 +32,6 @@
       ];
     };
 
-  services.plex = {
-    enable = false;
-    openFirewall = true;
-  };
-
   services.jellyfin = {
     enable = true;
     openFirewall = true;
