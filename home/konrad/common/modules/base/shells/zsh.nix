@@ -105,13 +105,11 @@ in
     shellAliases = {
       # For a full list of active aliases, run `alias`.
       # to run command that is shadowed by an alias run (for example): \ls or command ls
-      cat = "bat";
       g = "git";
       grep = "grep --color=auto";
       ip = "ip --color";
       mv = "mv -i";
       rm = "rm -i";
-      watch = "viddy";
       ".." = "cd ..";
       "..." = "cd ../..";
     }
