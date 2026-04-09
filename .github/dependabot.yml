@@ -4,3 +4,15 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "nix"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "04:00"
+      timezone: "Europe/Warsaw"
+    groups:
+      all:
+        patterns:
+          - "*"
