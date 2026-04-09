@@ -13,6 +13,6 @@ updates:
       time: "04:00"
       timezone: "Europe/Warsaw"
     groups:
-      all:
+      flake:
         patterns:
           - "*"
