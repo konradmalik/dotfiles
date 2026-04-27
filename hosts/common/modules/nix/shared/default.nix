@@ -15,15 +15,6 @@
         custom =
           ((import ../../../../../pkgs/scripts) final prev)
           // ((import ../../../../../pkgs/fonts) final prev);
-        # FIXME after https://github.com/NixOS/nixpkgs/issues/513543
-        zsh = prev.zsh.overrideAttrs (
-          old:
-          prev.lib.optionalAttrs prev.stdenv.isDarwin {
-            preConfigure = (old.preConfigure or "") + ''
-              export zsh_cv_sys_sigsuspend=yes
-            '';
-          }
-        );
       })
     ];
     config = {
