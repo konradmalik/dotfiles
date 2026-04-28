@@ -75,11 +75,12 @@ in
           "/home/*/.local/share"
           "/home/*/.local/state"
           "/home/*/.m2"
-          "/home/*/.mozilla/firefox/*/storage"
+          "/home/*/.config/mozzilla/firefox/*/storage"
           "/home/*/.npm"
           "/home/*/.nuget"
           "/home/*/.opam"
           "/home/*/.pnpm"
+          "/home/*/.terraform"
           "/home/*/Downloads"
           "/home/*/go"
         ];
