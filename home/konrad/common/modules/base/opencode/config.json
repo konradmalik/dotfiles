@@ -16,6 +16,9 @@
             "tail *": "allow",
             "tr *": "allow"
         },
-        "edit": "ask"
+        "edit": "ask",
+        "read": {
+            "*.env*": "deny"
+        }
     }
 }

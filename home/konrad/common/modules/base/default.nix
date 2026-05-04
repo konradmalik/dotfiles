@@ -10,6 +10,7 @@
     ./atuin.nix
     ./bat.nix
     ./btop.nix
+    ./claude
     ./direnv.nix
     ./fzf.nix
     ./git
