@@ -1,6 +1,38 @@
 {
     "$schema": "https://json.schemastore.org/claude-code-settings.json",
+    "attribution": { "commit": "", "pr": "" },
+    "cleanupPeriodDays": 14,
     "permissions": {
-        "deny": ["Read(./.env)", "Read(./.env.*)", "Read(*.pem)", "Read(*.key)", "Read(~/.ssh/**)"]
+        "disableBypassPermissionsMode": "disable",
+        "deny": [
+            "Read(*.key)",
+            "Read(*.pem)",
+            "Read(./**/*.key)",
+            "Read(./**/*.p12)",
+            "Read(./**/*.pem)",
+            "Read(./**/*.pfx)",
+            "Read(./**/.env)",
+            "Read(./**/.env.*)",
+            "Read(./**/credentials/**)",
+            "Read(./**/secrets/**)",
+            "Read(./.env)",
+            "Read(./.env.*)",
+            "Read(~/.aws/**)",
+            "Read(~/.azure/**)",
+            "Read(~/.config/gcloud/**)",
+            "Read(~/.config/gh/hosts.yml)",
+            "Read(~/.config/op/**)",
+            "Read(~/.config/sops/**)",
+            "Read(~/.docker/config.json)",
+            "Read(~/.gnupg/**)",
+            "Read(~/.kube/config)",
+            "Read(~/.netrc)",
+            "Read(~/.password-store/**)",
+            "Read(~/.pgpass)",
+            "Read(~/.ssh/**)",
+            "Bash(env)",
+            "Bash(printenv)",
+            "Bash(printenv *)"
+        ]
     }
 }
