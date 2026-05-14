@@ -14,7 +14,6 @@
           [
             "x86_64-linux"
             "aarch64-linux"
-            "x86_64-darwin"
             "aarch64-darwin"
           ]
           (
@@ -28,13 +27,12 @@
           );
     in
     {
-      devShells = forAllSystems (
-        pkgs:
-        pkgs.mkShell {
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
           name = "Shell for this project";
           packages = [ pkgs.hello ];
-        }
-      );
+        };
+      });
 
       formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
     };
