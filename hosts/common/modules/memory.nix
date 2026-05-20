@@ -1,7 +1,4 @@
 {
   boot.zswap.enable = true;
-  services.earlyoom = {
-    enable = true;
-    freeMemThreshold = 10;
-  };
+  services.earlyoom.enable = true;
 }
