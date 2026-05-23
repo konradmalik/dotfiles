@@ -1,24 +1,32 @@
 {
   wayland.windowManager.hyprland.settings = {
-    input = {
-      kb_layout = "us,pl";
-      # left-to-right:
-      # use both shofts together to toggle keyboard layout
-      # capslock acts as another ctrl
-      # left alt allows to write special characters just like right alt
-      kb_options = "grp:shifts_toggle,ctrl:nocaps";
+    config = {
+      input = {
+        kb_layout = "us,pl";
+        # left-to-right:
+        # use both shifts together to toggle keyboard layout
+        # capslock acts as another ctrl
+        # left alt allows to write special characters just like right alt
+        kb_options = "grp:shifts_toggle,ctrl:nocaps";
 
-      natural_scroll = true;
-
-      touchpad = {
-        disable_while_typing = true;
         natural_scroll = true;
-        tap-to-click = true;
+
+        touchpad = {
+          disable_while_typing = true;
+          natural_scroll = true;
+          tap-to-click = true;
+        };
       };
+
+      cursor.inactive_timeout = 5;
     };
 
-    gesture = [ "3, horizontal, workspace" ];
-
-    cursor.inactive_timeout = 5;
+    gesture = [
+      {
+        fingers = 3;
+        direction = "horizontal";
+        action = "workspace";
+      }
+    ];
   };
 }

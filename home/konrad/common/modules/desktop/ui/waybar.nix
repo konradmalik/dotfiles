@@ -45,7 +45,14 @@ let
     ''}/bin/waybar-${name}";
 in
 {
-  wayland.windowManager.hyprland.settings.exec-once = [ "waybar" ];
+  wayland.windowManager.hyprland.settings.on = [
+    {
+      _args = [
+        "hyprland.start"
+        (lib.generators.mkLuaInline ''function() hl.exec_cmd("waybar") end'')
+      ];
+    }
+  ];
   stylix.targets.waybar.addCss = false;
 
   programs.waybar = {

@@ -20,10 +20,16 @@
   services.hyprpolkitagent.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
-    configType = "hyprlang";
     settings = {
       # fallback rule for any monitor not matching other rules
-      monitor = [ ", preferred, auto, 1" ];
+      monitor = [
+        {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = 1;
+        }
+      ];
     };
   };
 }

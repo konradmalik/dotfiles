@@ -1,133 +1,118 @@
 { osConfig, lib, ... }:
 let
   isLaptop = osConfig.services.upower.enable;
+
+  inline = lib.generators.mkLuaInline;
+  mkBind = keys: disp: { _args = [ keys (inline disp) ]; };
+  mkBindF = keys: disp: flags: { _args = [ keys (inline disp) flags ]; };
+
+  mouseFlag = { mouse = true; };
+  lockedFlag = { locked = true; };
+  audioFlag = {
+    repeating = true;
+    locked = true;
+  };
+
+  exec = cmd: ''hl.dsp.exec_cmd("${cmd}")'';
+
+  workspaceBinds = lib.concatMap (n: [
+    (mkBind "SUPER + ${toString n}" ''hl.dsp.focus({ workspace = ${toString n} })'')
+    (mkBind "SUPER + SHIFT + ${toString n}" ''hl.dsp.window.move({ workspace = ${toString n}, follow = false })'')
+  ]) [ 1 2 3 4 5 6 7 8 9 ];
+
+  # workspace 10 uses key "0"
+  workspace10Binds = [
+    (mkBind "SUPER + 0" ''hl.dsp.focus({ workspace = 10 })'')
+    (mkBind "SUPER + SHIFT + 0" ''hl.dsp.window.move({ workspace = 10, follow = false })'')
+  ];
+
+  directionalBinds = lib.concatMap (
+    { key, dir }:
+    [
+      (mkBind "SUPER + ${key}" ''hl.dsp.focus({ direction = "${dir}" })'')
+      (mkBind "SUPER + SHIFT + ${key}" ''hl.dsp.window.move({ direction = "${dir}" })'')
+      (mkBind "SUPER + CTRL + ${key}" ''hl.dsp.focus({ monitor = "${dir}" })'')
+      (mkBind "SUPER + CTRL + SHIFT + ${key}" ''hl.dsp.window.move({ monitor = "${dir}" })'')
+      (mkBind "SUPER + ALT + ${key}" ''hl.dsp.workspace.move({ monitor = "${dir}" })'')
+    ]
+  ) [
+    { key = "left"; dir = "l"; }
+    { key = "right"; dir = "r"; }
+    { key = "up"; dir = "u"; }
+    { key = "down"; dir = "d"; }
+    { key = "h"; dir = "l"; }
+    { key = "l"; dir = "r"; }
+    { key = "k"; dir = "u"; }
+    { key = "j"; dir = "d"; }
+  ];
 in
 {
-  wayland.windowManager.hyprland.settings = {
-    # Mouse bindings
-    bindm = [
-      "SUPER,mouse:272,movewindow"
-      "SUPER,mouse:273,resizewindow"
-    ];
-    bindel = [
-      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-    ]
-    ++ lib.optionals isLaptop [
-      ",XF86MonBrightnessUp, exec, brightnessctl set +10%"
-      ",XF86MonBrightnessDown, exec, brightnessctl set 10%-"
-    ];
-    bindl = [
-      ",XF86AudioNext,exec,playerctl next"
-      ",XF86AudioPause,exec,playerctl play-pause"
-      ",XF86AudioPlay,exec,playerctl play-pause"
-      ",XF86AudioPrev,exec,playerctl previous"
-      ",XF86AudioStop,exec,playerctl stop"
-    ];
-    bind = [
-      # Keyboard alt behavior
-      "SUPER,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch"
-      "SUPERSHIFT,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps"
+  wayland.windowManager.hyprland.settings.bind = [
+    # Mouse
+    (mkBindF "SUPER + mouse:272" "hl.dsp.window.drag()" mouseFlag)
+    (mkBindF "SUPER + mouse:273" "hl.dsp.window.resize()" mouseFlag)
 
-      # Program bindings
-      "SUPER,return,exec,$TERMINAL"
-      "SUPER,w,exec,makoctl dismiss"
-      "SUPER,b,exec,$BROWSER"
-      "SUPER,space,exec,fuzzel"
+    # Audio (repeating + locked so it works during long-press and on lock screen)
+    (mkBindF "XF86AudioRaiseVolume" (exec "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+") audioFlag)
+    (mkBindF "XF86AudioLowerVolume" (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-") audioFlag)
+    (mkBindF "XF86AudioMute" (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") audioFlag)
+    (mkBindF "XF86AudioMicMute" (exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle") audioFlag)
 
-      # Screenshots
-      # NOTE: killall is useful for occasional freezes of hyprpicker
-      # just try to screenshot again and it should unfreeze
-      "SUPER,p,exec,killall hyprpicker ; hyprshot --freeze --mode region --output /tmp/screenshots"
-      "SUPERSHIFT,p,exec,killall hyprpicker ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"
+    # Media (locked so it works on lock screen)
+    (mkBindF "XF86AudioNext" (exec "playerctl next") lockedFlag)
+    (mkBindF "XF86AudioPause" (exec "playerctl play-pause") lockedFlag)
+    (mkBindF "XF86AudioPlay" (exec "playerctl play-pause") lockedFlag)
+    (mkBindF "XF86AudioPrev" (exec "playerctl previous") lockedFlag)
+    (mkBindF "XF86AudioStop" (exec "playerctl stop") lockedFlag)
 
-      # Window manager controls
-      "SUPERSHIFT,q,killactive"
-      "SUPERSHIFT,e,exit"
-      "SUPER,f,fullscreen,1"
-      "SUPERSHIFT,f,fullscreen,0"
-      "SUPERSHIFT,space,togglefloating"
-      "SUPER,minus,layoutmsg,splitratio,-0.25"
-      "SUPERSHIFT,minus,layoutmsg,splitratio,-0.3333333"
-      "SUPER,equal,layoutmsg,splitratio,0.25"
-      "SUPERSHIFT,equal,layoutmsg,splitratio,0.3333333"
+    # Keyboard alt behavior
+    (mkBind "SUPER + c" (exec "hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch"))
+    (mkBind "SUPER + SHIFT + c" (exec "hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps"))
 
-      # dwindle
-      "SUPER,s,pseudo"
-      "SUPER,g,togglegroup"
-      "SUPER,apostrophe,changegroupactive,f"
-      "SUPERSHIFT,apostrophe,changegroupactive,b"
+    # Program bindings
+    (mkBind "SUPER + return" (exec "$TERMINAL"))
+    (mkBind "SUPER + w" (exec "makoctl dismiss"))
+    (mkBind "SUPER + b" (exec "$BROWSER"))
+    (mkBind "SUPER + space" (exec "fuzzel"))
 
-      # rest
-      "SUPER,left,movefocus,l"
-      "SUPER,right,movefocus,r"
-      "SUPER,up,movefocus,u"
-      "SUPER,down,movefocus,d"
-      "SUPER,h,movefocus,l"
-      "SUPER,l,movefocus,r"
-      "SUPER,k,movefocus,u"
-      "SUPER,j,movefocus,d"
-      "SUPERSHIFT,left,movewindow,l"
-      "SUPERSHIFT,right,movewindow,r"
-      "SUPERSHIFT,up,movewindow,u"
-      "SUPERSHIFT,down,movewindow,d"
-      "SUPERSHIFT,h,movewindow,l"
-      "SUPERSHIFT,l,movewindow,r"
-      "SUPERSHIFT,k,movewindow,u"
-      "SUPERSHIFT,j,movewindow,d"
-      "SUPERSHIFT,j,movewindow,d"
-      "SUPER,tab,cyclenext"
-      "SUPERSHIFT,tab,cyclenext,prev"
-      "SUPERCONTROL,tab,swapnext"
-      "SUPERCONTROLSHIFT,tab,swapnext,prev"
-      "SUPERCONTROL,left,focusmonitor,l"
-      "SUPERCONTROL,right,focusmonitor,r"
-      "SUPERCONTROL,up,focusmonitor,u"
-      "SUPERCONTROL,down,focusmonitor,d"
-      "SUPERCONTROL,h,focusmonitor,l"
-      "SUPERCONTROL,l,focusmonitor,r"
-      "SUPERCONTROL,k,focusmonitor,u"
-      "SUPERCONTROL,j,focusmonitor,d"
-      "SUPERCONTROLSHIFT,left,movewindow,mon:l"
-      "SUPERCONTROLSHIFT,right,movewindow,mon:r"
-      "SUPERCONTROLSHIFT,up,movewindow,mon:u"
-      "SUPERCONTROLSHIFT,down,movewindow,mon:d"
-      "SUPERCONTROLSHIFT,h,movewindow,mon:l"
-      "SUPERCONTROLSHIFT,l,movewindow,mon:r"
-      "SUPERCONTROLSHIFT,k,movewindow,mon:u"
-      "SUPERCONTROLSHIFT,j,movewindow,mon:d"
-      "SUPERALT,left,movecurrentworkspacetomonitor,l"
-      "SUPERALT,right,movecurrentworkspacetomonitor,r"
-      "SUPERALT,up,movecurrentworkspacetomonitor,u"
-      "SUPERALT,down,movecurrentworkspacetomonitor,d"
-      "SUPERALT,h,movecurrentworkspacetomonitor,l"
-      "SUPERALT,l,movecurrentworkspacetomonitor,r"
-      "SUPERALT,k,movecurrentworkspacetomonitor,u"
-      "SUPERALT,j,movecurrentworkspacetomonitor,d"
-      "SUPER,u,togglespecialworkspace"
-      "SUPERSHIFT,u,movetoworkspace,special"
-      "SUPER,1,workspace,01"
-      "SUPER,2,workspace,02"
-      "SUPER,3,workspace,03"
-      "SUPER,4,workspace,04"
-      "SUPER,5,workspace,05"
-      "SUPER,6,workspace,06"
-      "SUPER,7,workspace,07"
-      "SUPER,8,workspace,08"
-      "SUPER,9,workspace,09"
-      "SUPER,0,workspace,10"
-      "SUPERSHIFT,1,movetoworkspacesilent,01"
-      "SUPERSHIFT,2,movetoworkspacesilent,02"
-      "SUPERSHIFT,3,movetoworkspacesilent,03"
-      "SUPERSHIFT,4,movetoworkspacesilent,04"
-      "SUPERSHIFT,5,movetoworkspacesilent,05"
-      "SUPERSHIFT,6,movetoworkspacesilent,06"
-      "SUPERSHIFT,7,movetoworkspacesilent,07"
-      "SUPERSHIFT,8,movetoworkspacesilent,08"
-      "SUPERSHIFT,9,movetoworkspacesilent,09"
-      "SUPERSHIFT,0,movetoworkspacesilent,10"
-    ];
-  };
+    # Screenshots
+    # NOTE: killall is useful for occasional freezes of hyprpicker
+    # just try to screenshot again and it should unfreeze
+    (mkBind "SUPER + p" (exec "killall hyprpicker ; hyprshot --freeze --mode region --output /tmp/screenshots"))
+    (mkBind "SUPER + SHIFT + p" (exec "killall hyprpicker ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"))
+
+    # Window manager controls
+    (mkBind "SUPER + SHIFT + q" "hl.dsp.window.close()")
+    (mkBind "SUPER + SHIFT + e" "hl.dsp.exit()")
+    (mkBind "SUPER + f" ''hl.dsp.window.fullscreen({ mode = "maximized" })'')
+    (mkBind "SUPER + SHIFT + f" ''hl.dsp.window.fullscreen({ mode = "fullscreen" })'')
+    (mkBind "SUPER + SHIFT + space" "hl.dsp.window.float()")
+    (mkBind "SUPER + minus" ''hl.dsp.layout("splitratio -0.25")'')
+    (mkBind "SUPER + SHIFT + minus" ''hl.dsp.layout("splitratio -0.3333333")'')
+    (mkBind "SUPER + equal" ''hl.dsp.layout("splitratio 0.25")'')
+    (mkBind "SUPER + SHIFT + equal" ''hl.dsp.layout("splitratio 0.3333333")'')
+
+    # dwindle
+    (mkBind "SUPER + s" "hl.dsp.window.pseudo()")
+    (mkBind "SUPER + g" "hl.dsp.group.toggle()")
+    (mkBind "SUPER + apostrophe" "hl.dsp.group.next()")
+    (mkBind "SUPER + SHIFT + apostrophe" "hl.dsp.group.prev()")
+
+    # Window/workspace/monitor cycling
+    (mkBind "SUPER + tab" "hl.dsp.window.cycle_next()")
+    (mkBind "SUPER + SHIFT + tab" "hl.dsp.window.cycle_next({ next = false })")
+    (mkBind "SUPER + CTRL + tab" "hl.dsp.window.swap({ next = true })")
+    (mkBind "SUPER + CTRL + SHIFT + tab" "hl.dsp.window.swap({ prev = true })")
+
+    # Special workspace
+    (mkBind "SUPER + u" ''hl.dsp.workspace.toggle_special("")'')
+    (mkBind "SUPER + SHIFT + u" ''hl.dsp.window.move({ workspace = "special" })'')
+  ]
+  ++ directionalBinds
+  ++ workspaceBinds
+  ++ workspace10Binds
+  ++ lib.optionals isLaptop [
+    (mkBindF "XF86MonBrightnessUp" (exec "brightnessctl set +10%") audioFlag)
+    (mkBindF "XF86MonBrightnessDown" (exec "brightnessctl set 10%-") audioFlag)
+  ];
 }

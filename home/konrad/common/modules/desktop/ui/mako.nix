@@ -1,9 +1,16 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   icons = config.stylix.icons;
 in
 {
-  wayland.windowManager.hyprland.settings.exec-once = [ "mako" ];
+  wayland.windowManager.hyprland.settings.on = [
+    {
+      _args = [
+        "hyprland.start"
+        (lib.generators.mkLuaInline ''function() hl.exec_cmd("mako") end'')
+      ];
+    }
+  ];
 
   services.mako = {
     enable = true;
