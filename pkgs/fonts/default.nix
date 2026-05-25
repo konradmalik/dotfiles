@@ -1,12 +1,10 @@
 final: prev:
 
 let
-  inherit (final) pkgs;
-
-  mkNerdFont = pkgs.callPackage ./mkNerdFont.nix { };
+  mkNerdFont = prev.callPackage ./mkNerdFont.nix { };
 in
 {
   fonts = {
-    iosemka = mkNerdFont (pkgs.callPackage ./iosemka.nix { });
+    iosemka = mkNerdFont (prev.callPackage ./iosemka.nix { });
   };
 }
