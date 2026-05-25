@@ -9,8 +9,7 @@
     overlays = [
       (final: prev: {
         stable = import inputs.nixpkgs-stable {
-          system = final.system;
-          config = final.config;
+          system = prev.system;
         };
         custom =
           ((import ../../../../../pkgs/scripts) final prev)
