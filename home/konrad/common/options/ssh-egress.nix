@@ -13,46 +13,61 @@ in
       programs.ssh = {
         enable = true;
         enableDefaultConfig = false;
-        extraConfig = ''
-          IgnoreUnknown UseKeychain
-          UseKeychain yes
-        '';
         includes = [ "config.d/*" ];
-        matchBlocks = {
-          "*" = {
-            forwardAgent = false;
-            addKeysToAgent = "yes";
-            compression = true;
-            serverAliveInterval = 15;
-            serverAliveCountMax = 6;
-            hashKnownHosts = false;
-            userKnownHostsFile = "~/.ssh/known_hosts";
-            controlMaster = "auto";
-            controlPath = "/tmp/%r@%h:%p";
-            controlPersist = "1m";
+        settings = {
+
+          "Host framework" = {
+            HostName = "100.83.43.115";
           };
-          git = {
-            host = "github.com gitlab.com bitbucket.org";
-            user = "git";
-            identityFile = "${config.home.homeDirectory}/.ssh/personal";
-            identitiesOnly = true;
+
+          "Host m4" = {
+            HostName = "100.77.207.57";
           };
-          tailscale = {
-            host = "framework m4 rpi4-1 rpi4-2 x1c6";
-            user = "${config.home.username}";
-            forwardAgent = true;
-            identityFile = "${config.home.homeDirectory}/.ssh/personal";
-            identitiesOnly = true;
+
+          "Host rpi4-1" = {
+            HostName = "100.99.159.110";
           };
-          framework = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.83.43.115"; };
-          m4 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.77.207.57"; };
-          rpi4-1 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.99.159.110"; };
-          rpi4-2 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.78.182.5"; };
-          x1c6 = hm.dag.entryAfter [ "tailscale" ] { hostname = "100.111.137.125"; };
-          work = {
-            host = "*.cerebredev.com";
-            identityFile = "${config.home.homeDirectory}/.ssh/cerebre";
-            identitiesOnly = true;
+
+          "Host rpi4-2" = {
+            HostName = "100.78.182.5";
+          };
+
+          "Host x1c6" = {
+            HostName = "100.111.137.125";
+          };
+
+          "Host framework m4 rpi4-1 rpi4-2 x1c6" = {
+            ForwardAgent = "yes";
+            IdentitiesOnly = "yes";
+            User = "${config.home.username}";
+            IdentityFile = "${config.home.homeDirectory}/.ssh/personal";
+          };
+
+          "Host github.com gitlab.com bitbucket.org" = {
+            IdentitiesOnly = "yes";
+            User = "git";
+            IdentityFile = "${config.home.homeDirectory}/.ssh/personal";
+          };
+
+          "Host *.cerebredev.com" = {
+            IdentitiesOnly = "yes";
+            IdentityFile = "${config.home.homeDirectory}/.ssh/cerebre";
+          };
+
+          "Host *" = {
+            ForwardAgent = "no";
+            ServerAliveInterval = 15;
+            ServerAliveCountMax = 6;
+            Compression = "yes";
+            AddKeysToAgent = "yes";
+            HashKnownHosts = "no";
+            UserKnownHostsFile = "~/.ssh/known_hosts";
+            ControlMaster = "auto";
+            ControlPath = "/tmp/%r@%h:%p";
+            ControlPersist = "1m";
+
+            IgnoreUnknown = "UseKeychain";
+            UseKeychain = "yes";
           };
         };
       };
