@@ -42,5 +42,5 @@
     pathsToLink = [ "/share/zsh" ];
   };
 
-  system.stateVersion = lib.mkDefault "26.05";
+  system.stateVersion = lib.mkDefault "26.11";
 }
