@@ -2,7 +2,7 @@
   description = "NixOS and nix-darwin systems and tools by konradmalik";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager = {
       url = "github:nix-community/home-manager";
