@@ -10,33 +10,8 @@ let
   ) allHmUsers;
 in
 {
-  environment.systemPackages = with pkgs; [
-    hyprshot
-    impala
-    libnotify
-    nemo
-    pamixer
-    playerctl
-    wiremix
-    wl-clipboard
-  ];
+  programs.hyprland.enable = anyHyprlandEnabled;
 
-  programs = {
-    localsend.enable = true;
-    hyprland.enable = anyHyprlandEnabled;
-  };
-
-  # gtk portal needed to make gtk apps happy
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  # Initial login experience
-  services.greetd = {
-    enable = true;
-    settings.default_session.command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
-  };
-
-  hardware.graphics.enable = true;
-
-  # hint electron apps to use wayland:
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  services.greetd.settings.default_session.command =
+    "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
 }

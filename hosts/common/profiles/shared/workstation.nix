@@ -3,6 +3,7 @@
   imports = [
     ../../modules/hyprland.nix
     ../../modules/fontconfig.nix
+    ../../modules/wayland.nix
 
     ../../systems/nixos.nix
   ];
@@ -30,6 +31,8 @@
     HandlePowerKeyLongPress = "poweroff";
     # NOTE: idle does not seem to work when using hypridle, so define it there instead
   };
+
+  programs.localsend.enable = true;
 
   # start ssh-agent per user to remember ssh private keys
   programs.ssh = {

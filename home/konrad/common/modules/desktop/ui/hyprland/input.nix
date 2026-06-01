@@ -3,7 +3,7 @@
     input = {
       kb_layout = "us,pl";
       # left-to-right:
-      # use both shofts together to toggle keyboard layout
+      # use both shifts together to toggle keyboard layout
       # capslock acts as another ctrl
       # left alt allows to write special characters just like right alt
       kb_options = "grp:shifts_toggle,ctrl:nocaps";

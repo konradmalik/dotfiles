@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib;
@@ -22,5 +23,10 @@ in
       alsa.enable = true;
       pulse.enable = true;
     };
+
+    environment.systemPackages = with pkgs; [
+      playerctl
+      wiremix
+    ];
   };
 }
