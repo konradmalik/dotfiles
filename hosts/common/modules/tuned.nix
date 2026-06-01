@@ -1,5 +1,5 @@
 {
-  services.hyprpaper = {
+  services.tuned = {
     enable = true;
   };
 }

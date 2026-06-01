@@ -1,6 +1,12 @@
-{ osConfig, lib, ... }:
+{
+  osConfig,
+  lib,
+  ...
+}:
 let
   isLaptop = osConfig.services.upower.enable;
+
+  noctalia = cmd: "noctalia-shell ipc call ${cmd}";
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -10,10 +16,10 @@ in
       "SUPER,mouse:273,resizewindow"
     ];
     bindel = [
-      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ",XF86AudioRaiseVolume, exec, ${noctalia "volume increase"}"
+      ",XF86AudioLowerVolume, exec, ${noctalia "volume decrease"}"
+      ",XF86AudioMute, exec, ${noctalia "volume muteOutput"}"
+      ",XF86AudioMicMute, exec, ${noctalia "volume muteInput"}"
     ]
     ++ lib.optionals isLaptop [
       ",XF86MonBrightnessUp, exec, brightnessctl set +10%"
@@ -35,7 +41,7 @@ in
       "SUPER,return,exec,$TERMINAL"
       "SUPER,w,exec,makoctl dismiss"
       "SUPER,b,exec,$BROWSER"
-      "SUPER,space,exec,fuzzel"
+      "SUPER,space,exec,${noctalia "launcher toggle"}"
 
       # Screenshots
       # NOTE: killall is useful for occasional freezes of hyprpicker

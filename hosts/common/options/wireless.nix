@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 with lib;
@@ -14,22 +13,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      impala
-    ];
-
     services.resolved.enable = !config.services.blocky.enable;
     networking = {
-      wireless.iwd = {
-        enable = true;
-        settings = {
-          Settings.AutoConnect = true;
-
-          Network = {
-            EnableIPv6 = false;
-          };
-        };
-      };
+      networkmanager.enable = true;
       nameservers = [
         "1.1.1.1"
         "1.0.0.1"

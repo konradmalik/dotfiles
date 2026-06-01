@@ -2,7 +2,7 @@
 {
   imports = [
     ./shared/workstation.nix
-    ../modules/tlp.nix
+    ../modules/tuned.nix
   ];
 
   environment.systemPackages = [ pkgs.brightnessctl ];
