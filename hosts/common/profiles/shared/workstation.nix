@@ -1,9 +1,9 @@
 { pkgs, ... }:
 {
   imports = [
+    ../../modules/dm.nix
     ../../modules/hyprland.nix
     ../../modules/fontconfig.nix
-    ../../modules/wayland.nix
 
     ../../systems/nixos.nix
   ];

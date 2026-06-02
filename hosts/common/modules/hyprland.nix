@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }:
 let
@@ -12,6 +11,5 @@ in
 {
   programs.hyprland.enable = anyHyprlandEnabled;
 
-  services.greetd.settings.default_session.command =
-    "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
