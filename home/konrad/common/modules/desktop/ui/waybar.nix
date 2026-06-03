@@ -78,6 +78,9 @@ in
           "bluetooth"
           "network"
         ]
+        ++ (lib.optionals osConfig.services.tlp.pd.enable [
+          "power-profiles-daemon"
+        ])
         ++ (lib.optionals isLaptop [ "battery" ])
         ++ [
           "hyprland/language"
@@ -191,6 +194,17 @@ in
             good = 50;
             warning = 30;
             critical = 15;
+          };
+        };
+        power-profiles-daemon = {
+          format = "{icon}";
+          tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+          tooltip = true;
+          format-icons = {
+            default = "󰾅 ";
+            performance = "󰓅 ";
+            balanced = "󰾅 ";
+            power-saver = "󰌪 ";
           };
         };
         network = {

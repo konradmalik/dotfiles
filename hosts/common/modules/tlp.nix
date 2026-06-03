@@ -1,6 +1,7 @@
 {
   services.tlp = {
     enable = true;
+    pd.enable = true;
 
     settings = {
       CPU_BOOST_ON_AC = 1;
