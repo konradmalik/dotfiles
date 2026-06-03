@@ -8,7 +8,7 @@
     enable = true;
     autoEnable = true;
 
-    image = lib.mkDefault ../../../../files/wallpapers/nature-landscape-forest-path-wallpaper.jpg;
+    image = lib.mkDefault ../../../../files/wallpapers/nord1.png;
 
     base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
     polarity = "dark";
