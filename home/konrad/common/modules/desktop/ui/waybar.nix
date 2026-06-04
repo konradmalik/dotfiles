@@ -1,6 +1,5 @@
 {
   osConfig,
-  config,
   pkgs,
   lib,
   ...
@@ -84,7 +83,6 @@ in
         ++ (lib.optionals isLaptop [ "battery" ])
         ++ [
           "hyprland/language"
-          "user"
           "custom/powermenu"
         ];
 
@@ -242,14 +240,6 @@ in
           interval = 60;
           on-click = "nwg-bar -t hyprland.json";
         };
-        user = {
-          format = "{user}";
-          icon = true;
-          avatar = "${config.home.homeDirectory}/.face";
-          tooltip-format = "{}";
-          exec = "groups";
-          interval = 60;
-        };
         "custom/hyprsunset" = {
           interval = 5;
           return-type = "json";
@@ -361,12 +351,6 @@ in
             color: @base00;
             padding-left: 10px;
             padding-right: 5px;
-            border-radius: 5px;
-          }
-          #user {
-            background-color: @base0D;
-            color: @base00;
-            padding: 0 5px;
             border-radius: 5px;
           }
           #privacy {
