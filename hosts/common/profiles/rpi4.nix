@@ -1,6 +1,6 @@
 {
   imports = [
-    ../profiles/server.nix
+    ./server.nix
 
     ../modules/monitoring/agents.nix
   ];

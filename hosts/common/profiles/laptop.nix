@@ -1,8 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./shared/workstation.nix
-    ../modules/tlp.nix
+    ./desktop.nix
   ];
 
   environment.systemPackages = [ pkgs.brightnessctl ];
@@ -11,6 +10,16 @@
   services.logind.settings.Login = {
     HandleLidSwitch = "suspend";
     HandleLidSwitchDocked = "ignore";
+  };
+
+  services.tlp = {
+    enable = true;
+    pd.enable = true;
+
+    settings = {
+      CPU_BOOST_ON_AC = 1;
+      CPU_BOOST_ON_BAT = 0;
+    };
   };
 
   services.upower = {
