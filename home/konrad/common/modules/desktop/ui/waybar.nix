@@ -225,6 +225,10 @@ in
             Down: {bandwidthDownBits}'';
           on-click = terminal-spawn impala;
         };
+        "hyprland/language" = {
+          format = "{short}";
+          on-click = "hyprctl switchxkblayout all next";
+        };
         "custom/menu" = {
           return-type = "json";
           exec = jsonOutput "menu" {
