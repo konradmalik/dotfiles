@@ -34,6 +34,8 @@
       autoUpdate = true;
       upgrade = true;
       cleanup = "zap";
+      # FIXME remove after https://github.com/nix-darwin/nix-darwin/issues/1787
+      extraFlags = [ "--force-cleanup" ];
     };
     casks = [
       "alacritty"
