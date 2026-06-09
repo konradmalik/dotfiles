@@ -6,7 +6,7 @@ cmd='echo "Selected session: $(basename {} | tr . _)\nActive sessions:\n$(tmux l
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd . --type d --min-depth 1 --max-depth 3 ~/Code | fzf-tmux -p 80% -- --preview="$cmd")
+    selected=$(fd . --type d --min-depth 3 --max-depth 3 ~/Code | fzf-tmux -p 80% -- --preview="$cmd")
 fi
 
 if [[ -z $selected ]]; then
@@ -18,8 +18,9 @@ selected_name=$(basename "$selected" | tr . _)
 
 if ! tmux has-session -t="$selected_name" 2>/dev/null; then
     # if not such session, create
-    # use $() to avoid SHLVL increase
-    $(tmux new-session -ds "$selected_name" -c "$selected")
+    # (decrement SHLVL so the new session's shell lands at the same level
+    # as a plain tmux session instead of one higher)
+    SHLVL=$((SHLVL - 1)) tmux new-session -ds "$selected_name" -c "$selected"
 
     # try to execute script if exists
     if [ -f "$selected/$tmux_script_name" ]; then
