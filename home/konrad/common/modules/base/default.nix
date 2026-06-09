@@ -18,7 +18,6 @@
     ./gpg.nix
     ./k9s.nix
     ./lazygit.nix
-    ./nix-index.nix
     ./opencode
     ./packages.nix
     ./readline.nix
