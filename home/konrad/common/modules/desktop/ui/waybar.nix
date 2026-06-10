@@ -225,6 +225,13 @@ in
             Down: {bandwidthDownBits}'';
           on-click = terminal-spawn impala;
         };
+        "hyprland/workspaces" = {
+          format = "{id}";
+          cursor = "pointer";
+          on-click = "activate";
+          on-scroll-up = "hyprctl dispatch workspace e+1";
+          on-scroll-down = "hyprctl dispatch workspace e-1";
+        };
         "hyprland/language" = {
           format = "{short}";
           on-click = "hyprctl switchxkblayout all next";
