@@ -58,7 +58,6 @@ in
         margin-right = 10;
         modules-left = [
           "custom/menu"
-          "idle_inhibitor"
           "hyprland/workspaces"
           "custom/currentplayer"
           "custom/player"
@@ -83,6 +82,7 @@ in
         ++ (lib.optionals isLaptop [ "battery" ])
         ++ [
           "hyprland/language"
+          "idle_inhibitor"
           "custom/powermenu"
         ];
 
@@ -317,58 +317,6 @@ in
         };
       };
     };
-    # Cheatsheet:
-    # x -> all sides
-    # x y -> vertical, horizontal
-    # x y z -> top, horizontal, bottom
-    # w x y z -> top, right, bottom, left
-    style =
-      lib.mkAfter
-        # css
-        ''
-          * {
-            padding: 0 8px;
-          }
-          .modules-right {
-            margin-right: -16px;
-          }
-          .modules-left {
-            margin-left: -16px;
-          }
-          window#waybar {
-            border-radius: 5px;
-          }
-          #workspaces button.active {
-            background-color: @base09;
-            color: @base00;
-          }
-          #clock {
-            background-color: @base0D;
-            color: @base00;
-            padding: 0 16px;
-            margin: 0 16px;
-            border-radius: 5px;
-          }
-          #custom-menu {
-            background-color: @base0D;
-            color: @base00;
-            padding-left: 15px;
-            padding-right: 10px;
-            border-radius: 5px;
-            margin-right: 10px;
-          }
-          #custom-powermenu {
-            background-color: @base08;
-            color: @base00;
-            padding-left: 10px;
-            padding-right: 5px;
-            border-radius: 5px;
-          }
-          #privacy {
-            background-color: @base08;
-            color: @base00;
-            border-radius: 5px;
-          }
-        '';
+    style = lib.mkAfter (builtins.readFile ./waybar.css);
   };
 }

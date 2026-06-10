@@ -12,7 +12,7 @@
     ./hyprpaper.nix
     ./hyprsunset.nix
     ./nwg-bar.nix
-    ./waybar.nix
+    ./waybar
   ];
 
   home.packages = with pkgs; [
