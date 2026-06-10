@@ -10,13 +10,11 @@ let
 
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
-  cal = "${pkgs.util-linux}/bin/cal";
   impala = "${pkgs.impala}/bin/impala";
   bluetui = "${pkgs.bluetui}/bin/bluetui";
 
   terminal-spawn = cmd: "${lib.getExe pkgs.alacritty} -e /bin/sh -c \"${cmd}\"";
 
-  calendar = terminal-spawn "${cal} -3 && sleep infinity";
   systemMonitor = terminal-spawn "${pkgs.btop}/bin/btop";
   wiremix = terminal-spawn "${pkgs.wiremix}/bin/wiremix";
 
@@ -68,8 +66,7 @@ in
           "clock"
           "wireplumber"
         ]
-        ++ (lib.optionals isLaptop [ "backlight" ])
-        ++ [ "custom/hyprsunset" ];
+        ++ (lib.optionals isLaptop [ "backlight" ]);
         modules-right = [
           "privacy"
           "tray"
@@ -82,6 +79,7 @@ in
         ++ (lib.optionals isLaptop [ "battery" ])
         ++ [
           "hyprland/language"
+          "custom/hyprsunset"
           "idle_inhibitor"
           "custom/powermenu"
         ];
@@ -94,9 +92,22 @@ in
           on-click = terminal-spawn bluetui;
         };
         clock = {
-          format = "{:L%d %B %H:%M}";
-          tooltip-format = "<span>{calendar}</span>";
-          on-click = calendar;
+          format = "{:%H:%M}";
+          format-alt = "{:%Y-%m-%d}";
+          tooltip-format = "<tt>{calendar}</tt>";
+          calendar = {
+            mode = "month";
+            mode-mon-col = 3;
+            on-scroll = 1;
+            format = {
+              today = "<b>{}</b>";
+            };
+          };
+          actions = {
+            on-click-right = "mode";
+            on-scroll-up = "shift_up";
+            on-scroll-down = "shift_down";
+          };
         };
         cpu = {
           format = "  {usage}%";

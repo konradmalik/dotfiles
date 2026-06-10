@@ -16,6 +16,10 @@
 window#waybar {
   border-radius: 5px;
 }
+#workspaces button,
+#idle_inhibitor {
+  transition: all 0.2s ease-in-out;
+}
 #workspaces button {
   color: @base04;
   background-color: @base02;
@@ -23,7 +27,6 @@ window#waybar {
   padding: 0 4px;
   margin: 0 2px;
   border-radius: 5px;
-  transition: all 0.2s ease-in-out;
 }
 #workspaces button:hover {
   color: @base06;
@@ -46,9 +49,8 @@ window#waybar {
   background-color: @base0D;
   color: @base00;
   padding-left: 15px;
-  padding-right: 10px;
+  padding-right: 15px;
   border-radius: 5px;
-  margin-right: 10px;
 }
 #custom-powermenu {
   background-color: @base08;
@@ -61,4 +63,14 @@ window#waybar {
   background-color: @base08;
   color: @base00;
   border-radius: 5px;
+}
+#idle_inhibitor {
+  border-radius: 5px;
+}
+#idle_inhibitor.activated {
+  background-color: @base0A;
+  color: @base00;
+}
+#idle_inhibitor.deactivated {
+  color: @base04;
 }
