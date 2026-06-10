@@ -52,6 +52,8 @@
   bind-key - resize-pane -D 10
   bind-key + resize-pane -U 10
 
+  # don't exit copy-mode on mouse select
+  bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe
   # vi-like copy mode
   set-window-option -g mode-keys vi
   # Setup 'v' to begin selection, just like vim
@@ -59,7 +61,7 @@
   bind-key -T copy-mode-vi 'V' send-keys -X select-line
   bind-key -T copy-mode-vi 'r' send-keys -X rectangle-toggle
   # Setup 'y' to yank (copy), just like VIM
-  bind-key -T copy-mode-vi 'y' send-keys -X copy-selection-and-cancel
+  bind-key -T copy-mode-vi 'y' send-keys -X copy-selection
   # Setup P (capital) to paste after the prefix keys, JUST LIKE VIM
   bind P paste-buffer
 
