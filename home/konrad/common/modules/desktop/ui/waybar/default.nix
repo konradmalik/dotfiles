@@ -238,7 +238,6 @@ in
         };
         "hyprland/workspaces" = {
           format = "{id}";
-          cursor = "pointer";
           on-click = "activate";
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
@@ -317,7 +316,7 @@ in
           exec = ''${playerctl} metadata --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{title}} ({{artist}} - {{album}})"}' '';
           return-type = "json";
           interval = 2;
-          max-length = 30;
+          max-length = 50;
           format = "{icon} {text}";
           format-icons = {
             "Playing" = " ";
