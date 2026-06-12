@@ -92,8 +92,7 @@ in
           on-click = terminal-spawn bluetui;
         };
         clock = {
-          format = "{:%H:%M}";
-          format-alt = "{:%Y-%m-%d}";
+          format = "{:%Y-%m-%d %H:%M}";
           tooltip-format = "<tt>{calendar}</tt>";
           calendar = {
             mode = "month";
@@ -110,12 +109,23 @@ in
           };
         };
         cpu = {
-          format = "  {usage}%";
+          format = " ";
+          interval = 5;
+          states = {
+            warning = 70;
+            critical = 90;
+          };
+          tooltip-format = "CPU {usage}%";
           on-click = systemMonitor;
         };
         memory = {
-          format = "  {}%";
+          format = " ";
           interval = 5;
+          states = {
+            warning = 70;
+            critical = 90;
+          };
+          tooltip-format = "RAM {used:0.1f}/{total:0.1f} GiB ({percentage}%)";
           on-click = systemMonitor;
         };
         wireplumber = {
@@ -123,7 +133,7 @@ in
           format-muted = "  -%";
           format-bluetooth = "{icon}󰂯 {volume}% {format_source}";
           format-bluetooth-muted = " 󰂯 -% {format_source}";
-          format-source = "  {volume}%";
+          format-source = " {volume}%";
           format-source-muted = "  -%";
           format-icons = {
             headphone = " ";
@@ -241,6 +251,9 @@ in
           on-click = "activate";
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
+          persistent-workspaces = {
+            "*" = 5;
+          };
         };
         "hyprland/language" = {
           format = "{short}";
@@ -266,7 +279,7 @@ in
           return-type = "json";
           exec = jsonOutput "hyprsunset" {
             pre = ''
-              status="$(systemctl --user is-active hyprsunset)";
+              status="$(systemctl --user is-active hyprsunset || true)";
             '';
             alt = "\${status:-inactive}";
             tooltip = "hyprsunset is $status";

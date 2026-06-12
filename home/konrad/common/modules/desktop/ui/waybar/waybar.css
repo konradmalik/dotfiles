@@ -75,3 +75,15 @@ window#waybar {
 #idle_inhibitor.deactivated {
   color: @base04;
 }
+#cpu,
+#memory {
+  color: @base04;
+}
+#cpu.warning,
+#memory.warning {
+  color: @base0A;
+}
+#cpu.critical,
+#memory.critical {
+  color: @base08;
+}
