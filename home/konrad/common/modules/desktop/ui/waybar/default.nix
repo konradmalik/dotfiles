@@ -18,6 +18,27 @@ let
   systemMonitor = terminal-spawn "${pkgs.btop}/bin/btop";
   wiremix = terminal-spawn "${pkgs.wiremix}/bin/wiremix";
 
+  # Shared drawer config for hover-to-expand module groups.
+  drawer = {
+    transition-duration = 300;
+    transition-left-to-right = true;
+  };
+
+  # Shared click actions for the volume group modules.
+  volumeActions = {
+    on-click = wiremix;
+    on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+  };
+
+  # Hover-to-expand group: collapsed shows the first module, the rest reveal on hover.
+  drawerGroup = modules: {
+    orientation = "horizontal";
+    inherit drawer modules;
+  };
+
+  # Shared tooltip for the memory icon and its percentage reveal.
+  memoryTooltip = "RAM {used:0.1f}/{total:0.1f} GiB ({percentage}%)";
+
   # Function to simplify making waybar outputs
   jsonOutput =
     name:
@@ -61,12 +82,12 @@ in
           "custom/player"
         ];
         modules-center = [
-          "cpu"
-          "memory"
+          "group/cpu"
+          "group/memory"
           "clock"
-          "wireplumber"
+          "group/volume"
         ]
-        ++ (lib.optionals isLaptop [ "backlight" ]);
+        ++ (lib.optionals isLaptop [ "group/backlight" ]);
         modules-right = [
           "privacy"
           "tray"
@@ -76,7 +97,7 @@ in
         ++ (lib.optionals osConfig.services.tlp.pd.enable [
           "power-profiles-daemon"
         ])
-        ++ (lib.optionals isLaptop [ "battery" ])
+        ++ (lib.optionals isLaptop [ "group/battery" ])
         ++ [
           "hyprland/language"
           "custom/hyprsunset"
@@ -118,6 +139,10 @@ in
           tooltip-format = "CPU {usage}%";
           on-click = systemMonitor;
         };
+        "cpu#text" = {
+          format = "{usage}%";
+          interval = 5;
+        };
         memory = {
           format = " ";
           interval = 5;
@@ -125,16 +150,39 @@ in
             warning = 70;
             critical = 90;
           };
-          tooltip-format = "RAM {used:0.1f}/{total:0.1f} GiB ({percentage}%)";
+          tooltip-format = memoryTooltip;
           on-click = systemMonitor;
         };
-        wireplumber = {
-          format = "{icon} {volume}% {format_source}";
-          format-muted = "  -%";
-          format-bluetooth = "{icon}󰂯 {volume}% {format_source}";
-          format-bluetooth-muted = " 󰂯 -% {format_source}";
-          format-source = " {volume}%";
-          format-source-muted = "  -%";
+        "memory#text" = {
+          format = "{percentage}%";
+          interval = 5;
+          tooltip-format = memoryTooltip;
+        };
+        "group/cpu" = drawerGroup [
+          "cpu"
+          "cpu#text"
+        ];
+        "group/memory" = drawerGroup [
+          "memory"
+          "memory#text"
+        ];
+        "group/volume" = drawerGroup [
+          "wireplumber"
+          "wireplumber#text"
+        ];
+        "group/backlight" = drawerGroup [
+          "backlight"
+          "backlight#text"
+        ];
+        "group/battery" = drawerGroup [
+          "battery"
+          "battery#text"
+        ];
+        wireplumber = volumeActions // {
+          format = "{icon}";
+          format-muted = " ";
+          format-bluetooth = "{icon}󰂯";
+          format-bluetooth-muted = " 󰂯";
           format-icons = {
             headphone = " ";
             headset = "󰋎 ";
@@ -148,8 +196,11 @@ in
               " "
             ];
           };
-          on-click = wiremix;
-          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        };
+        "wireplumber#text" = volumeActions // {
+          format = "{volume}%  {format_source}";
+          format-source = " {volume}%";
+          format-source-muted = " ";
         };
         idle_inhibitor = {
           format = "{icon}";
@@ -159,7 +210,7 @@ in
           };
         };
         backlight = {
-          format = "{icon} {percent}%";
+          format = "{icon}";
           format-icons = [
             " "
             " "
@@ -174,8 +225,11 @@ in
           on-scroll-up = "brightnessctl set +1%";
           on-scroll-down = "brightnessctl set 1%-";
         };
+        "backlight#text" = {
+          format = "{percent}%";
+        };
         battery = {
-          format = "{icon} {capacity}%";
+          format = "{icon}";
           format-icons = {
             plugged = "";
             charging = [
@@ -214,6 +268,10 @@ in
             warning = 30;
             critical = 15;
           };
+        };
+        "battery#text" = {
+          format = "{capacity}%";
+          interval = 10;
         };
         power-profiles-daemon = {
           format = "{icon}";
