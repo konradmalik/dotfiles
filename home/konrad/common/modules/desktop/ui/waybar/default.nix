@@ -309,9 +309,6 @@ in
           on-click = "activate";
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
-          persistent-workspaces = {
-            "*" = 5;
-          };
         };
         "hyprland/language" = {
           format = "{short}";
