@@ -199,8 +199,9 @@ in
         };
         "wireplumber#text" = volumeActions // {
           format = "{volume}%  {format_source}";
+          format-muted = "-%  {format_source}";
           format-source = " {volume}%";
-          format-source-muted = " ";
+          format-source-muted = "  -%";
         };
         idle_inhibitor = {
           format = "{icon}";
