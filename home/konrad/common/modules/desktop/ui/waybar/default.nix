@@ -18,27 +18,6 @@ let
   systemMonitor = terminal-spawn "${pkgs.btop}/bin/btop";
   wiremix = terminal-spawn "${pkgs.wiremix}/bin/wiremix";
 
-  # Shared drawer config for hover-to-expand module groups.
-  drawer = {
-    transition-duration = 300;
-    transition-left-to-right = true;
-  };
-
-  # Shared click actions for the volume group modules.
-  volumeActions = {
-    on-click = wiremix;
-    on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-  };
-
-  # Hover-to-expand group: collapsed shows the first module, the rest reveal on hover.
-  drawerGroup = modules: {
-    orientation = "horizontal";
-    inherit drawer modules;
-  };
-
-  # Shared tooltip for the memory icon and its percentage reveal.
-  memoryTooltip = "RAM {used:0.1f}/{total:0.1f} GiB ({percentage}%)";
-
   # Function to simplify making waybar outputs
   jsonOutput =
     name:
@@ -82,12 +61,12 @@ in
           "custom/player"
         ];
         modules-center = [
-          "group/cpu"
-          "group/memory"
+          "cpu"
+          "memory"
           "clock"
-          "group/volume"
+          "wireplumber"
         ]
-        ++ (lib.optionals isLaptop [ "group/backlight" ]);
+        ++ (lib.optionals isLaptop [ "backlight" ]);
         modules-right = [
           "privacy"
           "tray"
@@ -97,7 +76,7 @@ in
         ++ (lib.optionals osConfig.services.tlp.pd.enable [
           "power-profiles-daemon"
         ])
-        ++ (lib.optionals isLaptop [ "group/battery" ])
+        ++ (lib.optionals isLaptop [ "battery" ])
         ++ [
           "hyprland/language"
           "custom/hyprsunset"
@@ -130,7 +109,7 @@ in
           };
         };
         cpu = {
-          format = " ";
+          format = "  {usage}%";
           interval = 5;
           states = {
             warning = 70;
@@ -139,50 +118,23 @@ in
           tooltip-format = "CPU {usage}%";
           on-click = systemMonitor;
         };
-        "cpu#text" = {
-          format = "{usage}%";
-          interval = 5;
-        };
         memory = {
-          format = " ";
+          format = "  {percentage}%";
           interval = 5;
           states = {
             warning = 70;
             critical = 90;
           };
-          tooltip-format = memoryTooltip;
+          tooltip-format = "RAM {used:0.1f}/{total:0.1f} GiB ({percentage}%)";
           on-click = systemMonitor;
         };
-        "memory#text" = {
-          format = "{percentage}%";
-          interval = 5;
-          tooltip-format = memoryTooltip;
-        };
-        "group/cpu" = drawerGroup [
-          "cpu"
-          "cpu#text"
-        ];
-        "group/memory" = drawerGroup [
-          "memory"
-          "memory#text"
-        ];
-        "group/volume" = drawerGroup [
-          "wireplumber"
-          "wireplumber#text"
-        ];
-        "group/backlight" = drawerGroup [
-          "backlight"
-          "backlight#text"
-        ];
-        "group/battery" = drawerGroup [
-          "battery"
-          "battery#text"
-        ];
-        wireplumber = volumeActions // {
-          format = "{icon}";
-          format-muted = " ";
-          format-bluetooth = "{icon}󰂯";
-          format-bluetooth-muted = " 󰂯";
+        wireplumber = {
+          format = "{icon} {volume}%  {format_source}";
+          format-muted = "   {format_source}";
+          format-bluetooth = "{icon}󰂯 {volume}%  {format_source}";
+          format-bluetooth-muted = " 󰂯  {format_source}";
+          format-source = " {volume}%";
+          format-source-muted = " ";
           format-icons = {
             headphone = " ";
             headset = "󰋎 ";
@@ -196,12 +148,8 @@ in
               " "
             ];
           };
-        };
-        "wireplumber#text" = volumeActions // {
-          format = "{volume}%  {format_source}";
-          format-muted = "-%  {format_source}";
-          format-source = " {volume}%";
-          format-source-muted = "  -%";
+          on-click = wiremix;
+          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
         idle_inhibitor = {
           format = "{icon}";
@@ -212,6 +160,7 @@ in
         };
         backlight = {
           format = "{icon}";
+          tooltip-format = "Brightness {percent}%";
           format-icons = [
             " "
             " "
@@ -226,11 +175,8 @@ in
           on-scroll-up = "brightnessctl set +1%";
           on-scroll-down = "brightnessctl set 1%-";
         };
-        "backlight#text" = {
-          format = "{percent}%";
-        };
         battery = {
-          format = "{icon}";
+          format = "{icon} {capacity}%";
           format-icons = {
             plugged = "";
             charging = [
@@ -269,10 +215,6 @@ in
             warning = 30;
             critical = 15;
           };
-        };
-        "battery#text" = {
-          format = "{capacity}%";
-          interval = 10;
         };
         power-profiles-daemon = {
           format = "{icon}";
@@ -316,11 +258,8 @@ in
           on-click = "hyprctl switchxkblayout all next";
         };
         "custom/menu" = {
-          return-type = "json";
-          exec = jsonOutput "menu" {
-            text = " ";
-            tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
-          };
+          format = " ";
+          tooltip-format = "${osConfig.system.nixos.distroName} ${osConfig.system.nixos.version} (${osConfig.system.nixos.codeName})";
           on-click = "fuzzel";
         };
         "custom/powermenu" = {
@@ -331,7 +270,7 @@ in
           on-click = "nwg-bar -t hyprland.json";
         };
         "custom/hyprsunset" = {
-          interval = 5;
+          interval = 30;
           return-type = "json";
           exec = jsonOutput "hyprsunset" {
             pre = ''

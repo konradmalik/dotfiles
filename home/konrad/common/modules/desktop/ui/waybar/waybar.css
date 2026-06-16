@@ -41,7 +41,6 @@ window#waybar,
   transition: all 0.2s ease-in-out;
 }
 
-/* Workspaces. */
 #workspaces button {
   color: @muted;
   background-color: @base02;
@@ -60,7 +59,6 @@ window#waybar,
   padding: 0 12px;
 }
 
-/* Colored pill modules: dark text on an accent/urgent background. */
 #clock,
 #custom-menu,
 #custom-powermenu,
@@ -89,7 +87,6 @@ window#waybar,
   padding-right: 5px;
 }
 
-/* Idle inhibitor toggle. */
 #idle_inhibitor.activated {
   color: @on-accent;
   background-color: @warning;
@@ -98,11 +95,6 @@ window#waybar,
   color: @muted;
 }
 
-/* CPU / RAM load color by state (battery only colors on warning/critical). */
-#cpu,
-#memory {
-  color: @muted;
-}
 #cpu.warning,
 #memory.warning,
 #battery.warning {
@@ -112,29 +104,4 @@ window#waybar,
 #memory.critical,
 #battery.critical {
   color: @urgent;
-}
-
-/* Drawer groups: the global * padding stacks on every nested box and makes the
- * group too wide. Zero it throughout, then restore it on the labels. The 8px
- * below must match the * rule above (GTK CSS has no length var to share it). */
-#cpu,
-#cpu *,
-#memory,
-#memory *,
-#volume,
-#volume *,
-#backlight,
-#backlight *,
-#battery,
-#battery * {
-  padding-left: 0;
-  padding-right: 0;
-}
-#cpu label,
-#memory label,
-#volume label,
-#backlight label,
-#battery label {
-  padding-left: 8px;
-  padding-right: 8px;
 }
