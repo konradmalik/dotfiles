@@ -1,95 +1,46 @@
-/* Cheatsheet:
- * x -> all sides
- * x y -> vertical, horizontal
- * x y z -> top, horizontal, bottom
- * w x y z -> top, right, bottom, left
- */
-
-/* Semantic aliases over the stylix base16 palette. GTK CSS has no var()/custom
- * properties, but @define-color (what @baseNN are) can reference another color,
- * so we name the roles we reuse in one place. */
-@define-color accent @base0D;
 @define-color urgent @base08;
 @define-color warning @base0A;
-@define-color on-accent @base00;
 @define-color muted @base04;
+@define-color background @base00;
+@define-color text @base05;
+@define-color accent @base0D;
+@define-color accent-alt @base09;
+
+window#waybar {
+  color: @text;
+}
 
 * {
-  padding: 0 8px;
-}
-.modules-left {
-  margin-left: -16px;
-}
-.modules-right {
-  margin-right: -16px;
+  background-color: @background;
+  border: none;
+  padding: 0 6px;
 }
 
-/* Rounded corners: the bar and every pill-style module. */
-window#waybar,
-#workspaces button,
-#clock,
-#custom-menu,
-#custom-powermenu,
-#privacy,
-#idle_inhibitor {
-  border-radius: 5px;
+#custom-menu {
+  color: @accent;
 }
 
-/* Smooth state changes. */
-#workspaces button,
-#idle_inhibitor {
-  transition: all 0.2s ease-in-out;
+#clock {
+  font-weight: bold;
 }
 
 #workspaces button {
-  color: @muted;
-  background-color: @base02;
-  min-width: 16px;
-  padding: 0 4px;
-  margin: 0 2px;
-}
-#workspaces button:hover {
-  color: @base06;
-  background-color: @base03;
+  padding: 0
 }
 #workspaces button.active {
-  color: @on-accent;
-  background-color: @base09;
-  min-width: 40px;
-  padding: 0 12px;
+  color: @accent-alt;
+}
+#workspaces button.empty {
+  opacity: 0.5;
 }
 
-#clock,
-#custom-menu,
-#custom-powermenu,
 #privacy {
-  color: @on-accent;
-}
-#clock,
-#custom-menu {
-  background-color: @accent;
-}
-#custom-powermenu,
-#privacy {
+  color: @background;
   background-color: @urgent;
-}
-#clock {
-  padding: 0 16px;
-  margin: 0 16px;
-  font-weight: bold;
-}
-#custom-menu {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-#custom-powermenu {
-  padding-left: 10px;
-  padding-right: 5px;
 }
 
 #idle_inhibitor.activated {
-  color: @on-accent;
-  background-color: @warning;
+  color: @warning;
 }
 #idle_inhibitor.deactivated {
   color: @muted;

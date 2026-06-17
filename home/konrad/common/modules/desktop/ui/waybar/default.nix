@@ -51,9 +51,6 @@ in
       primary = {
         layer = "top";
         position = "top";
-        margin-top = 10;
-        margin-left = 10;
-        margin-right = 10;
         modules-left = [
           "custom/menu"
           "hyprland/workspaces"
@@ -61,33 +58,35 @@ in
           "custom/player"
         ];
         modules-center = [
+          "clock"
+          "privacy"
+        ];
+        modules-right = [
+          "tray"
           "cpu"
           "memory"
-          "clock"
-          "wireplumber"
-        ]
-        ++ (lib.optionals isLaptop [ "backlight" ]);
-        modules-right = [
-          "privacy"
-          "tray"
           "bluetooth"
+          "wireplumber"
           "network"
+          "hyprland/language"
         ]
         ++ (lib.optionals osConfig.services.tlp.pd.enable [
           "power-profiles-daemon"
         ])
-        ++ (lib.optionals isLaptop [ "battery" ])
+        ++ (lib.optionals isLaptop [
+          "battery"
+          "backlight"
+        ])
         ++ [
-          "hyprland/language"
           "custom/hyprsunset"
           "idle_inhibitor"
           "custom/powermenu"
         ];
 
         bluetooth = {
-          format = "󰂯 ";
-          format-disabled = "󰂲 ";
-          format-connected = "󰂱 ";
+          format = " 󰂯 ";
+          format-disabled = " 󰂲 ";
+          format-connected = " 󰂱 ";
           tooltip-format = "Devices connected: {num_connections}";
           on-click = terminal-spawn bluetui;
         };
@@ -99,7 +98,7 @@ in
             mode-mon-col = 3;
             on-scroll = 1;
             format = {
-              today = "<b>{}</b>";
+              today = "<b><u>{}</u></b>";
             };
           };
           actions = {
@@ -248,7 +247,29 @@ in
           on-click = terminal-spawn impala;
         };
         "hyprland/workspaces" = {
-          format = "{id}";
+          format = "{icon}";
+          cursor = true;
+          format-icons = {
+            "1" = "1";
+            "2" = "2";
+            "3" = "3";
+            "4" = "4";
+            "5" = "5";
+            "6" = "6";
+            "7" = "7";
+            "8" = "8";
+            "9" = "9";
+            "10" = "0";
+            active = "󱓻";
+            default = "";
+          };
+          persistent-workspaces = {
+            "1" = { };
+            "2" = { };
+            "3" = { };
+            "4" = { };
+            "5" = { };
+          };
           on-click = "activate";
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
