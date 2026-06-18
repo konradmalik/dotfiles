@@ -63,12 +63,12 @@ in
         ];
         modules-right = [
           "tray"
-          "cpu"
-          "memory"
           "bluetooth"
           "wireplumber"
           "network"
           "hyprland/language"
+          "cpu"
+          "memory"
         ]
         ++ (lib.optionals osConfig.services.tlp.pd.enable [
           "power-profiles-daemon"
@@ -108,7 +108,7 @@ in
           };
         };
         cpu = {
-          format = "  {usage}%";
+          format = " ";
           interval = 5;
           states = {
             warning = 70;
@@ -118,7 +118,7 @@ in
           on-click = systemMonitor;
         };
         memory = {
-          format = "  {percentage}%";
+          format = " ";
           interval = 5;
           states = {
             warning = 70;
@@ -128,25 +128,19 @@ in
           on-click = systemMonitor;
         };
         wireplumber = {
-          format = "{icon} {volume}%  {format_source}";
-          format-muted = "   {format_source}";
-          format-bluetooth = "{icon}󰂯 {volume}%  {format_source}";
-          format-bluetooth-muted = " 󰂯  {format_source}";
+          format = "{icon}";
+          format-muted = " ";
+          format-bluetooth = "{icon}󰂯";
+          format-bluetooth-muted = " 󰂯";
           format-source = " {volume}%";
           format-source-muted = " ";
-          format-icons = {
-            headphone = " ";
-            headset = "󰋎 ";
-            hands-free = "󰋎 ";
-            portable = " ";
-            phone = " ";
-            car = " ";
-            default = [
-              " "
-              " "
-              " "
-            ];
-          };
+          format-icons = [
+            " "
+            " "
+            " "
+          ];
+          scroll-step = "5";
+          tooltip-format = "{node_name}\n{icon} {volume}%  {format_source}";
           on-click = wiremix;
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
@@ -171,11 +165,11 @@ in
             " "
             " "
           ];
-          on-scroll-up = "brightnessctl set +1%";
-          on-scroll-down = "brightnessctl set 1%-";
+          on-scroll-up = "brightnessctl set +5%";
+          on-scroll-down = "brightnessctl set 5%-";
         };
         battery = {
-          format = "{icon} {capacity}%";
+          format = "{icon}";
           format-icons = {
             plugged = "";
             charging = [
