@@ -36,8 +36,7 @@
       jq
       yq-go
 
-      dust
-      duf
+      dua
       procs
 
       croc
