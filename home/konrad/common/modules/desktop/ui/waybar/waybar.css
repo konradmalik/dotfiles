@@ -8,12 +8,36 @@
 
 window#waybar {
   color: @text;
+  background-color: @background
 }
 
-* {
-  background-color: @background;
-  border: none;
+#custom-menu,
+#workspaces,
+#custom-currentplayer,
+#custom-player,
+#clock,
+#privacy,
+#tray,
+#cpu,
+#memory,
+/* #bluetooth, already wide */
+#wireplumber,
+#network,
+#language,
+#power-profiles-daemon,
+#battery,
+#backlight,
+#custom-hyprsunset,
+#idle_inhibitor,
+#custom-powermenu {
   padding: 0 6px;
+}
+
+tooltip {
+  background-color: @background;
+}
+tooltip label {
+  color: @text;
 }
 
 #custom-menu {

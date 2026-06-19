@@ -83,6 +83,9 @@ in
           "custom/powermenu"
         ];
 
+        tray = {
+          spacing = 6;
+        };
         bluetooth = {
           format = " 󰂯 ";
           format-disabled = " 󰂲 ";
@@ -273,7 +276,7 @@ in
           on-click = "hyprctl switchxkblayout all next";
         };
         "custom/menu" = {
-          format = " ";
+          format = "  ";
           tooltip-format = "${osConfig.system.nixos.distroName} ${osConfig.system.nixos.version} (${osConfig.system.nixos.codeName})";
           on-click = "fuzzel";
         };
