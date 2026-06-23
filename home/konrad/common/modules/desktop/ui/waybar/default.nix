@@ -133,8 +133,6 @@ in
         wireplumber = {
           format = "{icon}";
           format-muted = " ";
-          format-bluetooth = "{icon}󰂯";
-          format-bluetooth-muted = " 󰂯";
           format-source = " {volume}%";
           format-source-muted = " ";
           format-icons = [
@@ -142,8 +140,8 @@ in
             " "
             " "
           ];
-          scroll-step = "5";
-          tooltip-format = "{node_name}\n{icon} {volume}%  {format_source}";
+          scroll-step = 5;
+          tooltip-format = "Output: {node_name}\nInput: {source_desc}\n{icon} {volume}%  {format_source}";
           on-click = wiremix;
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
