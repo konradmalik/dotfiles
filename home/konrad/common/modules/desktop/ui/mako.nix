@@ -3,7 +3,9 @@ let
   icons = config.stylix.icons;
 in
 {
-  wayland.windowManager.hyprland.settings.exec-once = [ "mako" ];
+  wayland.windowManager.hyprland.extraConfig = ''
+    hl.on("hyprland.start", function() hl.exec_cmd("mako") end)
+  '';
 
   services.mako = {
     enable = true;
