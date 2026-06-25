@@ -3,131 +3,102 @@ let
   isLaptop = osConfig.services.upower.enable;
 in
 {
-  wayland.windowManager.hyprland.settings = {
-    # Mouse bindings
-    bindm = [
-      "SUPER,mouse:272,movewindow"
-      "SUPER,mouse:273,resizewindow"
-    ];
-    bindel = [
-      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-    ]
-    ++ lib.optionals isLaptop [
-      ",XF86MonBrightnessUp, exec, brightnessctl set +10%"
-      ",XF86MonBrightnessDown, exec, brightnessctl set 10%-"
-    ];
-    bindl = [
-      ",XF86AudioNext,exec,playerctl next"
-      ",XF86AudioPause,exec,playerctl play-pause"
-      ",XF86AudioPlay,exec,playerctl play-pause"
-      ",XF86AudioPrev,exec,playerctl previous"
-      ",XF86AudioStop,exec,playerctl stop"
-    ];
-    bind = [
-      # Keyboard alt behavior
-      "SUPER,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch"
-      "SUPERSHIFT,c,exec,hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps"
+  wayland.windowManager.hyprland.extraLuaFiles.bindings = ''
+    -- Keyboard layout toggle behavior
+    hl.bind("SUPER + c", hl.dsp.exec_cmd("hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch"))
+    hl.bind("SUPER + SHIFT + c", hl.dsp.exec_cmd("hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps"))
 
-      # Program bindings
-      "SUPER,return,exec,$TERMINAL"
-      "SUPER,w,exec,makoctl dismiss"
-      "SUPER,b,exec,$BROWSER"
-      "SUPER,space,exec,fuzzel"
+    -- Program bindings
+    hl.bind("SUPER + return", hl.dsp.exec_cmd("$TERMINAL"))
+    hl.bind("SUPER + w", hl.dsp.exec_cmd("makoctl dismiss"))
+    hl.bind("SUPER + b", hl.dsp.exec_cmd("$BROWSER"))
+    hl.bind("SUPER + space", hl.dsp.exec_cmd("fuzzel"))
 
-      # Screenshots
-      # NOTE: killall is useful for occasional freezes of hyprpicker
-      # just try to screenshot again and it should unfreeze
-      "SUPER,p,exec,killall hyprpicker ; hyprshot --freeze --mode region --output /tmp/screenshots"
-      "SUPERSHIFT,p,exec,killall hyprpicker ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"
+    -- Screenshots
+    -- NOTE: killall is useful for occasional freezes of hyprpicker
+    -- just try to screenshot again and it should unfreeze
+    hl.bind("SUPER + p", hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --mode region --output /tmp/screenshots"))
+    hl.bind("SUPER + SHIFT + p", hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"))
 
-      # Window manager controls
-      "SUPERSHIFT,q,killactive"
-      "SUPERSHIFT,e,exit"
-      "SUPER,f,fullscreen,1"
-      "SUPERSHIFT,f,fullscreen,0"
-      "SUPERSHIFT,space,togglefloating"
-      "SUPER,minus,layoutmsg,splitratio,-0.25"
-      "SUPERSHIFT,minus,layoutmsg,splitratio,-0.3333333"
-      "SUPER,equal,layoutmsg,splitratio,0.25"
-      "SUPERSHIFT,equal,layoutmsg,splitratio,0.3333333"
+    -- Window manager controls
+    hl.bind("SUPER + SHIFT + q", hl.dsp.window.close())
+    hl.bind("SUPER + SHIFT + e", hl.dsp.exit())
+    hl.bind("SUPER + f", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
+    hl.bind("SUPER + SHIFT + f", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+    hl.bind("SUPER + SHIFT + space", hl.dsp.window.float({ action = "toggle" }))
+    hl.bind("SUPER + minus", hl.dsp.layout("splitratio -0.25"))
+    hl.bind("SUPER + SHIFT + minus", hl.dsp.layout("splitratio -0.3333333"))
+    hl.bind("SUPER + equal", hl.dsp.layout("splitratio 0.25"))
+    hl.bind("SUPER + SHIFT + equal", hl.dsp.layout("splitratio 0.3333333"))
 
-      # dwindle
-      "SUPER,s,pseudo"
-      "SUPER,g,togglegroup"
-      "SUPER,apostrophe,changegroupactive,f"
-      "SUPERSHIFT,apostrophe,changegroupactive,b"
+    -- dwindle
+    hl.bind("SUPER + s", hl.dsp.window.pseudo())
+    hl.bind("SUPER + g", hl.dsp.group.toggle())
+    hl.bind("SUPER + apostrophe", hl.dsp.group.next())
+    hl.bind("SUPER + SHIFT + apostrophe", hl.dsp.group.prev())
 
-      # rest
-      "SUPER,left,movefocus,l"
-      "SUPER,right,movefocus,r"
-      "SUPER,up,movefocus,u"
-      "SUPER,down,movefocus,d"
-      "SUPER,h,movefocus,l"
-      "SUPER,l,movefocus,r"
-      "SUPER,k,movefocus,u"
-      "SUPER,j,movefocus,d"
-      "SUPERSHIFT,left,movewindow,l"
-      "SUPERSHIFT,right,movewindow,r"
-      "SUPERSHIFT,up,movewindow,u"
-      "SUPERSHIFT,down,movewindow,d"
-      "SUPERSHIFT,h,movewindow,l"
-      "SUPERSHIFT,l,movewindow,r"
-      "SUPERSHIFT,k,movewindow,u"
-      "SUPERSHIFT,j,movewindow,d"
-      "SUPERSHIFT,j,movewindow,d"
-      "SUPER,tab,cyclenext"
-      "SUPERSHIFT,tab,cyclenext,prev"
-      "SUPERCONTROL,tab,swapnext"
-      "SUPERCONTROLSHIFT,tab,swapnext,prev"
-      "SUPERCONTROL,left,focusmonitor,l"
-      "SUPERCONTROL,right,focusmonitor,r"
-      "SUPERCONTROL,up,focusmonitor,u"
-      "SUPERCONTROL,down,focusmonitor,d"
-      "SUPERCONTROL,h,focusmonitor,l"
-      "SUPERCONTROL,l,focusmonitor,r"
-      "SUPERCONTROL,k,focusmonitor,u"
-      "SUPERCONTROL,j,focusmonitor,d"
-      "SUPERCONTROLSHIFT,left,movewindow,mon:l"
-      "SUPERCONTROLSHIFT,right,movewindow,mon:r"
-      "SUPERCONTROLSHIFT,up,movewindow,mon:u"
-      "SUPERCONTROLSHIFT,down,movewindow,mon:d"
-      "SUPERCONTROLSHIFT,h,movewindow,mon:l"
-      "SUPERCONTROLSHIFT,l,movewindow,mon:r"
-      "SUPERCONTROLSHIFT,k,movewindow,mon:u"
-      "SUPERCONTROLSHIFT,j,movewindow,mon:d"
-      "SUPERALT,left,movecurrentworkspacetomonitor,l"
-      "SUPERALT,right,movecurrentworkspacetomonitor,r"
-      "SUPERALT,up,movecurrentworkspacetomonitor,u"
-      "SUPERALT,down,movecurrentworkspacetomonitor,d"
-      "SUPERALT,h,movecurrentworkspacetomonitor,l"
-      "SUPERALT,l,movecurrentworkspacetomonitor,r"
-      "SUPERALT,k,movecurrentworkspacetomonitor,u"
-      "SUPERALT,j,movecurrentworkspacetomonitor,d"
-      "SUPER,u,togglespecialworkspace"
-      "SUPERSHIFT,u,movetoworkspace,special"
-      "SUPER,1,workspace,01"
-      "SUPER,2,workspace,02"
-      "SUPER,3,workspace,03"
-      "SUPER,4,workspace,04"
-      "SUPER,5,workspace,05"
-      "SUPER,6,workspace,06"
-      "SUPER,7,workspace,07"
-      "SUPER,8,workspace,08"
-      "SUPER,9,workspace,09"
-      "SUPER,0,workspace,10"
-      "SUPERSHIFT,1,movetoworkspacesilent,01"
-      "SUPERSHIFT,2,movetoworkspacesilent,02"
-      "SUPERSHIFT,3,movetoworkspacesilent,03"
-      "SUPERSHIFT,4,movetoworkspacesilent,04"
-      "SUPERSHIFT,5,movetoworkspacesilent,05"
-      "SUPERSHIFT,6,movetoworkspacesilent,06"
-      "SUPERSHIFT,7,movetoworkspacesilent,07"
-      "SUPERSHIFT,8,movetoworkspacesilent,08"
-      "SUPERSHIFT,9,movetoworkspacesilent,09"
-      "SUPERSHIFT,0,movetoworkspacesilent,10"
-    ];
-  };
+    -- Cycle / swap windows
+    hl.bind("SUPER + tab", hl.dsp.window.cycle_next({ next = true }))
+    hl.bind("SUPER + SHIFT + tab", hl.dsp.window.cycle_next({ prev = true }))
+    hl.bind("SUPER + CTRL + tab", hl.dsp.window.swap({ next = true }))
+    hl.bind("SUPER + CTRL + SHIFT + tab", hl.dsp.window.swap({ prev = true }))
+
+    -- Focus / move windows across directions and monitors
+    local function moveWorkspaceToMonitor(monitor)
+      return function()
+        local ws = hl.get_active_workspace()
+        if not ws then return end
+        hl.dispatch(hl.dsp.workspace.move({ workspace = ws.id, monitor = monitor }))
+      end
+    end
+
+    local directions = {
+      { keys = { "left", "h" },  dir = "l", word = "left" },
+      { keys = { "right", "l" }, dir = "r", word = "right" },
+      { keys = { "up", "k" },    dir = "u", word = "up" },
+      { keys = { "down", "j" },  dir = "d", word = "down" },
+    }
+
+    for _, d in ipairs(directions) do
+      for _, key in ipairs(d.keys) do
+        hl.bind("SUPER + " .. key, hl.dsp.focus({ direction = d.word }))
+        hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ direction = d.dir }))
+        hl.bind("SUPER + CTRL + " .. key, hl.dsp.focus({ monitor = d.dir }))
+        hl.bind("SUPER + CTRL + SHIFT + " .. key, hl.dsp.window.move({ monitor = d.dir }))
+        hl.bind("SUPER + ALT + " .. key, moveWorkspaceToMonitor(d.dir))
+      end
+    end
+
+    -- Special workspace
+    hl.bind("SUPER + u", hl.dsp.workspace.toggle_special(""))
+    hl.bind("SUPER + SHIFT + u", hl.dsp.window.move({ workspace = "special" }))
+
+    -- Workspaces
+    local workspaceKeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }
+    for i, key in ipairs(workspaceKeys) do
+      local ws = string.format("%02d", i)
+      hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = ws }))
+      hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = ws, follow = false }))
+    end
+
+    -- Mouse bindings
+    hl.bind("SUPER + mouse:272", hl.dsp.window.drag())
+    hl.bind("SUPER + mouse:273", hl.dsp.window.resize())
+
+    -- Audio
+    hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+    hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+    hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
+    hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+    ${lib.optionalString isLaptop ''
+      hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set +10%"), { locked = true, repeating = true })
+      hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"), { locked = true, repeating = true })
+    ''}
+    -- Media control
+    hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+    hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+    hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+    hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+    hl.bind("XF86AudioStop", hl.dsp.exec_cmd("playerctl stop"), { locked = true })
+  '';
 }

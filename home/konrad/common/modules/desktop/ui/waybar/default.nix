@@ -42,7 +42,9 @@ let
     ''}/bin/waybar-${name}";
 in
 {
-  wayland.windowManager.hyprland.settings.exec-once = [ "waybar" ];
+  wayland.windowManager.hyprland.extraConfig = ''
+    hl.on("hyprland.start", function() hl.exec_cmd("waybar") end)
+  '';
   stylix.targets.waybar.addCss = false;
 
   programs.waybar = {

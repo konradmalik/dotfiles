@@ -31,10 +31,16 @@
     # use from NixOS module
     package = null;
     portalPackage = null;
-    configType = "hyprlang";
     settings = {
       # fallback rule for any monitor not matching other rules
-      monitor = [ ", preferred, auto, 1" ];
+      monitor = [
+        {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = 1;
+        }
+      ];
     };
   };
 }
