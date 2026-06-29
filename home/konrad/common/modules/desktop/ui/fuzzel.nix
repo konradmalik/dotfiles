@@ -8,6 +8,7 @@
     settings = {
       main = {
         terminal = "${config.home.sessionVariables.TERMINAL} -e";
+        dpi-aware = "no";
       };
     };
   };
