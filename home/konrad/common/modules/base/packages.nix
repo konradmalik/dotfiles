@@ -39,7 +39,8 @@
       dua
       procs
 
-      croc
+      # FIXME unstable has hash mismatch
+      stable.croc
       gh
       glab
     ]
