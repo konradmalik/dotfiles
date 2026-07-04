@@ -1,4 +1,7 @@
 {
+  # atuin owns ctrl-r
+  programs.fzf.historyWidget.command = "";
+
   programs.atuin = {
     enable = true;
     flags = [ "--disable-up-arrow" ];
