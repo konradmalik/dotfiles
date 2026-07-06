@@ -69,6 +69,11 @@
               import inputs.nixpkgs {
                 inherit system;
                 overlays = [
+                  (final: prev: {
+                    stable = import inputs.nixpkgs-stable {
+                      system = prev.system;
+                    };
+                  })
                   (import ./pkgs/fonts)
                   (import ./pkgs/scripts)
                 ];
