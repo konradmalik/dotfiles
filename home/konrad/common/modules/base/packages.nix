@@ -9,11 +9,13 @@
       inetutils
       lsof
       moreutils
-      ouch
-      progress
       tree
       unixtools.xxd
       wget
+
+      # FIXME unstable has hash mismatch
+      stable.croc
+      ouch
       zip
 
       fd
@@ -23,24 +25,20 @@
       sad
       scooter
 
+      dua
       entr
       hyperfine
-      spacer
+      procs
+      progress
       viddy
 
       age
       fq
-      dsq
       jc
       jo
       jq
       yq-go
 
-      dua
-      procs
-
-      # FIXME unstable has hash mismatch
-      stable.croc
       gh
       glab
     ]
