@@ -13,6 +13,7 @@
     ./../users/konrad/darwin.nix
 
     inputs.stylix.darwinModules.stylix
+    inputs.home-manager.darwinModules.home-manager
   ];
 
   environment = {
