@@ -28,6 +28,7 @@ in
       default-timeout = 10000;
       ignore-timeout = false;
       max-visible = 5;
+      max-history = 20;
       sort = "-time";
       group-by = "app-name";
 
@@ -35,6 +36,10 @@ in
 
       format = "<b>%s</b>\\n%b";
       markup = true;
+
+      "mode=do-not-disturb" = {
+        invisible = 1;
+      };
     };
   };
 }

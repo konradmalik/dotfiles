@@ -13,6 +13,11 @@ let
   impala = "${pkgs.impala}/bin/impala";
   bluetui = "${pkgs.bluetui}/bin/bluetui";
 
+  makoctl = "${pkgs.mako}/bin/makoctl";
+  fuzzel = "${pkgs.fuzzel}/bin/fuzzel";
+  wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
+  refreshWaybar = "${pkgs.procps}/bin/pkill -RTMIN+8 waybar";
+
   terminal-spawn = cmd: "${lib.getExe pkgs.alacritty} -e /bin/sh -c \"${cmd}\"";
 
   systemMonitor = terminal-spawn "${pkgs.btop}/bin/btop";
@@ -46,6 +51,7 @@ in
     hl.on("hyprland.start", function() hl.exec_cmd("waybar") end)
   '';
   stylix.targets.waybar.addCss = false;
+  services.mako.settings.on-notify = "exec ${refreshWaybar}";
 
   programs.waybar = {
     enable = true;
@@ -60,6 +66,7 @@ in
           "custom/player"
         ];
         modules-center = [
+          "custom/notifications"
           "clock"
           "privacy"
         ];
@@ -278,6 +285,45 @@ in
           format = "  ";
           tooltip-format = "${osConfig.system.nixos.distroName} ${osConfig.system.nixos.version} (${osConfig.system.nixos.codeName})";
           on-click = "fuzzel";
+        };
+        "custom/notifications" = {
+          return-type = "json";
+          interval = 5;
+          signal = 8;
+          exec = jsonOutput "notifications" {
+            pre = ''
+              notifs="$(${makoctl} list -j)"
+              count="$(${pkgs.jq}/bin/jq 'length' <<<"$notifs")"
+              list="$(${pkgs.jq}/bin/jq -r '.[] | "• \(.summary)"' <<<"$notifs")"
+              if ${makoctl} mode | grep -qx do-not-disturb; then
+                state="dnd"
+                tooltip="Do not disturb"
+              elif [ "$count" -gt 0 ]; then
+                state="active"
+                tooltip="$count notification(s)"
+              else
+                state="none"
+                tooltip="No notifications"
+              fi
+              [ -n "$list" ] && tooltip="$tooltip"$'\n'"$list"
+              [ "$count" -gt 0 ] && badge=" $count" || badge=""
+            '';
+            alt = "$state";
+            class = "$state";
+            text = "$badge";
+            tooltip = "$tooltip";
+          };
+          format = "{icon}{text}";
+          format-icons = {
+            none = "󰂚 ";
+            active = "󱅫 ";
+            dnd = "󰂛 ";
+          };
+          on-click = ''${makoctl} history -j | ${pkgs.jq}/bin/jq -r '.[] | "\(.summary) — \(.body)"' | ${fuzzel} --dmenu --prompt "notifications> " | ${wl-copy}'';
+          on-click-right = "${makoctl} dismiss --all; ${refreshWaybar}";
+          on-click-middle = "${makoctl} mode -t do-not-disturb; ${refreshWaybar}";
+          on-scroll-up = "${makoctl} restore; ${refreshWaybar}";
+          on-scroll-down = "${makoctl} dismiss; ${refreshWaybar}";
         };
         "custom/powermenu" = {
           format = " ";
