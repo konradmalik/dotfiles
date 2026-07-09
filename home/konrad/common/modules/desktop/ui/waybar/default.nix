@@ -1,4 +1,5 @@
 {
+  config,
   osConfig,
   pkgs,
   lib,
@@ -13,14 +14,14 @@ let
   impala = "${pkgs.impala}/bin/impala";
   bluetui = "${pkgs.bluetui}/bin/bluetui";
 
-  makoctl = "${pkgs.mako}/bin/makoctl";
-  fuzzel = "${pkgs.fuzzel}/bin/fuzzel";
+  makoctl = "${config.services.mako.package}/bin/makoctl";
+  fuzzel = "${config.programs.fuzzel.package}/bin/fuzzel";
   wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
   refreshWaybar = "${pkgs.procps}/bin/pkill -RTMIN+8 waybar";
 
-  terminal-spawn = cmd: "${lib.getExe pkgs.alacritty} -e /bin/sh -c \"${cmd}\"";
+  terminal-spawn = cmd: "${lib.getExe config.programs.alacritty.package} -e /bin/sh -c \"${cmd}\"";
 
-  systemMonitor = terminal-spawn "${pkgs.btop}/bin/btop";
+  systemMonitor = terminal-spawn "${config.programs.btop.package}/bin/btop";
   wiremix = terminal-spawn "${pkgs.wiremix}/bin/wiremix";
 
   # Function to simplify making waybar outputs

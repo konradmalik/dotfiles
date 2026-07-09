@@ -4,7 +4,7 @@ let
 in
 {
   wayland.windowManager.hyprland.extraConfig = ''
-    hl.on("hyprland.start", function() hl.exec_cmd("mako") end)
+    hl.on("hyprland.start", function() hl.exec_cmd("${config.services.mako.package}/bin/mako") end)
   '';
 
   services.mako = {
