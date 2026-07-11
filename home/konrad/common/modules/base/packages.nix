@@ -13,8 +13,7 @@
       unixtools.xxd
       wget
 
-      # FIXME unstable has hash mismatch
-      stable.croc
+      croc
       ouch
       zip
 
