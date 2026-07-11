@@ -47,5 +47,9 @@
       psmisc
       trace-cmd
     ]
-    ++ lib.optionals stdenvNoCC.isDarwin [ colima ];
+    # FIXME build failure on aarch64-darwin
+    ++ lib.optionals stdenvNoCC.isDarwin [
+      (builtins.getFlake "github:NixOS/nixpkgs/89570f24e97e614aa34aa9ab1c927b6578a43775")
+      .legacyPackages.${pkgs.system}.colima
+    ];
 }
