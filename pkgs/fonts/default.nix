@@ -1,11 +1,20 @@
 final: prev:
 
 let
-  # FIXME remove stable workaround once fixed. Unstable hangs
-  mkNerdFont = prev.callPackage ./mkNerdFont.nix { inherit (final.stable.pkgs) nerd-font-patcher; };
+  mkNerdFont = prev.callPackage ./mkNerdFont.nix { };
 in
 {
   fonts = {
-    iosemka = mkNerdFont (prev.callPackage ./iosemka.nix { });
+    # FIXME remove stable workaround once fixed. Unstable fails to build
+    iosemka = mkNerdFont (
+      prev.callPackage ./iosemka.nix {
+        inherit
+          ((builtins.getFlake "github:NixOS/nixpkgs/97dd352dc415e846fb278b773ff476bb38a80afb")
+            .legacyPackages.${prev.pkgs.system}
+          )
+          iosevka
+          ;
+      }
+    );
   };
 }
