@@ -9,11 +9,22 @@ stdenvNoCC.mkDerivation {
   nativeBuildInputs = [ nerd-font-patcher ];
 
   dontFixup = true;
-  dontInstall = true;
 
   buildPhase = ''
-    mkdir -p $out
-    find -name \*.ttf -exec nerd-font-patcher -o $out/share/fonts/truetype/ --no-progressbars --complete {} \;
-    find -name \*.otf -exec nerd-font-patcher -o $out/share/fonts/opentype/ --no-progressbars --complete {} \;
+    runHook preBuild
+
+    find -name \*.ttf -exec nerd-font-patcher -o patched/truetype/ --no-progressbars --complete {} \;
+    find -name \*.otf -exec nerd-font-patcher -o patched/opentype/ --no-progressbars --complete {} \;
+
+    runHook postBuild
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p "$out/share/fonts"
+    cp -a patched/. "$out/share/fonts/"
+
+    runHook postInstall
   '';
 }
