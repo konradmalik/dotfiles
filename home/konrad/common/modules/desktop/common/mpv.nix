@@ -40,18 +40,9 @@
   };
   programs.mpv = {
     enable = true;
-    # FIXME: fails to build on aarch64-darwin
-    package =
-      (
-        if pkgs.stdenv.hostPlatform.isDarwin then
-          (builtins.getFlake "github:NixOS/nixpkgs/89570f24e97e614aa34aa9ab1c927b6578a43775")
-          .legacyPackages.${pkgs.system}.mpv
-        else
-          pkgs.mpv
-      ).override
-        {
-          youtubeSupport = true;
-        };
+    package = pkgs.mpv.override {
+      youtubeSupport = true;
+    };
     config = {
       hwdec = "auto";
       loop-playlist = "inf";
