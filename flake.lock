@@ -713,6 +713,7 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_3",
         "nvim-lspconfig": "nvim-lspconfig",
+        "nvim-treesitter": "nvim-treesitter",
         "nvim-treesitter-context": "nvim-treesitter-context",
         "oil-nvim": "oil-nvim",
         "plenary-nvim": "plenary-nvim",
@@ -724,11 +725,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1784268416,
-        "narHash": "sha256-wZnB2sj/6H5fg2EIyhtuTdslaCAZKvLnrNWOAInZ3l0=",
+        "lastModified": 1784549913,
+        "narHash": "sha256-S0aNpdKMvjkDJrehPWv62e2FpYIIKLti1PMQBjmCzOA=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "d344d2cb6bb322da9070956099e3e060f92ac0a4",
+        "rev": "199856c339fd7ff73faeeb63de1d3aafdf3b4fb4",
         "type": "github"
       },
       "original": {
@@ -971,6 +972,28 @@
         "type": "github"
       }
     },
+    "nvim-treesitter": {
+      "inputs": {
+        "nixpkgs": [
+          "neovim",
+          "nixpkgs"
+        ],
+        "nvim-treesitter": "nvim-treesitter_2"
+      },
+      "locked": {
+        "lastModified": 1784549641,
+        "narHash": "sha256-egzQPNcRVMq0JAckNfPbDEL3vYBwlYbSfpnXnDAoVEs=",
+        "owner": "konradmalik",
+        "repo": "nvim-treesitter-nightly-overlay",
+        "rev": "964b7fb5d186293f4b8456d4942b889dce7d0f7e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "konradmalik",
+        "repo": "nvim-treesitter-nightly-overlay",
+        "type": "github"
+      }
+    },
     "nvim-treesitter-context": {
       "flake": false,
       "locked": {
@@ -984,6 +1007,22 @@
       "original": {
         "owner": "nvim-treesitter",
         "repo": "nvim-treesitter-context",
+        "type": "github"
+      }
+    },
+    "nvim-treesitter_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784500197,
+        "narHash": "sha256-FQj0+qeaW9rLy3dUbGbUG4UYtnry7UBA1n9SM2qXLdk=",
+        "owner": "nvim-treesitter",
+        "repo": "nvim-treesitter",
+        "rev": "7248feaca45e4d944591497964bc19afa89ad1c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-treesitter",
+        "repo": "nvim-treesitter",
         "type": "github"
       }
     },
