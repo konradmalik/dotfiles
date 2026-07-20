@@ -7,7 +7,7 @@ on:
 name: linux
 jobs:
   flake-check:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: wimpysworld/nothing-but-nix@v10
@@ -19,7 +19,7 @@ jobs:
         run: nix flake check
 
   build-shell:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - flake-check
     steps:
@@ -42,10 +42,10 @@ jobs:
       fail-fast: false
       matrix:
         host:
-          - { hostname: framework, os: ubuntu-24.04 }
-          - { hostname: rpi4-1, os: ubuntu-24.04-arm }
-          - { hostname: rpi4-2, os: ubuntu-24.04-arm }
-          - { hostname: x1c6, os: ubuntu-24.04 }
+          - { hostname: framework, os: ubuntu-26.04 }
+          - { hostname: rpi4-1, os: ubuntu-26.04-arm }
+          - { hostname: rpi4-2, os: ubuntu-26.04-arm }
+          - { hostname: x1c6, os: ubuntu-26.04 }
     runs-on: ${{ matrix.host.os }}
     needs:
       - flake-check
@@ -65,7 +65,7 @@ jobs:
         run: nix build .#nixosConfigurations.${{ matrix.host.hostname }}.config.system.build.toplevel
 
   build-homemanager:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - flake-check
     steps:
