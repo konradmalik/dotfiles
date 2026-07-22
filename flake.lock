@@ -717,6 +717,7 @@
         "nvim-treesitter-context": "nvim-treesitter-context",
         "oil-nvim": "oil-nvim",
         "plenary-nvim": "plenary-nvim",
+        "sops-nvim": "sops-nvim",
         "telescope-fzf-native-nvim": "telescope-fzf-native-nvim",
         "telescope-live-grep-args-nvim": "telescope-live-grep-args-nvim",
         "telescope-nvim": "telescope-nvim",
@@ -725,11 +726,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1784549913,
-        "narHash": "sha256-S0aNpdKMvjkDJrehPWv62e2FpYIIKLti1PMQBjmCzOA=",
+        "lastModified": 1784731740,
+        "narHash": "sha256-ov+s9eHgH/5mhCkEW+NA6qy9JiAKj5VrsqZh5enTK+0=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "199856c339fd7ff73faeeb63de1d3aafdf3b4fb4",
+        "rev": "6ffff73770bdd78c1c0ed0c1c1172ce27fae4d96",
         "type": "github"
       },
       "original": {
@@ -1090,6 +1091,22 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "sops-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783728147,
+        "narHash": "sha256-pMnAGm7tkgM5pxhNEs06Qdx69qztMd14uNpuRi4I4qE=",
+        "owner": "trixnz",
+        "repo": "sops.nvim",
+        "rev": "4de0cb71746d7a6de6311c85bc39873e56bcefc7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "trixnz",
+        "repo": "sops.nvim",
         "type": "github"
       }
     },
