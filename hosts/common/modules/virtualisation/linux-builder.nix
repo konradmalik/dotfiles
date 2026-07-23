@@ -1,12 +1,10 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
-  # /tmp so the console log self-cleans (macOS reaps it after ~3 days idle)
-  # instead of growing unbounded; launchd recreates it on each start.
-  logFile = "/tmp/linux-builder.log";
   # start/stop/restart/status helper for the on-demand linux-builder VM
   linux-builder-ctl = pkgs.writeShellApplication {
     name = "linux-builder-ctl";
@@ -31,11 +29,17 @@ let
           fi
           ;;
         logs)
-          # follow the VM console/boot log; optional arg = initial lines (default 100)
-          sudo tail -n "''${2:-100}" -F ${logFile}
+          # vzvm sends the guest console to macOS unified logging
+          # no arg: follow live; arg = historical window, e.g. `logs 1h`
+          pred='subsystem == "systems.applicative.vzvm"'
+          if [ -n "''${2:-}" ]; then
+            log show --last "$2" --predicate "$pred"
+          else
+            log stream --predicate "$pred"
+          fi
           ;;
         *)
-          echo "usage: linux-builder-ctl {start|stop|restart|status|logs [lines]}" >&2
+          echo "usage: linux-builder-ctl {start|stop|restart|status|logs [duration]}" >&2
           exit 1
           ;;
       esac
@@ -49,22 +53,27 @@ in
   launchd.daemons.linux-builder.serviceConfig = {
     RunAtLoad = lib.mkForce false;
     KeepAlive = lib.mkForce false;
-    # capture the VM console/boot output so `linux-builder-ctl logs` can tail it
-    StandardOutPath = logFile;
-    StandardErrorPath = logFile;
   };
+
+  # vzvm: back the builder with Apple's Virtualization.framework instead of QEMU.
+  nixpkgs.overlays = [ inputs.vzvm.overlays.default ];
 
   nix.linux-builder = {
     # sudo ssh linux-builder
     enable = true;
+    package = pkgs.darwin.linux-builder-vz;
     ephemeral = true;
+    # x86_64-linux via Rosetta (needs `softwareupdate --install-rosetta` on the host)
+    systems = [
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
     config = {
       virtualisation = {
         cores = 6;
-        darwin-builder = {
-          memorySize = 8 * 1024;
-          diskSize = 60 * 1024;
-        };
+        # mkForce: the vzvm profile pins these at normal priority
+        memorySize = lib.mkForce (8 * 1024); # MiB
+        diskSize = lib.mkForce (60 * 1024); # MiB
       };
     };
   };

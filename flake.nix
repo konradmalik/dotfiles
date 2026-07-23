@@ -14,6 +14,11 @@
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vzvm = {
+      # Apple Virtualization.framework backend for nix.linux-builder
+      url = "github:applicative-systems/vzvm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     disko = {

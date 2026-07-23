@@ -1071,7 +1071,8 @@
         "nixpkgs": "nixpkgs_5",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "sops-nix": "sops-nix",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "vzvm": "vzvm"
       }
     },
     "sops-nix": {
@@ -1335,6 +1336,26 @@
       "original": {
         "owner": "tpope",
         "repo": "vim-fugitive",
+        "type": "github"
+      }
+    },
+    "vzvm": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784630957,
+        "narHash": "sha256-wAozYULlBYelKH5Z35uOWm6nzu9gpMCV6G5WhWL8GKk=",
+        "owner": "applicative-systems",
+        "repo": "vzvm",
+        "rev": "9f92052c7d9698382230b5f31db44db43b4a3121",
+        "type": "github"
+      },
+      "original": {
+        "owner": "applicative-systems",
+        "repo": "vzvm",
         "type": "github"
       }
     },
