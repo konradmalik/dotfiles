@@ -1,4 +1,3 @@
-{ ... }:
 {
   imports = [
     ./shared
@@ -12,11 +11,6 @@
         Hour = 2;
         Minute = 0;
       };
-    };
-    linux-builder = {
-      # sudo ssh linux-builder
-      enable = false;
-      ephemeral = true;
     };
   };
 }
