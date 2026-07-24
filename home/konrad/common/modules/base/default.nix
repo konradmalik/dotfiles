@@ -18,10 +18,8 @@
     ./gpg.nix
     ./k9s.nix
     ./lazygit.nix
-    ./opencode
     ./packages.nix
     ./readline.nix
-    ./rtorrent.nix
     ./shells
     ./sops.nix
     ./ssh-keys.nix
