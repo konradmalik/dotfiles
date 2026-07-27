@@ -14,6 +14,12 @@
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # TODO: drop this input once the PR is merged, see modules/virtualisation/darwin.nix
+    # https://github.com/nix-darwin/nix-darwin/pull/1691
+    darwin-container = {
+      url = "github:heywoodlh/nix-darwin/container-init";
+      flake = false;
+    };
     vzvm = {
       # Apple Virtualization.framework backend for nix.linux-builder
       url = "github:applicative-systems/vzvm";
