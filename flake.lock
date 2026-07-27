@@ -137,23 +137,6 @@
         "type": "github"
       }
     },
-    "darwin-container": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1783014345,
-        "narHash": "sha256-wdn3a7kpdVizMppuR5QUeKxbWoS7uQSE4/0vMvcOERI=",
-        "owner": "heywoodlh",
-        "repo": "nix-darwin",
-        "rev": "e4f95598d1b30bd59f0c2095df3f235a224d3073",
-        "type": "github"
-      },
-      "original": {
-        "owner": "heywoodlh",
-        "ref": "container-init",
-        "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -1081,7 +1064,6 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
-        "darwin-container": "darwin-container",
         "disko": "disko",
         "flake-compat": "flake-compat",
         "home-manager": "home-manager",
