@@ -39,10 +39,30 @@ jobs:
       - name: Shell build
         run: nix build .#devShells.aarch64-darwin.default
 
+  build-linux-builder-image:
+    runs-on: ubuntu-26.04-arm
+    needs:
+      - flake-check
+    steps:
+      - uses: actions/checkout@v7
+      - uses: wimpysworld/nothing-but-nix@v10
+      - uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            accept-flake-config = true
+      - if: ${{ !github.event.pull_request.head.repo.fork }}
+        uses: cachix/cachix-action@v17
+        with:
+          name: "konradmalik"
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Build linux-builder guest system
+        run: nix build .#darwinConfigurations.m4.config.nix.linux-builder.package.nixosConfig.system.build.toplevel
+
   build-m4:
     runs-on: macos-26
     needs:
       - flake-check
+      - build-linux-builder-image
     steps:
       - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@v22
