@@ -5,11 +5,12 @@
 }:
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
+    inputs.nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
 
     ./hardware-configuration.nix
     ./disko.nix
 
+    ../common/modules/llama.nix
     ../common/profiles/desktop.nix
   ];
 
