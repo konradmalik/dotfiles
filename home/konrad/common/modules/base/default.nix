@@ -18,6 +18,7 @@
     ./gpg.nix
     ./k9s.nix
     ./lazygit.nix
+    ./opencode.nix
     ./packages.nix
     ./readline.nix
     ./shells
