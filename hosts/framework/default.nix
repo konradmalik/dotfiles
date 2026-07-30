@@ -10,7 +10,7 @@
     ./hardware-configuration.nix
     ./disko.nix
 
-    ../common/modules/llama.nix
+    ../common/modules/llama
     ../common/profiles/desktop.nix
   ];
 
