@@ -22,10 +22,18 @@ let
   ];
 in
 {
+  boot.kernelParams =
+    let
+      maxGpuGB = 48;
+      pageSizeKiB = 48;
+    in
+    [
+      "amdgpu.gttsize=${toString (maxGpuGB * 1024)}"
+      "ttm.pages_limit=${toString (maxGpuGB * 1024 * 1024 * 1024 / pageSizeKiB)}"
+    ];
+
   services.llama-swap = {
     enable = true;
-    # NOTE: llama-swap takes a single listen address, so the firewall below is
-    # what actually limits it to the lan and the tailnet
     listenAddress = "0.0.0.0";
     inherit (llama) port;
 
@@ -81,6 +89,7 @@ in
     };
   };
 
+  # expose only on specified interfaces
   networking.firewall.interfaces = lib.genAttrs exposedInterfaces (_: {
     allowedTCPPorts = [ config.services.llama-swap.port ];
   });

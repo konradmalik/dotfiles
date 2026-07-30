@@ -1,5 +1,4 @@
 {
-  # NOTE: absent entirely in the standalone konrad@generic config
   osConfig ? { },
   pkgs,
   lib,
@@ -11,8 +10,6 @@ let
 
   llama = import ../../../../../hosts/common/modules/llama/shared.nix;
 
-  # NOTE: `or false` matters on darwin, where services.llama-swap does not exist
-  # at all. Only the framework host serves locally, the rest go over the tailnet.
   servesLocally = osConfig.services.llama-swap.enable or false;
 
   baseURL = "http://${
