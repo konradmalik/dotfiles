@@ -74,7 +74,9 @@ in
   };
 
   systemd.services.llama-swap = {
-    environment.LLAMA_CACHE = modelsDir;
+    # NOTE: upstream points this at its CacheDirectory. Keep the models in state
+    # instead, they are tens of GB and /var/cache is fair game for cleanup.
+    environment.LLAMA_CACHE = lib.mkForce modelsDir;
     serviceConfig = {
       StateDirectory = "llama-swap/models";
       # NOTE: DynamicUser needs these to reach /dev/dri/renderD128 for Vulkan,
