@@ -92,8 +92,8 @@
     defaults = {
       # 6 is CPU History
       ActivityMonitor.IconType = 6;
-      # Show battery percentage in the menu bar
-      controlcenter.BatteryShowPercentage = true;
+      # Don't show battery percentage in the menu bar
+      controlcenter.BatteryShowPercentage = false;
       dock = {
         autohide = true;
         expose-group-apps = true;
