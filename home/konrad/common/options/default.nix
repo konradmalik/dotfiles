@@ -1,5 +1,5 @@
 {
-  bitwarden = import ./bitwarden.nix;
+  bitwarden = import ./bitwarden;
   nvim = import ./nvim.nix;
   restic = import ./restic;
   ssh-egress = import ./ssh-egress.nix;
