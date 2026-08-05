@@ -7,12 +7,9 @@
 with lib;
 let
   cfg = config.konrad.programs.bitwarden;
-  # exports secrets kept as hidden fields of a single item, see bw-env.sh
+  # moves secrets between hidden fields of an item and the environment,
+  # see bw-env.sh for the get/import/export commands
   bw-env = pkgs.callPackage ./bw-env { bitwarden-cli = cfg.package; };
-  # the inverse, turns a .env file into such an item
-  bw-env-import = pkgs.callPackage ./bw-env-import { bitwarden-cli = cfg.package; };
-  # and back out again, for tools that insist on a .env file
-  bw-env-export = pkgs.callPackage ./bw-env-export { bitwarden-cli = cfg.package; };
   # helper to unlock bw and export session automatically
   jq = "${pkgs.jq}/bin/jq";
   bw = "${cfg.package}/bin/bw";
@@ -66,8 +63,6 @@ in
     home.packages = [
       cfg.package
       bw-env
-      bw-env-import
-      bw-env-export
     ];
   };
 }
