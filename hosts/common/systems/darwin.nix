@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   inputs,
   ...
@@ -36,6 +37,9 @@
       upgrade = true;
       cleanup = "zap";
     };
+    brews = lib.optionals config.home-manager.users.konrad.konrad.programs.bitwarden.enable [
+      "jeanregisser/tap/bitwarden-cli-bio"
+    ];
     casks = [
       "alacritty"
       "calibre"
