@@ -4,6 +4,7 @@
     ../modules/dm.nix
     ../modules/hyprland.nix
     ../modules/fontconfig.nix
+    ../modules/printing.nix
 
     ../systems/nixos.nix
   ];
