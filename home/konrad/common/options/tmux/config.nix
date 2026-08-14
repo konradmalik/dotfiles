@@ -36,10 +36,6 @@
   # Enable OSC 52 clipboard
   set-option -g set-clipboard on
 
-  # Forward disambiguated keys (ctrl-i vs tab, ctrl-shift-*) to apps that ask for them.
-  # Needs the per-terminal 'extkeys' feature to actually reach the host terminal.
-  set-option -s extended-keys on
-
   # vim splits
   bind-key v split-window -h
   bind-key g split-window -v
