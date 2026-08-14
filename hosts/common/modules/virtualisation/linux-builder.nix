@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
@@ -59,12 +58,10 @@ in
     KeepAlive = lib.mkForce false;
   };
 
-  # vzvm: back the builder with Apple's Virtualization.framework instead of QEMU.
-  nixpkgs.overlays = [ inputs.vzvm.overlays.default ];
-
   nix.linux-builder = {
     # sudo ssh linux-builder
     enable = true;
+    # vzvm: Apple's Virtualization.framework instead of QEMU
     package = pkgs.darwin.linux-builder-vz;
     ephemeral = true;
     # x86_64-linux via Rosetta (needs `softwareupdate --install-rosetta` on the host)
@@ -75,9 +72,10 @@ in
     config = {
       virtualisation = {
         cores = 6;
-        # mkForce: the vzvm profile pins these at normal priority
-        memorySize = lib.mkForce (8 * 1024); # MiB
-        diskSize = lib.mkForce (60 * 1024); # MiB
+        darwin-builder = {
+          memorySize = 8 * 1024; # MiB
+          diskSize = 60 * 1024; # MiB
+        };
       };
     };
   };
