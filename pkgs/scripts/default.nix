@@ -124,7 +124,9 @@ in
       file = ./terminal-testdrive.sh;
       deps = with pkgs; [
         bc
+        coreutils
         gawk
+        ncurses
       ];
     }
     {
