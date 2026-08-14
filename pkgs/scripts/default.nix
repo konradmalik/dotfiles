@@ -122,11 +122,12 @@ in
     }
     {
       file = ./terminal-testdrive.sh;
+      # no ncurses: its share/terminfo collides with ghostty's in the home-manager path,
+      # and tput is only used with an '|| echo 80' fallback anyway
       deps = with pkgs; [
         bc
         coreutils
         gawk
-        ncurses
       ];
     }
     {
