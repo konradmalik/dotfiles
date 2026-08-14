@@ -14,7 +14,7 @@ in
     # bash
     ''
       # overrides for the ghostty (host) terminal features
-      set -as terminal-features ",*ghostty*:hyperlinks:osc7:progressbar:overline:extkeys:usstyle"
+      set -as terminal-features ",*ghostty*:hyperlinks:osc7:progressbar:overline:usstyle"
     '';
 
   programs.ghostty = {
