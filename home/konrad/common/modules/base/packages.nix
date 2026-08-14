@@ -42,13 +42,13 @@
       glab
     ]
     ++ (builtins.attrValues custom.scripts)
-    ++ lib.optionals stdenvNoCC.isLinux [
+    ++ lib.optionals stdenvNoCC.hostPlatform.isLinux [
       psmisc
       trace-cmd
     ]
     # FIXME build failure on aarch64-darwin
-    ++ lib.optionals stdenvNoCC.isDarwin [
+    ++ lib.optionals stdenvNoCC.hostPlatform.isDarwin [
       (builtins.getFlake "github:NixOS/nixpkgs/89570f24e97e614aa34aa9ab1c927b6578a43775")
-      .legacyPackages.${pkgs.system}.colima
+      .legacyPackages.${pkgs.stdenv.hostPlatform.system}.colima
     ];
 }

@@ -9,7 +9,7 @@
     overlays = [
       (final: prev: {
         stable = import inputs.nixpkgs-stable {
-          system = prev.system;
+          inherit (prev.stdenv.hostPlatform) system;
         };
         custom =
           ((import ../../../../../pkgs/scripts) final prev)
@@ -37,8 +37,8 @@
       trusted-users = [
         "root"
       ]
-      ++ lib.optional pkgs.stdenvNoCC.isLinux "@wheel"
-      ++ lib.optional pkgs.stdenvNoCC.isDarwin "@admin";
+      ++ lib.optional pkgs.stdenvNoCC.hostPlatform.isLinux "@wheel"
+      ++ lib.optional pkgs.stdenvNoCC.hostPlatform.isDarwin "@admin";
       extra-substituters = [
         "https://konradmalik.cachix.org"
         "https://nix-community.cachix.org"

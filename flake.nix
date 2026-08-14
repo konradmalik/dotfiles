@@ -102,7 +102,7 @@
             name = "dotfiles";
 
             shellHook =
-              pkgs.lib.optionalString pkgs.stdenvNoCC.isLinux
+              pkgs.lib.optionalString pkgs.stdenvNoCC.hostPlatform.isLinux
                 # bash
                 ''
                   ln -fs ${hyprlandLuarc} ./home/konrad/common/modules/desktop/ui/hyprland/.luarc.json
@@ -117,8 +117,10 @@
                 sops
                 ssh-to-age
               ])
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isDarwin darwinPackages
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.isLinux [ (getSystem inputs.disko.packages).disko ];
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
+                (getSystem inputs.disko.packages).disko
+              ];
           };
         }
       );
@@ -161,7 +163,7 @@
         pkgs:
         pkgs.fonts
         // pkgs.scripts
-        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.isLinux) (
+        // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.hostPlatform.isLinux) (
           let
             rpiSdCard = "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
             # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243

@@ -27,7 +27,7 @@ in
       shell-integration-features = true;
     };
   }
-  // lib.optionalAttrs pkgs.stdenv.isDarwin {
+  // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
     package = null;
   };
 }
