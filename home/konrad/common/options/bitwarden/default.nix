@@ -11,7 +11,7 @@ let
   # see bw-env.sh for the get/import/export commands
   bw-env = pkgs.callPackage ./bw-env { bitwarden-cli = cfg.package; };
   # bwbio is bw with touchID unlock support, installed via homebrew (see hosts darwin.nix)
-  bwbioAliases = optionalAttrs pkgs.stdenv.isDarwin { bw = "bwbio"; };
+  bwbioAliases = optionalAttrs pkgs.stdenv.hostPlatform.isDarwin { bw = "bwbio"; };
   # helper to unlock bw and export session automatically
   jq = "${pkgs.jq}/bin/jq";
   # this needs to be a shell function due to 'export'

@@ -54,7 +54,7 @@ in
       imagemagick
       zoxide
     ]
-    ++ lib.optionals stdenvNoCC.isLinux [
+    ++ lib.optionals stdenvNoCC.hostPlatform.isLinux [
       wl-clipboard
     ];
 }

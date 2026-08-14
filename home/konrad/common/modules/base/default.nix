@@ -35,7 +35,7 @@
     ssh-egress.enable = true;
     nvim = {
       enable = true;
-      package = inputs.neovim.packages.${pkgs.system}.default;
+      package = inputs.neovim.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
   };
 
