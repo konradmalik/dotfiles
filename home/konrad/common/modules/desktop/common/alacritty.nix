@@ -4,10 +4,12 @@
   ...
 }:
 {
-  programs.tmux.extraConfig = ''
-    # overrides for the alacritty (host) terminal features
-    set -as terminal-features ",alacritty*:RGB:hyperlinks:strikethrough:usstyle"
-  '';
+  programs.tmux.extraConfig =
+    # bash
+    ''
+      # overrides for the alacritty (host) terminal features
+      set -as terminal-features ",alacritty*:RGB:hyperlinks:usstyle:focus:osc7"
+    '';
 
   programs.alacritty = {
     enable = lib.mkDefault true;

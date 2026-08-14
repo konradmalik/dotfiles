@@ -29,12 +29,16 @@
   set-option -g monitor-activity on
   set-option -g visual-activity off
 
-  # This allows applications running inside tmux to receive and process certain terminal escape sequences directly,
-  # improving compatibility with terminal features like OSC 52 clipboard integration, hyperlinks, and images.
+  # Forwards escape sequences tmux can't parse verbatim to the host terminal.
+  # Needed for kitty graphics (yazi previews); OSC 52 and hyperlinks are handled by tmux itself.
   set-option -g allow-passthrough on
 
   # Enable OSC 52 clipboard
   set-option -g set-clipboard on
+
+  # Forward disambiguated keys (ctrl-i vs tab, ctrl-shift-*) to apps that ask for them.
+  # Needs the per-terminal 'extkeys' feature to actually reach the host terminal.
+  set-option -s extended-keys on
 
   # vim splits
   bind-key v split-window -h

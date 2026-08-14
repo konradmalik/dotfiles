@@ -10,6 +10,13 @@ in
 {
   home.sessionVariables.TERMINAL = if pkg != null then lib.getExe pkg else "ghostty";
 
+  programs.tmux.extraConfig =
+    # bash
+    ''
+      # overrides for the ghostty (host) terminal features
+      set -as terminal-features ",*ghostty*:hyperlinks:osc7:progressbar:overline:extkeys:usstyle"
+    '';
+
   programs.ghostty = {
     enable = lib.mkDefault true;
     settings = {
