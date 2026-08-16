@@ -54,7 +54,9 @@ in
             IdentityFile = "${config.home.homeDirectory}/.ssh/cerebre";
           };
 
-          "Host *" = {
+          # must be named "*" so home-manager emits it last;
+          # ssh takes the first obtained value for each keyword
+          "*" = {
             ForwardAgent = "no";
             ServerAliveInterval = 15;
             ServerAliveCountMax = 6;
