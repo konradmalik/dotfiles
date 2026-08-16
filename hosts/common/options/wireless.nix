@@ -125,8 +125,6 @@ in
       wireless.iwd = {
         enable = true;
         settings = {
-          Settings.AutoConnect = true;
-
           Network = {
             EnableIPv6 = false;
           };
