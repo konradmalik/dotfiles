@@ -13,7 +13,19 @@
 
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
-  konrad.network.wireless.enable = true;
+
+  # TODO fill them
+  # sops.secrets."wifi/home" = { };
+  # sops.secrets."wifi/office" = { };
+  konrad.network.wireless = {
+    enable = true;
+    networks = {
+      # "home".passphraseFile = config.sops.secrets."wifi/home".path;
+      # "office wifi".passphraseFile = config.sops.secrets."wifi/office".path;
+      "some cafe".passphrase = "freecoffee";
+    };
+  };
+
   konrad.services = {
     autoupgrade = {
       enable = true;
