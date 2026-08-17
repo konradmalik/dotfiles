@@ -5,10 +5,10 @@
     settings = {
       git = {
         overrideGpg = true;
-        pagers = [
+        diffRenderers = [
           {
             colorArg = "always";
-            pager = "${lib.getExe pkgs.delta} --dark --paging=never";
+            command = "${lib.getExe pkgs.delta} --dark --paging=never";
           }
         ];
       };
