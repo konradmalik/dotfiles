@@ -54,6 +54,7 @@
   outputs =
     { self, ... }@inputs:
     let
+
       forAllSystems =
         function:
         inputs.nixpkgs.lib.genAttrs
@@ -65,13 +66,10 @@
           (
             system:
             function (
-              import inputs.nixpkgs {
-                inherit system;
-                overlays = [
-                  (import ./pkgs/fonts)
-                  (import ./pkgs/scripts)
-                ];
-              }
+              inputs.nixpkgs.legacyPackages.${system}.appendOverlays [
+                (import ./pkgs/fonts)
+                (import ./pkgs/scripts)
+              ]
             )
           );
 
