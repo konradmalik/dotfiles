@@ -20,7 +20,7 @@
     enable = true;
     networks = {
       "pozdrawiamhipstera".passphraseFile = config.sops.secrets."wifi/home".path;
-      "Konrad's iPhone".passphraseFile = config.sops.secrets."wifi/hotspot".path;
+      "Konrad’s iPhone".passphraseFile = config.sops.secrets."wifi/hotspot".path;
     };
   };
 
