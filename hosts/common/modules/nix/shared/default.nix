@@ -15,6 +15,18 @@
           ((import ../../../../../pkgs/scripts) final prev)
           // ((import ../../../../../pkgs/fonts) final prev);
       })
+      # curl-impersonate's dylib kept upstream's @rpath install name on darwin,
+      # so consumers (e.g. python3Packages.curl-cffi, a yt-dlp dependency)
+      # fail at load time with "Library not loaded: @rpath/libcurl-impersonate.4.dylib".
+      # Fixed upstream via https://github.com/NixOS/nixpkgs/commit/9da1a5ec6c87b0def6717f4c99ca499fe95ba213
+      # TODO: remove this overlay once that fix reaches our nixpkgs input.
+      (final: prev: {
+        curl-impersonate = prev.curl-impersonate.overrideAttrs (old: {
+          nativeBuildInputs =
+            (old.nativeBuildInputs or [ ])
+            ++ prev.lib.optionals prev.stdenv.hostPlatform.isDarwin [ prev.fixDarwinDylibNames ];
+        });
+      })
     ];
     config = {
       allowUnfree = true;
