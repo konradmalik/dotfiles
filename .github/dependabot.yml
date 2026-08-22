@@ -9,6 +9,7 @@ updates:
 
   - package-ecosystem: "nix"
     directory: "/"
+    cooldown: 0
     schedule:
       interval: "weekly"
       day: "saturday"
