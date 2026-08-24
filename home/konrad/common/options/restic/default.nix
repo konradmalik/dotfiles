@@ -12,16 +12,11 @@ in
   options.konrad.programs.restic = {
     enable = mkEnableOption "Enables restic backups through home-manager and backblaze b2";
 
-    b2ApplicationId = mkOption {
+    b2ApplicationKeyId = mkOption {
       type = types.str;
       example = "12345";
-      description = "backblaze account id";
+      description = "backblaze application key id";
       default = "0035814e69b653f0000000006";
-    };
-
-    b2ApplicationKeyFile = mkOption {
-      type = types.str;
-      description = "file containing backblaze account key";
     };
 
     b2Bucket = mkOption {
@@ -31,11 +26,72 @@ in
       default = "backups-km";
     };
 
+    b2S3Endpoint = mkOption {
+      type = types.str;
+      example = "s3.us-west-004.backblazeb2.com";
+      description = ''
+        Backblaze s3-compatible endpoint hosting the bucket. Shown in the b2 console
+        on the bucket details page. Must match the account's realm, otherwise every
+        restic invocation fails to reach the repository.
+      '';
+      default = "s3.eu-central-003.backblazeb2.com";
+    };
+
     package = lib.mkOption {
       type = lib.types.package;
       default = pkgs.restic;
       description = "Package for restic";
       example = "pkgs.restic";
+    };
+
+    retryLock = mkOption {
+      type = types.str;
+      example = "15m";
+      description = ''
+        How long restic retries acquiring the repository lock. All machines share one
+        repo, so an exclusive operation (forget --prune) collides with any other
+        host's running backup; without retries it fails immediately.
+      '';
+      default = "1h";
+    };
+
+    retention = mkOption {
+      description = "Retention policy used by forget and forget-prune";
+      default = { };
+      type = types.submodule {
+        options = {
+          last = mkOption {
+            type = types.int;
+            default = 3;
+            description = "keep the last n snapshots";
+          };
+          hourly = mkOption {
+            type = types.int;
+            default = 12;
+            description = "keep the last n hourly snapshots";
+          };
+          daily = mkOption {
+            type = types.int;
+            default = 7;
+            description = "keep the last n daily snapshots";
+          };
+          weekly = mkOption {
+            type = types.int;
+            default = 4;
+            description = "keep the last n weekly snapshots";
+          };
+          monthly = mkOption {
+            type = types.int;
+            default = 12;
+            description = "keep the last n monthly snapshots";
+          };
+          yearly = mkOption {
+            type = types.int;
+            default = 2;
+            description = "keep the last n yearly snapshots";
+          };
+        };
+      };
     };
 
     includes = lib.mkOption {
@@ -67,27 +123,122 @@ in
   # great reference https://hugoreeves.com/posts/2019/backups-with-restic/
   config =
     let
-      repostiory = "b2:${cfg.b2Bucket}";
-      restic = cfg.package;
-
       baker = pkgs.callPackage ./baker.nix {
-        inherit
-          repostiory
-          restic
-          ;
         inherit (cfg)
           includes
           excludes
-          b2ApplicationId
+          retention
+          retryLock
           ;
 
+        restic = cfg.package;
+        repository = "s3:${cfg.b2S3Endpoint}/${cfg.b2Bucket}";
+        applicationKeyId = cfg.b2ApplicationKeyId;
+        applicationKeyFile = config.sops.secrets."restic/b2_application_key".path;
         passwordFile = config.sops.secrets."restic/password".path;
-        b2ApplicationKeyFile = config.sops.secrets."restic/b2_application_key".path;
       };
 
-      mkUnit = command: script: {
+      # local mutex, unrelated to the restic lock inside the repository: it only
+      # keeps two baker jobs on this machine from running at the same time.
+      lockFile = "/tmp/baker.lock";
+
+      # wraps a baker command with the local mutex, logging and notifications.
+      runner =
+        name: bakerCommand:
+        let
+          notifier =
+            priority: tags:
+            pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
+              inherit config priority tags;
+              title = "baker";
+              # ntfy-sender interpolates this into the request body, so the message
+              # is built at runtime and carries the exit code and the failing output.
+              text = "$MSG";
+            };
+
+          notifierInfo = notifier "min" "";
+          notifierError = notifier "high" "warning";
+        in
+        pkgs.writeShellScript "restic-${name}.sh"
+          # bash
+          ''
+            set -uo pipefail
+
+            export PATH="${
+              lib.makeBinPath [
+                pkgs.coreutils
+                pkgs.flock
+              ]
+            }:$PATH"
+
+            log="$(mktemp)"
+            trap 'rm -f "$log"' EXIT
+
+            exec 9>"${lockFile}"
+            if ! flock --exclusive --timeout 900 9; then
+              MSG="${name} skipped, another baker run is still in progress"
+              export MSG
+              echo "$MSG"
+              ${notifierInfo}
+              exit 0
+            fi
+
+            echo "=== ${name} started $(date)"
+            ${baker}/bin/baker ${bakerCommand} 2>&1 | tee "$log"
+            code="''${PIPESTATUS[0]}"
+            echo "=== ${name} finished with exit code $code $(date)"
+
+            if [[ "$code" == 0 ]]; then
+              MSG="${name} succeeded"
+              export MSG
+              ${notifierInfo}
+            else
+              MSG="${name} failed (exit $code)"$'\n'"$(tail -c 800 "$log")"
+              export MSG
+              ${notifierError}
+            fi
+
+            exit "$code"
+          '';
+
+      # one definition per job, so linux and darwin cannot drift apart.
+      # backups are deliberately off the full hour: every machine used to start at
+      # :00, which is exactly when the weekly maintenance jobs needed the repo.
+      jobs = {
+        backup = {
+          command = "backup";
+          onCalendar = "*:07";
+          calendarInterval = [ { Minute = 7; } ];
+        };
+        check = {
+          command = "check";
+          onCalendar = "Sat 04:30";
+          calendarInterval = [
+            {
+              Weekday = 6;
+              Hour = 4;
+              Minute = 30;
+            }
+          ];
+        };
+        forget = {
+          command = "forget-prune";
+          onCalendar = "Sun 04:30";
+          calendarInterval = [
+            {
+              Weekday = 0;
+              Hour = 4;
+              Minute = 30;
+            }
+          ];
+        };
+      };
+
+      scripts = mapAttrs (name: job: runner name job.command) jobs;
+
+      mkUnit = name: {
         Unit = {
-          Description = "Restic ${command}";
+          Description = "Restic ${name}";
           After = [
             "sops-nix.service"
             "network.target"
@@ -96,79 +247,52 @@ in
 
         Service = {
           Type = "oneshot";
-          ExecStart = "${lib.getExe pkgs.flock} --exclusive --timeout 60 /tmp/baker.lock ${script}";
+          Nice = 19;
+          IOSchedulingClass = "idle";
+          ExecStart = toString scripts.${name};
         };
       };
 
-      mkTimer = command: interval: {
+      mkTimer = name: job: {
         Unit = {
-          Description = "Restic ${command} timer";
+          Description = "Restic ${name} timer";
         };
 
         Install.WantedBy = [ "timers.target" ];
 
         Timer = {
-          Unit = "restic-${command}.service";
-          OnCalendar = interval;
+          Unit = "restic-${name}.service";
+          OnCalendar = job.onCalendar;
+          # all hosts back up to the same repo, so don't let them start in lockstep
+          RandomizedDelaySeconds = 900;
+          AccuracySec = "1m";
           Persistent = true;
         };
       };
 
-      mkAgent = command: script: interval: {
+      mkAgent = name: job: {
         enable = true;
         config = {
           ProcessType = "Background";
+          LowPriorityIO = true;
+          # caffeinate keeps idle and disk sleep away for the duration of the run:
+          # a suspended restic stops refreshing its repository lock, gets killed and
+          # leaves the lock behind.
           ProgramArguments = [
-            "${lib.getExe pkgs.flock}"
-            "--exclusive"
-            "--timeout"
-            "60"
-            "/tmp/baker.lock"
-            (toString script)
+            "/usr/bin/caffeinate"
+            "-i"
+            "-m"
+            (toString scripts.${name})
           ];
           RunAtLoad = false;
-          StandardOutPath = "/tmp/restic/${command}/stdout";
-          StandardErrorPath = "/tmp/restic/${command}/stderr";
-          StartCalendarInterval = interval;
+          # /tmp is wiped on reboot, which left no trace of failed runs
+          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/restic/${name}.log";
+          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/restic/${name}.log";
+          # every key left out here is a wildcard, so an entry without Hour and
+          # Minute launches the job every single minute of that weekday
+          StartCalendarInterval = job.calendarInterval;
         };
       };
-
-      command =
-        name: cmd:
-        let
-          notifierError = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
-            inherit config;
-            priority = "high";
-            tags = "warning";
-            title = "baker";
-            text = "${name} failed";
-          };
-
-          notifierInfo = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
-            inherit config;
-            priority = "min";
-            title = "baker";
-            text = "${name} succeeded";
-          };
-        in
-        pkgs.writeShellScript "${name}.sh"
-          # bash
-          ''
-            echo "${name}"
-            ${pkgs.coreutils}/bin/date
-            ${cmd}
-            code=$?
-            if [[ "$code" == 0 ]]; then
-              ${notifierInfo}
-            else
-              ${notifierError}
-            fi
-            echo
-          '';
-
-      resticBackup = command "restic-backup" "${baker}/bin/baker b2 backup";
-      resticForget = command "restic-forget" "${baker}/bin/baker b2 forget-prune";
-      resticCheck = command "restic-check" "${baker}/bin/restic-b2 check";
     in
     mkIf cfg.enable {
       sops.secrets =
@@ -184,24 +308,10 @@ in
 
       home.packages = [ baker ];
 
-      systemd.user.services = {
-        "restic-backup" = mkUnit "backup" resticBackup;
-        "restic-forget" = mkUnit "forget" resticForget;
-        "restic-check" = mkUnit "check" resticCheck;
-      };
+      systemd.user.services = mapAttrs' (name: _: nameValuePair "restic-${name}" (mkUnit name)) jobs;
 
-      systemd.user.timers = {
-        "restic-backup" = mkTimer "backup" "hourly";
-        "restic-forget" = mkTimer "forget" "Mon";
-        "restic-check" = mkTimer "check" "Fri";
-      };
+      systemd.user.timers = mapAttrs' (name: job: nameValuePair "restic-${name}" (mkTimer name job)) jobs;
 
-      launchd.agents = {
-        "restic-backup" = mkAgent "backup" resticBackup [ { Minute = 0; } ];
-        # Saturday
-        "restic-check" = mkAgent "check" resticCheck [ { Weekday = 6; } ];
-        # Sunday
-        "restic-forget" = mkAgent "forget" resticForget [ { Weekday = 0; } ];
-      };
+      launchd.agents = mapAttrs' (name: job: nameValuePair "restic-${name}" (mkAgent name job)) jobs;
     };
 }

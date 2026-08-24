@@ -2,10 +2,12 @@
   lib,
   includes,
   excludes,
-  b2ApplicationId,
-  b2ApplicationKeyFile,
-  repostiory,
+  retention,
+  retryLock,
+  repository,
   passwordFile,
+  applicationKeyId,
+  applicationKeyFile,
   symlinkJoin,
   writeText,
   writeShellScriptBin,
@@ -15,100 +17,116 @@ let
   includeFile = writeText "restic-include" (lib.strings.concatStringsSep "\n" includes);
   excludeFile = writeText "restic-exclude" (lib.strings.concatStringsSep "\n" excludes);
 
-  # wraps restic with backblaze env with all configs in one place
-  b2-env =
-    writeText "restic-b2-env"
+  # all config in one place, sourced by both wrappers below.
+  # backblaze is used through its s3-compatible api because the native b2 backend
+  # has known error handling issues, see restic docs "preparing a new repository".
+  env =
+    writeText "restic-env"
       # bash
       ''
-        export B2_ACCOUNT_ID="${b2ApplicationId}"
-        export B2_ACCOUNT_KEY="$(<${b2ApplicationKeyFile})"
+        export AWS_ACCESS_KEY_ID="${applicationKeyId}"
+        export AWS_SECRET_ACCESS_KEY="$(<${applicationKeyFile})"
 
-        export RESTIC_REPOSITORY="${repostiory}"
+        export RESTIC_REPOSITORY="${repository}"
         export RESTIC_PASSWORD_FILE="${passwordFile}"
-
-        export KEEP_LAST=3
-        export RETENTION_HOURS=12
-        export RETENTION_DAYS=7
-        export RETENTION_WEEKS=4
-        export RETENTION_MONTHS=12
-        export RETENTION_YEARS=2
       '';
+
+  # --retry-lock is a global flag, so every command below waits for a lock held by
+  # another host's running backup instead of failing immediately. Without it, an
+  # exclusive lock (forget --prune) fails the moment any other host is backing up.
   restic-b2 = writeShellScriptBin "restic-b2" ''
-    source "${b2-env}"
-    ${restic}/bin/restic "''$@"
+    source "${env}"
+    exec ${restic}/bin/restic --retry-lock "${retryLock}" "$@"
   '';
+
+  # host,paths is restic's default: with a single repo shared by all machines,
+  # grouping by paths only would pool every host into one retention group, so one
+  # machine's snapshots could satisfy the policy and another's be forgotten whole.
+  retentionArgs = lib.strings.concatStringsSep " " [
+    "--group-by host,paths"
+    "--keep-last ${toString retention.last}"
+    "--keep-hourly ${toString retention.hourly}"
+    "--keep-daily ${toString retention.daily}"
+    "--keep-weekly ${toString retention.weekly}"
+    "--keep-monthly ${toString retention.monthly}"
+    "--keep-yearly ${toString retention.yearly}"
+  ];
+
   baker = writeShellScriptBin "baker" ''
-    source "${b2-env}"
+    set -uo pipefail
 
-    # Args to be passed to the restic invocation
-    args=()
+    restic="${restic-b2}/bin/restic-b2"
 
-    # The repo is the first argument
-    case ''$1 in
-      b2)
-        echo "Running command using B2, repository: $RESTIC_REPOSITORY"
-        ;;
-      *)
-        echo "The first argument is the repository to use for the backup, the options are..."
-        echo "b2: Backblaze B2 cloud storage repository."
-        exit
-        ;;
-    esac
+    usage() {
+      echo "usage: baker <command>"
+      echo
+      echo "commands:"
+      echo "  backup        back up the configured directories"
+      echo "  forget        forget snapshots according to the retention policy"
+      echo "  forget-prune  like forget, but also prune unused data from the repository"
+      echo "  check         verify the repository structure"
+      echo "  snapshots     list snapshots"
+      echo "  unlock        remove stale locks"
+      echo "  unlock-all    remove ALL locks, even live ones (nothing may be running)"
+      echo "  init          initialize the repository"
+    }
 
-    # The command to execute comes second
-    case ''$2 in
+    # An interrupted run (a laptop going to sleep mid-backup) leaves its lock in the
+    # repository. restic only considers a lock stale once it has not been refreshed
+    # for 30 minutes, so this can never race a live run on any host - but nothing
+    # ever cleaned those up before, so they had to be removed by hand.
+    unlock_stale() {
+      echo "--> removing stale locks"
+      "$restic" unlock
+    }
+
+    case "''${1-}" in
       backup)
-        echo "Backing up."
-        echo "Directories:"
+        echo "--> backing up:"
         cat "${includeFile}"
-        echo
-
-        args+=( 'backup' )
-        args+=( '--exclude-file' "${excludeFile}" )
-        args+=( "--files-from" "${includeFile}" )
+        unlock_stale
+        exec "$restic" backup \
+          --exclude-file "${excludeFile}" \
+          --exclude-caches \
+          --exclude-if-present .nobackup \
+          --files-from "${includeFile}"
         ;;
 
       forget)
-        echo "Forgetting old snapshots"
-
-        args+=(
-          "forget"
-          "--group-by" "paths"
-          "--keep-last" "$KEEP_LAST"
-          "--keep-hourly" "$RETENTION_HOURS"
-          "--keep-daily" "$RETENTION_DAYS"
-          "--keep-weekly" "$RETENTION_WEEKS"
-          "--keep-monthly" "$RETENTION_MONTHS"
-          "--keep-yearly" "$RETENTION_YEARS"
-        )
+        echo "--> forgetting old snapshots"
+        unlock_stale
+        exec "$restic" forget ${retentionArgs}
         ;;
 
       forget-prune)
-        echo "Forgetting and pruning old snapshots"
+        echo "--> forgetting and pruning old snapshots"
+        unlock_stale
+        exec "$restic" forget --prune --cleanup-cache ${retentionArgs}
+        ;;
 
-        args+=(
-          "forget"
-          "--prune"
-          "--group-by" "paths"
-          "--keep-last" "$KEEP_LAST"
-          "--keep-hourly" "$RETENTION_HOURS"
-          "--keep-daily" "$RETENTION_DAYS"
-          "--keep-weekly" "$RETENTION_WEEKS"
-          "--keep-monthly" "$RETENTION_MONTHS"
-          "--keep-yearly" "$RETENTION_YEARS"
-        )
+      check)
+        echo "--> checking the repository"
+        unlock_stale
+        exec "$restic" check --cleanup-cache
+        ;;
+
+      snapshots | init)
+        exec "$restic" "$1"
+        ;;
+
+      unlock)
+        exec "$restic" unlock
+        ;;
+
+      unlock-all)
+        exec "$restic" unlock --remove-all
         ;;
 
       *)
-        echo "The second argument is the operation to run, the options are..."
-        echo "backup: Backup files"
-        echo "forget: Forgets snapshots according to the retention policies"
-        echo "forget-prune: Like forget but also prunes unused data from the repository"
-        exit
+        usage
+        exit 1
         ;;
     esac
-
-    ${restic}/bin/restic "''${args[@]}"
   '';
 in
 symlinkJoin {
