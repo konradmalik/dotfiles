@@ -34,31 +34,22 @@ in
 
     systemd.services =
       let
-        notifierError = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix {
-          inherit config;
-          priority = "high";
-          tags = "warning";
-          title = "$SERVICE";
-          text = "Status: failed";
-        };
-
-        notifierInfo = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix {
-          inherit config;
-          priority = "min";
-          title = "$SERVICE";
-          text = "Status: succeeded";
-        };
+        ntfy = pkgs.callPackage ../../../pkgs/special/ntfy-sender.nix { inherit config; };
       in
       {
         "${cfg.problemServiceName}@" = {
           enable = true;
           environment.SERVICE = "%i";
-          script = "${notifierError}";
+          script = ''
+            ${ntfy} --priority high --tags rotating_light --title "$SERVICE" "❌ failed"
+          '';
         };
         "${cfg.infoServiceName}@" = {
           enable = true;
           environment.SERVICE = "%i";
-          script = "${notifierInfo}";
+          script = ''
+            ${ntfy} --priority min --tags white_check_mark --title "$SERVICE" "✅ succeeded"
+          '';
         };
       };
   };
