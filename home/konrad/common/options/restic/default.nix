@@ -184,7 +184,7 @@ in
 
             exec 9>"${lockFile}"
             if ! flock --exclusive --timeout ${toString lockTimeout} 9; then
-              msg="⏳ skipped, another baker run is still holding the lock"
+              msg="skipped, another baker run is still holding the lock"
               echo "$msg"
               notify low hourglass_flowing_sand <<< "$msg"
               exit 0
@@ -197,12 +197,14 @@ in
             elapsed="$(date -u -d "@$((SECONDS - start))" +%T)"
             echo "=== ${name} finished with exit code $code $(date)"
 
+            # the emoji comes from the ntfy tag below, which is rendered in front of
+            # the title, so the body must not repeat it
             case "$code" in
-              0) head="✅ succeeded in $elapsed"; prio=min; tag=white_check_mark ;;
+              0) head="succeeded in $elapsed"; prio=min; tag=white_check_mark ;;
               # a backup that could not read some files still wrote a snapshot,
               # so that is a warning rather than a failure
-              3) head="⚠️ warnings in $elapsed: $(reason "$code")"; prio=default; tag=warning ;;
-              *) head="❌ failed in $elapsed: $(reason "$code") (exit $code)"; prio=high; tag=rotating_light ;;
+              3) head="warnings in $elapsed: $(reason "$code")"; prio=default; tag=warning ;;
+              *) head="failed in $elapsed: $(reason "$code") (exit $code)"; prio=high; tag=x ;;
             esac
 
             # every restic command ends with its own summary, so the notification
