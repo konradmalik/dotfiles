@@ -141,23 +141,13 @@ in
       # local mutex, unrelated to the restic lock inside the repository: it only
       # keeps two baker jobs on this machine from running at the same time.
       lockFile = "/tmp/baker.lock";
+      lockTimeout = 900;
 
       # wraps a baker command with the local mutex, logging and notifications.
       runner =
-        name: bakerCommand:
+        name: job:
         let
-          notifier =
-            priority: tags:
-            pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix {
-              inherit config priority tags;
-              title = "baker";
-              # ntfy-sender interpolates this into the request body, so the message
-              # is built at runtime and carries the exit code and the failing output.
-              text = "$MSG";
-            };
-
-          notifierInfo = notifier "min" "";
-          notifierError = notifier "high" "warning";
+          ntfy = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix { inherit config; };
         in
         pkgs.writeShellScript "restic-${name}.sh"
           # bash
@@ -168,35 +158,57 @@ in
               lib.makeBinPath [
                 pkgs.coreutils
                 pkgs.flock
+                pkgs.gnugrep
               ]
             }:$PATH"
 
             log="$(mktemp)"
             trap 'rm -f "$log"' EXIT
 
+            notify() { ${ntfy} --priority "$1" --tags "$2" --title "baker: ${name}"; }
+
+            # restic's documented exit codes, because a bare "exit 11" gives no
+            # clue that the repository was simply locked by another host
+            reason() {
+              case "$1" in
+                1) echo "command failed" ;;
+                2) echo "go runtime error" ;;
+                3) echo "some source data could not be read" ;;
+                10) echo "repository does not exist" ;;
+                11) echo "failed to lock the repository" ;;
+                12) echo "wrong password" ;;
+                130) echo "interrupted" ;;
+                *) echo "unknown error" ;;
+              esac
+            }
+
             exec 9>"${lockFile}"
-            if ! flock --exclusive --timeout 900 9; then
-              MSG="${name} skipped, another baker run is still in progress"
-              export MSG
-              echo "$MSG"
-              ${notifierInfo}
+            if ! flock --exclusive --timeout ${toString lockTimeout} 9; then
+              msg="⏳ skipped, another baker run is still holding the lock"
+              echo "$msg"
+              notify low hourglass_flowing_sand <<< "$msg"
               exit 0
             fi
 
             echo "=== ${name} started $(date)"
-            ${baker}/bin/baker ${bakerCommand} 2>&1 | tee "$log"
+            start="$SECONDS"
+            ${baker}/bin/baker ${job.command} 2>&1 | tee "$log"
             code="''${PIPESTATUS[0]}"
+            elapsed="$(date -u -d "@$((SECONDS - start))" +%T)"
             echo "=== ${name} finished with exit code $code $(date)"
 
-            if [[ "$code" == 0 ]]; then
-              MSG="${name} succeeded"
-              export MSG
-              ${notifierInfo}
-            else
-              MSG="${name} failed (exit $code)"$'\n'"$(tail -c 800 "$log")"
-              export MSG
-              ${notifierError}
-            fi
+            case "$code" in
+              0) head="✅ succeeded in $elapsed"; prio=min; tag=white_check_mark ;;
+              # a backup that could not read some files still wrote a snapshot,
+              # so that is a warning rather than a failure
+              3) head="⚠️ warnings in $elapsed: $(reason "$code")"; prio=default; tag=warning ;;
+              *) head="❌ failed in $elapsed: $(reason "$code") (exit $code)"; prio=high; tag=rotating_light ;;
+            esac
+
+            # every restic command ends with its own summary, so the notification
+            # body is simply the tail of it, minus progress and blank line noise
+            printf '%s\n\n%s\n' "$head" "$(grep -vE '^(\[|$)' "$log" | tail -n 15)" |
+              notify "$prio" "$tag"
 
             exit "$code"
           '';
@@ -234,7 +246,7 @@ in
         };
       };
 
-      scripts = mapAttrs (name: job: runner name job.command) jobs;
+      scripts = mapAttrs runner jobs;
 
       mkUnit = name: {
         Unit = {
