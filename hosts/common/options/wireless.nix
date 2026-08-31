@@ -130,10 +130,6 @@ in
           };
         };
       };
-      nameservers = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
     };
 
     # runs on every activation and on boot before iwd is started, iwd itself watches

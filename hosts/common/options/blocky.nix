@@ -5,6 +5,11 @@
     allowedUDPPorts = lib.optional config.services.blocky.enable config.services.blocky.settings.ports.dns;
   };
 
+  networking.nameservers = lib.mkIf config.services.blocky.enable [
+    "1.1.1.1"
+    "1.0.0.1"
+  ];
+
   services.blocky = {
     settings = {
       ports = {

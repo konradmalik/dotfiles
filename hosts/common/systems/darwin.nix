@@ -66,12 +66,6 @@
   };
 
   networking = {
-    # get via `networksetup -listallnetworkservices`
-    knownNetworkServices = [ "Wi-Fi" ];
-    dns = [
-      "1.1.1.1"
-      "1.0.0.1"
-    ];
     applicationFirewall = {
       enable = true;
       allowSigned = true;
