@@ -9,28 +9,25 @@
     ./../common/modules/monitoring/prometheus.nix
   ];
 
-  networking.hostName = "rpi4-2";
+  networking = {
+    hostName = "rpi4-2";
+    # dhcp is served by the router; we just need a stable address for blocky
+    defaultGateway = "192.168.88.1";
+    interfaces.end0 = {
+      useDHCP = false;
+      ipv4.addresses = [
+        {
+          address = "192.168.88.3";
+          prefixLength = 24;
+        }
+      ];
+    };
+  };
 
   services.blocky.enable = true;
 
   sops.secrets.healthcheck.key = "healthchecks/rpi4-2";
   konrad.services.healthcheck.urlFile = config.sops.secrets.healthcheck.path;
-
-  konrad.services.dhcp =
-    let
-      ip = "192.168.100.3";
-    in
-    {
-      enable = true;
-      defaultGateway = "192.168.100.1";
-      staticIP = ip;
-      interface = "end0";
-      dhcp-range = "192.168.100.178,192.168.100.254,255.255.255.0,24h";
-      dhcp-dns = [
-        "192.168.100.2"
-        ip
-      ];
-    };
 
   services.jellyfin = {
     enable = true;

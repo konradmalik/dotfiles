@@ -20,7 +20,7 @@ in
         job_name = "rpi4-1";
         static_configs = [
           {
-            targets = mkTargets "192.168.100.2";
+            targets = mkTargets "192.168.88.2";
           }
         ];
       }
@@ -28,7 +28,7 @@ in
         job_name = "rpi4-2";
         static_configs = [
           {
-            targets = mkTargets "192.168.100.3";
+            targets = mkTargets "192.168.88.3";
           }
         ];
       }
