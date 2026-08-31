@@ -3,7 +3,6 @@
   blocky = import ./blocky.nix;
   bluetooth = import ./bluetooth.nix;
   borg = import ./borg.nix;
-  dhcp = import ./dhcp.nix;
   healthcheck = import ./healthcheck.nix;
   hd-idle = import ./hd-idle.nix;
   ntfy = import ./ntfy.nix;

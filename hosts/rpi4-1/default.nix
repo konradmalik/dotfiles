@@ -13,21 +13,16 @@
   sops.secrets.healthcheck.key = "healthchecks/rpi4-1";
   konrad.services.healthcheck.urlFile = config.sops.secrets.healthcheck.path;
 
-  konrad.services = {
-    dhcp =
-      let
-        ip = "192.168.100.2";
-      in
-      {
-        enable = true;
-        defaultGateway = "192.168.100.1";
-        staticIP = ip;
-        interface = "end0";
-        dhcp-range = "192.168.100.126,192.168.100.254,255.255.255.0,24h";
-        dhcp-dns = [
-          ip
-          "192.168.100.3"
-        ];
-      };
+  networking = {
+    defaultGateway = "192.168.100.1";
+    interfaces.end0 = {
+      useDHCP = false;
+      ipv4.addresses = [
+        {
+          address = "192.168.100.2";
+          prefixLength = 24;
+        }
+      ];
+    };
   };
 }
