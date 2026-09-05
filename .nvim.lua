@@ -12,7 +12,7 @@ vim.lsp.config("nixd", {
                     expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.framework.options.home-manager.users.type.getSubOptions []",
                 },
                 darwin = {
-                    expr = "(builtins.getFlake (toString ./.)).darwinConfigurations.mbp13.options",
+                    expr = "(builtins.getFlake (toString ./.)).darwinConfigurations.m4.options",
                 },
             },
         },

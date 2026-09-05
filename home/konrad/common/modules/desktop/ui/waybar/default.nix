@@ -361,7 +361,10 @@ in
           return-type = "json";
           exec = jsonOutput "currentplayer" {
             pre = ''
-              player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No player active" | cut -d '.' -f1)"
+              player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No player active")"
+              # strip any .instance suffix; | binds tighter than ||, so this cannot
+              # live on the same line as the fallback
+              player="''${player%%.*}"
               count="$(${playerctl} -l | wc -l)"
               if ((count > 1)); then
                 more=" +$((count - 1))"

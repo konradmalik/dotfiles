@@ -8,7 +8,7 @@ if [ "$(file "$1" --mime-type -b)" = "application/zstd" ]; then
         set -x
         zstdcat "$1" | sudo dd of="$2" status=progress iflag=fullblock oflag=direct conv=fsync,noerror bs=64k
     )
-elif [ "$(file "$2"--mime-type -b)" = "application/xz" ]; then
+elif [ "$(file "$1" --mime-type -b)" = "application/xz" ]; then
     echo "Flashing xz using xzcat | dd"
     (
         set -x

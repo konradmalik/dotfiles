@@ -33,4 +33,7 @@ else
     exit 1
 fi
 
-bb sh -c "sleep \"$seconds\" && notify \"$title\" \"$message\""
+# shellcheck disable=SC2016  # the child shell is what must expand $1..$3, not this one
+# args are passed positionally, not interpolated into the -c string, so a title
+# or message containing quotes or $(...) cannot break out
+bb sh -c 'sleep "$1" && notify "$2" "$3"' remind "$seconds" "$title" "$message"

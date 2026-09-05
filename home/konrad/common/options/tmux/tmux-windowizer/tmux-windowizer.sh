@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-branch_name=$(basename "$1")
-session_name=$(tmux display-message -p "#S")
-window_name=$(echo "$branch_name" | tr "./" "__")
-
 if [ $# -lt 2 ]; then
     echo "too few arguments; provide at least: <window_name> *<cmd>"
     exit 1
 fi
+
+branch_name=$(basename "$1")
+session_name=$(tmux display-message -p "#S")
+window_name=$(echo "$branch_name" | tr "./" "__")
 
 # we dont want to support this script while outside tmux
 if [[ -z $TMUX ]]; then

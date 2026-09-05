@@ -140,7 +140,7 @@ in
 
       # local mutex, unrelated to the restic lock inside the repository: it only
       # keeps two baker jobs on this machine from running at the same time.
-      lockFile = "/tmp/baker.lock";
+      lockFile = "${config.xdg.cacheHome}/baker.lock";
       lockTimeout = 900;
 
       # wraps a baker command with the local mutex, logging and notifications.
@@ -182,6 +182,7 @@ in
               esac
             }
 
+            mkdir -p "$(dirname "${lockFile}")"
             exec 9>"${lockFile}"
             if ! flock --exclusive --timeout ${toString lockTimeout} 9; then
               msg="skipped, another baker run is still holding the lock"

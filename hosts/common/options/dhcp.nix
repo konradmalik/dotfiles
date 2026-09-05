@@ -63,7 +63,7 @@ in
     # Ensure the network interface has a static IP (required for DHCP server)
     networking = {
       inherit (cfg) defaultGateway;
-      interfaces.end0 = {
+      interfaces.${cfg.interface} = {
         useDHCP = false;
         ipv4.addresses = [
           {

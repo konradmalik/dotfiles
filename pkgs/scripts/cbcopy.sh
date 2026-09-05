@@ -8,10 +8,13 @@ elif hash wl-copy 2>/dev/null; then
 elif hash xclip 2>/dev/null; then
     exec xclip -selection clipboard
 else
-    rm -f /tmp/clipboard 2>/dev/null
+    # per-user location; /tmp/clipboard is shared and pre-creatable by anyone.
+    # cbpaste derives the same path.
+    clipboard="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/cbclipboard"
+    rm -f "$clipboard" 2>/dev/null
     if [ $# -eq 0 ]; then
-        cat >/tmp/clipboard
+        cat >"$clipboard"
     else
-        cat "$1" >/tmp/clipboard
+        cat "$1" >"$clipboard"
     fi
 fi

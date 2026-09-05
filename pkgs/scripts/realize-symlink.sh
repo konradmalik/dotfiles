@@ -6,7 +6,7 @@ set -eu
 for file in "$@"; do
     if [[ -L "$file" ]]; then
         if [[ -d "$file" ]]; then
-            tmpdir="''${file}.tmp"
+            tmpdir="${file}.tmp"
             mkdir -p "$tmpdir"
             cp --verbose --recursive "$file"/* "$tmpdir"
             unlink "$file"

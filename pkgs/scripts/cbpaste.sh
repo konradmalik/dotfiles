@@ -7,8 +7,9 @@ elif hash wl-paste 2>/dev/null; then
     exec wl-paste
 elif hash xclip 2>/dev/null; then
     exec xclip -selection clipboard -o
-elif [ -e /tmp/clipboard ]; then
-    exec cat /tmp/clipboard
+elif [ -e "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/cbclipboard" ]; then
+    # kept in sync with cbcopy
+    exec cat "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/cbclipboard"
 else
     echo ''
 fi

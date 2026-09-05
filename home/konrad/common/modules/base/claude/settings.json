@@ -31,6 +31,7 @@
             "Read(~/.pgpass)",
             "Read(~/.ssh/**)",
             "Bash(env)",
+            "Bash(env *)",
             "Bash(printenv)",
             "Bash(printenv *)"
         ]

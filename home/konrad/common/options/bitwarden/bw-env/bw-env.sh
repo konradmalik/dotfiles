@@ -271,7 +271,7 @@ cmd_export() {
     trap - EXIT
 
     # names only, never the values
-    warn "wrote $(printf '%s\n' "$lines" | wc -l | tr -d ' ') secrets to $env_file (mode 0600): $(jq -r '[(.fields // [])[] | select(.type == 1) | .name] | join(", ")' <<<"$item")"
+    warn "wrote $(printf '%s\n' "$lines" | wc -l | tr -d ' ') secrets to $env_file (mode 0600): $(jq -r '[(.fields // [])[] | select(.type == 1 and .name != null and .value != null) | .name] | join(", ")' <<<"$item")"
 }
 
 command="${1:-}"
