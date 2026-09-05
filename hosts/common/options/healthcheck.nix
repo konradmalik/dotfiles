@@ -35,6 +35,8 @@ in
   config = lib.mkIf cfg.enable {
     systemd.services.healthcheck = {
       description = "Ping Healthchecks.io endpoint";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "healthcheck" ''
@@ -47,8 +49,6 @@ in
     systemd.timers.healthcheck = {
       description = "Timer to periodically ping Healthchecks.io";
       wantedBy = [ "timers.target" ];
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
       timerConfig = {
         OnBootSec = "1min";
         OnUnitActiveSec = cfg.interval;

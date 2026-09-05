@@ -1,7 +1,10 @@
 { config, lib, ... }:
 {
   networking.firewall = {
-    allowedTCPPorts = lib.optional config.services.blocky.enable config.services.blocky.settings.ports.http;
+    allowedTCPPorts = lib.optionals config.services.blocky.enable [
+      config.services.blocky.settings.ports.dns
+      config.services.blocky.settings.ports.http
+    ];
     allowedUDPPorts = lib.optional config.services.blocky.enable config.services.blocky.settings.ports.dns;
   };
 

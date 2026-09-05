@@ -139,8 +139,6 @@
 
           # list aliases
           la = "--list-cmds=alias";
-          # gitignore.io
-          gitignore = "!curl -sL https://www.toptal.com/developers/gitignore/api/$@";
         };
 
         branch = {

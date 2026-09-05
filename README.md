@@ -101,7 +101,7 @@ $ nixos-generate-config --no-filesystems --root /mnt
 ```
 
 Generate/add sops keys (if required for the configuration). Do this later only if no critical services rely on them (like user passwords).
-Host ones will be picked up automatically. Add user ones to `/home/USER/.config/sops.keys.txt`.
+Host ones will be picked up automatically. Add user ones to `/home/USER/.config/sops/age/keys.txt`.
 For details refer to [sops-nix](#sops-nix) section.
 
 Finally, use hardware-configuration and disko to install nixos:

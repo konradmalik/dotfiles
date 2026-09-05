@@ -25,11 +25,11 @@ in
   boot.kernelParams =
     let
       maxGpuGB = 48;
-      pageSizeKiB = 48;
+      pageSizeKiB = 4;
     in
     [
       "amdgpu.gttsize=${toString (maxGpuGB * 1024)}"
-      "ttm.pages_limit=${toString (maxGpuGB * 1024 * 1024 * 1024 / pageSizeKiB)}"
+      "ttm.pages_limit=${toString (maxGpuGB * 1024 * 1024 / pageSizeKiB)}"
     ];
 
   services.llama-swap = {
