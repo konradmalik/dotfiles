@@ -101,7 +101,13 @@
           # serve DNS immediately and seed lists from cachePath, instead of refusing
           # to start when a single source is briefly unreachable
           strategy = "fast";
-          downloads.cachePath = "/var/lib/blocky/lists";
+          downloads = {
+            cachePath = "/var/lib/blocky/lists";
+            # tif.txt is ~42MB; the 5s default is Go's whole-request budget
+            # (body read included), so it truncates the list mid-download
+            timeout = "5m";
+            readTimeout = "5m";
+          };
         };
       };
     };
