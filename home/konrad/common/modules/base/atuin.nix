@@ -4,7 +4,10 @@
 
   programs.atuin = {
     enable = true;
-    flags = [ "--disable-up-arrow" ];
+    flags = [
+      "--disable-up-arrow"
+      "--disable-ai"
+    ];
     settings = {
       style = "compact";
       sync_frequency = "15m";
@@ -12,6 +15,9 @@
       workspaces = true;
       sync = {
         records = true;
+      };
+      ai = {
+        enabled = false;
       };
     };
   };
