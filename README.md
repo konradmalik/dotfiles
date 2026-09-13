@@ -5,12 +5,37 @@
 
 My NixOS and Nix-Darwin configurations.
 
-## Naming
+## Layout
+
+- `hosts` - system-level (NixOS/nix-darwin) configuration, one dir per machine plus `common`
+- `home` - home-manager configuration, per user
+- `pkgs` - own packages and overlays (`fonts`, `scripts`, `special`)
+- `files` - static assets (wallpapers, grafana dashboards)
+- `templates` - flake templates
+- `router` - home network and MikroTik router config, see [router/readme.md](./router/readme.md)
+
+### Naming
+
+Inside `hosts/common` and `home/*/common`:
 
 - modules - something that's imported on-demand and does not support explicitly enabling
 - options - something that's always imported but requires explicit enable. It's also configurable via some abstraction.
 - systems - prepared modules for specific systems like nixos, darwin etc.
 - profiles - prepared modules for a specific use-case like desktop, server, laptop, etc.
+- hardware - hardware-specific modules shared by more than one host
+- users - per-user system-level config
+
+### Hosts
+
+| Host        | Kind       | Notes                              |
+| ----------- | ---------- | ---------------------------------- |
+| `framework` | NixOS      | desktop, Ryzen AI Max+ 395         |
+| `x1c6`      | NixOS      | laptop, ThinkPad X1 Carbon 6th gen |
+| `rpi4-1`    | NixOS      | server, aarch64                    |
+| `rpi4-2`    | NixOS      | server, aarch64                    |
+| `m4`        | nix-darwin | macOS                              |
+
+Plus `konrad@generic` - a standalone home-manager config for non-NixOS Linux.
 
 ## Commands
 
@@ -41,7 +66,7 @@ $ sudo nixos-rebuild --flake . boot
 To just build (for example for a test):
 
 ```bash
-$ nix build .#nixosConfigurations.x1c6.config.system.build.toplevel
+$ nix build .#nixosConfigurations.framework.config.system.build.toplevel
 ```
 
 #### Build sd-image:
@@ -50,16 +75,12 @@ $ nix build .#nixosConfigurations.x1c6.config.system.build.toplevel
 $ nix build .#rpi4-2-sd-image
 ```
 
-Copy it somewhere and unpack:
+The image lands in `result/sd-image/nixos-sd-image-<version>-aarch64-linux.img.zst`.
+
+Unpack and flash it to the card:
 
 ```bash
-$ unzstd -d rpi4-2.img.zst
-```
-
-Flash directly to the card:
-
-```bash
-$ sudo dd if=rpi4-2.img of=/dev/sdX bs=4096 conv=fsync status=progress
+$ unzstd -c result/sd-image/*.img.zst | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
 ```
 
 > [!NOTE]
@@ -94,10 +115,11 @@ Use disko to format and mount:
 $ sudo disko --mode destroy,format,mount ./hosts/x1c6/disko.nix
 ```
 
-Generate hardware configuration:
+Generate hardware configuration and put it in the host's dir:
 
 ```bash
-$ nixos-generate-config --no-filesystems --root /mnt
+$ sudo nixos-generate-config --no-filesystems --root /mnt
+$ cp /mnt/etc/nixos/hardware-configuration.nix ./hosts/x1c6/
 ```
 
 Generate/add sops keys (if required for the configuration). Do this later only if no critical services rely on them (like user passwords).
@@ -168,24 +190,17 @@ $ nix build .#darwinConfigurations.m4.system
 
 It is useful to have a Linux builder on a macOS machine to build linux-specific stuff.
 
-NixOS has a great support for this. We need to:
+`nix-darwin` supports it as an option. It is a NixOS VM run via Apple's
+Virtualization.framework (`linux-builder-vz`) and it serves both `aarch64-linux`
+and `x86_64-linux` - the latter through Rosetta, which needs
+`softwareupdate --install-rosetta` on the host once.
 
-- set up a remote builder
-- configure nix.buildMachines to use it
-
-We can have either a truly remote machine (local PC, cloud VM etc. etc.) or a 'local remote builder' which is just a qemu virtual machine with
-NixOS inside. This 'local remote builder' is very handy to have either way, very easy to deploy and very lightweight
-(it mounts your existing /nix/store for example for absolutely minimal disk usage).
-
-`nix-darwin` support a Linux builder as an option:
-
-```nix
-nix.linux-builder.enable = true;
-```
+The launchd daemon is started on demand with the
+`linux-builder-ctl` helper that ships with that module.
 
 #### Docker on Darwin
 
-Use [container](https://github.com/apple/container).
+Use [colima](https://github.com/abiosoft/colima). It's installed via homebrew.
 
 ### Linux (non-NixOS; home-manager):
 
@@ -201,9 +216,9 @@ To just build (for example for a test):
 $ nix build .#homeConfigurations.konrad@generic.activationPackage
 ```
 
-### sops-nix
+## sops-nix
 
-#### system-wide (Linux only)
+### system-wide (Linux only)
 
 Strategy with keys:
 
@@ -212,7 +227,7 @@ Strategy with keys:
 - `age` derived from personal ssh key for personal secrets
 - one global `age` key per person that is kept secret and not directly on any machine. Serves as a backup to decrypt in case of 'tragedy'
 
-##### Host keys
+#### Host keys
 
 To get age key for the machine, use:
 
@@ -226,15 +241,15 @@ Add this key to `.sops.yaml` and propagate re-encryption to all secrets:
 $ for file in $(grep -lr "^sops:$"); do sops updatekeys -y $file; done
 ```
 
-##### User keys
+#### User keys
 
 Create `age` directory for sops:
 
 ```bash
-$ mkdir -p "$XDG_CONFIG_HOME/sops/age" \
-$ && touch "$XDG_CONFIG_HOME/sops/age/keys.txt" \
-$ && chmod 700 "$XDG_CONFIG_HOME/sops/age" \
-$ && chmod 600 "$XDG_CONFIG_HOME/sops/age/keys.txt"
+$ mkdir -p "$XDG_CONFIG_HOME/sops/age"
+$ touch "$XDG_CONFIG_HOME/sops/age/keys.txt"
+$ chmod 700 "$XDG_CONFIG_HOME/sops/age"
+$ chmod 600 "$XDG_CONFIG_HOME/sops/age/keys.txt"
 ```
 
 Create `age` key from your personal ssh key:
@@ -253,13 +268,13 @@ Add this key to `.sops.yaml` and propagate re-encryption to all secrets:
 $ for file in $(grep -lr "^sops:$"); do sops updatekeys -y $file; done
 ```
 
-#### home-manager
+### home-manager
 
 For user-specific secrets, a home-manager modules of sops-nix is used.
 
 We similarly use `age`. The key is reused from system-wide config (the one derived from personal ssh).
 See how `sops` is configured in the home-manager (it just points at the `keys.txt` file).
 
-### Credits
+## Credits
 
 [Misterio77](https://github.com/Misterio77/nix-config) - big inspiration for hyprland and nix files structure.
