@@ -38,9 +38,12 @@
 
   fileSystems = {
     "/mnt" = {
-      device = "/dev/sda2";
+      device = "/dev/disk/by-uuid/37d6273c-f954-442c-9c0d-3ee305898fd9";
       fsType = "ext4";
-      options = [ "nofail" ];
+      options = [
+        "nofail"
+        "noatime"
+      ];
     };
   };
 }
