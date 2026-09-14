@@ -9,6 +9,7 @@
       inetutils
       lsof
       moreutils
+      rsync
       tree
       unixtools.xxd
       wget
