@@ -10,7 +10,6 @@ let
   tmuxTextProcessor = pkgs.callPackage ./text_processor.nix { };
   tmux-sessionizer = pkgs.callPackage ./tmux-sessionizer { };
   tmux-switcher = pkgs.callPackage ./tmux-switcher { };
-  tmux-windowizer = pkgs.callPackage ./tmux-windowizer { };
   baseConfig = pkgs.callPackage ./config.nix {
     inherit tmuxTextProcessor tmux-switcher tmux-sessionizer;
   };
@@ -50,13 +49,19 @@ in
       ];
     };
 
+    programs.zsh.initContent = ''
+      ${builtins.readFile ./tmux-windowizer.zsh}
+      # send the currently typed command to a new window
+      bindkey -M viins '^O' tmux-windowizer
+      bindkey -M vicmd '^O' tmux-windowizer
+    '';
+
     programs.git.ignores = [ ".tmux.sh" ];
 
     programs.fzf.tmux.enableShellIntegration = true;
 
     home.packages = [
       tmux-sessionizer
-      tmux-windowizer
       tmux-switcher
     ];
   };
