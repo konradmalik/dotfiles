@@ -10,7 +10,6 @@ let
   tmuxTextProcessor = pkgs.callPackage ./text_processor.nix { };
   tmux-sessionizer = pkgs.callPackage ./tmux-sessionizer { };
   tmux-switcher = pkgs.callPackage ./tmux-switcher { };
-  tmux-windowizer = pkgs.callPackage ./tmux-windowizer { };
   baseConfig = pkgs.callPackage ./config.nix {
     inherit tmuxTextProcessor tmux-switcher tmux-sessionizer;
   };
@@ -50,13 +49,22 @@ in
       ];
     };
 
+    programs.zsh.initContent =
+      # zsh
+      ''
+        ${builtins.readFile ./tmux-windowizer.zsh}
+        # a CSI sequence no keyboard emits, so this can only be triggered by the
+        # prefix binding in ./config.nix, never typed by hand
+        bindkey -M viins '\e[999~' tmux-windowizer
+        bindkey -M vicmd '\e[999~' tmux-windowizer
+      '';
+
     programs.git.ignores = [ ".tmux.sh" ];
 
     programs.fzf.tmux.enableShellIntegration = true;
 
     home.packages = [
       tmux-sessionizer
-      tmux-windowizer
       tmux-switcher
     ];
   };

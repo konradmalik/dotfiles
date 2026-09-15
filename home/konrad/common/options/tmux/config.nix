@@ -81,6 +81,10 @@
   # facebook pathpicker
   bind-key F run-shell -b "${tmuxTextProcessor} '${lib.getExe pkgs.fpp} -nfc' '#{pane_id}' '#{pane_current_path}'"
 
+  # tmux windowizer; only zsh knows what is typed at the prompt, so just ask it
+  # to run its widget (the hex is \e[999~, bound to it in ./default.nix)
+  bind-key C-w if-shell -F '#{==:#{pane_current_command},zsh}' 'send-keys -H 1b 5b 39 39 39 7e' 'display-message "windowizer: not at a zsh prompt"'
+
   # tmux session switcher
   bind-key C-s run-shell -b "${tmux-switcher}/bin/tmr"
 
