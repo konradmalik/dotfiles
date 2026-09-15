@@ -83,15 +83,8 @@
         let
           getSystem = attr: attr.${pkgs.stdenvNoCC.hostPlatform.system};
           darwinPackages = builtins.attrValues (removeAttrs (getSystem inputs.darwin.packages) [ "default" ]);
-          hyprlandLuarc = pkgs.writeText "hyprland-luarc.json" (
-            builtins.toJSON {
-              "$schema" = "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json";
-              "runtime.version" = "Lua 5.4";
-              "workspace.library" = [ "${pkgs.hyprland}/share/hypr/stubs" ];
-              "workspace.checkThirdParty" = false;
-              "diagnostics.globals" = [ "hl" ];
-            }
-          );
+          hyprlandDir = "home/konrad/common/modules/desktop/ui/hyprland";
+          hyprlandLuarc = pkgs.callPackage ./${hyprlandDir}/luarc.nix { };
         in
         {
           default = pkgs.mkShell {
@@ -100,11 +93,10 @@
             name = "dotfiles";
 
             shellHook =
-              pkgs.lib.optionalString pkgs.stdenvNoCC.hostPlatform.isLinux
-                # bash
-                ''
-                  ln -fs ${hyprlandLuarc} ./home/konrad/common/modules/desktop/ui/hyprland/.luarc.json
-                '';
+              # bash
+              ''
+                ln -fs ${hyprlandLuarc} ./${hyprlandDir}/.luarc.json
+              '';
 
             packages =
               (with pkgs; [
