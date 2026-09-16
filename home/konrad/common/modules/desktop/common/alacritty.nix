@@ -5,7 +5,7 @@
 }:
 {
   programs.tmux.extraConfig =
-    # bash
+    # sh
     ''
       # overrides for the alacritty (host) terminal features
       set -as terminal-features ",alacritty*:RGB:hyperlinks:usstyle:focus:osc7"

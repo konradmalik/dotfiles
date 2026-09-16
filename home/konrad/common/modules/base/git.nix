@@ -161,8 +161,6 @@
 
         diff = {
           algorithm = "histogram";
-          colormoved = "plain";
-          colormovedws = "allow-indentation-change";
           mnemonicPrefix = true;
           renames = true;
           tool = "difftastic";
@@ -171,20 +169,18 @@
         difftool = {
           prompt = false;
           difftastic = {
-            cmd = "${difft} $LOCAL $REMOTE";
+            cmd = "${difft} \"$LOCAL\" \"$REMOTE\"";
           };
         };
 
         gpg = {
-          format = "ssh";
           ssh = {
-            allowedSignersFile = "${../../../../../../files/allowed_signers}";
+            allowedSignersFile = "${../../../../../files/allowed_signers}";
           };
         };
 
         fetch = {
           all = true;
-          fsckobjects = true;
           prune = true;
           pruneTags = true;
           writeCommitGraph = true;
@@ -200,11 +196,11 @@
 
         merge = {
           conflictstyle = "zdiff3";
-          keepBackup = false;
-          tool = "vimdiff";
+          tool = "nvimdiff";
         };
 
         mergetool = {
+          keepBackup = false;
           prompt = false;
         };
 
@@ -213,7 +209,7 @@
         };
 
         push = {
-          default = "tracking";
+          default = "upstream";
           autoSetupRemote = true;
           followTags = true;
           gpgSign = "if-asked";
@@ -224,10 +220,6 @@
           autoSquash = true;
           rebaseMerges = true;
           updateRefs = true;
-        };
-
-        receive = {
-          fsckobjects = true;
         };
 
         rerere = {
