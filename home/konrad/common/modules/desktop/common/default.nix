@@ -8,6 +8,7 @@
     ./firefox.nix
     ./imv.nix
     ./mpv.nix
+    ./zathura.nix
   ];
 
   xdg.mimeApps.enable = true;
@@ -24,7 +25,6 @@
       spotify
       # for xdg-open in 'gx' in vim for example
       xdg-utils
-      zathura
     ];
   };
 
