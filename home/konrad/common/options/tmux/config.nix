@@ -1,9 +1,6 @@
 {
   tmux-sessionizer,
   tmux-switcher,
-  tmuxTextProcessor,
-  pkgs,
-  lib,
 }:
 # sh
 ''
@@ -79,9 +76,6 @@
 
   # tmux sessionizer
   bind-key C-o run-shell -b "${tmux-sessionizer}/bin/tms"
-
-  # facebook pathpicker
-  bind-key F run-shell -b "${tmuxTextProcessor} '${lib.getExe pkgs.fpp} -nfc' '#{pane_id}' '#{pane_current_path}'"
 
   # tmux windowizer; only zsh knows what is typed at the prompt, so just ask it
   # to run its widget (the hex is \e[999~, bound to it in ./default.nix)

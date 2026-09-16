@@ -7,11 +7,10 @@
 with lib;
 let
   cfg = config.konrad.programs.tmux;
-  tmuxTextProcessor = pkgs.callPackage ./text_processor.nix { };
   tmux-sessionizer = pkgs.callPackage ./tmux-sessionizer { };
   tmux-switcher = pkgs.callPackage ./tmux-switcher { };
   baseConfig = pkgs.callPackage ./config.nix {
-    inherit tmuxTextProcessor tmux-switcher tmux-sessionizer;
+    inherit tmux-switcher tmux-sessionizer;
   };
   themeConfig = import ./theme.nix { inherit config; };
 in

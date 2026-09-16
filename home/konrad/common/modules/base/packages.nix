@@ -19,7 +19,6 @@
       zip
 
       fd
-      fpp
       ripgrep
       ripgrep-all
       sad
