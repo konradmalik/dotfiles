@@ -25,7 +25,6 @@
     ./sops.nix
     ./ssh-keys.nix
     ./starship.nix
-    ./tealdeer.nix
     ./yazi.nix
   ]
   ++ builtins.attrValues (import ./../../options);
