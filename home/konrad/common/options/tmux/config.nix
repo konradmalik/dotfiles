@@ -31,6 +31,8 @@
 
   # Forwards escape sequences tmux can't parse verbatim to the host terminal.
   # Needed for kitty graphics (yazi previews); OSC 52 and hyperlinks are handled by tmux itself.
+  # deliberately 'on' and not 'all': with 'all' an invisible pane's sequences
+  # bypass tmux and land on whatever window is on screen
   set-option -g allow-passthrough on
 
   # Enable OSC 52 clipboard
