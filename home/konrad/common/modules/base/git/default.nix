@@ -8,7 +8,6 @@
   home.packages = with pkgs; [
     difftastic
     git-absorb
-    git-crypt
     git-extras
     git-who
   ];

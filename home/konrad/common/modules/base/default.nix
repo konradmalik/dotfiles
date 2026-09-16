@@ -15,7 +15,6 @@
     ./fzf.nix
     ./git
     ./glow.nix
-    ./gpg.nix
     ./k9s.nix
     ./lazygit.nix
     ./opencode.nix
