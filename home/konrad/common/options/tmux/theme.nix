@@ -2,7 +2,7 @@
 let
   c = config.lib.stylix.colors;
 in
-# tmux
+# sh
 ''
   set -g status-style "fg=#${c.base04},bg=default"
   set -g window-status-style "bg=default"

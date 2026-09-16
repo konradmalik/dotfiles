@@ -5,7 +5,7 @@
   pkgs,
   lib,
 }:
-# tmux
+# sh
 ''
   ## KONRAD's SENSIBLE DEFAULTS
   # tmux messages are displayed for 4 seconds
