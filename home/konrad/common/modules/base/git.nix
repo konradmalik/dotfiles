@@ -79,9 +79,6 @@
           stats-recent = "!git log --since 6.months.ago --numstat | awk '/^[0-9-]+/{ print $NF}' | sort | uniq -c | sort -nr | head";
           unstage = "reset HEAD --";
           whatadded = "log --diff-filter=A";
-          prepare-worktree = "!${
-            lib.getExe' (pkgs.callPackage ./git-prepare-worktree { }) "git-prepare-worktree"
-          }";
 
           a = "add";
           ap = "add -p";

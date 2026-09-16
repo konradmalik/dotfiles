@@ -13,7 +13,7 @@
     ./claude
     ./direnv.nix
     ./fzf.nix
-    ./git
+    ./git.nix
     ./glow.nix
     ./k9s.nix
     ./lazygit.nix
