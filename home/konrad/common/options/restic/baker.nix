@@ -4,6 +4,7 @@
   excludes,
   retention,
   retryLock,
+  maxAgeDays,
   repository,
   passwordFile,
   applicationKeyId,
@@ -11,6 +12,8 @@
   symlinkJoin,
   writeText,
   writeShellScriptBin,
+  coreutils,
+  jq,
   restic,
 }:
 let
@@ -65,6 +68,7 @@ let
       echo "  forget        forget snapshots according to the retention policy"
       echo "  forget-prune  like forget, but also prune unused data from the repository"
       echo "  check         verify the repository structure"
+      echo "  watchdog      fail when this host's newest snapshot is too old"
       echo "  snapshots     list snapshots"
       echo "  unlock        remove stale locks"
       echo "  unlock-all    remove ALL locks, even live ones (nothing may be running)"
@@ -108,6 +112,35 @@ let
         echo "--> checking the repository"
         unlock_stale
         exec "$restic" check --cleanup-cache
+        ;;
+
+      watchdog)
+        host="$(${coreutils}/bin/uname -n)"
+
+        snapshots="$("$restic" snapshots --latest 1 --host "$host" --json)"
+        code=$?
+        if ((code != 0)); then
+          echo "could not read the repository (restic exit $code)"
+          exit "$code"
+        fi
+
+        latest="$(printf '%s' "$snapshots" | ${jq}/bin/jq -r '.[0].time // empty')"
+        if [[ -z "$latest" ]]; then
+          echo "the repository holds no snapshot at all for host $host"
+          exit 90
+        fi
+
+        age=$(( $(${coreutils}/bin/date +%s) - $(${coreutils}/bin/date -d "$latest" +%s) ))
+        # date -u -d @seconds wraps around at 24h, which is useless here
+        pretty="$((age / 86400))d $((age % 86400 / 3600))h"
+
+        if ((age > ${toString maxAgeDays} * 86400)); then
+          echo "newest snapshot for $host is $pretty old, more than the allowed ${toString maxAgeDays}d"
+          echo "it was taken at $latest"
+          exit 90
+        fi
+
+        echo "newest snapshot for $host is $pretty old, taken at $latest"
         ;;
 
       snapshots | init)

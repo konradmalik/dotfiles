@@ -55,6 +55,18 @@ in
       default = "1h";
     };
 
+    maxSnapshotAgeDays = mkOption {
+      type = types.int;
+      example = 3;
+      description = ''
+        How old this host's newest snapshot may get before the watchdog job
+        complains. Nothing checks anything while the machine is off, so a laptop
+        that is simply switched off stays quiet; this only fires on a machine
+        that is running but has stopped producing snapshots.
+      '';
+      default = 3;
+    };
+
     retention = mkOption {
       description = "Retention policy used by forget and forget-prune";
       default = { };
@@ -131,6 +143,8 @@ in
           retryLock
           ;
 
+        maxAgeDays = cfg.maxSnapshotAgeDays;
+
         restic = cfg.package;
         repository = "s3:${cfg.b2S3Endpoint}/${cfg.b2Bucket}";
         applicationKeyId = cfg.b2ApplicationKeyId;
@@ -148,6 +162,23 @@ in
         name: job:
         let
           ntfy = pkgs.callPackage ../../../../../pkgs/special/ntfy-sender.nix { inherit config; };
+
+          lockPreamble =
+            lib.optionalString (job.lock or true)
+              # bash
+              ''
+                mkdir -p "$(dirname "${lockFile}")"
+                exec 9>"${lockFile}"
+                if ! flock --exclusive --timeout ${toString lockTimeout} 9; then
+                  # nothing was backed up, which is the same outcome as a failure even
+                  # though there is no error to report, so it warns like exit code 3.
+                  # the unit itself still succeeded, hence exit 0.
+                  msg="skipped after ${toString lockTimeout}s, another baker run is still holding the lock"
+                  echo "$msg"
+                  notify default warning <<< "$msg"
+                  exit 0
+                fi
+              '';
         in
         pkgs.writeShellScript "restic-${name}.sh"
           # bash
@@ -178,21 +209,13 @@ in
                 11) echo "failed to lock the repository" ;;
                 12) echo "wrong password" ;;
                 130) echo "interrupted" ;;
+                # not restic's, baker's own: no code above 130 is taken
+                90) echo "backups have stopped" ;;
                 *) echo "unknown error" ;;
               esac
             }
 
-            mkdir -p "$(dirname "${lockFile}")"
-            exec 9>"${lockFile}"
-            if ! flock --exclusive --timeout ${toString lockTimeout} 9; then
-              # nothing was backed up, which is the same outcome as a failure even
-              # though there is no error to report, so it warns like exit code 3.
-              # the unit itself still succeeded, hence exit 0.
-              msg="skipped after ${toString lockTimeout}s, another baker run is still holding the lock"
-              echo "$msg"
-              notify default warning <<< "$msg"
-              exit 0
-            fi
+            ${lockPreamble}
 
             echo "=== ${name} started $(date)"
             start="$SECONDS"
@@ -240,6 +263,17 @@ in
               Weekday = 6;
               Hour = 4;
               Minute = 30;
+            }
+          ];
+        };
+        watchdog = {
+          command = "watchdog";
+          lock = false;
+          onCalendar = "12:20";
+          calendarInterval = [
+            {
+              Hour = 12;
+              Minute = 20;
             }
           ];
         };
