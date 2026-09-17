@@ -185,9 +185,12 @@ in
             mkdir -p "$(dirname "${lockFile}")"
             exec 9>"${lockFile}"
             if ! flock --exclusive --timeout ${toString lockTimeout} 9; then
-              msg="skipped, another baker run is still holding the lock"
+              # nothing was backed up, which is the same outcome as a failure even
+              # though there is no error to report, so it warns like exit code 3.
+              # the unit itself still succeeded, hence exit 0.
+              msg="skipped after ${toString lockTimeout}s, another baker run is still holding the lock"
               echo "$msg"
-              notify low hourglass_flowing_sand <<< "$msg"
+              notify default warning <<< "$msg"
               exit 0
             fi
 
@@ -198,20 +201,24 @@ in
             elapsed="$(date -u -d "@$((SECONDS - start))" +%T)"
             echo "=== ${name} finished with exit code $code $(date)"
 
-            # the emoji comes from the ntfy tag below, which is rendered in front of
-            # the title, so the body must not repeat it
-            case "$code" in
-              0) head="succeeded in $elapsed"; prio=min; tag=white_check_mark ;;
-              # a backup that could not read some files still wrote a snapshot,
-              # so that is a warning rather than a failure
-              3) head="warnings in $elapsed: $(reason "$code")"; prio=default; tag=warning ;;
-              *) head="failed in $elapsed: $(reason "$code") (exit $code)"; prio=high; tag=x ;;
-            esac
+            # a run that worked is not worth a notification: backups happen every
+            # hour on every machine, so success pings were pure noise on the phone
+            # and drowned the ones that actually mean something
+            if ((code != 0)); then
+              # the emoji comes from the ntfy tag below, which is rendered in front
+              # of the title, so the body must not repeat it
+              case "$code" in
+                # a backup that could not read some files still wrote a snapshot,
+                # so that is a warning rather than a failure
+                3) head="warnings in $elapsed: $(reason "$code")"; prio=default; tag=warning ;;
+                *) head="failed in $elapsed: $(reason "$code") (exit $code)"; prio=high; tag=x ;;
+              esac
 
-            # every restic command ends with its own summary, so the notification
-            # body is simply the tail of it, minus progress and blank line noise
-            printf '%s\n\n%s\n' "$head" "$(grep -vE '^(\[|$)' "$log" | tail -n 15)" |
-              notify "$prio" "$tag"
+              # every restic command ends with its own summary, so the notification
+              # body is simply the tail of it, minus progress and blank line noise
+              printf '%s\n\n%s\n' "$head" "$(grep -vE '^(\[|$)' "$log" | tail -n 15)" |
+                notify "$prio" "$tag"
+            fi
 
             exit "$code"
           '';

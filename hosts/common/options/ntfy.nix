@@ -8,6 +8,9 @@ let
   cfg = config.konrad.services.ntfy;
 in
 {
+  # only failures are notified: a job that keeps working every hour on every
+  # machine buries the one that stopped, so there is deliberately no success
+  # counterpart to the service below
   options.konrad.services.ntfy = {
     enable = lib.mkEnableOption "Enables ntfy services";
 
@@ -16,13 +19,6 @@ in
       default = "notify-problem";
       readOnly = true;
       description = "Name of the created systemd service for problems, without @";
-    };
-
-    infoServiceName = lib.mkOption {
-      type = lib.types.str;
-      default = "info";
-      readOnly = true;
-      description = "Name of the created systemd service for information, without @";
     };
   };
 
@@ -42,13 +38,6 @@ in
           environment.SERVICE = "%i";
           script = ''
             ${ntfy} --priority high --tags rotating_light --title "$SERVICE" "❌ failed"
-          '';
-        };
-        "${cfg.infoServiceName}@" = {
-          enable = true;
-          environment.SERVICE = "%i";
-          script = ''
-            ${ntfy} --priority min --tags white_check_mark --title "$SERVICE" "✅ succeeded"
           '';
         };
       };

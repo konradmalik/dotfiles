@@ -37,7 +37,6 @@
 
   systemd.services.${config.konrad.services.borg.systemdName}.unitConfig = {
     RequiresMountsFor = "/mnt/borg";
-    OnSuccess = "${config.konrad.services.ntfy.infoServiceName}@%i.service";
     OnFailure = "${config.konrad.services.ntfy.problemServiceName}@%i.service";
   };
 
