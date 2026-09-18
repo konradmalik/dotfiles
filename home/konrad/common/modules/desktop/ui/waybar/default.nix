@@ -18,11 +18,72 @@ let
   fuzzel = "${config.programs.fuzzel.package}/bin/fuzzel";
   wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
   refreshWaybar = "${pkgs.procps}/bin/pkill -RTMIN+8 waybar";
+  refreshTailscale = "${pkgs.procps}/bin/pkill -RTMIN+9 waybar";
 
   terminal-spawn = cmd: "${lib.getExe config.programs.alacritty.package} -e /bin/sh -c \"${cmd}\"";
 
   systemMonitor = terminal-spawn "${config.programs.btop.package}/bin/btop";
   wiremix = terminal-spawn "${pkgs.wiremix}/bin/wiremix";
+
+  colors = config.lib.stylix.colors.withHashtag;
+
+  tailscale = "${osConfig.services.tailscale.package}/bin/tailscale";
+  # the tailscale mark: nine dots, the five solid ones drawing the "t". no font
+  # carries it, so it is rendered to a png and pulled in as a css background
+  tailscaleIcon =
+    name: color:
+    let
+      svg = pkgs.writeText "tailscale-${name}.svg" ''
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}">
+          <circle cx="4.5" cy="4.5" r="2.9"/>
+          <circle cx="12" cy="4.5" r="2.9"/>
+          <circle cx="19.5" cy="4.5" r="2.9"/>
+          <circle cx="12" cy="12" r="2.9"/>
+          <circle cx="12" cy="19.5" r="2.9"/>
+          <circle cx="4.5" cy="12" r="2.9" opacity="0.35"/>
+          <circle cx="19.5" cy="12" r="2.9" opacity="0.35"/>
+          <circle cx="4.5" cy="19.5" r="2.9" opacity="0.35"/>
+          <circle cx="19.5" cy="19.5" r="2.9" opacity="0.35"/>
+        </svg>
+      '';
+    in
+    pkgs.runCommand "tailscale-${name}.png" { nativeBuildInputs = [ pkgs.librsvg ]; } ''
+      rsvg-convert --width 64 --height 64 ${svg} --output $out
+    '';
+  tailscaleCopyIp = pkgs.writeShellScript "waybar-tailscale-copy-ip" ''
+    set -euo pipefail
+    ip="$(${tailscale} ip -4 2>/dev/null)" || ip=""
+    # piping straight into wl-copy would clear the clipboard when down
+    if [ -n "$ip" ]; then
+      printf '%s' "$ip" | ${wl-copy}
+    else
+      ${pkgs.libnotify}/bin/notify-send "Tailscale" "No address to copy"
+    fi
+  '';
+  # up/down need the operator bit granted in hosts/common/modules/tailscale.nix
+  tailscaleToggle = pkgs.writeShellScript "waybar-tailscale-toggle" ''
+    set -euo pipefail
+    state="$(${tailscale} status --json 2>/dev/null | ${pkgs.jq}/bin/jq -r '.BackendState // ""')" || state=""
+
+    notify() { ${pkgs.libnotify}/bin/notify-send --urgency critical "Tailscale" "$1"; }
+
+    case "$state" in
+      Running)
+        out="$(${tailscale} down 2>&1)" || notify "$out"
+        ;;
+      NeedsLogin)
+        # up prints a login url and then waits for the browser, so this one has
+        # to happen somewhere the url is actually readable
+        ${terminal-spawn "${tailscale} up"}
+        ;;
+      *)
+        # up blocks forever by default, and it refuses outright when prefs were
+        # set with non-default flags, so bound it and surface whatever it said
+        out="$(${tailscale} up --timeout 30s 2>&1)" || notify "$out"
+        ;;
+    esac
+    ${refreshTailscale} || true
+  '';
 
   # Function to simplify making waybar outputs
   jsonOutput =
@@ -52,6 +113,14 @@ in
     hl.on("hyprland.start", function() hl.exec_cmd("waybar") end)
   '';
   stylix.targets.waybar.addCss = false;
+
+  # waybar.css refers to these by relative url, which gtk resolves next to the
+  # stylesheet, so they have to land in the same directory
+  xdg.configFile = lib.optionalAttrs osConfig.services.tailscale.enable {
+    "waybar/tailscale-connected.png".source = tailscaleIcon "connected" colors.base0D;
+    "waybar/tailscale-needs-login.png".source = tailscaleIcon "needs-login" colors.base0A;
+    "waybar/tailscale-off.png".source = tailscaleIcon "off" colors.base04;
+  };
   services.mako.settings.on-notify = "exec ${refreshWaybar}";
 
   programs.waybar = {
@@ -75,6 +144,11 @@ in
           "tray"
           "bluetooth"
           "wireplumber"
+        ]
+        ++ (lib.optionals osConfig.services.tailscale.enable [
+          "custom/tailscale"
+        ])
+        ++ [
           "network"
           "hyprland/language"
           "cpu"
@@ -281,6 +355,38 @@ in
         "hyprland/language" = {
           format = "{short}";
           on-click = "hyprctl switchxkblayout all next";
+        };
+        "custom/tailscale" = {
+          interval = 10;
+          signal = 9;
+          return-type = "json";
+          exec = jsonOutput "tailscale" {
+            pre = ''
+              # reading the status needs no operator bit, tailscaled hands every
+              # local user read-only access. the cli does exit non-zero in some
+              # states while still printing usable json, so only the json counts
+              status="$(${tailscale} status --json 2>/dev/null)" || true
+              ${pkgs.jq}/bin/jq -e . >/dev/null 2>&1 <<<"$status" || status="{}"
+              state="$(${pkgs.jq}/bin/jq -r '.BackendState // "NoState"' <<<"$status")"
+              host="$(${pkgs.jq}/bin/jq -r '.Self.HostName // "?"' <<<"$status")"
+              ip="$(${pkgs.jq}/bin/jq -r '.TailscaleIPs[0]? // "no address"' <<<"$status")"
+              case "$state" in
+                Running) class="connected" ;;
+                Stopped) class="stopped" ;;
+                NeedsLogin) class="needs-login" ;;
+                *) class="down" ;;
+              esac
+
+              tooltip="Tailscale: $state"$'\n'"$host ($ip)"
+            '';
+            class = "$class";
+            tooltip = "$tooltip";
+          };
+          # the icon is a css background, but waybar hides a custom module whose
+          # text is empty, so the label is a space holding the space open
+          format = " ";
+          on-click = "${tailscaleToggle}";
+          on-click-right = "${tailscaleCopyIp}";
         };
         "custom/menu" = {
           format = "  ";
