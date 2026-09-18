@@ -1,0 +1,4 @@
+module qs.Ui
+BarItem 1.0 BarItem.qml
+Overlay 1.0 Overlay.qml
+Tooltip 1.0 Tooltip.qml

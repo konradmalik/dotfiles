@@ -1,0 +1,5 @@
+module qs.Notifications
+singleton Notifs 1.0 Notifs.qml
+Card 1.0 Card.qml
+Popups 1.0 Popups.qml
+Center 1.0 Center.qml

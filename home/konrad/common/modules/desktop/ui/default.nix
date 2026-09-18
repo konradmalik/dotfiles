@@ -4,15 +4,12 @@
 }:
 {
   imports = [
-    ./fuzzel.nix
     ./hyprland
-    ./mako.nix
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
     ./hyprsunset.nix
-    ./nwg-bar.nix
-    ./waybar
+    ./quickshell
   ];
 
   home.packages = with pkgs; [

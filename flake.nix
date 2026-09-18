@@ -85,6 +85,8 @@
           darwinPackages = builtins.attrValues (removeAttrs (getSystem inputs.darwin.packages) [ "default" ]);
           hyprlandDir = "home/konrad/common/modules/desktop/ui/hyprland";
           hyprlandLuarc = pkgs.callPackage ./${hyprlandDir}/luarc.nix { };
+          quickshellDir = "home/konrad/common/modules/desktop/ui/quickshell";
+          qmlls = pkgs.callPackage ./${quickshellDir}/qmlls.nix { };
         in
         {
           default = pkgs.mkShell {
@@ -96,21 +98,26 @@
               # bash
               ''
                 ln -fs ${hyprlandLuarc} ./${hyprlandDir}/.luarc.json
+                # the shell's own `qs.*` modules live under this directory, and
+                # qmlls resolves them only if it is an import path
+                export QML_IMPORT_PATH="$PWD/${quickshellDir}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
               '';
 
-            packages =
-              (with pkgs; [
-                age
-                git
-                home-manager
-                nmap
-                sops
-                ssh-to-age
-              ])
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
-                (getSystem inputs.disko.packages).disko
-              ];
+            packages = [
+              qmlls
+            ]
+            ++ (with pkgs; [
+              age
+              git
+              home-manager
+              nmap
+              sops
+              ssh-to-age
+            ])
+            ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
+            ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
+              (getSystem inputs.disko.packages).disko
+            ];
           };
         }
       );

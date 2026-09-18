@@ -4,9 +4,9 @@ hl.bind("SUPER + SHIFT + c", hl.dsp.exec_cmd("hyprctl keyword input:kb_options g
 
 -- Program bindings
 hl.bind("SUPER + return", hl.dsp.exec_cmd("$TERMINAL"))
-hl.bind("SUPER + w", hl.dsp.exec_cmd("makoctl dismiss"))
+hl.bind("SUPER + w", hl.dsp.global("quickshell:dismiss"))
 hl.bind("SUPER + b", hl.dsp.exec_cmd("$BROWSER"))
-hl.bind("SUPER + space", hl.dsp.exec_cmd("fuzzel"))
+hl.bind("SUPER + space", hl.dsp.global("quickshell:launcher"))
 
 -- Screenshots
 -- NOTE: killall is useful for occasional freezes of hyprpicker

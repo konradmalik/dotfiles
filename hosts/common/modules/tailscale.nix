@@ -1,16 +1,16 @@
 { config, lib, ... }:
 let
-  # only the waybar module needs to drive tailscale from a user session, so the
+  # only the desktop shell needs to drive tailscale from a user session, so the
   # operator is granted on those machines only
-  waybarUsers = builtins.filter (user: config.home-manager.users.${user}.programs.waybar.enable) (
-    builtins.attrNames config.home-manager.users
-  );
+  shellUsers = builtins.filter (
+    user: config.home-manager.users.${user}.wayland.windowManager.hyprland.enable
+  ) (builtins.attrNames config.home-manager.users);
 in
 {
   assertions = [
     {
-      assertion = builtins.length waybarUsers <= 1;
-      message = "tailscale takes a single operator, got waybar users: ${toString waybarUsers}";
+      assertion = builtins.length shellUsers <= 1;
+      message = "tailscale takes a single operator, got shell users: ${toString shellUsers}";
     }
   ];
 
@@ -20,6 +20,6 @@ in
     openFirewall = true;
     # lets that user run `tailscale up/down/set` without root, everyone else
     # keeps the read-only access tailscaled hands out by default
-    extraSetFlags = lib.optional (waybarUsers != [ ]) "--operator=${builtins.head waybarUsers}";
+    extraSetFlags = lib.optional (shellUsers != [ ]) "--operator=${builtins.head shellUsers}";
   };
 }

@@ -1,0 +1,2 @@
+module qs.Config
+singleton Env 1.0 Env.qml

@@ -18,3 +18,13 @@ vim.lsp.config("nixd", {
         },
     },
 })
+
+-- qmlls comes from this repo's devShell, not from the neovim flake, and finds
+-- both the quickshell modules and this checkout's own `qs.*` modules through
+-- the QML_IMPORT_PATH the devShell exports.
+vim.lsp.config("qmlls", {
+    cmd = { "qmlls" },
+    filetypes = { "qml" },
+    root_markers = { ".qmlls.ini" },
+})
+vim.lsp.enable("qmlls")

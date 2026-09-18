@@ -1,0 +1,7 @@
+module qs.Common
+singleton Theme 1.0 Theme.qml
+singleton Sys 1.0 Sys.qml
+singleton Cmd 1.0 Cmd.qml
+singleton Players 1.0 Players.qml
+singleton Net 1.0 Net.qml
+singleton Shell 1.0 Shell.qml
