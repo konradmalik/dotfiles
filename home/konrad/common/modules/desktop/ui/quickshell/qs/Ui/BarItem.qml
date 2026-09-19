@@ -16,7 +16,12 @@ Item {
     property bool bold: false
     property bool active: true
 
+    // Set by items that drop a BarPopup: a tooltip must not stack on top of the
+    // panel the same click just opened.
+    property bool popupOpen: false
+
     readonly property bool hovered: mouse.containsMouse
+    readonly property bool tooltipArmed: hovered && tooltip !== "" && !popupOpen
 
     signal leftClicked
     signal rightClicked
@@ -93,8 +98,8 @@ Item {
         onTriggered: tooltipLoader.active = true
     }
 
-    onHoveredChanged: {
-        if (root.hovered && root.tooltip !== "")
+    onTooltipArmedChanged: {
+        if (root.tooltipArmed)
             hoverDelay.restart();
         else {
             hoverDelay.stop();

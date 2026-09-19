@@ -126,6 +126,17 @@ let
         }
       '';
 
+  # Quickshell reloads a config whenever its files change on disk, but the one
+  # hyprland starts is this read-only store copy, so editing ./qs does nothing
+  # until the next switch. To iterate without rebuilding, run the working tree
+  # instead -- ./qs/Config/Env.qml is checked in as a stub for exactly this:
+  #
+  #   quickshell kill                       # stop the store copy
+  #   quickshell -p ./qs                    # from this directory; ^C to stop
+  #
+  # Saving any file under ./qs now reloads the running shell in place. The stub
+  # carries fallback colours, fonts and program paths rather than this host's,
+  # so anything reading Env is approximate until the config is switched to.
   shell = pkgs.runCommandLocal "quickshell-shell" { } ''
     cp -r ${./qs} $out
     chmod -R u+w $out
