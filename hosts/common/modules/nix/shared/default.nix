@@ -2,11 +2,13 @@
   pkgs,
   lib,
   inputs,
+  nodejsOverlay,
   ...
 }:
 {
   nixpkgs = {
     overlays = [
+      nodejsOverlay
       (final: prev: {
         stable = import inputs.nixpkgs-stable {
           inherit (prev.stdenv.hostPlatform) system;
