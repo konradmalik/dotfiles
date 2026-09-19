@@ -3,7 +3,9 @@ import Quickshell
 
 // Fallback only. The Nix module overwrites this file with the values for the
 // host being built; it is checked in so that qmlls can resolve qs.Config, and
-// so that `quickshell -p src` runs straight from the working tree.
+// so that `quickshell -p src` runs straight from the working tree. It describes
+// a laptop, because every host this shell is built for is one -- with these
+// false, a working-tree run silently hides the items gated on them.
 Singleton {
     readonly property var colors: ({
             base00: "#1f1f28",
@@ -29,16 +31,17 @@ Singleton {
     readonly property string popupFontFamily: "Ubuntu Sans"
     readonly property int popupFontSize: 11
 
-    readonly property bool hasBattery: false
-    readonly property bool hasBacklight: false
+    readonly property bool hasBattery: true
+    readonly property bool hasBacklight: true
     readonly property bool hasTailscale: true
-    readonly property bool hasPowerProfiles: false
+    readonly property bool hasPowerProfiles: true
 
     readonly property string distro: "NixOS"
 
     readonly property list<string> terminalArgv: ["alacritty", "-e", "/bin/sh", "-c"]
     readonly property list<string> tailscaleToggle: ["true"]
     readonly property list<string> tailscaleCopyIp: ["true"]
+    readonly property list<string> cameraWatch: ["true"]
 
     readonly property string systemMonitor: "btop"
     readonly property string mixer: "wiremix"

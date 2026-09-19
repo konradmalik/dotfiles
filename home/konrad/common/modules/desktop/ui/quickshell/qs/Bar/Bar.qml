@@ -41,6 +41,8 @@ Variants {
             NotificationsItem {}
 
             Clock {}
+
+            Privacy {}
         }
 
         Row {

@@ -30,7 +30,10 @@ BarItem {
     Process {
         id: toggle
 
-        onExited: poll.running = true
+        // Not onExited: its QProcess::ExitStatus parameter is not a type QML can
+        // resolve, and running already goes false the moment the process ends.
+        onRunningChanged: if (!toggle.running)
+            poll.running = true
     }
 
     Process {

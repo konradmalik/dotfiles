@@ -86,6 +86,8 @@
           hyprlandDir = "home/konrad/common/modules/desktop/ui/hyprland";
           hyprlandLuarc = pkgs.callPackage ./${hyprlandDir}/luarc.nix { };
           quickshellDir = "home/konrad/common/modules/desktop/ui/quickshell";
+          # built out of quickshell, which is linux-only, so this must stay
+          # unforced on darwin -- see the packages list below
           qmlls = pkgs.callPackage ./${quickshellDir}/qmlls.nix { };
         in
         {
@@ -98,15 +100,16 @@
               # bash
               ''
                 ln -fs ${hyprlandLuarc} ./${hyprlandDir}/.luarc.json
-                # the shell's own `qs.*` modules live under this directory, and
-                # qmlls resolves them only if it is an import path
-                export QML_IMPORT_PATH="$PWD/${quickshellDir}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
-              '';
+              ''
+              + pkgs.lib.optionalString pkgs.stdenvNoCC.hostPlatform.isLinux
+                # bash
+                ''
+                  # the shell's own `qs.*` modules live under this directory, and
+                  # qmlls resolves them only if it is an import path
+                  export QML_IMPORT_PATH="$PWD/${quickshellDir}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
+                '';
 
-            packages = [
-              qmlls
-            ]
-            ++ (with pkgs; [
+            packages = (with pkgs; [
               age
               git
               home-manager
@@ -117,6 +120,7 @@
             ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
             ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
               (getSystem inputs.disko.packages).disko
+              qmlls
             ];
           };
         }

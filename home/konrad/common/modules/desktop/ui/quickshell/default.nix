@@ -53,6 +53,47 @@ let
     esac
   '';
 
+  # A camera exposes no "in use" flag to read, so the device nodes are watched
+  # for open/close with inotify and fuser is asked who is holding them. Nothing
+  # polls: the scan runs only when something actually opens or closes a camera.
+  cameraWatch = pkgs.writeShellScript "quickshell-camera-watch" ''
+    set -u
+
+    set -- /dev/video*
+    [ -e "$1" ] || { printf '\n'; exit 0; }
+
+    # fuser prints the holding pids on stdout, and comm turns each one into the
+    # name worth showing. One line of comma separated names, empty when idle.
+    users() {
+      out=""
+      for pid in $(${pkgs.psmisc}/bin/fuser "$@" 2>/dev/null); do
+        [ -r "/proc/$pid/comm" ] || continue
+        read -r name < "/proc/$pid/comm" || continue
+        case " $out " in
+        *" $name "*) ;;
+        *) out="''${out:+$out, }$name" ;;
+        esac
+      done
+      printf '%s' "$out"
+    }
+
+    state=""
+    emit() {
+      new="$(users "$@")"
+      if [ "$new" != "$state" ]; then
+        state="$new"
+        printf '%s\n' "$new"
+      fi
+    }
+
+    # The scan is what decides; inotify only says when to run it, so a dropped
+    # event costs nothing past the next open or close.
+    ${pkgs.inotify-tools}/bin/inotifywait -q -m -e open -e close "$@" | {
+      emit "$@"
+      while read -r _; do emit "$@"; done
+    }
+  '';
+
   qmlString = value: ''"${value}"'';
   qmlList = values: "[${lib.concatMapStringsSep ", " qmlString values}]";
   qmlBool = value: if value then "true" else "false";
@@ -110,6 +151,7 @@ let
             }
             readonly property list<string> tailscaleToggle: ${qmlList [ "${tailscaleToggle}" ]}
             readonly property list<string> tailscaleCopyIp: ${qmlList [ "${tailscaleCopyIp}" ]}
+            readonly property list<string> cameraWatch: ${qmlList [ "${cameraWatch}" ]}
 
             readonly property string systemMonitor: ${qmlString (lib.getExe config.programs.btop.package)}
             readonly property string mixer: ${qmlString (lib.getExe pkgs.wiremix)}
@@ -126,6 +168,17 @@ let
         }
       '';
 
+  # Quickshell reloads a config whenever its files change on disk, but the one
+  # hyprland starts is this read-only store copy, so editing ./qs does nothing
+  # until the next switch. To iterate without rebuilding, run the working tree
+  # instead -- ./qs/Config/Env.qml is checked in as a stub for exactly this:
+  #
+  #   quickshell kill                       # stop the store copy
+  #   quickshell -p ./qs                    # from this directory; ^C to stop
+  #
+  # Saving any file under ./qs now reloads the running shell in place. The stub
+  # carries fallback colours, fonts and program paths rather than this host's,
+  # so anything reading Env is approximate until the config is switched to.
   shell = pkgs.runCommandLocal "quickshell-shell" { } ''
     cp -r ${./qs} $out
     chmod -R u+w $out

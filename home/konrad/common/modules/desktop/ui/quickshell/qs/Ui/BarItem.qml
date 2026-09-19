@@ -11,12 +11,20 @@ Item {
     property string text: ""
     property string tooltip: ""
     property color color: Theme.text
+    // Filled behind the item, for states that have to read as a warning rather
+    // than as one more glyph in the row.
+    property color background: "transparent"
     property int padding: Theme.itemPadding
     property int spacing: 4
     property bool bold: false
     property bool active: true
 
+    // Set by items that drop a BarPopup: a tooltip must not stack on top of the
+    // panel the same click just opened.
+    property bool popupOpen: false
+
     readonly property bool hovered: mouse.containsMouse
+    readonly property bool tooltipArmed: hovered && tooltip !== "" && !popupOpen
 
     signal leftClicked
     signal rightClicked
@@ -27,6 +35,13 @@ Item {
     implicitWidth: active && row.implicitWidth > 0 ? row.implicitWidth + padding * 2 : 0
     implicitHeight: Theme.barHeight
     visible: implicitWidth > 0
+
+    Rectangle {
+        anchors.fill: parent
+        visible: root.background.a > 0
+        color: root.background
+        radius: Theme.radius
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -93,8 +108,8 @@ Item {
         onTriggered: tooltipLoader.active = true
     }
 
-    onHoveredChanged: {
-        if (root.hovered && root.tooltip !== "")
+    onTooltipArmedChanged: {
+        if (root.tooltipArmed)
             hoverDelay.restart();
         else {
             hoverDelay.stop();

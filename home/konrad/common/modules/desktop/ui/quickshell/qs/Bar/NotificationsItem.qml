@@ -7,8 +7,6 @@ import qs.Ui
 BarItem {
     id: root
 
-    property bool centerOpen: false
-
     text: {
         const icon = Notifs.dnd ? "󰂛" : Notifs.count > 0 ? "󱅫" : "󰂚";
         return Notifs.count > 0 ? icon + " " + Notifs.count : icon;
@@ -21,21 +19,20 @@ BarItem {
         return Notifs.count + " notification(s)";
     }
 
-    onLeftClicked: root.centerOpen = !root.centerOpen
+    onLeftClicked: root.popupOpen = !root.popupOpen
     onRightClicked: Notifs.dismissAll()
     onMiddleClicked: Notifs.dnd = !Notifs.dnd
     onScrolledUp: Notifs.restore()
     onScrolledDown: Notifs.dismissOldest()
 
     LazyLoader {
-        active: root.centerOpen
+        active: root.popupOpen
 
         Center {
             anchorItem: root
             visible: true
 
-            onVisibleChanged: if (!visible)
-                root.centerOpen = false
+            onDismissed: root.popupOpen = false
         }
     }
 }
