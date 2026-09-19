@@ -15,7 +15,7 @@ PopupWindow {
     signal dismissed
 
     anchor.item: anchorItem
-    anchor.rect.y: anchorItem ? anchorItem.height : 0
+    anchor.rect.y: anchorItem.height
     anchor.gravity: Edges.Bottom
     anchor.adjustment: PopupAdjustment.SlideX
 
