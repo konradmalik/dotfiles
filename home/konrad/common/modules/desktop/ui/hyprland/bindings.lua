@@ -1,7 +1,3 @@
--- Keyboard layout toggle behavior
-hl.bind("SUPER + c", hl.dsp.exec_cmd("hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps,lv3:lalt_switch"))
-hl.bind("SUPER + SHIFT + c", hl.dsp.exec_cmd("hyprctl keyword input:kb_options grp:shifts_toggle,ctrl:nocaps"))
-
 -- Program bindings
 hl.bind("SUPER + return", hl.dsp.exec_cmd("$TERMINAL"))
 hl.bind("SUPER + w", hl.dsp.global("quickshell:dismiss"))

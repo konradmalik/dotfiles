@@ -6,7 +6,6 @@
         # left-to-right:
         # use both shifts together to toggle keyboard layout
         # capslock acts as another ctrl
-        # left alt allows to write special characters just like right alt
         kb_options = "grp:shifts_toggle,ctrl:nocaps";
 
         natural_scroll = true;
