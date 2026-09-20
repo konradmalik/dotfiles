@@ -54,6 +54,13 @@
   outputs =
     { self, ... }@inputs:
     let
+      # nodejs_latest (26.x) fails its own test suite on build
+      # (test/parallel/test-fs-cp-async-file-modes.mjs), so pin every consumer
+      # of nodejs_latest (e.g. iosevka) to the default LTS nodejs until that
+      # is fixed upstream.
+      nodejsOverlay = final: prev: {
+        nodejs_latest = prev.nodejs;
+      };
 
       forAllSystems =
         function:
@@ -67,7 +74,7 @@
             system:
             function (
               inputs.nixpkgs.legacyPackages.${system}.appendOverlays [
-                (import ./pkgs/overlays/nodejs.nix)
+                nodejsOverlay
                 (import ./pkgs/fonts)
                 (import ./pkgs/scripts)
               ]
@@ -75,7 +82,7 @@
           );
 
       specialArgs = {
-        inherit inputs;
+        inherit inputs nodejsOverlay;
       };
     in
     {
