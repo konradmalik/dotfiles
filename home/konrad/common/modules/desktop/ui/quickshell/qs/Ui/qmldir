@@ -1,6 +1,7 @@
 module qs.Ui
 BarItem 1.0 BarItem.qml
 BarPopup 1.0 BarPopup.qml
+Dropdown 1.0 Dropdown.qml
 Overlay 1.0 Overlay.qml
 Slider 1.0 Slider.qml
 Tooltip 1.0 Tooltip.qml

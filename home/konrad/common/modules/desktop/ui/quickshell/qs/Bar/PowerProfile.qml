@@ -1,4 +1,6 @@
+pragma ComponentBehavior: Bound
 import QtQuick
+import Quickshell
 import Quickshell.Services.UPower
 import qs.Config
 import qs.Ui
@@ -16,16 +18,44 @@ BarItem {
         return map;
     }
 
-    // tlp-pd does not always offer a performance profile, so cycling has to walk
-    // the profiles that actually exist rather than the full list.
+    // tlp-pd does not always offer a performance profile, so only the ones that
+    // actually exist are offered.
     readonly property var available: order.filter(p => p !== PowerProfile.Performance || PowerProfiles.hasPerformanceProfile)
 
     active: Env.hasPowerProfiles
     text: icons[PowerProfiles.profile] ?? icons[PowerProfile.Balanced]
     tooltip: "Power profile: " + PowerProfile.toString(PowerProfiles.profile)
 
-    onLeftClicked: {
-        const at = root.available.indexOf(PowerProfiles.profile);
-        PowerProfiles.profile = root.available[(at + 1) % root.available.length];
+    onLeftClicked: root.popupOpen = !root.popupOpen
+
+    LazyLoader {
+        active: root.popupOpen
+
+        BarPopup {
+            anchorItem: root
+            visible: true
+
+            onDismissed: root.popupOpen = false
+
+            Dropdown {
+                width: 220
+                title: "Profile"
+                current: PowerProfiles.profile
+                options: root.available.map(p => ({
+                            value: p,
+                            label: PowerProfile.toString(p),
+                            icon: root.icons[p]
+                        }))
+
+                // The popup holds nothing else, so there is no point making
+                // someone open the list before they can pick from it.
+                expanded: true
+
+                onPicked: value => {
+                    PowerProfiles.profile = value;
+                    root.popupOpen = false;
+                }
+            }
+        }
     }
 }
