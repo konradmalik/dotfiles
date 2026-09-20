@@ -109,27 +109,29 @@
               ''
                 ln -fs ${hyprlandLuarc} ./${hyprlandDir}/.luarc.json
               ''
-              + pkgs.lib.optionalString pkgs.stdenvNoCC.hostPlatform.isLinux
-                # bash
-                ''
-                  # the shell's own `qs.*` modules live under this directory, and
-                  # qmlls resolves them only if it is an import path
-                  export QML_IMPORT_PATH="$PWD/${quickshellDir}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
-                '';
+              +
+                pkgs.lib.optionalString pkgs.stdenvNoCC.hostPlatform.isLinux
+                  # bash
+                  ''
+                    # the shell's own `qs.*` modules live under this directory, and
+                    # qmlls resolves them only if it is an import path
+                    export QML_IMPORT_PATH="$PWD/${quickshellDir}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
+                  '';
 
-            packages = (with pkgs; [
-              age
-              git
-              home-manager
-              nmap
-              sops
-              ssh-to-age
-            ])
-            ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
-            ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
-              (getSystem inputs.disko.packages).disko
-              qmlls
-            ];
+            packages =
+              (with pkgs; [
+                age
+                git
+                home-manager
+                nmap
+                sops
+                ssh-to-age
+              ])
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
+              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
+                (getSystem inputs.disko.packages).disko
+                qmlls
+              ];
           };
         }
       );
