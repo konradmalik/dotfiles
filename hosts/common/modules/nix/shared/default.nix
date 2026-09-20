@@ -7,6 +7,7 @@
 {
   nixpkgs = {
     overlays = [
+      (import ../../../../../pkgs/overlays/nodejs.nix)
       (final: prev: {
         stable = import inputs.nixpkgs-stable {
           inherit (prev.stdenv.hostPlatform) system;

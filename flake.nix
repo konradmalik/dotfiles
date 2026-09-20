@@ -67,6 +67,7 @@
             system:
             function (
               inputs.nixpkgs.legacyPackages.${system}.appendOverlays [
+                (import ./pkgs/overlays/nodejs.nix)
                 (import ./pkgs/fonts)
                 (import ./pkgs/scripts)
               ]
