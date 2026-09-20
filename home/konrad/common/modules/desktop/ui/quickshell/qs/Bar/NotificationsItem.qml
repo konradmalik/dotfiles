@@ -22,7 +22,6 @@ BarItem {
     onLeftClicked: root.popupOpen = !root.popupOpen
     onRightClicked: Notifs.dismissAll()
     onMiddleClicked: Notifs.dnd = !Notifs.dnd
-    onScrolledUp: Notifs.restore()
     onScrolledDown: Notifs.dismissOldest()
 
     LazyLoader {

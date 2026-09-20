@@ -9,42 +9,38 @@ Singleton {
     id: root
 
     property bool dnd: false
+
+    // What is on screen right now. Quickshell has no popup of its own: `tracked`
+    // decides what stays in the server's list, that list is the history, and
+    // what gets drawn on top of it is the shell's own business.
     property var popups: []
-    property var dismissed: []
 
     // Transient notifications are volume popups and progress bars: worth
-    // showing, not worth keeping. They still have to be tracked, because an
-    // untracked one is destroyed the moment the handler returns, so they are
-    // kept out of the history here instead.
+    // showing, not worth keeping.
     readonly property var history: [...server.trackedNotifications.values].reverse().filter(n => !n.transient)
     readonly property int count: popups.length
 
     function accept(notification) {
+        // An untracked notification is destroyed the moment this returns.
         notification.tracked = true;
 
         if (!root.dnd)
             root.popups = [notification].concat(root.popups);
 
-        root.trim();
-    }
-
-    function trim() {
+        // Keep the history bounded; the oldest drop off the end.
         const tracked = server.trackedNotifications.values;
         for (let i = 0; i < tracked.length - Theme.notificationHistory; i++)
             tracked[i].tracked = false;
     }
 
+    // Taking a popup off screen deliberately does not call notification.dismiss():
+    // that would close it, and a closed notification leaves the server's list,
+    // which is the history. Transient ones are not kept, so they go straight out.
     function dismiss(notification) {
-        if (!root.popups.includes(notification))
-            return;
         root.popups = root.popups.filter(n => n !== notification);
 
-        if (notification.transient) {
+        if (notification.transient)
             notification.tracked = false;
-            return;
-        }
-
-        root.dismissed = [notification].concat(root.dismissed).slice(0, Theme.notificationHistory);
     }
 
     function dismissOldest() {
@@ -53,28 +49,16 @@ Singleton {
     }
 
     function dismissAll() {
-        root.dismissed = root.popups.concat(root.dismissed).slice(0, Theme.notificationHistory);
         root.popups = [];
-    }
-
-    function restore() {
-        if (root.dismissed.length === 0)
-            return;
-        const notification = root.dismissed[0];
-        root.dismissed = root.dismissed.slice(1);
-        if (!root.popups.includes(notification))
-            root.popups = [notification].concat(root.popups);
     }
 
     function forget(notification) {
         root.popups = root.popups.filter(n => n !== notification);
-        root.dismissed = root.dismissed.filter(n => n !== notification);
         notification.tracked = false;
     }
 
     function clear() {
         root.popups = [];
-        root.dismissed = [];
         for (const notification of [...server.trackedNotifications.values])
             notification.tracked = false;
     }
@@ -109,7 +93,6 @@ Singleton {
 
                 function onClosed() {
                     root.popups = root.popups.filter(n => n !== watched.modelData);
-                    root.dismissed = root.dismissed.filter(n => n !== watched.modelData);
                 }
             }
         }
