@@ -49,8 +49,10 @@ Overlay {
 
         // Leaving the session is the compositor's job, and with a lua config it
         // is the only one of these that cannot be spelled as a plain command.
+        // The argument is lua, not a bare dispatcher name: hyprland parses it,
+        // and a bare word fails with "expected a dispatcher".
         if (entry.command.length === 0)
-            Hyprland.dispatch("exit");
+            Hyprland.dispatch("hl.dsp.exit()");
         else
             Cmd.run(entry.command);
     }
