@@ -22,6 +22,7 @@ Variants {
             right: true
         }
 
+        // Where you are and what is playing.
         Row {
             anchors.left: parent.left
             anchors.leftMargin: Theme.barMargin
@@ -46,17 +47,22 @@ Variants {
             anchors.centerIn: parent
         }
 
+        // Indicators: something about this session is not in its usual state,
+        // and the clock is where the eye already goes. The two that come and go
+        // on their own sit nearest it.
         Row {
             anchors.right: clock.left
             anchors.rightMargin: Theme.itemSpacing
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.itemSpacing
 
-            NotificationsItem {}
-
             IdleInhibit {
                 barWindow: bar
             }
+
+            Sunset {}
+
+            NotificationsItem {}
         }
 
         Row {
@@ -68,6 +74,8 @@ Variants {
             Privacy {}
         }
 
+        // The machine, by subject, ending on the switch that turns it off:
+        // other people's icons, then load, radios, sound, screen, power.
         Row {
             anchors.right: parent.right
             anchors.rightMargin: Theme.barMargin
@@ -78,13 +86,17 @@ Variants {
 
             BluetoothItem {}
 
-            Volume {}
+            NetworkItem {}
 
             Tailscale {}
 
-            NetworkItem {}
-
             Language {}
+
+            Volume {}
+
+            Backlight {}
+
+            Monitor {}
 
             Cpu {}
 
@@ -93,12 +105,6 @@ Variants {
             PowerProfile {}
 
             Battery {}
-
-            Backlight {}
-
-            Sunset {}
-
-            Monitor {}
 
             PowerMenu {}
         }
