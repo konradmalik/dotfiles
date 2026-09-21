@@ -52,11 +52,11 @@ Variants {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.itemSpacing
 
+            Sunset {}
+
             IdleInhibit {
                 barWindow: bar
             }
-
-            Sunset {}
 
             NotificationsItem {}
         }
