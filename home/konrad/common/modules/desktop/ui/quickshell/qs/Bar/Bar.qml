@@ -32,10 +32,6 @@ Variants {
             Menu {}
 
             Workspaces {}
-
-            CurrentPlayer {}
-
-            Player {}
         }
 
         // The clock is centred on the screen rather than sitting inside a
@@ -70,6 +66,8 @@ Variants {
             anchors.leftMargin: Theme.itemSpacing
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.itemSpacing
+
+            Media {}
 
             Privacy {}
         }
