@@ -9,6 +9,8 @@
 let
   isLaptop = osConfig.services.upower.enable;
 
+  touchscreen = config.konrad.hardware.touchscreen;
+
   colors = config.lib.stylix.colors.withHashtag;
   fonts = config.stylix.fonts;
 
@@ -138,6 +140,11 @@ let
             readonly property bool hasBacklight: ${qmlBool isLaptop}
             readonly property bool hasTailscale: ${qmlBool osConfig.services.tailscale.enable}
             readonly property bool hasPowerProfiles: ${qmlBool osConfig.services.tlp.pd.enable}
+
+            readonly property string touchscreenDevice: ${
+              qmlString (if touchscreen.name == null then "" else touchscreen.name)
+            }
+            readonly property bool touchscreenEnabled: ${qmlBool touchscreen.enabled}
 
             readonly property string distro: "${osConfig.system.nixos.distroName} ${osConfig.system.nixos.version} (${osConfig.system.nixos.codeName})"
 

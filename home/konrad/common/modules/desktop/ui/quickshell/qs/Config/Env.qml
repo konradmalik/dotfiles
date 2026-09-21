@@ -36,6 +36,9 @@ Singleton {
     readonly property bool hasTailscale: true
     readonly property bool hasPowerProfiles: true
 
+    readonly property string touchscreenDevice: "raydium-corporation-raydium-touch-system"
+    readonly property bool touchscreenEnabled: false
+
     readonly property string distro: "NixOS"
 
     readonly property list<string> terminalArgv: ["alacritty", "-e", "/bin/sh", "-c"]

@@ -98,6 +98,8 @@ Variants {
 
             Sunset {}
 
+            Monitor {}
+
             PowerMenu {}
         }
     }
