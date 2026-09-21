@@ -10,7 +10,8 @@ BarItem {
 
     property bool inhibited: false
 
-    text: inhibited ? "󰒳" : "󰒲"
+    // A full, steaming mug while sleep is held off; an empty one otherwise.
+    text: inhibited ? "󰅶" : "󰛊"
     color: inhibited ? Theme.warning : Theme.muted
     tooltip: inhibited ? "Idle inhibited" : "Idle allowed"
 

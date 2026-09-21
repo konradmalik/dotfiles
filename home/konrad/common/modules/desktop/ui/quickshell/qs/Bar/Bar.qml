@@ -37,13 +37,33 @@ Variants {
             Player {}
         }
 
-        Row {
+        // The clock is centred on the screen rather than sitting inside a
+        // centred row, so whatever is put beside it cannot push the date off
+        // centre.
+        Clock {
+            id: clock
+
             anchors.centerIn: parent
+        }
+
+        Row {
+            anchors.right: clock.left
+            anchors.rightMargin: Theme.itemSpacing
+            anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.itemSpacing
 
             NotificationsItem {}
 
-            Clock {}
+            IdleInhibit {
+                barWindow: bar
+            }
+        }
+
+        Row {
+            anchors.left: clock.right
+            anchors.leftMargin: Theme.itemSpacing
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: Theme.itemSpacing
 
             Privacy {}
         }
@@ -77,10 +97,6 @@ Variants {
             Backlight {}
 
             Sunset {}
-
-            IdleInhibit {
-                barWindow: bar
-            }
 
             PowerMenu {}
         }
