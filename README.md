@@ -165,8 +165,7 @@ $ nixos-enter
 
 First clone this repo to the machine.
 
-Then you need to install nix. `nix-darwin` manual suggests using [lix](https://lix.systems/install/) as the bootstrapper
-(it does not influence what implementation of nix is used later by the system).
+Then you need to install nix. `nix-darwin` manual suggests using [lix](https://lix.systems/install/) as the bootstrapper.
 
 Next install [homebrew](https://brew.sh/).
 
@@ -178,7 +177,19 @@ Finally, build and enable config locally:
 $ sudo darwin-rebuild switch --flake .
 ```
 
-To just build (for example for a test):
+Once that succeeds, uninstall the bootstrapper. `nix.package` owns nix from here on, but the installer
+leaves itself in root's default profile, which stays on `PATH` next to the real one. Two nix
+implementations sharing `~/.cache/nix` do not agree on the narHash of every git input, which surfaces
+later as `mismatch in field 'narHash' of input ...` in flakes and direnv:
+
+```bash
+$ sudo nix-env --profile /nix/var/nix/profiles/default --uninstall lix
+$ sudo nix-env --profile /nix/var/nix/profiles/default --delete-generations old
+```
+
+`nix-env -q --profile /nix/var/nix/profiles/default` should then list only `nss-cacert`.
+
+To just build a darwin host (for example for a test):
 
 ```bash
 $ nix build .#darwinConfigurations.m4.config.system.build.toplevel
