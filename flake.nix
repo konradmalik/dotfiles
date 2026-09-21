@@ -96,7 +96,7 @@
           quickshellDir = "home/konrad/common/modules/desktop/ui/quickshell";
           # built out of quickshell, which is linux-only, so this must stay
           # unforced on darwin -- see the packages list below
-          qmlls = pkgs.callPackage ./${quickshellDir}/qmlls.nix { };
+          qmlTools = pkgs.callPackage ./${quickshellDir}/qml-tools.nix { };
         in
         {
           default = pkgs.mkShell {
@@ -114,7 +114,7 @@
                   # bash
                   ''
                     # the shell's own `qs.*` modules live under this directory, and
-                    # qmlls resolves them only if it is an import path
+                    # the qml tools resolve them only if it is an import path
                     export QML_IMPORT_PATH="$PWD/${quickshellDir}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
                   '';
 
@@ -130,7 +130,7 @@
               ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
               ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
                 (getSystem inputs.disko.packages).disko
-                qmlls
+                qmlTools
               ];
           };
         }
