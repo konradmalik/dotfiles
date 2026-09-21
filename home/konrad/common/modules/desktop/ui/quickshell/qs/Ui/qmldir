@@ -4,5 +4,6 @@ BarPopup 1.0 BarPopup.qml
 Checkbox 1.0 Checkbox.qml
 Dropdown 1.0 Dropdown.qml
 Overlay 1.0 Overlay.qml
+PopupRow 1.0 PopupRow.qml
 Slider 1.0 Slider.qml
 Tooltip 1.0 Tooltip.qml

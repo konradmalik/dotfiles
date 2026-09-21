@@ -9,6 +9,11 @@ import qs.Ui
 BarItem {
     id: root
 
+    // Where the kernel keeps this machine's backlight, and how far it goes.
+    // brightnessctl is asked once: neither answer changes while the shell runs.
+    property string file: ""
+    property int max: 0
+
     property real level: 0
 
     // brightnessctl is a process per change, which a drag would spawn faster
@@ -44,6 +49,43 @@ BarItem {
     onScrolledDown: root.set(root.level - 0.05)
 
     Process {
+        id: locate
+
+        running: root.active
+        // "device,class,current,percent%,max" -- the class is in there because
+        // a backlight is not always filed under /sys/class/backlight.
+        command: [Env.brightnessctl, "-m"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const fields = this.text.trim().split(",");
+                if (fields.length < 5)
+                    return;
+                root.max = Number(fields[4]);
+                root.file = "/sys/class/" + fields[1] + "/" + fields[0] + "/brightness";
+            }
+        }
+    }
+
+    // sysfs reports writes to this file, so the brightness keys -- which go
+    // straight to brightnessctl, around the shell -- land here as they are
+    // pressed rather than whenever a poll next came round.
+    FileView {
+        id: watcher
+
+        path: root.file
+        watchChanges: true
+
+        onFileChanged: this.reload()
+        onLoaded: {
+            // A value read while a change of our own is still on its way out is
+            // the one being left behind, so only a settled file is adopted.
+            const raw = Number(this.text().trim());
+            if (root.max > 0 && isFinite(raw) && !apply.running && root.pending < 0)
+                root.level = raw / root.max;
+        }
+    }
+
+    Process {
         id: apply
 
         // Not onExited: its QProcess::ExitStatus parameter is not a type QML can
@@ -54,34 +96,8 @@ BarItem {
             if (root.pending >= 0)
                 root.flush();
             else
-                poll.running = true;
+                watcher.reload();
         }
-    }
-
-    Process {
-        id: poll
-
-        // -m prints "device,class,current,percent%,max"; the percentage it
-        // reports is already the perceptual one brightnessctl applies.
-        command: [Env.brightnessctl, "-m"]
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const fields = this.text.trim().split(",");
-                if (fields.length >= 4)
-                    root.level = parseInt(fields[3]) / 100;
-            }
-        }
-    }
-
-    Timer {
-        interval: 10000
-        running: root.active
-        repeat: true
-        triggeredOnStart: true
-        // A poll mid-drag would snap the slider back to whatever the last
-        // applied step was, so it waits until the queue has drained.
-        onTriggered: if (!poll.running && !apply.running && root.pending < 0)
-            poll.running = true
     }
 
     LazyLoader {
@@ -94,7 +110,7 @@ BarItem {
             onDismissed: root.popupOpen = false
 
             Column {
-                width: 180
+                width: Theme.popupWidth
                 spacing: Theme.popupPadding
 
                 Text {

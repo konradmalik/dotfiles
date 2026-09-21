@@ -74,7 +74,7 @@ BarItem {
             onDismissed: root.popupOpen = false
 
             Column {
-                width: 180
+                width: Theme.popupWidth
                 spacing: Theme.popupPadding
 
                 Text {
@@ -95,13 +95,11 @@ BarItem {
                     onMoved: value => root.setVolume(value)
                 }
 
-                Rectangle {
-                    width: parent.width
-                    height: Math.round(Theme.popupFontSize * 2.4)
-                    radius: Theme.popupRadius
-                    color: mixerMouse.containsMouse ? Theme.hover : "transparent"
-                    border.width: 1
-                    border.color: Theme.border
+                PopupRow {
+                    onClicked: {
+                        root.popupOpen = false;
+                        Cmd.term(Env.mixer);
+                    }
 
                     Text {
                         anchors.centerIn: parent
@@ -110,18 +108,6 @@ BarItem {
                         color: Theme.text
                         font.family: Theme.popupFontFamily
                         font.pointSize: Theme.popupFontSize
-                    }
-
-                    MouseArea {
-                        id: mixerMouse
-
-                        anchors.fill: parent
-                        hoverEnabled: true
-
-                        onClicked: {
-                            root.popupOpen = false;
-                            Cmd.term(Env.mixer);
-                        }
                     }
                 }
             }

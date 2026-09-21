@@ -8,17 +8,15 @@ BarItem {
 
     required property var barWindow
 
-    property bool inhibited: false
-
     // A full, steaming mug while sleep is held off; an empty one otherwise.
-    text: inhibited ? "󰅶" : "󰛊"
-    color: inhibited ? Theme.warning : Theme.muted
-    tooltip: inhibited ? "Idle inhibited" : "Idle allowed"
+    text: Shell.idleInhibited ? "󰅶" : "󰛊"
+    color: Shell.idleInhibited ? Theme.warning : Theme.muted
+    tooltip: Shell.idleInhibited ? "Idle inhibited" : "Idle allowed"
 
-    onLeftClicked: root.inhibited = !root.inhibited
+    onLeftClicked: Shell.idleInhibited = !Shell.idleInhibited
 
     IdleInhibitor {
         window: root.barWindow
-        enabled: root.inhibited
+        enabled: Shell.idleInhibited
     }
 }

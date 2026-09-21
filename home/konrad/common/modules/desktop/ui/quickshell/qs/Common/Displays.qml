@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
+import qs.Common
 import qs.Config
 
 // The built-in panel, whatever is plugged in next to it, and the touchscreen on
@@ -136,16 +137,13 @@ Singleton {
         command: [Env.hyprctl, "monitors", "all", "-j"]
         stdout: StdioCollector {
             onStreamFinished: {
-                let outputs;
-                try {
-                    outputs = JSON.parse(this.text);
-                } catch (e) {
-                    // Hyprland mid-reconfigure can answer with nothing usable.
-                    // The last good answer stands until the next scan, which
-                    // beats a blank list -- that would read as "the external is
-                    // gone" and undo a layout that is fine.
+                // Hyprland mid-reconfigure can answer with nothing usable. The
+                // last good answer stands until the next scan, which beats a
+                // blank list -- that would read as "the external is gone" and
+                // undo a layout that is fine.
+                const outputs = Cmd.json(this.text, null);
+                if (!outputs)
                     return;
-                }
 
                 root.builtIn = outputs.find(o => root.isBuiltIn(o.name)) ?? null;
                 root.externals = outputs.filter(o => !root.isBuiltIn(o.name));

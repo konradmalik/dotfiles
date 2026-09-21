@@ -38,7 +38,7 @@ BarItem {
             onDismissed: root.popupOpen = false
 
             Dropdown {
-                width: 220
+                width: Theme.popupWidth
                 title: "Profile"
                 current: PowerProfiles.profile
                 options: root.available.map(p => ({

@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.Common
 import qs.Config
 
 // Quickshell's own Networking service speaks only to NetworkManager, and these
@@ -69,11 +70,7 @@ Singleton {
         command: [Env.ip, "-j", "addr"]
         stdout: StdioCollector {
             onStreamFinished: {
-                try {
-                    root.links = JSON.parse(this.text);
-                } catch (e) {
-                    root.links = [];
-                }
+                root.links = Cmd.json(this.text, []);
                 root.resolve();
             }
         }
@@ -89,24 +86,20 @@ Singleton {
                 root.wifiPath = "";
                 root.wifiState = "";
 
-                try {
-                    const objects = JSON.parse(this.text).data[0];
-                    let connected = "";
+                const objects = Cmd.json(this.text, {}).data?.[0] ?? {};
+                let connected = "";
 
-                    for (const path in objects) {
-                        const station = objects[path]["net.connman.iwd.Station"];
-                        if (!station)
-                            continue;
-                        root.wifiPath = path;
-                        root.wifiState = station.State?.data ?? "";
-                        root.wifiDevice = objects[path]["net.connman.iwd.Device"]?.Name?.data ?? "";
-                        connected = station.ConnectedNetwork?.data ?? "";
-                    }
-
-                    root.ssid = objects[connected]?.["net.connman.iwd.Network"]?.Name?.data ?? "";
-                } catch (e) {
-                    root.ssid = "";
+                for (const path in objects) {
+                    const station = objects[path]["net.connman.iwd.Station"];
+                    if (!station)
+                        continue;
+                    root.wifiPath = path;
+                    root.wifiState = station.State?.data ?? "";
+                    root.wifiDevice = objects[path]["net.connman.iwd.Device"]?.Name?.data ?? "";
+                    connected = station.ConnectedNetwork?.data ?? "";
                 }
+
+                root.ssid = objects[connected]?.["net.connman.iwd.Network"]?.Name?.data ?? "";
 
                 root.resolve();
 
@@ -123,14 +116,10 @@ Singleton {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                try {
-                    const rssi = JSON.parse(this.text).data[0].RSSI.data;
-                    // -80 dBm is the bottom of usable and -40 is right next to
-                    // the access point; the five icons are spread over that.
-                    root.strength = Math.max(0, Math.min(1, (rssi + 80) / 40));
-                } catch (e) {
-                    root.strength = 0;
-                }
+                const rssi = Cmd.json(this.text, {}).data?.[0]?.RSSI?.data;
+                // -80 dBm is the bottom of usable and -40 is right next to the
+                // access point; the five icons are spread over that.
+                root.strength = rssi === undefined ? 0 : Math.max(0, Math.min(1, (rssi + 80) / 40));
             }
         }
     }

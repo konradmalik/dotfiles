@@ -23,18 +23,15 @@ BarItem {
 
     onLeftClicked: Shell.powerOpen = !Shell.powerOpen
 
+    // Uptime is only ever read off the tooltip, so it is read when the pointer
+    // arrives rather than on a beat that nobody is looking at.
+    onHoveredChanged: if (root.hovered)
+        proc.reload()
+
     FileView {
         id: proc
 
         path: "/proc/uptime"
         onLoaded: root.uptime = root.pretty(text())
-    }
-
-    Timer {
-        interval: 60000
-        running: true
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: proc.reload()
     }
 }

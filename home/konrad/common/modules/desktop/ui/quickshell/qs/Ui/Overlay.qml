@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
 import Quickshell.Wayland
+import qs.Common
 
 PanelWindow {
     id: root
@@ -12,7 +12,7 @@ PanelWindow {
     signal dismissed
 
     visible: shown
-    screen: Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name) ?? Quickshell.screens[0]
+    screen: Shell.focusedScreen
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Overlay

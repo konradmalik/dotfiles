@@ -51,8 +51,6 @@ Singleton {
     readonly property string wifiTui: "impala"
     readonly property string bluetoothTui: "bluetui"
 
-    readonly property string sh: "sh"
-    readonly property string uptime: "uptime"
     readonly property string systemctl: "systemctl"
     readonly property string loginctl: "loginctl"
     readonly property string hyprctl: "hyprctl"

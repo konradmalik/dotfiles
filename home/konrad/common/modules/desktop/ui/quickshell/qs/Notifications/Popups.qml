@@ -1,13 +1,12 @@
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
 import Quickshell.Wayland
 import qs.Common
 
 PanelWindow {
     id: root
 
-    screen: Quickshell.screens.find(s => s.name === Hyprland.focusedMonitor?.name) ?? Quickshell.screens[0]
+    screen: Shell.focusedScreen
     visible: Notifs.popups.length > 0
     color: "transparent"
     exclusiveZone: 0

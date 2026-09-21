@@ -33,9 +33,6 @@ BarItem {
 
     active: Env.touchscreenDevice !== "" || Displays.canSwitchLayout
     text: "󰍹"
-    // Muted while everything is left as the config set it, so the icon is worth
-    // a look only once something here has been changed.
-    color: Displays.touchscreen || Displays.layout !== "extend" ? Theme.text : Theme.muted
     tooltip: {
         const lines = [];
         if (Env.touchscreenDevice !== "")
@@ -57,7 +54,7 @@ BarItem {
             onDismissed: root.popupOpen = false
 
             Column {
-                width: 240
+                width: Theme.popupWidth
                 spacing: Theme.popupPadding
 
                 Checkbox {

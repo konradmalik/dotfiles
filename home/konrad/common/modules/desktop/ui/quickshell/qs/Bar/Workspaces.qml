@@ -2,7 +2,6 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell.Hyprland
 import qs.Common
-import qs.Config
 import qs.Ui
 
 Row {
@@ -31,7 +30,7 @@ Row {
         if (ws)
             ws.activate();
         else
-            Cmd.run([Env.hyprctl, "dispatch", "hl.dsp.focus({ workspace = \"" + id + "\" })"]);
+            Hyprland.dispatch('hl.dsp.focus({ workspace = "' + id + '" })');
     }
 
     function step(delta) {

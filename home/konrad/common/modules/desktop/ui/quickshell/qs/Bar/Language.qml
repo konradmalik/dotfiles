@@ -23,15 +23,11 @@ BarItem {
         command: [Env.hyprctl, "-j", "devices"]
         stdout: StdioCollector {
             onStreamFinished: {
-                try {
-                    const keyboards = JSON.parse(this.text).keyboards ?? [];
-                    // The main keyboard is the one whose layout the switch
-                    // moves; on a seat with several devices only it is right.
-                    const main = keyboards.find(k => k.main) ?? keyboards[0];
-                    root.layout = main?.active_keymap ?? "";
-                } catch (e) {
-                    root.layout = "";
-                }
+                const keyboards = Cmd.json(this.text, {}).keyboards ?? [];
+                // The main keyboard is the one whose layout the switch moves;
+                // on a seat with several devices only it is right.
+                const main = keyboards.find(k => k.main) ?? keyboards[0];
+                root.layout = main?.active_keymap ?? "";
             }
         }
     }

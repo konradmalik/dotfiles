@@ -3,10 +3,7 @@ import qs.Common
 
 // One on/off row for a popup. The box is a glyph rather than a drawn square,
 // so it sits on the same baseline as every other icon in the shell.
-//
-// Needs a width, either from a parent that has one or set directly -- a popup
-// that sizes itself to its contents cannot supply it.
-Rectangle {
+PopupRow {
     id: root
 
     required property string label
@@ -14,12 +11,7 @@ Rectangle {
 
     signal toggled(bool checked)
 
-    width: parent.width
-    implicitHeight: Math.round(Theme.popupFontSize * 2.4)
-    radius: Theme.popupRadius
-    color: mouse.containsMouse ? Theme.hover : "transparent"
-    border.width: 1
-    border.color: Theme.border
+    onClicked: root.toggled(!root.checked)
 
     Text {
         id: box
@@ -47,14 +39,5 @@ Rectangle {
         color: Theme.text
         font.family: Theme.popupFontFamily
         font.pointSize: Theme.popupFontSize
-    }
-
-    MouseArea {
-        id: mouse
-
-        anchors.fill: parent
-        hoverEnabled: true
-
-        onClicked: root.toggled(!root.checked)
     }
 }

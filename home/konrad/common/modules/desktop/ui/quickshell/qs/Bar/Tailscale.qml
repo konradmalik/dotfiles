@@ -63,14 +63,10 @@ BarItem {
         command: [Env.tailscale, "status", "--json"]
         stdout: StdioCollector {
             onStreamFinished: {
-                try {
-                    const status = JSON.parse(this.text);
-                    root.backendState = status.BackendState ?? "NoState";
-                    root.host = status.Self?.HostName ?? "?";
-                    root.address = status.TailscaleIPs?.[0] ?? "no address";
-                } catch (e) {
-                    root.backendState = "NoState";
-                }
+                const status = Cmd.json(this.text, {});
+                root.backendState = status.BackendState ?? "NoState";
+                root.host = status.Self?.HostName ?? "?";
+                root.address = status.TailscaleIPs?.[0] ?? "no address";
             }
         }
     }

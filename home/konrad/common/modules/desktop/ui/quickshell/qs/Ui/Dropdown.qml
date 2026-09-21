@@ -17,8 +17,6 @@ Column {
 
     property bool expanded: false
 
-    readonly property int rowHeight: Math.round(Theme.popupFontSize * 2.4)
-
     signal picked(var value)
 
     function labelOf(value) {
@@ -29,13 +27,8 @@ Column {
     width: parent.width
     spacing: 2
 
-    Rectangle {
-        width: parent.width
-        height: root.rowHeight
-        radius: Theme.popupRadius
-        color: headerMouse.containsMouse ? Theme.hover : "transparent"
-        border.width: 1
-        border.color: Theme.border
+    PopupRow {
+        onClicked: root.expanded = !root.expanded
 
         Text {
             anchors.left: parent.left
@@ -62,14 +55,6 @@ Column {
             font.family: Theme.fontFamily
             font.pointSize: Theme.popupFontSize
         }
-
-        MouseArea {
-            id: headerMouse
-
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: root.expanded = !root.expanded
-        }
     }
 
     Repeater {
@@ -77,17 +62,21 @@ Column {
 
         // The rows read as a list hanging off the header, so they carry no
         // border of their own.
-        Rectangle {
+        PopupRow {
             id: row
 
             required property var modelData
 
             readonly property bool isCurrent: modelData.value === root.current
 
-            width: root.width
-            height: root.rowHeight
-            radius: Theme.popupRadius
-            color: rowMouse.containsMouse ? Theme.hover : "transparent"
+            bordered: false
+
+            // Collapse first: whoever is listening may well close whatever this
+            // is sitting in, and then there is nothing left to set.
+            onClicked: {
+                root.expanded = false;
+                root.picked(row.modelData.value);
+            }
 
             // Glyphs come out of the monospace nerd font, labels out of the
             // popup font, so they cannot share a Text.
@@ -129,20 +118,6 @@ Column {
                 color: Theme.accent
                 font.family: Theme.fontFamily
                 font.pointSize: Theme.popupFontSize
-            }
-
-            MouseArea {
-                id: rowMouse
-
-                anchors.fill: parent
-                hoverEnabled: true
-
-                // Collapse first: whoever is listening may well close whatever
-                // this is sitting in, and then there is nothing left to set.
-                onClicked: {
-                    root.expanded = false;
-                    root.picked(row.modelData.value);
-                }
             }
         }
     }

@@ -32,6 +32,11 @@ Singleton {
 
     readonly property int popupPadding: 10
     readonly property int popupRadius: 4
+    // One clickable line in a popup, and the width every popup body gets: the
+    // bar is a row of unrelated widgets, and popups that each sized themselves
+    // to their own contents made it look like one.
+    readonly property int popupRowHeight: Math.round(popupFontSize * 2.4)
+    readonly property int popupWidth: 240
     readonly property int tooltipMaxWidth: 480
 
     readonly property int notificationWidth: 380

@@ -190,6 +190,16 @@ let
     cp -r ${./qs} $out
     chmod -R u+w $out
     cp ${env} $out/Config/Env.qml
+
+    # ./qs/Config/Env.qml is checked in for working-tree runs and for qmlls, so
+    # it has to declare exactly what this module generates. Drift either way
+    # shows up only as an undefined property at runtime, and only on one of the
+    # two paths, so it is caught here instead.
+    names() { grep -o 'property [a-zA-Z<>]* [a-zA-Z]*:' "$1" | awk '{ print $3 }' | sort; }
+    if ! diff <(names ${./qs}/Config/Env.qml) <(names ${env}); then
+      echo "Config/Env.qml stub declares different properties than the generated one (< stub, > generated)" >&2
+      exit 1
+    fi
   '';
 
 in

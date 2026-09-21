@@ -27,8 +27,10 @@ Singleton {
         if (!root.dnd)
             root.popups = [notification].concat(root.popups);
 
-        // Keep the history bounded; the oldest drop off the end.
-        const tracked = server.trackedNotifications.values;
+        // Keep the history bounded; the oldest drop off the end. The copy
+        // matters: `values` is the live list, and untracking one shifts every
+        // index after it out from under the loop.
+        const tracked = [...server.trackedNotifications.values];
         for (let i = 0; i < tracked.length - Theme.notificationHistory; i++)
             tracked[i].tracked = false;
     }
@@ -49,7 +51,8 @@ Singleton {
     }
 
     function dismissAll() {
-        root.popups = [];
+        for (const notification of [...root.popups])
+            root.dismiss(notification);
     }
 
     function forget(notification) {
