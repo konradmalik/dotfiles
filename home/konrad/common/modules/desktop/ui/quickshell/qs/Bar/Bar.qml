@@ -24,7 +24,9 @@ Variants {
 
         Row {
             anchors.left: parent.left
+            anchors.leftMargin: Theme.barMargin
             anchors.verticalCenter: parent.verticalCenter
+            spacing: Theme.itemSpacing
 
             Menu {}
 
@@ -37,6 +39,7 @@ Variants {
 
         Row {
             anchors.centerIn: parent
+            spacing: Theme.itemSpacing
 
             NotificationsItem {}
 
@@ -47,7 +50,9 @@ Variants {
 
         Row {
             anchors.right: parent.right
+            anchors.rightMargin: Theme.barMargin
             anchors.verticalCenter: parent.verticalCenter
+            spacing: Theme.itemSpacing
 
             Tray {}
 

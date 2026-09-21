@@ -33,6 +33,9 @@ Row {
     property string castTarget: ""
 
     spacing: 4
+    // Nothing being captured means no widget at all, so the bar row does not
+    // keep a gap for it.
+    visible: implicitWidth > 0
 
     function appName(node) {
         return node.properties["application.name"] || node.description || node.name;

@@ -23,6 +23,11 @@ Singleton {
     // The bar tracks the font so a larger desktop size cannot clip glyphs.
     readonly property int barHeight: Math.round(Env.fontSize * 3)
     readonly property int itemPadding: 6
+    // Gaps between the items in a bar row, and between the outermost item and
+    // the screen edge. Groups that read as one widget (workspaces, tray) stay
+    // tight inside themselves and only take this gap from their neighbours.
+    readonly property int itemSpacing: 8
+    readonly property int barMargin: 12
     readonly property int radius: 4
 
     readonly property int popupPadding: 10

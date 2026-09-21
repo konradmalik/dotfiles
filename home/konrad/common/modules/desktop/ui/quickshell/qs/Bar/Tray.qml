@@ -8,6 +8,9 @@ import qs.Ui
 Row {
     id: root
 
+    // An empty tray takes no space in the bar row, gap included.
+    visible: implicitWidth > 0
+
     Repeater {
         model: SystemTray.items
 
