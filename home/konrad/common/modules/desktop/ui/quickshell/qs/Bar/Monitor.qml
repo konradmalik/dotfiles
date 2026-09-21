@@ -2,7 +2,6 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import qs.Common
-import qs.Config
 import qs.Ui
 
 // The switches for the built-in panel and whatever is plugged in next to it.
@@ -32,11 +31,11 @@ BarItem {
         return root.layouts.find(l => l.value === value)?.label ?? value;
     }
 
-    active: Env.touchscreenDevice !== "" || Displays.canSwitchLayout
+    active: Displays.hasTouchscreen || Displays.canSwitchLayout
     text: "󰍹"
     tooltip: {
         const lines = [];
-        if (Env.touchscreenDevice !== "")
+        if (Displays.hasTouchscreen)
             lines.push("Touchscreen " + (Displays.touchscreen ? "on" : "off"));
         if (Displays.canSwitchLayout)
             lines.push(root.labelOf(Displays.layout));
@@ -59,7 +58,7 @@ BarItem {
                 spacing: Theme.popupPadding
 
                 Checkbox {
-                    visible: Env.touchscreenDevice !== ""
+                    visible: Displays.hasTouchscreen
                     label: "Touchscreen"
                     checked: Displays.touchscreen
 

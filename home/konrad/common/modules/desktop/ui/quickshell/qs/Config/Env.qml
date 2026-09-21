@@ -3,7 +3,7 @@ import Quickshell
 
 // Fallback only. The Nix module overwrites this file with the values for the
 // host being built; it is checked in so that qmlls can resolve qs.Config, and
-// so that `quickshell -p src` runs straight from the working tree. It describes
+// so that `quickshell -p qs` runs straight from the working tree. It describes
 // a laptop, because every host this shell is built for is one -- with these
 // false, a working-tree run silently hides the items gated on them.
 Singleton {

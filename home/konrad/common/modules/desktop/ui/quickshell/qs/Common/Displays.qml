@@ -21,6 +21,10 @@ Singleton {
 
     property bool touchscreen: Env.touchscreenEnabled
 
+    // Whether this machine has one at all, which is what decides if the
+    // checkbox and everything behind it are worth showing.
+    readonly property bool hasTouchscreen: Env.touchscreenDevice !== ""
+
     // Filled from `hyprctl monitors all`, because plain `hyprctl monitors`
     // lists only what is currently lit: a monitor that is off or mirroring
     // another one drops out of it, and those are the two states this exists to
@@ -29,8 +33,9 @@ Singleton {
     property var externals: []
 
     // The layout asked for, held until hyprland has reloaded and is back at the
-    // config's own.
+    // config's own, and when it was asked for.
     property string wanted: ""
+    property double wantedAt: 0
 
     // Every layout is about what the built-in panel does next to an external
     // one, so a machine missing either half has nothing to choose.
@@ -60,7 +65,7 @@ Singleton {
     }
 
     function applyTouchscreen() {
-        if (Env.touchscreenDevice === "")
+        if (!root.hasTouchscreen)
             return;
         // The device name comes out of the config rather than off the wire, so
         // it needs no quoting beyond being a string.
@@ -79,12 +84,19 @@ Singleton {
     // that once hyprland says the reload is through.
     function setLayout(value) {
         root.wanted = value;
+        root.wantedAt = Date.now();
         Quickshell.execDetached([Env.hyprctl, "reload"]);
     }
 
     function applyWanted() {
         const value = root.wanted;
         root.wanted = "";
+
+        // A reload the shell did not ask for -- a rebuild, most likely -- must
+        // not go and apply a layout somebody picked long ago, which is where
+        // this would still be sitting if that reload never arrived.
+        if (Date.now() - root.wantedAt > 5000)
+            return;
 
         // Extend needs nothing on top: the reload already is it.
         if (!root.builtIn || value === "" || value === "extend")

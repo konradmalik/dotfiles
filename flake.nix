@@ -81,6 +81,9 @@
             )
           );
 
+      hyprlandDir = "home/konrad/common/modules/desktop/ui/hyprland";
+      quickshellDir = "home/konrad/common/modules/desktop/ui/quickshell";
+
       specialArgs = {
         inherit inputs nodejsOverlay;
       };
@@ -91,12 +94,9 @@
         let
           getSystem = attr: attr.${pkgs.stdenvNoCC.hostPlatform.system};
           darwinPackages = builtins.attrValues (removeAttrs (getSystem inputs.darwin.packages) [ "default" ]);
-          hyprlandDir = "home/konrad/common/modules/desktop/ui/hyprland";
           hyprlandLuarc = pkgs.callPackage ./${hyprlandDir}/luarc.nix { };
-          quickshellDir = "home/konrad/common/modules/desktop/ui/quickshell";
-          # built out of quickshell, which is linux-only, so this must stay
-          # unforced on darwin -- see the packages list below
           qmlTools = pkgs.callPackage ./${quickshellDir}/qml-tools.nix { };
+          qmlLint = pkgs.callPackage ./${quickshellDir}/lint.nix { };
         in
         {
           default = pkgs.mkShell {
@@ -131,6 +131,7 @@
               ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
                 (getSystem inputs.disko.packages).disko
                 qmlTools
+                qmlLint
               ];
           };
         }
@@ -195,6 +196,13 @@
               (self.nixosConfigurations.rpi4-2.extendModules { inherit modules; }).config.system.build.sdImage;
           }
         )
+      );
+
+      checks = forAllSystems (
+        pkgs:
+        pkgs.lib.optionalAttrs pkgs.stdenvNoCC.hostPlatform.isLinux {
+          quickshell-qml = (pkgs.callPackage ./${quickshellDir}/lint.nix { }).check;
+        }
       );
 
       templates = import ./templates;

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Services.SystemTray
@@ -7,6 +8,12 @@ import qs.Ui
 
 Row {
     id: root
+
+    readonly property int count: SystemTray.items.values.length
+
+    // One icon is not worth a button to hide it behind.
+    readonly property bool collapsible: root.count > 1
+    readonly property bool showItems: !root.collapsible || Shell.trayExpanded
 
     // An empty tray takes no space in the bar row, gap included.
     visible: implicitWidth > 0
@@ -19,6 +26,7 @@ Row {
 
             required property var modelData
 
+            active: root.showItems
             tooltip: modelData.tooltipTitle || modelData.title || modelData.id
 
             // Some items exist only to hold a menu and treat a left click as a
@@ -49,5 +57,16 @@ Row {
                 anchor.gravity: Edges.Bottom
             }
         }
+    }
+
+    // Last in the row: the icons open out to the left of it, so the button
+    // itself does not move as they come and go.
+    BarItem {
+        active: root.collapsible
+        text: Shell.trayExpanded ? "󰅂" : "󰅁"
+        color: Theme.muted
+        tooltip: Shell.trayExpanded ? "Hide tray" : root.count + " tray icons"
+
+        onLeftClicked: Shell.trayExpanded = !Shell.trayExpanded
     }
 }

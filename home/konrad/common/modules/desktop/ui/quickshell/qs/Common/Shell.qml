@@ -2,11 +2,17 @@ pragma Singleton
 import Quickshell
 import Quickshell.Hyprland
 
-// The bar and the global shortcuts both open these and neither can reach the
-// other's objects, so the state lives on its own.
+// State that belongs to the session rather than to any one widget: things the
+// bar and the global shortcuts both touch, and things there is only one of
+// however many screens the bar is drawn on.
 Singleton {
     property bool launcherOpen: false
     property bool powerOpen: false
+
+    // Whether the tray is showing its icons. Deliberately a plain property: it
+    // is meant to be forgotten when the shell restarts, and it is one tray
+    // however many bars are drawing it.
+    property bool trayExpanded: false
 
     // Idle is one switch for the machine, but the bar it is toggled from is
     // drawn once per screen, so the state cannot live in the widget.

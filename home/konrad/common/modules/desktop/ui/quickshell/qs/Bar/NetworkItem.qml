@@ -27,15 +27,5 @@ BarItem {
         return lines.join("\n");
     }
 
-    Text {
-        anchors.verticalCenter: parent.verticalCenter
-        visible: Net.kind === "wifi" && Net.ssid !== ""
-        text: Net.ssid
-        textFormat: Text.PlainText
-        color: Theme.text
-        font.family: Theme.fontFamily
-        font.pointSize: Theme.fontSize
-    }
-
     onLeftClicked: Cmd.term(Env.wifiTui)
 }

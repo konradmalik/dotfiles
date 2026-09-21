@@ -55,7 +55,7 @@ Row {
             readonly property bool focused: Hyprland.focusedWorkspace?.id === modelData
             readonly property bool occupied: (ws?.toplevels.values.length ?? 0) > 0
 
-            padding: 4
+            padding: Theme.itemPadding
             text: focused ? "󱓻" : modelData === 10 ? "0" : String(modelData)
             color: focused ? Theme.accentAlt : Theme.text
             opacity: focused || occupied ? 1 : 0.5

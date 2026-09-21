@@ -13,7 +13,9 @@ Singleton {
     readonly property color urgent: Env.colors.base08
     readonly property color low: Env.colors.base03
     readonly property color border: Env.colors.base02
-    readonly property color hover: Env.colors.base02
+    // A step up from the border: hover has to read against the background on
+    // its own, and base02 is close enough to base00 to disappear against it.
+    readonly property color hover: Env.colors.base03
 
     readonly property string fontFamily: Env.fontFamily
     readonly property int fontSize: Env.fontSize

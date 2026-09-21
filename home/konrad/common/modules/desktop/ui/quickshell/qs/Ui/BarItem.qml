@@ -47,7 +47,7 @@ Item {
         anchors.fill: parent
         color: Theme.hover
         radius: Theme.radius
-        opacity: mouse.containsMouse ? 0.5 : 0
+        opacity: mouse.containsMouse ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {

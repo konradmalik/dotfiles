@@ -21,15 +21,23 @@ BarItem {
 
     bold: true
     text: Qt.formatDateTime(now, "yyyy-MM-dd HH:mm")
-    tooltip: Qt.formatDate(now, "dddd, d MMMM yyyy")
+    // The date, then the two clocks: here, and UTC under it. Qt formats in
+    // local time only, so UTC is taken off the ISO string the date already
+    // knows how to produce.
+    tooltip: {
+        const utc = root.now.toISOString();
+        return [Qt.formatDate(root.now, "dddd, d MMMM yyyy"), Qt.formatDateTime(root.now, "HH:mm t"), utc.slice(11, 16) + " UTC"].join("\n");
+    }
 
     onLeftClicked: root.popupOpen = !root.popupOpen
     onRightClicked: root.monthOffset = 0
     onScrolledUp: root.monthOffset -= 1
     onScrolledDown: root.monthOffset += 1
 
-    // Whatever month was last browsed, opening it again starts on this one.
-    onPopupOpenChanged: if (!root.popupOpen)
+    // On open, not on close: the wheel keeps working over a shut popup, so
+    // resetting on the way out still let a stray scroll decide which month the
+    // next open landed on.
+    onPopupOpenChanged: if (root.popupOpen)
         root.monthOffset = 0
 
     SystemClock {

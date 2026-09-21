@@ -12,6 +12,7 @@ Overlay {
     property int selected: 0
 
     readonly property int rowHeight: Math.round(Theme.popupFontSize * 3)
+    readonly property int maxRows: 8
 
     readonly property var results: {
         const needle = root.query.trim().toLowerCase();
@@ -60,132 +61,141 @@ Overlay {
     }
     onQueryChanged: root.selected = 0
 
-    Rectangle {
+    // The overlay centres what it is given, so this reserves the height of a
+    // full list and keeps it: a card that shrank with the results would drag
+    // the search box down the screen as you typed.
+    Item {
         implicitWidth: 620
-        implicitHeight: search.height + list.height
-        color: Theme.background
-        border.width: 1
-        border.color: Theme.border
-        radius: Theme.popupRadius
+        implicitHeight: search.height + root.maxRows * root.rowHeight
 
-        Item {
-            id: search
-
+        Rectangle {
+            anchors.top: parent.top
             width: parent.width
-            height: root.rowHeight + 8
+            height: search.height + list.height
+            color: Theme.background
+            border.width: 1
+            border.color: Theme.border
+            radius: Theme.popupRadius
 
-            TextInput {
-                id: input
+            Item {
+                id: search
 
-                anchors.fill: parent
-                anchors.leftMargin: 16
-                anchors.rightMargin: 16
-                verticalAlignment: TextInput.AlignVCenter
-                text: root.query
-                color: Theme.text
-                selectionColor: Theme.accent
-                selectedTextColor: Theme.background
-                font.family: Theme.popupFontFamily
-                font.pointSize: Theme.popupFontSize + 2
-                clip: true
-                focus: true
-
-                onTextChanged: root.query = text
-
-                Keys.onDownPressed: root.move(1)
-                Keys.onUpPressed: root.move(-1)
-                Keys.onReturnPressed: root.launch()
-                Keys.onEnterPressed: root.launch()
-                Keys.onTabPressed: root.move(1)
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    visible: input.text === ""
-                    text: "Search applications"
-                    color: Theme.muted
-                    font: input.font
-                }
-            }
-
-            Rectangle {
-                anchors.bottom: parent.bottom
                 width: parent.width
-                height: 1
-                color: Theme.border
-            }
-        }
+                height: root.rowHeight + 8
 
-        ListView {
-            id: list
+                TextInput {
+                    id: input
 
-            y: search.height
-            width: parent.width
-            height: Math.min(root.results.length, 8) * root.rowHeight
-            model: root.results
-            currentIndex: root.selected
-            clip: true
-            boundsBehavior: Flickable.StopAtBounds
-            highlightMoveDuration: 0
-            // Keeps the keyboard cursor on screen once the list is longer than
-            // the eight rows the popup shows.
-            onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
-
-            delegate: Rectangle {
-                id: row
-
-                required property var modelData
-                required property int index
-
-                width: list.width
-                height: root.rowHeight
-                color: index === root.selected ? Theme.hover : "transparent"
-
-                Row {
                     anchors.fill: parent
                     anchors.leftMargin: 16
                     anchors.rightMargin: 16
-                    spacing: 12
+                    verticalAlignment: TextInput.AlignVCenter
+                    text: root.query
+                    color: Theme.text
+                    selectionColor: Theme.accent
+                    selectedTextColor: Theme.background
+                    font.family: Theme.popupFontFamily
+                    font.pointSize: Theme.popupFontSize + 2
+                    clip: true
+                    focus: true
 
-                    IconImage {
+                    onTextChanged: root.query = text
+
+                    Keys.onDownPressed: root.move(1)
+                    Keys.onUpPressed: root.move(-1)
+                    Keys.onReturnPressed: root.launch()
+                    Keys.onEnterPressed: root.launch()
+                    Keys.onTabPressed: root.move(1)
+
+                    Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        source: Quickshell.iconPath(row.modelData.icon, true)
-                        implicitSize: Math.round(root.rowHeight * 0.6)
-                    }
-
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - parent.spacing - Math.round(root.rowHeight * 0.6)
-
-                        Text {
-                            width: parent.width
-                            text: row.modelData.name
-                            textFormat: Text.PlainText
-                            color: Theme.text
-                            font.family: Theme.popupFontFamily
-                            font.pointSize: Theme.popupFontSize
-                            elide: Text.ElideRight
-                        }
-
-                        Text {
-                            width: parent.width
-                            visible: text !== ""
-                            text: row.modelData.genericName ?? ""
-                            textFormat: Text.PlainText
-                            color: Theme.muted
-                            font.family: Theme.popupFontFamily
-                            font.pointSize: Theme.popupFontSize - 2
-                            elide: Text.ElideRight
-                        }
+                        visible: input.text === ""
+                        text: "Search applications"
+                        color: Theme.muted
+                        font: input.font
                     }
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onEntered: root.selected = row.index
-                    onClicked: {
-                        root.selected = row.index;
-                        root.launch();
+                Rectangle {
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    height: 1
+                    color: Theme.border
+                }
+            }
+
+            ListView {
+                id: list
+
+                y: search.height
+                width: parent.width
+                height: Math.min(root.results.length, root.maxRows) * root.rowHeight
+                model: root.results
+                currentIndex: root.selected
+                clip: true
+                boundsBehavior: Flickable.StopAtBounds
+                highlightMoveDuration: 0
+                // Keeps the keyboard cursor on screen once the list is longer than
+                // the eight rows the popup shows.
+                onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
+
+                delegate: Rectangle {
+                    id: row
+
+                    required property var modelData
+                    required property int index
+
+                    width: list.width
+                    height: root.rowHeight
+                    color: index === root.selected ? Theme.hover : "transparent"
+
+                    Row {
+                        anchors.fill: parent
+                        anchors.leftMargin: 16
+                        anchors.rightMargin: 16
+                        spacing: 12
+
+                        IconImage {
+                            anchors.verticalCenter: parent.verticalCenter
+                            source: Quickshell.iconPath(row.modelData.icon, true)
+                            implicitSize: Math.round(root.rowHeight * 0.6)
+                        }
+
+                        Column {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: parent.width - parent.spacing - Math.round(root.rowHeight * 0.6)
+
+                            Text {
+                                width: parent.width
+                                text: row.modelData.name
+                                textFormat: Text.PlainText
+                                color: Theme.text
+                                font.family: Theme.popupFontFamily
+                                font.pointSize: Theme.popupFontSize
+                                elide: Text.ElideRight
+                            }
+
+                            Text {
+                                width: parent.width
+                                visible: text !== ""
+                                text: row.modelData.genericName ?? ""
+                                textFormat: Text.PlainText
+                                color: Theme.muted
+                                font.family: Theme.popupFontFamily
+                                font.pointSize: Theme.popupFontSize - 2
+                                elide: Text.ElideRight
+                            }
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onEntered: root.selected = row.index
+                        onClicked: {
+                            root.selected = row.index;
+                            root.launch();
+                        }
                     }
                 }
             }
