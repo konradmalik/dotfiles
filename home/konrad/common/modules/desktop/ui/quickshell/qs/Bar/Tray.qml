@@ -44,6 +44,8 @@ Row {
                 menu: item.modelData.menu
                 anchor.item: item
                 anchor.rect.y: item.height
+                anchor.rect.width: item.width
+                anchor.edges: Edges.Bottom
                 anchor.gravity: Edges.Bottom
             }
         }

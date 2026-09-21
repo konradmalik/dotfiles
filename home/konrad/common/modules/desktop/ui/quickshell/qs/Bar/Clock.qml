@@ -1,48 +1,160 @@
+pragma ComponentBehavior: Bound
 import QtQuick
+import QtQuick.Controls
 import Quickshell
+import qs.Common
 import qs.Ui
 
+// The clock, with the month behind a click. The grid is QtQuick.Controls':
+// laying weeks out by hand means getting the lead-in, the month length and the
+// locale's first day right, and then keeping the weekday header lined up with
+// the columns under it -- which is exactly what the hand-rolled one got wrong.
+// MonthGrid and DayOfWeekRow share a column count and a spacing, so giving both
+// delegates the same cell width lines them up by construction.
 BarItem {
     id: root
 
     property int monthOffset: 0
 
     readonly property date now: clock.date
-
-    function calendar(when, offset) {
-        const shown = new Date(when.getFullYear(), when.getMonth() + offset, 1);
-        const year = shown.getFullYear();
-        const month = shown.getMonth();
-        const days = new Date(year, month + 1, 0).getDate();
-        // Monday-first, so Sunday (0) belongs at the end of the previous row.
-        const lead = (shown.getDay() + 6) % 7;
-
-        let out = Qt.formatDate(shown, "MMMM yyyy") + "\nMo Tu We Th Fr Sa Su\n";
-        let cells = [];
-        for (let i = 0; i < lead; i++)
-            cells.push("  ");
-        for (let d = 1; d <= days; d++) {
-            const today = offset === 0 && d === when.getDate();
-            cells.push((today ? "*" : " ") + (d < 10 ? " " + d : String(d)));
-        }
-
-        for (let i = 0; i < cells.length; i += 7)
-            out += cells.slice(i, i + 7).join(" ").replace(/\s+$/, "") + "\n";
-
-        return out.replace(/\n$/, "");
-    }
+    readonly property date shown: new Date(now.getFullYear(), now.getMonth() + monthOffset, 1)
 
     bold: true
     text: Qt.formatDateTime(now, "yyyy-MM-dd HH:mm")
-    tooltip: calendar(now, monthOffset)
+    tooltip: Qt.formatDate(now, "dddd, d MMMM yyyy")
 
+    onLeftClicked: root.popupOpen = !root.popupOpen
+    onRightClicked: root.monthOffset = 0
     onScrolledUp: root.monthOffset -= 1
     onScrolledDown: root.monthOffset += 1
-    onRightClicked: root.monthOffset = 0
+
+    // Whatever month was last browsed, opening it again starts on this one.
+    onPopupOpenChanged: if (!root.popupOpen)
+        root.monthOffset = 0
 
     SystemClock {
         id: clock
 
         precision: SystemClock.Minutes
+    }
+
+    component Stepper: Text {
+        id: stepper
+
+        required property int step
+
+        color: mouse.containsMouse ? Theme.text : Theme.muted
+        font.family: Theme.fontFamily
+        font.pointSize: Theme.popupFontSize
+
+        // A chevron is a small target, so the area it answers to is larger.
+        MouseArea {
+            id: mouse
+
+            anchors.fill: parent
+            anchors.margins: -6
+            hoverEnabled: true
+
+            onClicked: root.monthOffset += stepper.step
+        }
+    }
+
+    LazyLoader {
+        active: root.popupOpen
+
+        BarPopup {
+            anchorItem: root
+            visible: true
+
+            onDismissed: root.popupOpen = false
+
+            Column {
+                width: Theme.popupWidth
+                spacing: 4
+
+                Item {
+                    width: parent.width
+                    height: Theme.popupRowHeight
+
+                    Stepper {
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        step: -1
+                        text: "󰅁"
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: grid.locale.standaloneMonthName(grid.month) + " " + grid.year
+                        textFormat: Text.PlainText
+                        color: Theme.text
+                        font.family: Theme.popupFontFamily
+                        font.pointSize: Theme.popupFontSize
+                        font.bold: true
+                    }
+
+                    Stepper {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        step: 1
+                        text: "󰅂"
+                    }
+                }
+
+                DayOfWeekRow {
+                    width: parent.width
+                    padding: 0
+                    spacing: grid.spacing
+                    locale: grid.locale
+
+                    delegate: Text {
+                        required property string shortName
+
+                        width: grid.cellWidth
+                        horizontalAlignment: Text.AlignHCenter
+                        text: shortName
+                        textFormat: Text.PlainText
+                        // Some locales spell the short name longer than the
+                        // column; better clipped than bleeding into Monday.
+                        elide: Text.ElideRight
+                        color: Theme.muted
+                        font.family: Theme.popupFontFamily
+                        font.pointSize: Theme.popupFontSize - 2
+                    }
+                }
+
+                MonthGrid {
+                    id: grid
+
+                    readonly property real cellWidth: (width - spacing * 6) / 7
+
+                    width: parent.width
+                    padding: 0
+                    spacing: 4
+                    // The locale names the days and decides which one the
+                    // week starts on. The title is taken from this same one, so
+                    // the header can never end up in another language than the
+                    // month above it.
+                    locale: Qt.locale()
+                    month: root.shown.getMonth()
+                    year: root.shown.getFullYear()
+
+                    delegate: Text {
+                        required property var model
+
+                        width: grid.cellWidth
+                        horizontalAlignment: Text.AlignHCenter
+                        text: model.day
+                        textFormat: Text.PlainText
+                        // The days either side are there to square off the
+                        // weeks; they are not this month's business.
+                        color: model.today ? Theme.accent : model.month === grid.month ? Theme.text : Theme.low
+                        font.family: Theme.popupFontFamily
+                        font.pointSize: Theme.popupFontSize
+                        font.bold: model.today
+                    }
+                }
+            }
+        }
     }
 }

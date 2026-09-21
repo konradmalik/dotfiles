@@ -1,8 +1,11 @@
 import QtQuick
 import qs.Common
 
-// Qt Quick Controls' Slider would pull in a whole control style for what is a
-// track, a fill and a handle, so these are drawn directly.
+// Not Qt Quick Controls' Slider, even though the calendar now brings Controls
+// in. That one owns its value and writes to it as you drag, which drops the
+// binding that put it there. Every slider here shows a value the system owns --
+// brightness moves under the hyprland keys, volume under pipewire -- so the
+// parent stays the source of truth and this only ever reports a request.
 Item {
     id: root
 

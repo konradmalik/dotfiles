@@ -13,6 +13,8 @@ PopupWindow {
 
     anchor.item: anchorItem
     anchor.rect.y: anchorItem ? anchorItem.height : 0
+    anchor.rect.width: anchorItem ? anchorItem.width : 0
+    anchor.edges: Edges.Bottom
     anchor.gravity: Edges.Bottom
     anchor.adjustment: PopupAdjustment.SlideX
 

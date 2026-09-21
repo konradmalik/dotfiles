@@ -15,7 +15,12 @@ PopupWindow {
     signal dismissed
 
     anchor.item: anchorItem
+    // The anchor is the item's whole width rather than a point at its corner,
+    // so the popup hangs centred under the thing that opened it instead of
+    // starting at its left edge.
     anchor.rect.y: anchorItem.height
+    anchor.rect.width: anchorItem.width
+    anchor.edges: Edges.Bottom
     anchor.gravity: Edges.Bottom
     anchor.adjustment: PopupAdjustment.SlideX
 
