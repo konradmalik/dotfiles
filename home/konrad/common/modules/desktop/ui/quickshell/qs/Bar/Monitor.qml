@@ -1,50 +1,51 @@
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
 import qs.Common
 import qs.Config
 import qs.Ui
 
-// Controls for the laptop's own screen. Only the touchscreen so far.
-//
-// Hyprland has no way to read a device's enabled flag back -- get_config knows
-// the global input:touchdevice keys but not the per-device ones -- so the shell
-// owns the state rather than reflecting it. It starts out on whatever the
-// config set, and is pushed back out whenever hyprland reloads and silently
-// resets the device to that same config.
+// The switches for the built-in panel and whatever is plugged in next to it.
+// What they read and change lives in Displays, shared by every bar.
 BarItem {
     id: root
 
-    property bool touchscreen: Env.touchscreenEnabled
+    readonly property var layouts: [
+        {
+            value: "builtInOff",
+            label: "Laptop display disabled",
+            icon: "󰛧"
+        },
+        {
+            value: "mirror",
+            label: "Mirror display",
+            icon: "󰆑"
+        },
+        {
+            value: "extend",
+            label: "Extend display",
+            icon: "󰍺"
+        }
+    ]
 
-    function applyTouchscreen() {
-        if (!root.active)
-            return;
-        // hyprctl takes the lua as one argument. The device name comes out of
-        // the config rather than off the wire, so it needs no quoting beyond
-        // being a string.
-        Cmd.run([Env.hyprctl, "eval", 'hl.device({ name = "' + Env.touchscreenDevice + '", enabled = ' + (root.touchscreen ? "true" : "false") + " })"]);
+    function labelOf(value) {
+        return root.layouts.find(l => l.value === value)?.label ?? value;
     }
 
-    active: Env.touchscreenDevice !== ""
+    active: Env.touchscreenDevice !== "" || Displays.canSwitchLayout
     text: "󰍹"
-    tooltip: "Touchscreen " + (touchscreen ? "on" : "off")
+    // Muted while everything is left as the config set it, so the icon is worth
+    // a look only once something here has been changed.
+    color: Displays.touchscreen || Displays.layout !== "extend" ? Theme.text : Theme.muted
+    tooltip: {
+        const lines = [];
+        if (Env.touchscreenDevice !== "")
+            lines.push("Touchscreen " + (Displays.touchscreen ? "on" : "off"));
+        if (Displays.canSwitchLayout)
+            lines.push(root.labelOf(Displays.layout));
+        return lines.join("\n");
+    }
 
     onLeftClicked: root.popupOpen = !root.popupOpen
-
-    // Covers a shell reload as well as a toggle: quickshell coming back up puts
-    // the property at the config default, and hyprland has to agree with it.
-    onTouchscreenChanged: root.applyTouchscreen()
-    Component.onCompleted: root.applyTouchscreen()
-
-    Connections {
-        target: Hyprland
-
-        function onRawEvent(event) {
-            if (event.name === "configreloaded")
-                root.applyTouchscreen();
-        }
-    }
 
     LazyLoader {
         active: root.popupOpen
@@ -56,14 +57,24 @@ BarItem {
             onDismissed: root.popupOpen = false
 
             Column {
-                width: 180
+                width: 240
                 spacing: Theme.popupPadding
 
                 Checkbox {
+                    visible: Env.touchscreenDevice !== ""
                     label: "Touchscreen"
-                    checked: root.touchscreen
+                    checked: Displays.touchscreen
 
-                    onToggled: checked => root.touchscreen = checked
+                    onToggled: checked => Displays.touchscreen = checked
+                }
+
+                Dropdown {
+                    visible: Displays.canSwitchLayout
+                    title: "Displays"
+                    options: root.layouts
+                    current: Displays.layout
+
+                    onPicked: value => Displays.setLayout(value)
                 }
             }
         }

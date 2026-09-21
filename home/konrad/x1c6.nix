@@ -7,10 +7,8 @@
     # '';
     settings = {
       # monitor = [ { output = "eDP-1"; disabled = true; } ];
-      device = {
-        name = "raydium-corporation-raydium-touch-system";
-        enabled = false;
-      };
     };
   };
+
+  konrad.hardware.touchscreen.name = "raydium-corporation-raydium-touch-system";
 }
