@@ -22,8 +22,7 @@ in
       type = lib.types.bool;
       default = false;
       description = ''
-        Whether the touchscreen takes input when hyprland starts. The bar can
-        toggle it at runtime, and starts out showing this.
+        Whether the touchscreen takes input.
       '';
     };
   };

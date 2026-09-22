@@ -94,8 +94,6 @@ Variants {
 
             Backlight {}
 
-            Monitor {}
-
             Cpu {}
 
             Memory {}
