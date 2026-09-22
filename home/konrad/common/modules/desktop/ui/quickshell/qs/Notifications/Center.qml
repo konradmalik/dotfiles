@@ -18,21 +18,21 @@ BarPopup {
             Text {
                 id: title
 
-                text: Notifs.history.length > 0 ? "Notifications (" + Notifs.history.length + ")" : "No notifications"
+                text: Notifs.history.length > 0 ? "NOTIFICATIONS (" + Notifs.history.length + ")" : "NOTIFICATIONS"
                 textFormat: Text.PlainText
                 font.family: Theme.popupFontFamily
-                font.pointSize: Theme.popupFontSize
-                font.bold: true
-                color: Theme.text
+                font.pointSize: Theme.popupLabelFontSize
+                color: Theme.muted
             }
 
             Text {
                 anchors.right: parent.right
+                anchors.baseline: title.baseline
                 visible: Notifs.history.length > 0
                 text: "Clear"
                 textFormat: Text.PlainText
                 font.family: Theme.popupFontFamily
-                font.pointSize: Theme.popupFontSize
+                font.pointSize: Theme.popupLabelFontSize
                 color: clearMouse.containsMouse ? Theme.text : Theme.muted
 
                 MouseArea {
@@ -45,8 +45,22 @@ BarPopup {
             }
         }
 
+        Text {
+            width: parent.width
+            visible: Notifs.history.length === 0
+            height: implicitHeight + Theme.popupPadding * 2
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            text: "No notifications"
+            textFormat: Text.PlainText
+            font.family: Theme.popupFontFamily
+            font.pointSize: Theme.popupFontSize
+            color: Theme.muted
+        }
+
         Flickable {
             width: parent.width
+            visible: Notifs.history.length > 0
             height: Math.min(list.implicitHeight, 520)
             contentHeight: list.implicitHeight
             clip: true

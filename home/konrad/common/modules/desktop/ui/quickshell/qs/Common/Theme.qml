@@ -21,6 +21,8 @@ Singleton {
     readonly property int fontSize: Env.fontSize
     readonly property string popupFontFamily: Env.popupFontFamily
     readonly property int popupFontSize: Env.popupFontSize
+    readonly property int popupLabelFontSize: popupFontSize - 2
+    readonly property int emphasisWeight: Font.DemiBold
 
     // The bar tracks the font so a larger desktop size cannot clip glyphs.
     readonly property int barHeight: Math.round(Env.fontSize * 3)

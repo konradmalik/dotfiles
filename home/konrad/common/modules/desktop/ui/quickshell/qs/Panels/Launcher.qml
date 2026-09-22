@@ -182,7 +182,7 @@ Overlay {
                                 textFormat: Text.PlainText
                                 color: Theme.muted
                                 font.family: Theme.popupFontFamily
-                                font.pointSize: Theme.popupFontSize - 2
+                                font.pointSize: Theme.popupLabelFontSize
                                 elide: Text.ElideRight
                             }
                         }

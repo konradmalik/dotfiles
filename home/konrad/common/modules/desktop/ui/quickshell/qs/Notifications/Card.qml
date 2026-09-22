@@ -61,7 +61,7 @@ Rectangle {
                 textFormat: Text.PlainText
                 font.family: Theme.popupFontFamily
                 font.pointSize: Theme.popupFontSize
-                font.bold: true
+                font.weight: Theme.emphasisWeight
                 color: Theme.text
                 elide: Text.ElideRight
             }

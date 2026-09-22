@@ -98,7 +98,7 @@ BarItem {
                         color: Theme.text
                         font.family: Theme.popupFontFamily
                         font.pointSize: Theme.popupFontSize
-                        font.bold: true
+                        font.weight: Theme.emphasisWeight
                     }
 
                     Stepper {
@@ -127,7 +127,7 @@ BarItem {
                         elide: Text.ElideRight
                         color: Theme.muted
                         font.family: Theme.popupFontFamily
-                        font.pointSize: Theme.popupFontSize - 2
+                        font.pointSize: Theme.popupLabelFontSize
                     }
                 }
 
@@ -159,7 +159,7 @@ BarItem {
                         color: model.today ? Theme.accent : model.month === grid.month ? Theme.text : Theme.low
                         font.family: Theme.popupFontFamily
                         font.pointSize: Theme.popupFontSize
-                        font.bold: model.today
+                        font.weight: model.today ? Theme.emphasisWeight : Font.Normal
                     }
                 }
             }

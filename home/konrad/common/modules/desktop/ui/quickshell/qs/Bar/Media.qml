@@ -127,7 +127,7 @@ BarItem {
                             elide: Text.ElideRight
                             color: Theme.muted
                             font.family: Theme.fontFamily
-                            font.pointSize: Theme.popupFontSize - 2
+                            font.pointSize: Theme.popupLabelFontSize
                         }
 
                         Text {
@@ -139,7 +139,7 @@ BarItem {
                             color: Theme.text
                             font.family: Theme.popupFontFamily
                             font.pointSize: Theme.popupFontSize
-                            font.bold: true
+                            font.weight: Theme.emphasisWeight
                         }
 
                         Text {
