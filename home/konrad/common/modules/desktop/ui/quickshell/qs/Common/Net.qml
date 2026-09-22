@@ -5,23 +5,31 @@ import Quickshell.Io
 import qs.Common
 import qs.Config
 
-// Quickshell's own Networking service speaks only to NetworkManager, and these
-// machines run iwd, so the link state is read the way impala reads it: iwd over
-// the system bus for the station and the ssid, iproute2 for addresses, and the
-// station diagnostic for the rssi the icon needs.
+// Quickshell's own Networking service speaks only to NetworkManager -- its
+// backend enum has no second entry -- and these machines run iwd, so the link
+// state is read the way impala reads it: iwd over the system bus for the
+// station and the ssid, iproute2 for addresses, and the station diagnostic for
+// the rssi the icon needs.
+//
+// Nothing here parses anything it did not ask for as json. `ip monitor` is run
+// for its noise alone: a line off it only has to mean "something moved, ask
+// again", and what it asks is the same structured read that ran at startup.
+// That covers iwd too, because every transition the bar shows -- associating,
+// dhcp handing an address over, the link going away -- moves netlink as well.
 Singleton {
     id: root
 
-    property string kind: "none"
-    property string iface: ""
-    property string ssid: ""
-    property string address: ""
-    property real strength: 0
-
+    // The three raw answers. Everything below is derived from them, so a link
+    // going away cannot leave a stale ssid or address behind it -- there is
+    // nothing to clear, only something that stops being found.
     property var links: []
-    property string wifiDevice: ""
-    property string wifiPath: ""
-    property string wifiState: ""
+    property var objects: ({})
+
+    // -80 dBm is the bottom of usable and -40 is right next to the access
+    // point; the five icons are spread over that. Starting at the bottom means
+    // a diagnostic that never answers reads as the weakest icon rather than as
+    // no link at all.
+    property real rssi: -80
 
     function addressOf(name) {
         const link = root.links.find(l => l.ifname === name);
@@ -29,39 +37,28 @@ Singleton {
         return info ? info.local + "/" + info.prefixlen : "";
     }
 
-    // Anything carrying an address that is neither loopback, the wifi device,
-    // nor a tunnel counts as a wire. Tailscale in particular is always up and
-    // would otherwise read as the active link.
-    function wired() {
-        return root.links.find(l => l.ifname !== "lo" && l.ifname !== root.wifiDevice && l.operstate === "UP" && !l.link_info && root.addressOf(l.ifname) !== "") ?? null;
-    }
+    // iwd hangs the Station and the Device off one object path, and the ssid
+    // off a separate Network object that the station points at.
+    readonly property string stationPath: Object.keys(root.objects).find(p => root.objects[p]["net.connman.iwd.Station"]) ?? ""
+    readonly property var station: root.objects[root.stationPath]?.["net.connman.iwd.Station"] ?? null
+    readonly property string wifiDevice: root.objects[root.stationPath]?.["net.connman.iwd.Device"]?.Name?.data ?? ""
 
-    function resolve() {
-        const wire = root.wired();
+    // A wire is anything that is not loopback or the wifi device, is carrying
+    // an address, and says UP rather than UNKNOWN. That last part is what keeps
+    // tunnels out: tailscale is always up and would otherwise read as the
+    // active link, but a tun device has no carrier to report, so it sits at
+    // UNKNOWN and never qualifies.
+    readonly property var wire: root.links.find(l => l.ifname !== "lo" && l.ifname !== root.wifiDevice && l.operstate === "UP" && root.addressOf(l.ifname) !== "") ?? null
 
-        if (wire) {
-            root.kind = "ethernet";
-            root.iface = wire.ifname;
-            root.ssid = "";
-            root.address = root.addressOf(wire.ifname);
-        } else if (root.wifiState === "connected") {
-            root.kind = "wifi";
-            root.iface = root.wifiDevice;
-            root.address = root.addressOf(root.wifiDevice);
-        } else {
-            root.kind = "none";
-            root.iface = "";
-            root.ssid = "";
-            root.address = "";
-            root.strength = 0;
-        }
-    }
+    readonly property string kind: root.wire ? "ethernet" : root.station?.State?.data === "connected" ? "wifi" : "none"
+    readonly property string iface: root.kind === "ethernet" ? root.wire.ifname : root.kind === "wifi" ? root.wifiDevice : ""
+    readonly property string ssid: root.kind === "wifi" ? root.objects[root.station?.ConnectedNetwork?.data]?.["net.connman.iwd.Network"]?.Name?.data ?? "" : ""
+    readonly property string address: root.addressOf(root.iface)
+    readonly property real strength: root.kind === "wifi" ? Math.max(0, Math.min(1, (root.rssi + 80) / 40)) : 0
 
-    function poll() {
-        if (!linkProc.running)
-            linkProc.running = true;
-        if (!iwdProc.running)
-            iwdProc.running = true;
+    function read() {
+        linkProc.running = true;
+        iwdProc.running = true;
     }
 
     property Process linkProc: Process {
@@ -69,10 +66,7 @@ Singleton {
 
         command: [Env.ip, "-j", "addr"]
         stdout: StdioCollector {
-            onStreamFinished: {
-                root.links = Cmd.json(this.text, []);
-                root.resolve();
-            }
+            onStreamFinished: root.links = Cmd.json(this.text, [])
         }
     }
 
@@ -81,54 +75,65 @@ Singleton {
 
         command: [Env.busctl, "--system", "--json=short", "call", "net.connman.iwd", "/", "org.freedesktop.DBus.ObjectManager", "GetManagedObjects"]
         stdout: StdioCollector {
-            onStreamFinished: {
-                root.wifiDevice = "";
-                root.wifiPath = "";
-                root.wifiState = "";
-
-                const objects = Cmd.json(this.text, {}).data?.[0] ?? {};
-                let connected = "";
-
-                for (const path in objects) {
-                    const station = objects[path]["net.connman.iwd.Station"];
-                    if (!station)
-                        continue;
-                    root.wifiPath = path;
-                    root.wifiState = station.State?.data ?? "";
-                    root.wifiDevice = objects[path]["net.connman.iwd.Device"]?.Name?.data ?? "";
-                    connected = station.ConnectedNetwork?.data ?? "";
-                }
-
-                root.ssid = objects[connected]?.["net.connman.iwd.Network"]?.Name?.data ?? "";
-
-                root.resolve();
-
-                if (root.wifiState === "connected" && root.wifiPath !== "" && !diagProc.running) {
-                    diagProc.command = [Env.busctl, "--system", "--json=short", "call", "net.connman.iwd", root.wifiPath, "net.connman.iwd.StationDiagnostic", "GetDiagnostics"];
-                    diagProc.running = true;
-                }
-            }
+            onStreamFinished: root.objects = Cmd.json(this.text, {}).data?.[0] ?? {}
         }
     }
 
     property Process diagProc: Process {
         id: diagProc
 
+        command: [Env.busctl, "--system", "--json=short", "call", "net.connman.iwd", root.stationPath, "net.connman.iwd.StationDiagnostic", "GetDiagnostics"]
         stdout: StdioCollector {
-            onStreamFinished: {
-                const rssi = Cmd.json(this.text, {}).data?.[0]?.RSSI?.data;
-                // -80 dBm is the bottom of usable and -40 is right next to the
-                // access point; the five icons are spread over that.
-                root.strength = rssi === undefined ? 0 : Math.max(0, Math.min(1, (rssi + 80) / 40));
-            }
+            onStreamFinished: root.rssi = Cmd.json(this.text, {}).data?.[0]?.RSSI?.data ?? -80
         }
     }
 
-    property Timer timer: Timer {
-        interval: 5000
+    // Netlink says when an address or a link changes, which covers the wire
+    // coming and going and the address dhcp hands over.
+    property Process linkMonitor: Process {
+        id: linkMonitor
+
+        command: [Env.ip, "-oneline", "monitor", "address", "link"]
+        stdout: SplitParser {
+            onRead: settle.restart()
+        }
+    }
+
+    // One change arrives as a burst -- a link comes up and is then given an
+    // address, dhcp renews and rewrites one -- so the re-read waits for the
+    // burst to end instead of running once per line.
+    property Timer settle: Timer {
+        id: settle
+
+        interval: 200
+        onTriggered: root.read()
+    }
+
+    // The monitor is what makes this immediate; the tick is what makes it right
+    // anyway. It starts the monitor, brings it back if it died, and re-reads
+    // regardless -- so the one thing netlink can stay quiet about, iwd moving
+    // between states without the interface under it moving, is stale for a tick
+    // rather than until the next change that does move it.
+    property Timer tick: Timer {
+        interval: 15000
         running: true
         repeat: true
         triggeredOnStart: true
-        onTriggered: root.poll()
+        onTriggered: {
+            linkMonitor.running = true;
+            root.read();
+        }
+    }
+
+    // The rssi drifts with the room rather than changing on an event, and iwd
+    // has no signal carrying it, so it is the one thing polled -- and only
+    // while there is a wifi link whose strength is on screen to be wrong. Five
+    // icons spread over 40 dBm do not need it any oftener than the tick.
+    property Timer rssiTick: Timer {
+        interval: 15000
+        running: root.kind === "wifi"
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: diagProc.running = true
     }
 }
