@@ -11,8 +11,8 @@ Row {
 
     readonly property int count: SystemTray.items.values.length
 
-    // One icon is not worth a button to hide it behind.
-    readonly property bool collapsible: root.count > 1
+    // Anything at all in the tray gets the button; only an empty one does not.
+    readonly property bool collapsible: root.count > 0
     readonly property bool showItems: !root.collapsible || Shell.trayExpanded
 
     // An empty tray takes no space in the bar row, gap included.
@@ -65,7 +65,7 @@ Row {
         active: root.collapsible
         text: Shell.trayExpanded ? "󰅂" : "󰅁"
         color: Theme.muted
-        tooltip: Shell.trayExpanded ? "Hide tray" : root.count + " tray icons"
+        tooltip: Shell.trayExpanded ? "Hide tray" : root.count + (root.count === 1 ? " tray icon" : " tray icons")
 
         onLeftClicked: Shell.trayExpanded = !Shell.trayExpanded
     }

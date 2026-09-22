@@ -10,9 +10,9 @@ Singleton {
     property bool powerOpen: false
 
     // Whether the tray is showing its icons. Deliberately a plain property: it
-    // is meant to be forgotten when the shell restarts, and it is one tray
-    // however many bars are drawing it.
-    property bool trayExpanded: false
+    // is meant to be forgotten when the shell restarts -- which starts it
+    // expanded again -- and it is one tray however many bars are drawing it.
+    property bool trayExpanded: true
 
     // Idle is one switch for the machine, but the bar it is toggled from is
     // drawn once per screen, so the state cannot live in the widget.
