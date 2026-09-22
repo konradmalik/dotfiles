@@ -19,15 +19,18 @@ BarItem {
     readonly property date now: clock.date
     readonly property date shown: new Date(now.getFullYear(), now.getMonth() + monthOffset, 1)
 
+    // Qt formats in local time and cannot be told otherwise -- formatDateTime's
+    // third argument picks a locale's format type, not a zone. The same instant
+    // shifted by the offset reads, in local time, as UTC does, so it can go
+    // through the same formatter, weekday and month names included.
+    readonly property date nowUtc: new Date(now.getTime() + now.getTimezoneOffset() * 60000)
+
     bold: true
     text: Qt.formatDateTime(now, "yyyy-MM-dd HH:mm")
-    // The date, then the two clocks: here, and UTC under it. Qt formats in
-    // local time only, so UTC is taken off the ISO string the date already
-    // knows how to produce.
-    tooltip: {
-        const utc = root.now.toISOString();
-        return [Qt.formatDate(root.now, "dddd, d MMMM yyyy"), Qt.formatDateTime(root.now, "HH:mm t"), utc.slice(11, 16) + " UTC"].join("\n");
-    }
+    // Here, then UTC under it, both spelled out in full: the two are not always
+    // on the same date, which is why the second entry carries a date of its own
+    // rather than a bare time.
+    tooltip: [Qt.formatDateTime(root.now, "dddd, d MMMM yyyy, HH:mm t"), Qt.formatDateTime(nowUtc, "dddd, d MMMM yyyy, HH:mm") + " UTC"].join("\n")
 
     onLeftClicked: root.popupOpen = !root.popupOpen
     onRightClicked: root.monthOffset = 0
