@@ -9,18 +9,9 @@
 let
   root = ./.;
 
-  # Quickshell's own type metadata rather than anything in this config: it
-  # creates PanelWindow itself instead of declaratively, its qmltypes do not
-  # declare GlobalShortcut or the bluetooth models, and the popup anchor's
-  # grouped properties carry no type. Everything else stays fatal -- above all
-  # unqualified access, which is how both a missing singleton import and a
-  # missing ComponentBehavior pragma show up.
-  ignored = [
-    "uncreatable-type"
-    "unresolved-type"
-    "missing-type"
-    "import"
-  ];
+  # Which warnings are silenced lives in .qmllint.ini next to this file, so
+  # that qmlls -- which runs qmllint internally and looks for the same file --
+  # agrees with this linter instead of flagging in the editor what CI ignores.
 
   command = writeShellApplication {
     name = "quickshell-lint";
@@ -62,7 +53,6 @@ let
         -I ${qt6.qtdeclarative}/${qt6.qtbase.qtQmlPrefix} \
         -I ${quickshell}/${qt6.qtbase.qtQmlPrefix} \
         -I "$dir" \
-        ${lib.concatMapStringsSep " " (c: "--${c} disable") ignored} \
         --max-warnings 0 \
         "''${files[@]}"
     '';
