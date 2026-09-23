@@ -1,7 +1,30 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  ...
+}:
 let
   fonts = config.stylix.fonts;
   colors = config.lib.stylix.colors.withHashtag;
+
+  date = lib.getExe' pkgs.coreutils "date";
+  # cmd[] may exec the script directly, so no shell quoting survives the config;
+  # pango wants alpha as 1-65535 because date would eat a literal percent sign
+  clockText = pkgs.writeShellScript "hyprlock-clock" ''
+    exec ${date} +'<span weight="bold">%H<span alpha="35000">:</span>%M</span>'
+  '';
+  dateText = pkgs.writeShellScript "hyprlock-date" ''
+    export LC_TIME="${osConfig.i18n.extraLocaleSettings.LC_TIME or "C.UTF-8"}"
+    exec ${date} +'<span letter_spacing="3000">%A, %-d %B</span>'
+  '';
+
+  shadow = {
+    shadow_passes = 2;
+    shadow_size = 4;
+    shadow_color = "rgba(0, 0, 0, 0.5)";
+  };
 in
 {
   programs.hyprlock = {
@@ -23,15 +46,30 @@ in
         path = lib.mkForce "screenshot";
       };
 
-      label = {
-        text = "$TIME";
-        color = colors.base05;
-        font_family = fonts.sansSerif.name;
-        font_size = 90;
-        position = "0, 180";
-        halign = "center";
-        valign = "center";
-      };
+      label = [
+        (shadow
+          // {
+            text = "cmd[update:1000] ${clockText}";
+            color = colors.base05;
+            font_family = fonts.monospace.name;
+            font_size = 150;
+            position = "0, 240";
+            halign = "center";
+            valign = "center";
+          }
+        )
+        (shadow
+          // {
+            text = "cmd[update:60000] ${dateText}";
+            color = colors.base04;
+            font_family = fonts.sansSerif.name;
+            font_size = 18;
+            position = "0, 125";
+            halign = "center";
+            valign = "center";
+          }
+        )
+      ];
 
       input-field = {
         size = "600, 100";
