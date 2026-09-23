@@ -23,11 +23,7 @@ BarItem {
     active: Env.hasTailscale
     tooltip: "Tailscale: " + backendState + "\n" + host + " (" + address + ")"
 
-    onLeftClicked: {
-        Cmd.run(Env.tailscaleToggle);
-        poller.burst = 3;
-        poller.restart();
-    }
+    onLeftClicked: Cmd.run(Env.tailscaleToggle)
     onRightClicked: Cmd.run(Env.tailscaleCopyIp)
 
     // The nine-dot mark, five of them solid drawing the "t". No font carries
@@ -71,22 +67,37 @@ BarItem {
         }
     }
 
-    Timer {
-        id: poller
+    // The ipn bus is read for its noise alone: a line off it only means
+    // "something moved, ask again", so the pretty-printed notification never
+    // has to be parsed. --initial makes every connection say it once, which is
+    // both the first read and what makes a reconnect catch up on whatever
+    // changed while the watch was gone.
+    Process {
+        id: watch
 
-        // A toggle takes a moment to settle, so a click buys a few quick reads
-        // before the idle beat resumes.
-        property int burst: 0
-
-        interval: burst > 0 ? 1500 : 10000
         running: root.active
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            if (!poll.running)
-                poll.running = true;
-            if (burst > 0)
-                burst--;
+        command: [Env.tailscale, "debug", "watch-ipn", "--initial"]
+        stdout: SplitParser {
+            onRead: settle.restart()
         }
+    }
+
+    // One transition arrives as a burst of notifications, and the status is
+    // worth reading once it has landed rather than once per line.
+    Timer {
+        id: settle
+
+        interval: 200
+        onTriggered: poll.running = true
+    }
+
+    // tailscaled going away takes the watch with it, and it is the only thing
+    // keeping this off a timer.
+    Timer {
+        id: reconnect
+
+        interval: 5000
+        running: root.active && !watch.running
+        onTriggered: watch.running = true
     }
 }
