@@ -7,11 +7,10 @@
 }:
 let
   fonts = config.stylix.fonts;
-  colors = config.lib.stylix.colors.withHashtag;
+  colors = config.lib.stylix.colors;
+  rgb = c: "rgb(${c})";
 
   date = lib.getExe' pkgs.coreutils "date";
-  # cmd[] may exec the script directly, so no shell quoting survives the config;
-  # pango wants alpha as 1-65535 because date would eat a literal percent sign
   clockText = pkgs.writeShellScript "hyprlock-clock" ''
     exec ${date} +'<span weight="bold">%H<span alpha="35000">:</span>%M</span>'
   '';
@@ -47,10 +46,11 @@ in
       };
 
       label = [
-        (shadow
+        (
+          shadow
           // {
             text = "cmd[update:1000] ${clockText}";
-            color = colors.base05;
+            color = rgb colors.base05;
             font_family = fonts.monospace.name;
             font_size = 150;
             position = "0, 240";
@@ -58,10 +58,11 @@ in
             valign = "center";
           }
         )
-        (shadow
+        (
+          shadow
           // {
             text = "cmd[update:60000] ${dateText}";
-            color = colors.base04;
+            color = rgb colors.base04;
             font_family = fonts.sansSerif.name;
             font_size = 18;
             position = "0, 125";
