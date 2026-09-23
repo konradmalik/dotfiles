@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ../modules/dm.nix
@@ -14,13 +14,17 @@
   konrad.audio.enable = true;
   konrad.hardware.bluetooth.enable = true;
 
-  sops.secrets."wifi/home" = { };
-  sops.secrets."wifi/hotspot" = { };
   konrad.network.wireless = {
     enable = true;
     networks = {
-      "pozdrawiamhipstera".passphraseFile = config.sops.secrets."wifi/home".path;
-      "Konrad’s iPhone".passphraseFile = config.sops.secrets."wifi/hotspot".path;
+      home = {
+        ssid = "pozdrawiamhipstera";
+        passphraseSecret = "wifi/home";
+      };
+      hotspot = {
+        ssid = "Konrad’s iPhone";
+        passphraseSecret = "wifi/hotspot";
+      };
     };
   };
 

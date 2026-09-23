@@ -8,60 +8,27 @@ with lib;
 let
   cfg = config.konrad.network.wireless;
 
-  provisionNetwork =
-    ssid: net:
-    if net.passphraseFile != null then
-      "  iwdProvisionFile ${escapeShellArg ssid} ${escapeShellArg (toString net.passphraseFile)}\n"
-    else
-      "  iwdProvision ${escapeShellArg ssid} ${escapeShellArg net.passphrase}\n";
+  secretNetworks = filterAttrs (_: net: net.passphraseSecret != null) cfg.networks;
 
-  provisionScript =
-    # bash
-    ''
-      (
-      export LC_ALL=C
+  envVar = name: "PSK_" + toUpper (replaceStrings [ "-" ] [ "_" ] name);
 
-      stamps=/var/lib/iwd-networks
-      install -d -m 0700 /var/lib/iwd "$stamps"
-
-      iwdProvision() {
-        local ssid="$1" passphrase="$2" name desired hash verbatim='^[A-Za-z0-9_ -]+$'
-
-        # iwd takes the ssid from the file name, and only alphanumerics, spaces,
-        # dashes and underscores may appear there verbatim, anything else means the
-        # whole ssid is hex encoded, see storage_get_network_file_path in iwd
-        if [[ "$ssid" =~ $verbatim ]]; then
-          name="$ssid.psk"
-        else
-          name="=$(printf '%s' "$ssid" | od -An -v -tx1 | tr -d ' \n').psk"
-        fi
-
-        desired=$(printf '[Security]\nPassphrase=%s' "$passphrase")
-        hash=$(printf '%s' "$desired" | sha256sum | cut -d ' ' -f1)
-
-        # rewrite only when what is declared here changed, so that whatever iwd itself
-        # stored in the meantime (PreSharedKey, cached SAE points) is kept
-        if [ "$hash" = "$(cat "$stamps/$name" 2>/dev/null)" ]; then
-          return 0
-        fi
-
-        printf '%s\n' "$desired" >"/var/lib/iwd/$name"
-        chmod 0600 "/var/lib/iwd/$name"
-        printf '%s\n' "$hash" >"$stamps/$name"
-      }
-
-      iwdProvisionFile() {
-        if [ ! -r "$2" ]; then
-          echo "iwd-networks: $2 is not readable, skipping $1" >&2
-          return 0
-        fi
-
-        iwdProvision "$1" "$(cat "$2")"
-      }
-
-      ${concatStrings (mapAttrsToList provisionNetwork cfg.networks)}
-      )
-    '';
+  profile = name: net: {
+    connection = {
+      id = name;
+      type = "wifi";
+    };
+    wifi = {
+      inherit (net) ssid;
+      mode = "infrastructure";
+    };
+    wifi-security = {
+      key-mgmt = net.keyMgmt;
+      psk = if net.passphraseSecret != null then "\${${envVar name}}" else net.passphrase;
+    };
+    ipv4.method = "auto";
+    # these lans hand out no global v6, and "disabled" would drop link-local too
+    ipv6.method = "link-local";
+  };
 in
 {
   options.konrad.network.wireless = {
@@ -69,74 +36,104 @@ in
 
     networks = mkOption {
       type = types.attrsOf (
-        types.submodule {
-          options = {
-            passphrase = mkOption {
-              type = types.nullOr types.str;
-              default = null;
-              description = ''
-                Passphrase in plain text, ends up world readable in the nix store.
-                Mutually exclusive with passphraseFile.
-              '';
-            };
+        types.submodule (
+          { name, ... }:
+          {
+            options = {
+              ssid = mkOption {
+                type = types.str;
+                default = name;
+                description = "The ssid to look for, when it differs from the profile name.";
+              };
 
-            passphraseFile = mkOption {
-              type = types.nullOr types.path;
-              default = null;
-              example = literalExpression ''config.sops.secrets."wifi/home".path'';
-              description = ''
-                Path to a file holding the passphrase, read at activation time.
-                Mutually exclusive with passphrase.
-              '';
+              keyMgmt = mkOption {
+                type = types.str;
+                default = "wpa-psk";
+                example = "sae";
+                description = "NetworkManager's `wifi-security.key-mgmt`. WPA3-only networks want `sae`.";
+              };
+
+              passphrase = mkOption {
+                type = types.nullOr types.str;
+                default = null;
+                description = ''
+                  Passphrase in plain text, ends up world readable in the nix store.
+                  Mutually exclusive with passphraseSecret.
+                '';
+              };
+
+              passphraseSecret = mkOption {
+                type = types.nullOr types.str;
+                default = null;
+                example = "wifi/home";
+                description = ''
+                  Name of a sops secret holding the passphrase. The secret is
+                  declared for you and substituted into the profile at runtime, so
+                  it never reaches the nix store.
+                  Mutually exclusive with passphrase.
+                '';
+              };
             };
-          };
-        }
+          }
+        )
       );
       default = { };
       example = literalExpression ''
         {
-          "home".passphraseFile = config.sops.secrets."wifi/home".path;
-          "some cafe".passphrase = "freecoffee";
+          home = {
+            ssid = "some ssid";
+            passphraseSecret = "wifi/home";
+          };
+          cafe.passphrase = "freecoffee";
         }
       '';
       description = ''
-        Known wifi networks, keyed by ssid, provisioned into /var/lib/iwd.
+        Known wifi networks, keyed by profile name.
 
-        A network is (re)written only when the passphrase declared here changes, so
-        iwd stays free to update the files at runtime (e.g. when the passphrase is
-        changed through iwctl) and such changes survive until the declaration itself
-        changes. Removing a network here does not remove it from /var/lib/iwd.
+        These are regenerated under /run on every boot, so removing one here
+        removes it from the machine. Networks joined by hand live in /etc
+        instead and are left alone, so the two coexist.
       '';
     };
   };
 
   config = mkIf cfg.enable {
-    assertions = mapAttrsToList (ssid: net: {
-      assertion = (net.passphrase == null) != (net.passphraseFile == null);
-      message = ''konrad.network.wireless.networks."${ssid}": set exactly one of passphrase and passphraseFile'';
-    }) cfg.networks;
+    assertions =
+      mapAttrsToList (name: net: {
+        assertion = (net.passphrase == null) != (net.passphraseSecret == null);
+        message = ''konrad.network.wireless.networks."${name}": set exactly one of passphrase and passphraseSecret'';
+      }) cfg.networks
+      ++ mapAttrsToList (name: _: {
+        # the name is both a keyfile name and, uppercased, a shell identifier;
+        # excluding "_" keeps the "-" -> "_" rewrite from colliding
+        assertion = builtins.match "[A-Za-z0-9-]+" name != null;
+        message = ''konrad.network.wireless.networks."${name}": name must match [A-Za-z0-9-]+'';
+      }) cfg.networks;
 
-    environment.systemPackages = with pkgs; [
-      impala
-    ];
+    environment.systemPackages = [ pkgs.wifitui ];
 
     services.resolved.enable = !config.services.blocky.enable;
-    networking = {
-      wireless.iwd = {
-        enable = true;
-        settings = {
-          Network = {
-            EnableIPv6 = false;
-          };
-        };
+
+    sops = mkIf (secretNetworks != { }) {
+      secrets = genAttrs (mapAttrsToList (_: net: net.passphraseSecret) secretNetworks) (_: { });
+
+      templates."networkmanager.env" = {
+        content = concatStrings (
+          mapAttrsToList (
+            name: net: "${envVar name}=${config.sops.placeholder.${net.passphraseSecret}}\n"
+          ) secretNetworks
+        );
+        restartUnits = [ "NetworkManager-ensure-profiles.service" ];
       };
     };
 
-    # runs on every activation and on boot before iwd is started, iwd itself watches
-    # its storage dir so it picks the files up without a restart
-    system.activationScripts.iwd-networks = mkIf (cfg.networks != { }) {
-      deps = optional (config.sops.secrets != { } && !config.sops.useSystemdActivation) "setupSecrets";
-      text = provisionScript;
+    networking.networkmanager = {
+      enable = true;
+
+      ensureProfiles = {
+        environmentFiles = optional (secretNetworks != { }) config.sops.templates."networkmanager.env".path;
+        profiles = mapAttrs profile cfg.networks;
+      };
     };
   };
 }

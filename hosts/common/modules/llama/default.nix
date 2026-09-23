@@ -17,7 +17,7 @@ let
 
   exposedInterfaces = [
     "enp191s0"
-    "wlan0"
+    "wlp192s0"
     "tailscale0"
   ];
 in

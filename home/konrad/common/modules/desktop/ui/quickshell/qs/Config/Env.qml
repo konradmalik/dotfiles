@@ -45,14 +45,13 @@ Singleton {
 
     readonly property string systemMonitor: "btop"
     readonly property string mixer: "wiremix"
-    readonly property string wifiTui: "impala"
+    readonly property string wifiTui: "wifitui"
     readonly property string bluetoothTui: "bluetui"
 
     readonly property string systemctl: "systemctl"
     readonly property string loginctl: "loginctl"
     readonly property string hyprctl: "hyprctl"
     readonly property string ip: "ip"
-    readonly property string busctl: "busctl"
     readonly property string brightnessctl: "brightnessctl"
     readonly property string tailscale: "tailscale"
 }

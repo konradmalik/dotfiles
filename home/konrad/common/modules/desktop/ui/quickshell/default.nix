@@ -155,14 +155,13 @@ let
 
             readonly property string systemMonitor: ${qmlString (lib.getExe config.programs.btop.package)}
             readonly property string mixer: ${qmlString (lib.getExe pkgs.wiremix)}
-            readonly property string wifiTui: ${qmlString (lib.getExe pkgs.impala)}
+            readonly property string wifiTui: ${qmlString (lib.getExe pkgs.wifitui)}
             readonly property string bluetoothTui: ${qmlString (lib.getExe pkgs.bluetui)}
 
             readonly property string systemctl: "${pkgs.systemd}/bin/systemctl"
             readonly property string loginctl: "${pkgs.systemd}/bin/loginctl"
             readonly property string hyprctl: "${osConfig.programs.hyprland.package}/bin/hyprctl"
             readonly property string ip: "${pkgs.iproute2}/bin/ip"
-            readonly property string busctl: "${pkgs.systemd}/bin/busctl"
             readonly property string brightnessctl: ${qmlString (lib.getExe pkgs.brightnessctl)}
             readonly property string tailscale: "${tailscale}"
         }
