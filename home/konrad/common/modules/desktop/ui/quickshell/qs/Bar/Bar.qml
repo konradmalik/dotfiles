@@ -98,8 +98,6 @@ Variants {
 
             Memory {}
 
-            PowerProfile {}
-
             Battery {}
 
             PowerMenu {}
