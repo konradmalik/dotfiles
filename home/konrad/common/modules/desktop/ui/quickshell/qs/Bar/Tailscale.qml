@@ -26,8 +26,9 @@ BarItem {
     onLeftClicked: Cmd.run(Env.tailscaleToggle)
     onRightClicked: Cmd.run(Env.tailscaleCopyIp)
 
-    // The nine-dot mark, five of them solid drawing the "t". No font carries
-    // it, so it is drawn rather than set as a glyph.
+    // The nine-dot mark, four of them solid drawing the "t": the middle row and
+    // the dot below it, as in the official logo. No font carries it, so it is
+    // drawn rather than set as a glyph.
     Grid {
         anchors.verticalCenter: parent.verticalCenter
         columns: 3
@@ -39,7 +40,7 @@ BarItem {
             Rectangle {
                 required property int index
 
-                readonly property bool solid: [0, 1, 2, 4, 7].includes(index)
+                readonly property bool solid: [3, 4, 5, 7].includes(index)
 
                 width: Math.round(Theme.fontSize * 0.4)
                 height: width
