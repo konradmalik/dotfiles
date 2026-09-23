@@ -7,6 +7,4 @@
     inputs.stylix.homeModules.stylix
     ../../../../hosts/common/modules/stylix
   ];
-
-  home.file.".face".source = ../../../../files/avatar.png;
 }

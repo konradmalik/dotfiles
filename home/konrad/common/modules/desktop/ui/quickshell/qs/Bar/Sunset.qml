@@ -9,17 +9,12 @@ BarItem {
     property string unitState: "inactive"
 
     readonly property var icons: ({
-            inactive: "󱓤",
-            active: "󱁞",
-            failed: "",
-            activating: "",
-            deactivating: "",
-            maintenance: "󱤴",
-            reloading: "󰑓",
-            refreshing: "󰑓"
+            inactive: "󰖙",
+            active: "󰖔",
+            failed: "󰀦"
         })
 
-    text: icons[unitState] ?? icons.inactive
+    text: icons[unitState] ?? icons.failed
     tooltip: "hyprsunset is " + unitState
 
     onLeftClicked: {
@@ -43,7 +38,7 @@ BarItem {
         // has to be read off stdout rather than the exit code.
         command: [Env.systemctl, "--user", "is-active", "hyprsunset"]
         stdout: StdioCollector {
-            onStreamFinished: root.unitState = this.text.trim() || "inactive"
+            onStreamFinished: root.unitState = this.text.trim() || "unknown"
         }
     }
 

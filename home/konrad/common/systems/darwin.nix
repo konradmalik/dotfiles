@@ -13,8 +13,6 @@
   ];
 
   home = {
-    file.".face".source = ../../../../files/avatar.png;
-
     packages = with pkgs; [
       # make linux people at home
       coreutils
