@@ -121,6 +121,17 @@ in
       deps = with pkgs; [ python3 ];
     }
     {
+      file = ./sops-grep.sh;
+      # bash: needs >= 4.4 for 'mapfile -d' and 'wait -n', and the shebang stays
+      # '/usr/bin/env bash', which on darwin would otherwise find bash 3.2
+      deps = with pkgs; [
+        bash
+        coreutils
+        ripgrep
+        sops
+      ];
+    }
+    {
       file = ./terminal-testdrive.sh;
       # no ncurses: its share/terminfo collides with ghostty's in the home-manager path,
       # and tput is only used with an '|| echo 80' fallback anyway
