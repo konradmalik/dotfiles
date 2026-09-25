@@ -86,12 +86,17 @@ Rectangle {
             Row {
                 id: actions
 
-                visible: root.showActions && root.notification.actions.length > 0
+                // "default" is what activating the body invokes, it is not meant to be
+                // drawn, and it usually carries no label at all. Anything else without
+                // a label has nothing to render either.
+                readonly property var shown: root.notification.actions.filter(a => a.identifier !== "default" && a.text)
+
+                visible: root.showActions && actions.shown.length > 0
                 topPadding: 6
                 spacing: 8
 
                 Repeater {
-                    model: root.notification.actions
+                    model: actions.shown
 
                     Rectangle {
                         id: action
