@@ -286,6 +286,98 @@ For user-specific secrets, a home-manager modules of sops-nix is used.
 We similarly use `age`. The key is reused from system-wide config (the one derived from personal ssh).
 See how `sops` is configured in the home-manager (it just points at the `keys.txt` file).
 
+## Hardware-backed ssh keys
+
+Keys live in the machine's security chip: non-exportable, impossible to back up, one per
+machine. `~/.ssh/personal` stays as the offline fallback.
+
+### NixOS (TPM)
+
+`ssh-tpm-agent` serves the sealed keys and proxies to the plain `ssh-agent`, so ordinary
+key files keep working alongside them.
+
+```bash
+$ ssh-tpm-keygen --supported            # what this tpm can do
+$ ssh-tpm-keygen -C konrad@$(hostname)  # add -f ~/.ssh/name to choose the name
+```
+
+That writes `~/.ssh/id_ecdsa.tpm` and its `.pub`. The agent loads every sealed key it
+finds in `~/.ssh` on start, so any number of them can coexist:
+
+```bash
+$ systemctl --user restart ssh-tpm-agent.service
+$ ssh-add -l
+```
+
+The `.tpm` blob is the key, encrypted to a hierarchy seed that never leaves the chip.
+There is no per-key state inside the tpm, so removing a key is removing its files - while
+clearing the tpm regenerates that seed and destroys every key at once:
+
+```bash
+$ rm ~/.ssh/id_ecdsa.tpm ~/.ssh/id_ecdsa.pub
+$ systemctl --user restart ssh-tpm-agent.service
+```
+
+### nix-darwin (Secure Enclave)
+
+Requires macOS Tahoe. Apple's middleware is already wired up in the ssh config and in
+`SSH_SK_PROVIDER`, so `ssh`, `ssh-add` and `ssh-keygen` find it on their own.
+
+Create the identity - `-l` is the label, `-t bio` asks for Touch ID on every use while
+`-t none` never asks:
+
+```bash
+$ sc_auth create-ctk-identity -l ssh -k p-256-ne -t bio
+```
+
+Then download the key handle. `-K` writes one file pair per identity into the current
+directory, named after the label, and they can be renamed afterwards:
+
+```bash
+$ cd ~/.ssh
+$ SSH_ASKPASS_REQUIRE=force SSH_ASKPASS=true ssh-keygen -w /usr/lib/ssh-keychain.dylib -K
+$ ssh-keygen -lf id_ecdsa_sk_rk_ssh.pub
+```
+
+List and remove identities:
+
+```bash
+$ sc_auth list-ctk-identities
+$ sc_auth delete-ctk-identity -h <hash>
+```
+
+### Making ssh use them
+
+`ssh-egress` sets `IdentitiesOnly`, so only listed keys are offered. Point `hardwareKeys`
+at the public key (linux) or the handle file (darwin); `~/.ssh/personal` is appended as the
+fallback. ssh warns on every connection while the file is missing, so generate the key
+around the same time as the rebuild.
+
+```nix
+konrad.programs.ssh-egress.hardwareKeys = [
+  "${config.home.homeDirectory}/.ssh/id_ecdsa.pub"
+];
+```
+
+### Normal keys
+
+```bash
+$ ssh -i ~/.ssh/somekey user@host                # ad-hoc, works despite IdentitiesOnly
+$ ssh-add ~/.ssh/somekey                         # linux, proxied to the plain agent
+$ ssh-add --apple-use-keychain ~/.ssh/somekey    # darwin, passphrase into the keychain
+$ ssh-add --apple-load-keychain                  # darwin, after a reboot
+```
+
+Per host, add a block to `ssh-egress` or a drop-in to the already-included `config.d`:
+
+```bash
+$ cat >> ~/.ssh/config.d/somehost <<'EOF'
+Host somehost
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/somekey
+EOF
+```
+
 ## Credits
 
 [Misterio77](https://github.com/Misterio77/nix-config) - big inspiration for hyprland and nix files structure.

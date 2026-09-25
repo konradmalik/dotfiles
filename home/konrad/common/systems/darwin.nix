@@ -1,9 +1,14 @@
 {
+  config,
   osConfig,
   pkgs,
   lib,
   ...
 }:
+let
+  # apple's middleware, the only way to reach secure enclave backed keys
+  skProvider = "/usr/lib/ssh-keychain.dylib";
+in
 {
   imports = [
     ../modules/base
@@ -23,8 +28,18 @@
       gnused
     ];
 
-    sessionVariables.XDG_RUNTIME_DIR = "$TMPDIR";
+    sessionVariables = {
+      XDG_RUNTIME_DIR = "$TMPDIR";
+      # ssh-add and ssh-keygen don't read ssh_config, they need this instead
+      SSH_SK_PROVIDER = skProvider;
+    };
   };
+
+  programs.ssh.settings."*".SecurityKeyProvider = skProvider;
+
+  konrad.programs.ssh-egress.hardwareKeys = [
+    "${config.home.homeDirectory}/.ssh/id_ecdsa_sk_rk_ssh"
+  ];
 
   programs.zsh = {
     shellAliases = {

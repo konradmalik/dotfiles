@@ -23,6 +23,8 @@ in
       ++ ifTheyExist [
         "docker"
         "networkmanager"
+        # access to the tpm, only exists if security.tpm2 is enabled
+        "tss"
       ];
     };
   };

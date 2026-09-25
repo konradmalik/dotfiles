@@ -49,10 +49,12 @@
 
   programs.localsend.enable = true;
 
-  # start ssh-agent per user to remember ssh private keys
+  # required for tpm-sealed ssh keys, see home-manager's services.ssh-tpm-agent
+  security.tpm2.enable = true;
+
+  # the agents themselves are started by home-manager (services.ssh-agent and
+  # services.ssh-tpm-agent), here we only provide askpass for non-tpm keys
   programs.ssh = {
-    startAgent = true;
-    agentTimeout = null;
     askPassword = "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
     enableAskPassword = true;
   };
