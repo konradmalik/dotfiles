@@ -9,8 +9,8 @@ BarItem {
     property string unitState: "inactive"
 
     readonly property var icons: ({
-            inactive: "󰖙",
-            active: "󰖔",
+            inactive: "󰱥",
+            active: "󰔎",
             failed: "󰀦"
         })
 
