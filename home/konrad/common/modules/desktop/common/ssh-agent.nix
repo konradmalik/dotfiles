@@ -6,6 +6,5 @@
   services.ssh-agent.enable = true;
   services.ssh-tpm-agent.enable = true;
 
-  # only the public half is on disk, the sealed private one never leaves the agent
-  konrad.programs.ssh-egress.hardwareKeys = [ "${config.home.homeDirectory}/.ssh/id_ecdsa.pub" ];
+  konrad.programs.ssh-egress.hardwareKeys = [ "${config.home.homeDirectory}/.ssh/hardware" ];
 }

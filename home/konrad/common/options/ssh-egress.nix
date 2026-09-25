@@ -12,11 +12,11 @@ in
     hardwareKeys = mkOption {
       type = types.listOf types.str;
       default = [ ];
-      example = [ "~/.ssh/id_ecdsa.pub" ];
+      example = [ "~/.ssh/hardware" ];
       description = ''
-        Keys backed by this machine's security chip (tpm on linux, secure enclave on darwin).
-        Tried in order, before the on-disk fallback key.
-        On linux these are the public halves only, the private ones never leave the agent.
+        Keys backed by this machine's security chip, offered before the on-disk fallback.
+        Only set on machines that have one: ssh prints "no such identity" on every
+        connection for an identity file that is not there.
       '';
     };
   };

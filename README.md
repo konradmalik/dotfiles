@@ -297,11 +297,10 @@ machine. `~/.ssh/personal` stays as the offline fallback.
 key files keep working alongside them.
 
 ```bash
-$ ssh-tpm-keygen --supported            # what this tpm can do
-$ ssh-tpm-keygen -C konrad@$(hostname)  # add -f ~/.ssh/name to choose the name
+$ ssh-tpm-keygen -C konrad@$(hostname)  -f ~/.ssh/hardware
 ```
 
-That writes `~/.ssh/id_ecdsa.tpm` and its `.pub`. The agent loads every sealed key it
+That writes `~/.ssh/hardware.tpm` and its `.pub`. The agent loads every sealed key it
 finds in `~/.ssh` on start, so any number of them can coexist:
 
 ```bash
@@ -314,7 +313,7 @@ There is no per-key state inside the tpm, so removing a key is removing its file
 clearing the tpm regenerates that seed and destroys every key at once:
 
 ```bash
-$ rm ~/.ssh/id_ecdsa.tpm ~/.ssh/id_ecdsa.pub
+$ rm ~/.ssh/hardware.tpm ~/.ssh/hardware.pub
 $ systemctl --user restart ssh-tpm-agent.service
 ```
 
@@ -336,7 +335,7 @@ directory, named after the label, and they can be renamed afterwards:
 ```bash
 $ cd ~/.ssh
 $ SSH_ASKPASS_REQUIRE=force SSH_ASKPASS=true ssh-keygen -w /usr/lib/ssh-keychain.dylib -K
-$ ssh-keygen -lf id_ecdsa_sk_rk_ssh.pub
+$ ssh-keygen -lf hardware.pub
 ```
 
 List and remove identities:
@@ -348,16 +347,7 @@ $ sc_auth delete-ctk-identity -h <hash>
 
 ### Making ssh use them
 
-`ssh-egress` sets `IdentitiesOnly`, so only listed keys are offered. Point `hardwareKeys`
-at the public key (linux) or the handle file (darwin); `~/.ssh/personal` is appended as the
-fallback. ssh warns on every connection while the file is missing, so generate the key
-around the same time as the rebuild.
-
-```nix
-konrad.programs.ssh-egress.hardwareKeys = [
-  "${config.home.homeDirectory}/.ssh/id_ecdsa.pub"
-];
-```
+`ssh-egress.nix` sets `IdentitiesOnly`, so only listed keys are offered. See that file for names or add a new one.
 
 ### Normal keys
 

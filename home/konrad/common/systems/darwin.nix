@@ -37,9 +37,7 @@ in
 
   programs.ssh.settings."*".SecurityKeyProvider = skProvider;
 
-  konrad.programs.ssh-egress.hardwareKeys = [
-    "${config.home.homeDirectory}/.ssh/id_ecdsa_sk_rk_ssh"
-  ];
+  konrad.programs.ssh-egress.hardwareKeys = [ "${config.home.homeDirectory}/.ssh/hardware" ];
 
   programs.zsh = {
     shellAliases = {
