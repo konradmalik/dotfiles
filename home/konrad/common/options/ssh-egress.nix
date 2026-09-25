@@ -4,6 +4,7 @@ let
   cfg = config.konrad.programs.ssh-egress;
   # hardware-backed keys are offered first, the on-disk one stays as a fallback
   personalKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/personal" ];
+  workKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/personal" ];
 in
 {
   options.konrad.programs.ssh-egress = {
@@ -64,7 +65,7 @@ in
 
           "Host *.cerebredev.com" = {
             IdentitiesOnly = "yes";
-            IdentityFile = "${config.home.homeDirectory}/.ssh/cerebre";
+            IdentityFile = workKeys;
           };
 
           # must be named "*" so home-manager emits it last;
