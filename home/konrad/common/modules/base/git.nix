@@ -26,6 +26,14 @@
   programs.git =
     let
       difft = "${lib.getExe pkgs.difftastic}";
+      hardwareKeys = config.konrad.programs.ssh-egress.hardwareKeys;
+      # git signs with exactly one key, no list, no fallback
+      signingKeyFor =
+        onDisk:
+        if hardwareKeys == [ ] then
+          "${config.home.homeDirectory}/.ssh/${onDisk}.pub"
+        else
+          "${lib.head hardwareKeys}.pub";
     in
     {
       enable = true;
@@ -43,14 +51,14 @@
             user = {
               email = "konrad.malik@gmail.com";
               name = "Konrad Malik";
-              signingKey = "${config.home.homeDirectory}/.ssh/personal.pub";
+              signingKey = signingKeyFor "personal";
             };
           };
           work = {
             user = {
               email = "konrad@cerebre.io";
               name = "Konrad Malik";
-              signingKey = "${config.home.homeDirectory}/.ssh/cerebre.pub";
+              signingKey = signingKeyFor "cerebre";
             };
           };
         in
