@@ -349,13 +349,21 @@ $ sc_auth delete-ctk-identity -h <hash>
 
 `ssh-egress.nix` sets `IdentitiesOnly`, so only listed keys are offered. See that file for names or add a new one.
 
+### Bitwarden
+
+Non-hardware keys are in Bitwarden, only their `.pub` stays on disk - ssh resolves an `IdentityFile` through its
+`.pub` and lets the agent sign. The vault is a last resort by ordering:
+`ssh-egress` offers the hardware key first and never asks bitwarden when it is accepted.
+
+Linux chains it behind the plain agent, darwin points `IdentityAgent` at it since the
+enclave key needs no agent at all. Both need the desktop app running and unlocked.
+
 ### Normal keys
 
 ```bash
 $ ssh -i ~/.ssh/somekey user@host                # ad-hoc, works despite IdentitiesOnly
 $ ssh-add ~/.ssh/somekey                         # linux, proxied to the plain agent
-$ ssh-add --apple-use-keychain ~/.ssh/somekey    # darwin, passphrase into the keychain
-$ ssh-add --apple-load-keychain                  # darwin, after a reboot
+$ ssh-add --apple-use-keychain ~/.ssh/somekey    # darwin, needs IdentityAgent overridden
 ```
 
 Per host, add a block to `ssh-egress` or a drop-in to the already-included `config.d`:

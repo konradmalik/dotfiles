@@ -27,6 +27,9 @@
     let
       difft = "${lib.getExe pkgs.difftastic}";
       hardwareKeys = config.konrad.programs.ssh-egress.hardwareKeys;
+      # machines that keep no key files of their own have nothing to name here, so git
+      # asks the forwarded agent instead and signs as the laptop the session came from
+      agentOnly = config.konrad.programs.ssh-egress.allowAgentOnlyKeys;
       # git signs with exactly one key, no list, no fallback
       signingKeyFor =
         onDisk:
@@ -34,6 +37,13 @@
           "${config.home.homeDirectory}/.ssh/${onDisk}.pub"
         else
           "${lib.head hardwareKeys}.pub";
+      userFor = email: onDisk: {
+        user = {
+          inherit email;
+          name = "Konrad Malik";
+        }
+        // lib.optionalAttrs (!agentOnly) { signingKey = signingKeyFor onDisk; };
+      };
     in
     {
       enable = true;
@@ -47,20 +57,8 @@
 
       includes =
         let
-          personal = {
-            user = {
-              email = "konrad.malik@gmail.com";
-              name = "Konrad Malik";
-              signingKey = signingKeyFor "personal";
-            };
-          };
-          work = {
-            user = {
-              email = "konrad@cerebre.io";
-              name = "Konrad Malik";
-              signingKey = signingKeyFor "cerebre";
-            };
-          };
+          personal = userFor "konrad.malik@gmail.com" "personal";
+          work = userFor "konrad@cerebre.io" "cerebre";
         in
         [
           {
@@ -182,8 +180,12 @@
         };
 
         gpg = {
-          ssh = {
-            allowedSignersFile = "${../../../../../files/allowed_signers}";
+          # no allowedSignersFile: it could only ever hold my own keys, so it verifies
+          # nothing that is not already mine
+          ssh = lib.optionalAttrs agentOnly {
+            # no user.signingKey to point at, so take the agent's first key. ssh-tpm-agent
+            # lists its own sealed keys before the ones it proxies
+            defaultKeyCommand = "ssh-add -L";
           };
         };
 

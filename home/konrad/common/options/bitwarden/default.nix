@@ -12,6 +12,34 @@ let
   bw-env = pkgs.callPackage ./bw-env { bitwarden-cli = cfg.package; };
   # bwbio is bw with touchID unlock support, installed via homebrew (see hosts darwin.nix)
   bwbioAliases = optionalAttrs pkgs.stdenv.hostPlatform.isDarwin { bw = "bwbio"; };
+  # bitwarden's ssh agent cannot be chained behind the tpm one, an unreachable -A
+  # socket is fatal there. so it is scoped to a single command rather than exported,
+  # which keeps the hardware key reachable for everything else in the session
+  bwSshSock =
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      "${config.home.homeDirectory}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
+    else
+      "${config.home.homeDirectory}/.bitwarden-ssh-agent.sock";
+  bwsshFunc =
+    # bash
+    ''
+      function bwssh() {
+        # without a command the assignment below is not a prefix but a plain one,
+        # which would leak into the shell instead of lasting for one command
+        if [ "$#" -eq 0 ]; then
+          echo "usage: bwssh <command> [args...]" >&2
+          return 2
+        fi
+        # the socket file outlives the app that made it, so ask the agent instead:
+        # 2 is "could not contact", 1 only means it is up and holding nothing
+        SSH_AUTH_SOCK="${bwSshSock}" ssh-add -l >/dev/null 2>&1
+        if [ "$?" -eq 2 ]; then
+          echo "bwssh: cannot reach the bitwarden agent, is the desktop app running?" >&2
+          return 1
+        fi
+        SSH_AUTH_SOCK="${bwSshSock}" "$@"
+      }
+    '';
   # helper to unlock bw and export session automatically
   jq = "${pkgs.jq}/bin/jq";
   # this needs to be a shell function due to 'export'
@@ -60,11 +88,11 @@ in
 
   config = mkIf cfg.enable {
     programs.zsh = {
-      initContent = bwuFunc;
+      initContent = bwuFunc + bwsshFunc;
       shellAliases = bwbioAliases;
     };
     programs.bash = {
-      initExtra = bwuFunc;
+      initExtra = bwuFunc + bwsshFunc;
       shellAliases = bwbioAliases;
     };
     home.packages = [

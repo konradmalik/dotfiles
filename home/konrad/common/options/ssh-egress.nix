@@ -4,11 +4,25 @@ let
   cfg = config.konrad.programs.ssh-egress;
   # hardware-backed keys are offered first, the on-disk one stays as a fallback
   personalKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/personal" ];
+  identities = optionalAttrs (!cfg.allowAgentOnlyKeys) {
+    IdentitiesOnly = "yes";
+    IdentityFile = personalKeys;
+  };
   workKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/cerebre" ];
 in
 {
   options.konrad.programs.ssh-egress = {
     enable = mkEnableOption "Enables ssh-egress configuration through home-manager";
+
+    allowAgentOnlyKeys = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Whether to offer keys that exist only in the agent. Machines that are ssh'd into
+        rather than sat at keep no key files of their own and authenticate onwards with
+        the forwarded agent, which IdentitiesOnly would refuse to offer.
+      '';
+    };
 
     hardwareKeys = mkOption {
       type = types.listOf types.str;
@@ -52,16 +66,14 @@ in
 
           "Host framework m4 rpi4-1 rpi4-2 x1c6" = {
             ForwardAgent = "yes";
-            IdentitiesOnly = "yes";
             User = "${config.home.username}";
-            IdentityFile = personalKeys;
-          };
+          }
+          // identities;
 
           "Host github.com gitlab.com bitbucket.org" = {
-            IdentitiesOnly = "yes";
             User = "git";
-            IdentityFile = personalKeys;
-          };
+          }
+          // identities;
 
           "Host *.cerebredev.com" = {
             IdentitiesOnly = "yes";
