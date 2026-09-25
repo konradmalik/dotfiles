@@ -2,10 +2,23 @@
 with lib;
 let
   cfg = config.konrad.programs.ssh-egress;
+  # hardware-backed keys are offered first, the on-disk one stays as a fallback
+  personalKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/personal" ];
 in
 {
   options.konrad.programs.ssh-egress = {
     enable = mkEnableOption "Enables ssh-egress configuration through home-manager";
+
+    hardwareKeys = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      example = [ "~/.ssh/id_ecdsa.pub" ];
+      description = ''
+        Keys backed by this machine's security chip (tpm on linux, secure enclave on darwin).
+        Tried in order, before the on-disk fallback key.
+        On linux these are the public halves only, the private ones never leave the agent.
+      '';
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -40,13 +53,13 @@ in
             ForwardAgent = "yes";
             IdentitiesOnly = "yes";
             User = "${config.home.username}";
-            IdentityFile = "${config.home.homeDirectory}/.ssh/personal";
+            IdentityFile = personalKeys;
           };
 
           "Host github.com gitlab.com bitbucket.org" = {
             IdentitiesOnly = "yes";
             User = "git";
-            IdentityFile = "${config.home.homeDirectory}/.ssh/personal";
+            IdentityFile = personalKeys;
           };
 
           "Host *.cerebredev.com" = {

@@ -8,6 +8,7 @@
     ./firefox.nix
     ./imv.nix
     ./mpv.nix
+    ./ssh-agent.nix
     ./zathura.nix
   ];
 
