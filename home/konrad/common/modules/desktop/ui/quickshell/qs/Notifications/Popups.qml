@@ -38,13 +38,13 @@ PanelWindow {
         // dismissed, restarting the countdown on all the others. ScriptModel
         // diffs by identity so the surviving cards keep their timers.
         ScriptModel {
-            id: visible
+            id: shown
 
-            values: Notifs.popups.slice(0, Theme.notificationMaxVisible)
+            values: Notifs.visiblePopups
         }
 
         Repeater {
-            model: visible
+            model: shown
 
             Card {
                 id: card

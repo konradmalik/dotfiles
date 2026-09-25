@@ -48,5 +48,7 @@ Singleton {
     readonly property int notificationBorder: 2
     readonly property int notificationTimeout: 10000
     readonly property int notificationMaxVisible: 5
+    // How tall the history list in the center may grow before it scrolls.
+    readonly property int notificationCenterMaxHeight: 520
     readonly property int notificationHistory: 20
 }

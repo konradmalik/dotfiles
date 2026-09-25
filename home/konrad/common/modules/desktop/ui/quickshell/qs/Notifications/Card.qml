@@ -81,52 +81,49 @@ Rectangle {
                 elide: Text.ElideRight
             }
 
-            Item {
-                width: parent.width
-                height: actions.visible ? actions.implicitHeight + 6 : 0
+            // No wrapper to collapse it: a Column skips a child that is not
+            // visible, and the padding is what holds it off the body above.
+            Row {
+                id: actions
 
-                Row {
-                    id: actions
+                visible: root.showActions && root.notification.actions.length > 0
+                topPadding: 6
+                spacing: 8
 
-                    y: 6
-                    spacing: 8
-                    visible: root.showActions && root.notification.actions.length > 0
+                Repeater {
+                    model: root.notification.actions
 
-                    Repeater {
-                        model: root.notification.actions
+                    Rectangle {
+                        id: action
 
-                        Rectangle {
-                            id: action
+                        required property var modelData
 
-                            required property var modelData
+                        implicitWidth: actionLabel.implicitWidth + 16
+                        implicitHeight: actionLabel.implicitHeight + 8
+                        color: actionMouse.containsMouse ? Theme.hover : "transparent"
+                        border.width: 1
+                        border.color: Theme.border
+                        radius: Theme.popupRadius
 
-                            implicitWidth: actionLabel.implicitWidth + 16
-                            implicitHeight: actionLabel.implicitHeight + 8
-                            color: actionMouse.containsMouse ? Theme.hover : "transparent"
-                            border.width: 1
-                            border.color: Theme.border
-                            radius: Theme.popupRadius
+                        Text {
+                            id: actionLabel
 
-                            Text {
-                                id: actionLabel
+                            anchors.centerIn: parent
+                            text: action.modelData.text
+                            textFormat: Text.PlainText
+                            font.family: Theme.popupFontFamily
+                            font.pointSize: Theme.popupFontSize - 1
+                            color: Theme.text
+                        }
 
-                                anchors.centerIn: parent
-                                text: action.modelData.text
-                                textFormat: Text.PlainText
-                                font.family: Theme.popupFontFamily
-                                font.pointSize: Theme.popupFontSize - 1
-                                color: Theme.text
-                            }
+                        MouseArea {
+                            id: actionMouse
 
-                            MouseArea {
-                                id: actionMouse
-
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                onClicked: {
-                                    action.modelData.invoke();
-                                    root.activated();
-                                }
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                action.modelData.invoke();
+                                root.activated();
                             }
                         }
                     }
