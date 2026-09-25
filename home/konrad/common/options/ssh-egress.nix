@@ -4,7 +4,7 @@ let
   cfg = config.konrad.programs.ssh-egress;
   # hardware-backed keys are offered first, the on-disk one stays as a fallback
   personalKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/personal" ];
-  workKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/personal" ];
+  workKeys = cfg.hardwareKeys ++ [ "${config.home.homeDirectory}/.ssh/cerebre" ];
 in
 {
   options.konrad.programs.ssh-egress = {
