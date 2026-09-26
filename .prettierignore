@@ -1,0 +1,6 @@
+# sops keeps a MAC over the encrypted values, so reformatting risks the decryption.
+# keep this covering every path_regex in .sops.yaml
+*secrets.yaml
+
+.direnv/
+result

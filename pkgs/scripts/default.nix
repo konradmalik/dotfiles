@@ -103,7 +103,7 @@ in
       file = ./mkcd.sh;
     }
     {
-      file = ./notify.sh;
+      file = ./notify.py;
       deps = with pkgs; [ python3 ];
     }
     {
@@ -159,7 +159,7 @@ in
       ];
     }
     {
-      file = ./uuid.sh;
+      file = ./uuid.py;
       deps = with pkgs; [ python3 ];
     }
     {

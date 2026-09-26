@@ -53,6 +53,18 @@ git+file://$HOME/Code/github.com/konradmalik/dotfiles#<target>
 
 I'll use the local version for brevity.
 
+### Formatting and linting
+
+Everything below comes from the devshell, and CI runs the same target.
+
+```bash
+$ make fmt
+$ make check
+```
+
+Per language, if you'd rather not run the lot: `fmt-nix`, `fmt-lua`, `fmt-qml`, `fmt-sh`,
+`fmt-prettier`, and the matching `check-fmt-*` and `lint-*` targets.
+
 ### NixOS:
 
 #### Build and enable config locally:

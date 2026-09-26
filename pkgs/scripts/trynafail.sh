@@ -2,8 +2,6 @@
 
 set -u
 
-"$@"
-while [ "$?" -eq 0 ]; do
+while "$@"; do
     sleep 0.5
-    "$@"
 done
