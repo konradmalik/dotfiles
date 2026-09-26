@@ -1,6 +1,3 @@
-# qml tooling for the quickshell config in this directory: the language server
-# the editor talks to, and the linter behind it.
-# put on PATH by the devShell, see flake.nix
 {
   lib,
   qt6,
@@ -9,11 +6,6 @@
   writeShellScriptBin,
 }:
 let
-  # nixpkgs keeps every qt module in its own store path, so these find no qml
-  # modules on their own -- not even QtQuick. '-E' makes them read
-  # QML_IMPORT_PATH, which is pointed at qtdeclarative and quickshell here, and
-  # at the checkout itself by the devShell, so that the shell's own `qs.*`
-  # modules resolve too.
   wrap =
     name:
     writeShellScriptBin name ''
@@ -23,8 +15,12 @@ let
 in
 symlinkJoin {
   name = "quickshell-qml-tools";
-  paths = map wrap [
-    "qmlls"
-    "qmllint"
-  ];
+  paths =
+    map wrap [
+      "qmlls"
+      "qmllint"
+    ]
+    ++ [
+      (writeShellScriptBin "qmlformat" ''exec ${lib.getExe' qt6.qtdeclarative "qmlformat"} "$@"'')
+    ];
 }

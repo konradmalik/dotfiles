@@ -8,7 +8,10 @@ hl.bind("SUPER + space", hl.dsp.global("quickshell:launcher"))
 -- NOTE: killall is useful for occasional freezes of hyprpicker
 -- just try to screenshot again and it should unfreeze
 hl.bind("SUPER + p", hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --mode region --output /tmp/screenshots"))
-hl.bind("SUPER + SHIFT + p", hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -"))
+hl.bind(
+  "SUPER + SHIFT + p",
+  hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -")
+)
 
 -- Window manager controls
 hl.bind("SUPER + SHIFT + q", hl.dsp.window.close())
@@ -43,10 +46,10 @@ local function moveWorkspaceToMonitor(monitor)
 end
 
 local directions = {
-  { keys = { "left", "h" },  dir = "l", word = "left" },
+  { keys = { "left", "h" }, dir = "l", word = "left" },
   { keys = { "right", "l" }, dir = "r", word = "right" },
-  { keys = { "up", "k" },    dir = "u", word = "up" },
-  { keys = { "down", "j" },  dir = "d", word = "down" },
+  { keys = { "up", "k" }, dir = "u", word = "up" },
+  { keys = { "down", "j" }, dir = "d", word = "down" },
 }
 
 for _, d in ipairs(directions) do
@@ -76,10 +79,26 @@ hl.bind("SUPER + mouse:272", hl.dsp.window.drag())
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize())
 
 -- Audio
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+hl.bind(
+  "XF86AudioRaiseVolume",
+  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
+  { locked = true, repeating = true }
+)
+hl.bind(
+  "XF86AudioLowerVolume",
+  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+  { locked = true, repeating = true }
+)
+hl.bind(
+  "XF86AudioMute",
+  hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+  { locked = true, repeating = true }
+)
+hl.bind(
+  "XF86AudioMicMute",
+  hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+  { locked = true, repeating = true }
+)
 
 -- Media control
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })

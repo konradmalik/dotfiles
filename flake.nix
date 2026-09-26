@@ -87,6 +87,7 @@
           getSystem = attr: attr.${pkgs.stdenvNoCC.hostPlatform.system};
           darwinPackages = builtins.attrValues (removeAttrs (getSystem inputs.darwin.packages) [ "default" ]);
           hyprlandLuarc = pkgs.callPackage ./${hyprlandDir}/luarc.nix { };
+          hyprlandLuaLint = pkgs.callPackage ./${hyprlandDir}/lint.nix { };
           qmlTools = pkgs.callPackage ./${quickshellDir}/qml-tools.nix { };
           qmlLint = pkgs.callPackage ./${quickshellDir}/lint.nix { };
         in
@@ -114,11 +115,15 @@
               (with pkgs; [
                 age
                 git
+                gnumake
                 home-manager
+                nixfmt
                 nmap
                 sops
                 ssh-to-age
+                stylua
               ])
+              ++ [ hyprlandLuaLint ]
               ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
               ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
                 (getSystem inputs.disko.packages).disko
@@ -188,13 +193,6 @@
               (self.nixosConfigurations.rpi4-2.extendModules { inherit modules; }).config.system.build.sdImage;
           }
         )
-      );
-
-      checks = forAllSystems (
-        pkgs:
-        pkgs.lib.optionalAttrs pkgs.stdenvNoCC.hostPlatform.isLinux {
-          quickshell-qml = (pkgs.callPackage ./${quickshellDir}/lint.nix { }).check;
-        }
       );
 
       templates = import ./templates;
