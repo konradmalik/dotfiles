@@ -111,25 +111,26 @@
                     export QML_IMPORT_PATH="$PWD/${quickshellDir}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
                   '';
 
-            packages =
-              (with pkgs; [
-                age
-                git
-                gnumake
-                home-manager
-                nixfmt
-                nmap
-                sops
-                ssh-to-age
-                stylua
-              ])
-              ++ [ hyprlandLuaLint ]
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
-              ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
-                (getSystem inputs.disko.packages).disko
-                qmlTools
-                qmlLint
-              ];
+            packages = [
+              hyprlandLuaLint
+              (getSystem self.formatter)
+            ]
+            ++ (with pkgs; [
+              age
+              git
+              gnumake
+              home-manager
+              nmap
+              sops
+              ssh-to-age
+              stylua
+            ])
+            ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
+            ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
+              (getSystem inputs.disko.packages).disko
+              qmlTools
+              qmlLint
+            ];
           };
         }
       );

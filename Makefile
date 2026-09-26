@@ -1,9 +1,19 @@
 HYPRLAND_DIR := home/konrad/common/modules/desktop/ui/hyprland
 QUICKSHELL_DIR := home/konrad/common/modules/desktop/ui/quickshell
 
-FIND_SRC := find . -name .git -prune -o -name .direnv -prune -o
-NIX_FILES := $(shell $(FIND_SRC) -name '*.nix' -print)
-QML_FILES := $(shell find $(QUICKSHELL_DIR) -name '*.qml' -print)
+# --others so a new file is checked before it is ever staged, and wildcard
+# to drop what git still has in the index but is gone from disk
+GIT_LS := git ls-files --cached --others --exclude-standard
+NIX_FILES := $(wildcard $(shell $(GIT_LS) '*.nix'))
+QML_FILES := $(wildcard $(shell $(GIT_LS) '$(QUICKSHELL_DIR)/*.qml'))
+
+# an empty list would make the fmt checks pass over nothing at all
+ifeq ($(NIX_FILES),)
+$(error no nix files found, run make from the repo root)
+endif
+ifeq ($(QML_FILES),)
+$(error no qml files found under $(QUICKSHELL_DIR))
+endif
 
 .PHONY: check
 check: check-fmt check-lint
