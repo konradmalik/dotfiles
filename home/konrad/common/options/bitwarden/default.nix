@@ -40,6 +40,22 @@ let
         SSH_AUTH_SOCK="${bwSshSock}" "$@"
       }
     '';
+  # bwssh takes a command as its first argument,
+  # so completion has to be handed to that command
+  bwsshCompdef =
+    # zsh
+    ''
+      (( $+functions[compdef] )) && compdef _precommand bwssh
+    '';
+  bwsshComplete =
+    # bash
+    ''
+      if declare -F _comp_command >/dev/null; then
+        complete -F _comp_command bwssh
+      elif declare -F _command >/dev/null; then
+        complete -F _command bwssh
+      fi
+    '';
   # helper to unlock bw and export session automatically
   jq = "${pkgs.jq}/bin/jq";
   # this needs to be a shell function due to 'export'
@@ -88,11 +104,11 @@ in
 
   config = mkIf cfg.enable {
     programs.zsh = {
-      initContent = bwuFunc + bwsshFunc;
+      initContent = bwuFunc + bwsshFunc + bwsshCompdef;
       shellAliases = bwbioAliases;
     };
     programs.bash = {
-      initExtra = bwuFunc + bwsshFunc;
+      initExtra = bwuFunc + bwsshFunc + bwsshComplete;
       shellAliases = bwbioAliases;
     };
     home.packages = [
