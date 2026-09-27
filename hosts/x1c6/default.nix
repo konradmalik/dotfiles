@@ -3,11 +3,13 @@
   imports = [
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
 
-    ./hardware-configuration.nix
+    ./hardware.nix
     ./disko.nix
 
-    ../common/profiles/laptop.nix
+    ../../system/profiles/laptop.nix
   ];
+
+  home-manager.users.konrad.imports = [ ./home.nix ];
 
   networking.hostName = "x1c6";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

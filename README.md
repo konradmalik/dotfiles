@@ -7,23 +7,25 @@ My NixOS and Nix-Darwin configurations.
 
 ## Layout
 
-- `hosts` - system-level (NixOS/nix-darwin) configuration, one dir per machine plus `common`
-- `home` - home-manager configuration, per user
+- `hosts` - one directory per machine, holding everything specific to it: `default.nix`,
+  `hardware.nix`, its `home.nix`, and `disko.nix` where there is one
+- `system` - shared system-level (NixOS/nix-darwin) configuration
+- `home` - shared home-manager configuration
+- `secrets` - sops-encrypted secrets, `system.yaml` and `home.yaml`
 - `pkgs` - own packages and overlays (`fonts`, `scripts`, `special`)
-- `files` - static assets (wallpapers, grafana dashboards)
+- `files` - static assets (wallpapers, grafana dashboards - the dashboards are imported by hand
+  through the Grafana UI, not provisioned, so nothing in nix references them)
 - `templates` - flake templates
 - `router` - home network and MikroTik router config, see [router/readme.md](./router/readme.md)
 
 ### Naming
 
-Inside `hosts/common` and `home/*/common`:
+Inside `system` and `home`:
 
 - modules - something that's imported on-demand and does not support explicitly enabling
 - options - something that's always imported but requires explicit enable. It's also configurable via some abstraction.
-- systems - prepared modules for specific systems like nixos, darwin etc.
-- profiles - prepared modules for a specific use-case like desktop, server, laptop, etc.
-- hardware - hardware-specific modules shared by more than one host
-- users - per-user system-level config
+- profiles - prepared modules for a system kind or use-case: nixos, darwin, server, desktop, laptop
+- user - per-user system-level config (`system` only)
 
 ### Hosts
 
@@ -34,8 +36,6 @@ Inside `hosts/common` and `home/*/common`:
 | `rpi4-1`    | NixOS      | server, aarch64                    |
 | `rpi4-2`    | NixOS      | server, aarch64                    |
 | `m4`        | nix-darwin | macOS                              |
-
-Plus `konrad@generic` - a standalone home-manager config for non-NixOS Linux.
 
 ## Commands
 
@@ -131,7 +131,7 @@ Generate hardware configuration and put it in the host's dir:
 
 ```bash
 $ sudo nixos-generate-config --no-filesystems --root /mnt
-$ cp /mnt/etc/nixos/hardware-configuration.nix ./hosts/x1c6/
+$ cp /mnt/etc/nixos/hardware-configuration.nix ./hosts/x1c6/hardware.nix
 ```
 
 Generate/add sops keys (if required for the configuration). Do this later only if no critical services rely on them (like user passwords).
@@ -224,20 +224,6 @@ The launchd daemon is started on demand with the
 #### Docker on Darwin
 
 Use [colima](https://github.com/abiosoft/colima). It's installed via homebrew.
-
-### Linux (non-NixOS; home-manager):
-
-Build and enable config locally:
-
-```bash
-$ home-manager switch --flake .
-```
-
-To just build (for example for a test):
-
-```bash
-$ nix build .#homeConfigurations.konrad@generic.activationPackage
-```
 
 ## sops-nix
 

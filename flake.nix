@@ -73,8 +73,8 @@
             )
           );
 
-      hyprlandDir = "home/konrad/common/modules/desktop/ui/hyprland";
-      quickshellDir = "home/konrad/common/modules/desktop/ui/quickshell";
+      hyprlandDir = "home/modules/desktop/hyprland";
+      quickshellDir = "home/modules/desktop/quickshell";
 
       specialArgs = {
         inherit inputs;
@@ -161,14 +161,6 @@
         x1c6 = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [ ./hosts/x1c6 ];
-        };
-      };
-
-      homeConfigurations = {
-        "konrad@generic" = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = specialArgs;
-          modules = [ ./home/konrad/generic.nix ];
         };
       };
 

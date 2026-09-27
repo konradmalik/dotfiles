@@ -1,0 +1,32 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+let
+  cfg = config.konrad.hardware.audio;
+in
+{
+  options.konrad.hardware.audio = {
+    enable = mkEnableOption "Enables audio thorugh configured pipewire";
+  };
+
+  config = mkIf cfg.enable {
+    security.rtkit.enable = true;
+    services.pulseaudio.enable = false;
+
+    services.pipewire = {
+      enable = true;
+      audio.enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+    };
+
+    environment.systemPackages = with pkgs; [
+      playerctl
+      wiremix
+    ];
+  };
+}
