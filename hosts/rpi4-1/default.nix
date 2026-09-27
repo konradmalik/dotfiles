@@ -1,10 +1,12 @@
 { config, ... }:
 {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware.nix
 
-    ../common/profiles/rpi4.nix
+    ../../system/profiles/rpi4.nix
   ];
+
+  home-manager.users.konrad.imports = [ ./home.nix ];
 
   networking = {
     hostName = "rpi4-1";

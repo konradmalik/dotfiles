@@ -1,5 +1,5 @@
-HYPRLAND_DIR := home/konrad/common/modules/desktop/ui/hyprland
-QUICKSHELL_DIR := home/konrad/common/modules/desktop/ui/quickshell
+HYPRLAND_DIR := home/modules/desktop/hyprland
+QUICKSHELL_DIR := home/modules/desktop/quickshell
 
 # --others so a new file is checked before it is ever staged, and wildcard
 # to drop what git still has in the index but is gone from disk
