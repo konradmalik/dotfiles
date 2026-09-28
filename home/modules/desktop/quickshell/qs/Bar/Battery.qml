@@ -11,21 +11,23 @@ BarItem {
 
     readonly property var battery: UPower.displayDevice
     readonly property real level: battery?.percentage ?? 0
-    readonly property bool charging: battery?.state === UPowerDeviceState.Charging
-    readonly property bool full: battery?.state === UPowerDeviceState.FullyCharged
+    readonly property string percent: Math.round(level * 100) + "%"
+
+    // Being on AC is not the same as charging: once full, or held by the
+    // charge thresholds, the battery sits on AC in FullyCharged, PendingCharge
+    // or even Discharging.
+    readonly property string status: battery?.state === UPowerDeviceState.Charging ? "charging" : UPower.onBattery ? "discharging" : "plugged"
 
     readonly property list<string> chargingIcons: ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
     readonly property list<string> dischargingIcons: ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
 
     readonly property var profileOrder: [PowerProfile.PowerSaver, PowerProfile.Balanced, PowerProfile.Performance]
 
-    readonly property var profileIcons: {
-        const map = {};
-        map[PowerProfile.PowerSaver] = "󰌪";
-        map[PowerProfile.Balanced] = "";
-        map[PowerProfile.Performance] = "󰓅";
-        return map;
-    }
+    readonly property var profileIcons: ({
+            [PowerProfile.PowerSaver]: "󰌪",
+            [PowerProfile.Balanced]: "",
+            [PowerProfile.Performance]: "󰓅"
+        })
 
     // Only what the daemon advertises in Profiles: a machine whose drivers
     // carry no performance profile is not offered one, because quickshell
@@ -38,24 +40,30 @@ BarItem {
         return icons[Math.min(icons.length - 1, Math.floor(root.level * icons.length))];
     }
 
+    // Rounded to minutes before splitting, so 7199s reads 2h 0m, not 1h 60m.
     function duration(seconds) {
-        if (!seconds || seconds <= 0)
+        const minutes = Math.round(seconds / 60);
+        if (!(minutes > 0))
             return "";
-        const h = Math.floor(seconds / 3600);
-        const m = Math.round((seconds % 3600) / 60);
+        const h = Math.floor(minutes / 60);
+        const m = minutes % 60;
         return h > 0 ? h + "h " + m + "m" : m + "m";
     }
 
+    function flow(arrow, seconds) {
+        const left = root.duration(seconds);
+        return Math.round(Math.abs(root.battery.changeRate)) + "W" + arrow + " " + root.percent + (left ? " " + left : "");
+    }
+
     active: Env.hasBattery && (battery?.isLaptopBattery ?? false)
-    text: full ? "" : bucket(charging ? chargingIcons : dischargingIcons)
-    color: !charging && level <= 0.15 ? Theme.urgent : !charging && level <= 0.30 ? Theme.warning : Theme.text
+    // The level of a plugged battery is in the tooltip.
+    text: status === "charging" ? bucket(chargingIcons) : status === "plugged" ? "󰚥" : bucket(dischargingIcons)
+    // Low charge only matters when nothing is going to top it up.
+    color: status !== "discharging" || level > 0.30 ? Theme.text : level > 0.15 ? Theme.warning : Theme.urgent
     tooltip: {
         if (!battery)
             return "";
-        const watts = Math.round(Math.abs(battery.changeRate));
-        const left = root.duration(charging ? battery.timeToFull : battery.timeToEmpty);
-        const arrow = charging ? "↑" : "↓";
-        const lines = [watts + "W" + arrow + " " + Math.round(level * 100) + "%" + (left ? " " + left : "")];
+        const lines = [status === "charging" ? flow("↑", battery.timeToFull) : status === "discharging" ? flow("↓", battery.timeToEmpty) : "Plugged in " + percent];
         if (Env.hasPowerProfiles)
             lines.push("Profile: " + PowerProfile.toString(PowerProfiles.profile));
         return lines.join("\n");
