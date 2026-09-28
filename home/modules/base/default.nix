@@ -7,7 +7,6 @@
 }:
 {
   imports = [
-    ./atuin.nix
     ./bat.nix
     ./btop.nix
     ./claude

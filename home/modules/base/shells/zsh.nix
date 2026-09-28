@@ -123,6 +123,7 @@ in
       expireDuplicatesFirst = true;
       extended = false;
       ignoreDups = true;
+      ignoreAllDups = true;
       ignoreSpace = true;
       share = true;
       save = 100000;
