@@ -1,11 +1,9 @@
-final: prev:
+pkgs:
 
 let
-  mkNerdFont = prev.callPackage ./mkNerdFont.nix { };
+  mkNerdFont = pkgs.callPackage ./mkNerdFont.nix { };
 in
 {
-  fonts = {
-    iosemka = mkNerdFont (prev.callPackage ./iosemka.nix { });
-    iorkeley = mkNerdFont (prev.callPackage ./iorkeley.nix { });
-  };
+  iosemka = mkNerdFont (pkgs.callPackage ./iosemka.nix { });
+  iorkeley = mkNerdFont (pkgs.callPackage ./iorkeley.nix { });
 }

@@ -57,21 +57,11 @@
 
       forAllSystems =
         function:
-        inputs.nixpkgs.lib.genAttrs
-          [
-            "x86_64-linux"
-            "aarch64-linux"
-            "aarch64-darwin"
-          ]
-          (
-            system:
-            function (
-              inputs.nixpkgs.legacyPackages.${system}.appendOverlays [
-                (import ./pkgs/fonts)
-                (import ./pkgs/scripts)
-              ]
-            )
-          );
+        inputs.nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ] (system: function inputs.nixpkgs.legacyPackages.${system});
 
       hyprlandDir = "home/modules/desktop/hyprland";
       quickshellDir = "home/modules/desktop/quickshell";
@@ -166,8 +156,11 @@
 
       packages = forAllSystems (
         pkgs:
-        pkgs.fonts
-        // pkgs.scripts
+        let
+          custom = import ./pkgs pkgs;
+        in
+        custom.fonts
+        // custom.scripts
         // pkgs.lib.optionalAttrs (pkgs.stdenvNoCC.hostPlatform.isLinux) (
           let
             rpiSdCard = "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";

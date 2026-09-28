@@ -11,7 +11,7 @@
         stable = import inputs.nixpkgs-stable {
           inherit (prev.stdenv.hostPlatform) system;
         };
-        custom = ((import ../../../pkgs/scripts) final prev) // ((import ../../../pkgs/fonts) final prev);
+        custom = import ../../../pkgs final;
       })
     ];
     config = {

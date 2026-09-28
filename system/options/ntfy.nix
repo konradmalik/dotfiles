@@ -30,7 +30,13 @@ in
 
     systemd.services =
       let
-        ntfy = pkgs.callPackage ../../pkgs/special/ntfy-sender.nix { inherit config; };
+        ntfy = lib.escapeShellArgs [
+          "${pkgs.custom.scripts.ntfy-send}/bin/ntfy-send"
+          "--token-file"
+          config.sops.secrets."ntfy/token".path
+          "--topic-file"
+          config.sops.secrets."ntfy/topic".path
+        ];
       in
       {
         "${cfg.problemServiceName}@" = {

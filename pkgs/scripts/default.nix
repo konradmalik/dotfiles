@@ -1,8 +1,6 @@
-final: prev:
+pkgs:
 
 let
-  inherit (final) pkgs;
-
   wrapScript =
     {
       name,
@@ -42,129 +40,134 @@ let
       ) scripts
     );
 in
-{
-  scripts = scriptsToAttr [
-    {
-      file = ./bb.sh;
-    }
-    {
-      file = ./cbcopy.sh;
-    }
-    {
-      file = ./cbpaste.sh;
-    }
-    {
-      file = ./copypasta.sh;
-    }
-    {
-      file = ./cpgb.sh;
-    }
-    {
-      file = ./cpgc.sh;
-    }
-    {
-      file = ./cptmp.sh;
-    }
-    {
-      file = ./cpwd.sh;
-    }
-    {
-      file = ./flakify.sh;
-    }
-    {
-      file = ./flash-to.sh;
-      deps = with pkgs; [
-        zstd
-        xz
-        file
-      ];
-    }
-    {
-      file = ./google.sh;
-    }
-    {
-      file = ./httpstatus.sh;
-      deps = with pkgs; [ gnugrep ];
-    }
-    {
-      file = ./iso8601.sh;
-    }
-    {
-      file = ./jwt.sh;
-      deps = with pkgs; [
-        jc
-        jq
-      ];
-    }
-    {
-      file = ./line.sh;
-    }
-    {
-      file = ./mkcd.sh;
-    }
-    {
-      file = ./notify.py;
-      deps = with pkgs; [ python3 ];
-    }
-    {
-      file = ./realize-symlink.sh;
-      deps = with pkgs; [ coreutils ];
-    }
-    {
-      file = ./remind.sh;
-    }
-    {
-      file = ./scratch.sh;
-    }
-    {
-      file = ./serveit.sh;
-      deps = with pkgs; [ python3 ];
-    }
-    {
-      file = ./sops-grep.sh;
-      # bash: needs >= 4.4 for 'mapfile -d' and 'wait -n', and the shebang stays
-      # '/usr/bin/env bash', which on darwin would otherwise find bash 3.2
-      deps = with pkgs; [
-        bash
-        coreutils
-        ripgrep
-        sops
-      ];
-    }
-    {
-      file = ./terminal-testdrive.sh;
-      # no ncurses: its share/terminfo collides with ghostty's in the home-manager path,
-      # and tput is only used with an '|| echo 80' fallback anyway
-      deps = with pkgs; [
-        bc
-        coreutils
-        gawk
-      ];
-    }
-    {
-      file = ./timer.sh;
-    }
-    {
-      file = ./tryna.sh;
-    }
-    {
-      file = ./trynafail.sh;
-    }
-    {
-      file = ./uniq-exts.sh;
-      deps = with pkgs; [
-        coreutils
-        fd
-        gnused
-      ];
-    }
-    {
-      file = ./uuid.py;
-      deps = with pkgs; [ python3 ];
-    }
-    {
-      file = ./weather.sh;
-      deps = with pkgs; [ curl ];
-    }
-  ];
-}
+scriptsToAttr [
+  {
+    file = ./bb.sh;
+  }
+  {
+    file = ./cbcopy.sh;
+  }
+  {
+    file = ./cbpaste.sh;
+  }
+  {
+    file = ./copypasta.sh;
+  }
+  {
+    file = ./cpgb.sh;
+  }
+  {
+    file = ./cpgc.sh;
+  }
+  {
+    file = ./cptmp.sh;
+  }
+  {
+    file = ./cpwd.sh;
+  }
+  {
+    file = ./flakify.sh;
+  }
+  {
+    file = ./flash-to.sh;
+    deps = with pkgs; [
+      zstd
+      xz
+      file
+    ];
+  }
+  {
+    file = ./google.sh;
+  }
+  {
+    file = ./httpstatus.sh;
+    deps = with pkgs; [ gnugrep ];
+  }
+  {
+    file = ./iso8601.sh;
+  }
+  {
+    file = ./jwt.sh;
+    deps = with pkgs; [
+      jc
+      jq
+    ];
+  }
+  {
+    file = ./line.sh;
+  }
+  {
+    file = ./mkcd.sh;
+  }
+  {
+    file = ./notify.py;
+    deps = with pkgs; [ python3 ];
+  }
+  {
+    file = ./ntfy-send.sh;
+    deps = with pkgs; [
+      curl
+      inetutils
+    ];
+  }
+  {
+    file = ./realize-symlink.sh;
+    deps = with pkgs; [ coreutils ];
+  }
+  {
+    file = ./remind.sh;
+  }
+  {
+    file = ./scratch.sh;
+  }
+  {
+    file = ./serveit.sh;
+    deps = with pkgs; [ python3 ];
+  }
+  {
+    file = ./sops-grep.sh;
+    # bash: needs >= 4.4 for 'mapfile -d' and 'wait -n', and the shebang stays
+    # '/usr/bin/env bash', which on darwin would otherwise find bash 3.2
+    deps = with pkgs; [
+      bash
+      coreutils
+      ripgrep
+      sops
+    ];
+  }
+  {
+    file = ./terminal-testdrive.sh;
+    # no ncurses: its share/terminfo collides with ghostty's in the home-manager path,
+    # and tput is only used with an '|| echo 80' fallback anyway
+    deps = with pkgs; [
+      bc
+      coreutils
+      gawk
+    ];
+  }
+  {
+    file = ./timer.sh;
+  }
+  {
+    file = ./tryna.sh;
+  }
+  {
+    file = ./trynafail.sh;
+  }
+  {
+    file = ./uniq-exts.sh;
+    deps = with pkgs; [
+      coreutils
+      fd
+      gnused
+    ];
+  }
+  {
+    file = ./uuid.py;
+    deps = with pkgs; [ python3 ];
+  }
+  {
+    file = ./weather.sh;
+    deps = with pkgs; [ curl ];
+  }
+]
