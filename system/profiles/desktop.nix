@@ -44,7 +44,8 @@
   services.logind.settings.Login = {
     HandlePowerKey = "suspend";
     HandlePowerKeyLongPress = "poweroff";
-    # NOTE: idle does not seem to work when using hypridle, so define it there instead
+    # NOTE: logind's IdleAction needs the session to report IdleHint, which
+    # Hyprland/hypridle never set for wayland sessions; idle is handled by hypridle
   };
 
   programs.localsend.enable = true;
