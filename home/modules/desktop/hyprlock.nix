@@ -11,13 +11,7 @@ let
   rgb = c: "rgb(${c})";
 
   date = lib.getExe' pkgs.coreutils "date";
-  clockText = pkgs.writeShellScript "hyprlock-clock" ''
-    exec ${date} +'<span weight="bold">%H<span alpha="35000">:</span>%M</span>'
-  '';
-  dateText = pkgs.writeShellScript "hyprlock-date" ''
-    export LC_TIME="${osConfig.i18n.extraLocaleSettings.LC_TIME or "C.UTF-8"}"
-    exec ${date} +'<span letter_spacing="3000">%A, %-d %B</span>'
-  '';
+  lcTime = osConfig.i18n.extraLocaleSettings.LC_TIME or "C.UTF-8";
 
   shadow = {
     shadow_passes = 2;
@@ -49,9 +43,9 @@ in
         (
           shadow
           // {
-            text = "cmd[update:1000] ${clockText}";
+            text = "$TIME";
             color = rgb colors.base05;
-            font_family = fonts.monospace.name;
+            font_family = "${fonts.monospace.name} Bold";
             font_size = 150;
             position = "0, 240";
             halign = "center";
@@ -61,7 +55,7 @@ in
         (
           shadow
           // {
-            text = "cmd[update:60000] ${dateText}";
+            text = "cmd[update:60000] LC_TIME=${lcTime} ${date} +'%A, %-d %B'";
             color = rgb colors.base04;
             font_family = fonts.sansSerif.name;
             font_size = 18;
