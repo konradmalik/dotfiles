@@ -16,7 +16,17 @@ let
   wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
   notify-send = "${pkgs.libnotify}/bin/notify-send";
 
-  terminal = lib.getExe config.programs.alacritty.package;
+  # Terminals the shell opens carry their own class so hyprland can float them
+  # all with one rule, whichever program ends up running inside.
+  terminalClass = "quickshell-tui";
+  terminalArgv = [
+    (lib.getExe config.programs.alacritty.package)
+    "--class"
+    terminalClass
+    "-e"
+    "/bin/sh"
+    "-c"
+  ];
 
   tailscaleCopyIp = pkgs.writeShellScript "quickshell-tailscale-copy-ip" ''
     set -euo pipefail
@@ -43,7 +53,7 @@ let
       NeedsLogin)
         # up prints a login url and then waits for the browser, so this one has
         # to happen somewhere the url is actually readable
-        ${terminal} -e /bin/sh -c "${tailscale} up"
+        ${lib.escapeShellArgs terminalArgv} "${tailscale} up"
         ;;
       *)
         # up blocks forever by default, and it refuses outright when prefs were
@@ -141,14 +151,7 @@ let
 
             readonly property string distro: "${osConfig.system.nixos.distroName} ${osConfig.system.nixos.version} (${osConfig.system.nixos.codeName})"
 
-            readonly property list<string> terminalArgv: ${
-              qmlList [
-                terminal
-                "-e"
-                "/bin/sh"
-                "-c"
-              ]
-            }
+            readonly property list<string> terminalArgv: ${qmlList terminalArgv}
             readonly property list<string> tailscaleToggle: ${qmlList [ "${tailscaleToggle}" ]}
             readonly property list<string> tailscaleCopyIp: ${qmlList [ "${tailscaleCopyIp}" ]}
             readonly property list<string> cameraWatch: ${qmlList [ "${cameraWatch}" ]}
@@ -202,5 +205,13 @@ in
     # lua
     ''
       hl.on("hyprland.start", function() hl.exec_cmd("${pkgs.quickshell}/bin/quickshell -p ${shell}") end)
+
+      hl.window_rule({
+          name   = "float-quickshell-tui",
+          match  = { class = "^${terminalClass}$" },
+          float  = true,
+          center = true,
+          size   = "monitor_w*0.6 monitor_h*0.6",
+      })
     '';
 }

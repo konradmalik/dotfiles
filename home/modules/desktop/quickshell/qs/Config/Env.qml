@@ -38,7 +38,7 @@ Singleton {
 
     readonly property string distro: "NixOS"
 
-    readonly property list<string> terminalArgv: ["alacritty", "-e", "/bin/sh", "-c"]
+    readonly property list<string> terminalArgv: ["alacritty", "--class", "quickshell-tui", "-e", "/bin/sh", "-c"]
     readonly property list<string> tailscaleToggle: ["true"]
     readonly property list<string> tailscaleCopyIp: ["true"]
     readonly property list<string> cameraWatch: ["true"]
