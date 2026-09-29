@@ -25,21 +25,15 @@ in
         obsidianPath
       ];
 
-      # the external disk on framework's dock, shared by every machine that gets
-      # docked there. Each host's system config mounts it, a run finding it
-      # missing just skips.
       local = {
         repository = "/mnt/backup/restic";
         includes = [ config.home.homeDirectory ];
         backupMinute = 37;
         maintenanceHour = 5;
-        # disk space is cheap here, so keep a longer history than offsite:
-        # monthly snapshots for two years, yearly ones for five
         retention = {
           monthly = 24;
           yearly = 5;
         };
-        # another machine may hold the dock for a few days
         maxSnapshotAgeDays = lib.mkDefault 7;
       };
     };

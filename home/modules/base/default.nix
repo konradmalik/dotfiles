@@ -19,6 +19,7 @@
     ./opencode.nix
     ./packages.nix
     ./readline.nix
+    ./restic.nix
     ./shells
     ./sops.nix
     ./ssh-keys.nix

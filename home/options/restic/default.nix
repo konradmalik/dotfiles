@@ -197,15 +197,14 @@ let
 in
 {
   options.konrad.programs.restic = {
-    enable = lib.mkEnableOption "restic backups, to backblaze b2 and any other repositories";
+    enable = lib.mkEnableOption "restic backups";
 
     repositories = mkOption {
       type = types.attrsOf (types.submodule repositoryModule);
       default = { };
       description = ''
         Repositories to back up to, each gets its own baker-<name> command and
-        scheduled jobs. The b2 one is always there, so every machine keeps an
-        offsite copy; its includes must be set by the host.
+        scheduled jobs.
       '';
     };
 
@@ -220,22 +219,11 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
-        konrad.programs.restic.repositories.b2 = {
-          # backblaze through its s3-compatible api, because the native b2 backend
-          # has known error handling issues, see restic docs "preparing a new
-          # repository". The endpoint (shown on the bucket details page) must match
-          # the account's realm, otherwise restic cannot reach the repository.
-          repository = "s3:s3.eu-central-003.backblazeb2.com/backups-km";
-          environment.AWS_ACCESS_KEY_ID = "0035814e69b653f0000000006";
-          environmentFiles.AWS_SECRET_ACCESS_KEY = config.sops.secrets."restic/b2_application_key".path;
-        };
-
         sops.secrets =
           let
             sopsFile = ../../../secrets/system.yaml;
           in
           {
-            "restic/b2_application_key" = { };
             "restic/password" = { };
             "ntfy/token" = { inherit sopsFile; };
             "ntfy/topic" = { inherit sopsFile; };
