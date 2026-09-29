@@ -12,7 +12,8 @@ My NixOS and Nix-Darwin configurations.
 - `system` - shared system-level (NixOS/nix-darwin) configuration
 - `home` - shared home-manager configuration
 - `secrets` - sops-encrypted secrets, `system.yaml` and `home.yaml`
-- `pkgs` - own packages and overlays (`fonts`, `scripts`, `special`)
+- `pkgs` - own packages (`fonts`, `scripts`), available as `pkgs.custom.*` in configs and as
+  flake `packages`
 - `files` - static assets (wallpapers, grafana dashboards - the dashboards are imported by hand
   through the Grafana UI, not provisioned, so nothing in nix references them)
 - `templates` - flake templates
