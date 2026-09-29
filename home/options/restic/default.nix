@@ -4,376 +4,304 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.konrad.programs.restic;
-in
-{
-  options.konrad.programs.restic = {
-    enable = mkEnableOption "Enables restic backups through home-manager and backblaze b2";
+  inherit (lib) mkOption types;
 
-    b2ApplicationKeyId = mkOption {
-      type = types.str;
-      example = "12345";
-      description = "backblaze application key id";
-      default = "0035814e69b653f0000000006";
-    };
+  repositoryModule = {
+    options = {
+      repository = mkOption {
+        type = types.str;
+        example = "/mnt/backup/restic";
+        description = "restic repository location, as in RESTIC_REPOSITORY";
+      };
 
-    b2Bucket = mkOption {
-      type = types.str;
-      example = "somebucket";
-      description = "b2 bucket to use for the restic repo";
-      default = "backups-km";
-    };
+      passwordFile = mkOption {
+        type = types.str;
+        default = config.sops.secrets."restic/password".path;
+        defaultText = lib.literalExpression ''config.sops.secrets."restic/password".path'';
+        description = "file holding the repository password";
+      };
 
-    b2S3Endpoint = mkOption {
-      type = types.str;
-      example = "s3.us-west-004.backblazeb2.com";
-      description = ''
-        Backblaze s3-compatible endpoint hosting the bucket. Shown in the b2 console
-        on the bucket details page. Must match the account's realm, otherwise every
-        restic invocation fails to reach the repository.
-      '';
-      default = "s3.eu-central-003.backblazeb2.com";
-    };
+      environment = mkOption {
+        type = types.attrsOf types.str;
+        default = { };
+        description = "extra environment for restic, usually backend settings";
+      };
 
-    package = lib.mkOption {
-      type = lib.types.package;
-      default = pkgs.restic;
-      description = "Package for restic";
-      example = "pkgs.restic";
-    };
-
-    retryLock = mkOption {
-      type = types.str;
-      example = "15m";
-      description = ''
-        How long restic retries acquiring the repository lock. All machines share one
-        repo, so an exclusive operation (forget --prune) collides with any other
-        host's running backup; without retries it fails immediately.
-      '';
-      default = "1h";
-    };
-
-    maxSnapshotAgeDays = mkOption {
-      type = types.int;
-      example = 3;
-      description = ''
-        How old this host's newest snapshot may get before the watchdog job
-        complains. Nothing checks anything while the machine is off, so a laptop
-        that is simply switched off stays quiet; this only fires on a machine
-        that is running but has stopped producing snapshots.
-      '';
-      default = 3;
-    };
-
-    retention = mkOption {
-      description = "Retention policy used by forget and forget-prune";
-      default = { };
-      type = types.submodule {
-        options = {
-          last = mkOption {
-            type = types.int;
-            default = 3;
-            description = "keep the last n snapshots";
-          };
-          hourly = mkOption {
-            type = types.int;
-            default = 12;
-            description = "keep the last n hourly snapshots";
-          };
-          daily = mkOption {
-            type = types.int;
-            default = 7;
-            description = "keep the last n daily snapshots";
-          };
-          weekly = mkOption {
-            type = types.int;
-            default = 4;
-            description = "keep the last n weekly snapshots";
-          };
-          monthly = mkOption {
-            type = types.int;
-            default = 12;
-            description = "keep the last n monthly snapshots";
-          };
-          yearly = mkOption {
-            type = types.int;
-            default = 2;
-            description = "keep the last n yearly snapshots";
-          };
+      environmentFiles = mkOption {
+        type = types.attrsOf types.str;
+        default = { };
+        example = {
+          AWS_SECRET_ACCESS_KEY = "/run/secrets/key";
         };
+        description = "like environment, but each value is read from the given file when baker runs, for secrets";
+      };
+
+      includes = mkOption {
+        type = types.listOf types.str;
+        description = "paths to back up";
+      };
+
+      retention = mkOption {
+        type = types.attrsOf (types.either types.int types.str);
+        example = {
+          within = "1d";
+          monthly = "unlimited";
+        };
+        description = ''
+          retention policy, each entry becomes a --keep-<name> flag of restic forget.
+          Setting one entry keeps the defaults for the others.
+        '';
+      };
+
+      backupMinute = mkOption {
+        type = types.ints.between 0 59;
+        default = 7;
+        description = ''
+          minute of every hour at which the backup runs. Keep it off the full hour
+          and away from other repositories, so jobs don't all start at once.
+        '';
+      };
+
+      maintenanceHour = mkOption {
+        type = types.ints.between 0 23;
+        default = 4;
+        description = "hour at which the weekly check (saturday) and prune (sunday) run";
+      };
+
+      maxSnapshotAgeDays = mkOption {
+        type = types.nullOr types.int;
+        default = 3;
+        description = ''
+          How old this host's newest snapshot may get before the daily watchdog
+          complains, null disables the watchdog. Nothing checks anything while the
+          machine is off, so this only fires on a machine that is running but has
+          stopped producing snapshots.
+        '';
       };
     };
 
-    includes = lib.mkOption {
-      type = lib.types.listOf (lib.types.str);
-      description = "What to include";
-      example = [
-        "${config.home.homeDirectory}/Code/scratch"
-        "${config.home.homeDirectory}/Documents"
-        "${config.home.homeDirectory}/obsidian"
-      ];
+    # mkDefault per entry, so a host overriding one of them keeps the rest
+    config.retention = lib.mapAttrs (_: lib.mkDefault) {
+      last = 3;
+      hourly = 12;
+      daily = 7;
+      weekly = 4;
+      monthly = 12;
+      yearly = 2;
+    };
+  };
+
+  baker = pkgs.writeShellApplication {
+    name = "baker";
+    runtimeInputs = with pkgs; [
+      coreutils
+      gnugrep
+      jq
+      restic
+      custom.scripts.ntfy-send
+    ];
+    # baker.sh sets its own options, errexit deliberately not among them
+    bashOptions = [ ];
+    text = builtins.readFile ./baker.sh;
+  };
+
+  excludeFile = pkgs.writeText "baker-excludes" (lib.concatLines cfg.excludes);
+
+  # baker-<name>: baker bound to one repository through its environment
+  mkWrapper =
+    name: repo:
+    let
+      exports = {
+        RESTIC_REPOSITORY = repo.repository;
+        RESTIC_PASSWORD_FILE = repo.passwordFile;
+        BAKER_NAME = name;
+        BAKER_INCLUDE_FILE = pkgs.writeText "baker-${name}-includes" (lib.concatLines repo.includes);
+        BAKER_EXCLUDE_FILE = excludeFile;
+        BAKER_KEEP = toString (lib.mapAttrsToList (k: v: "--keep-${k} ${toString v}") repo.retention);
+        BAKER_NTFY_TOKEN_FILE = config.sops.secrets."ntfy/token".path;
+        BAKER_NTFY_TOPIC_FILE = config.sops.secrets."ntfy/topic".path;
+      }
+      // lib.optionalAttrs (repo.maxSnapshotAgeDays != null) {
+        BAKER_MAX_AGE_DAYS = toString repo.maxSnapshotAgeDays;
+      }
+      // repo.environment;
+    in
+    pkgs.writeShellScriptBin "baker-${name}" ''
+      ${lib.concatLines (lib.mapAttrsToList (k: v: "export ${k}=${lib.escapeShellArg v}") exports)}
+      ${lib.concatLines (
+        lib.mapAttrsToList (k: file: "export ${k}=\"$(<${lib.escapeShellArg file})\"") repo.environmentFiles
+      )}
+      exec ${lib.getExe baker} "$@"
+    '';
+
+  wrappers = lib.mapAttrs mkWrapper cfg.repositories;
+
+  # Every scheduled job, keyed by its unit name. `at` uses launchd's calendar
+  # keys, the systemd schedule is derived from it so the two cannot drift apart.
+  jobs = lib.concatMapAttrs (
+    name: repo:
+    let
+      job = command: at: {
+        "baker-${name}-${builtins.head command}" = {
+          inherit at;
+          exec = [
+            (lib.getExe wrappers.${name})
+            "run"
+          ]
+          ++ command;
+        };
+      };
+    in
+    job [ "backup" ] { Minute = repo.backupMinute; }
+    // job [ "check" "--cleanup-cache" ] {
+      Weekday = 6;
+      Hour = repo.maintenanceHour;
+      Minute = 30;
+    }
+    // job [ "forget" "--prune" "--cleanup-cache" ] {
+      Weekday = 0;
+      Hour = repo.maintenanceHour;
+      Minute = 30;
+    }
+    // lib.optionalAttrs (repo.maxSnapshotAgeDays != null) (
+      job [ "watchdog" ] {
+        Hour = 12;
+        Minute = 20;
+      }
+    )
+  ) cfg.repositories;
+
+  onCalendar =
+    {
+      Weekday ? null,
+      Hour ? null,
+      Minute,
+    }:
+    lib.optionalString (Weekday != null) (
+      builtins.elemAt [
+        "Sun"
+        "Mon"
+        "Tue"
+        "Wed"
+        "Thu"
+        "Fri"
+        "Sat"
+      ] Weekday
+      + " "
+    )
+    + "${if Hour == null then "*" else toString Hour}:${lib.fixedWidthNumber 2 Minute}";
+
+  darwinLogDir = "${config.home.homeDirectory}/Library/Logs/baker";
+in
+{
+  options.konrad.programs.restic = {
+    enable = lib.mkEnableOption "restic backups, to backblaze b2 and any other repositories";
+
+    repositories = mkOption {
+      type = types.attrsOf (types.submodule repositoryModule);
+      default = { };
+      description = ''
+        Repositories to back up to, each gets its own baker-<name> command and
+        scheduled jobs. The b2 one is always there, so every machine keeps an
+        offsite copy; its includes must be set by the host.
+      '';
     };
 
-    excludes = lib.mkOption {
-      type = lib.types.listOf (lib.types.str);
-      description = "What to exclude";
-      example = [
-        "**/node_modules/"
-        "**/.DS_Store"
-        "**/.stfolder"
-      ];
-      default = [
-        "**/node_modules/"
-        "**/.DS_Store"
-        "**/.direnv"
-      ];
+    excludes = mkOption {
+      type = types.listOf types.str;
+      default = import ./excludes.nix config.home.homeDirectory;
+      description = "restic exclude patterns, shared by all repositories";
     };
   };
 
   # great reference https://hugoreeves.com/posts/2019/backups-with-restic/
-  config =
-    let
-      baker = pkgs.callPackage ./baker.nix {
-        inherit (cfg)
-          includes
-          excludes
-          retention
-          retryLock
-          ;
-
-        maxAgeDays = cfg.maxSnapshotAgeDays;
-
-        restic = cfg.package;
-        repository = "s3:${cfg.b2S3Endpoint}/${cfg.b2Bucket}";
-        applicationKeyId = cfg.b2ApplicationKeyId;
-        applicationKeyFile = config.sops.secrets."restic/b2_application_key".path;
-        passwordFile = config.sops.secrets."restic/password".path;
-      };
-
-      # local mutex, unrelated to the restic lock inside the repository: it only
-      # keeps two baker jobs on this machine from running at the same time.
-      lockFile = "${config.xdg.cacheHome}/baker.lock";
-      lockTimeout = 900;
-
-      # wraps a baker command with the local mutex, logging and notifications.
-      runner =
-        name: job:
-        let
-          ntfy = lib.escapeShellArgs [
-            "${pkgs.custom.scripts.ntfy-send}/bin/ntfy-send"
-            "--token-file"
-            config.sops.secrets."ntfy/token".path
-            "--topic-file"
-            config.sops.secrets."ntfy/topic".path
-          ];
-
-          lockPreamble =
-            lib.optionalString (job.lock or true)
-              # bash
-              ''
-                mkdir -p "$(dirname "${lockFile}")"
-                exec 9>"${lockFile}"
-                if ! flock --exclusive --timeout ${toString lockTimeout} 9; then
-                  # nothing was backed up, which is the same outcome as a failure even
-                  # though there is no error to report, so it warns like exit code 3.
-                  # the unit itself still succeeded, hence exit 0.
-                  msg="skipped after ${toString lockTimeout}s, another baker run is still holding the lock"
-                  echo "$msg"
-                  notify default warning <<< "$msg"
-                  exit 0
-                fi
-              '';
-        in
-        pkgs.writeShellScript "restic-${name}.sh"
-          # bash
-          ''
-            set -uo pipefail
-
-            export PATH="${
-              lib.makeBinPath [
-                pkgs.coreutils
-                pkgs.flock
-                pkgs.gnugrep
-              ]
-            }:$PATH"
-
-            log="$(mktemp)"
-            trap 'rm -f "$log"' EXIT
-
-            notify() { ${ntfy} --priority "$1" --tags "$2" --title "baker: ${name}"; }
-
-            # restic's documented exit codes, because a bare "exit 11" gives no
-            # clue that the repository was simply locked by another host
-            reason() {
-              case "$1" in
-                1) echo "command failed" ;;
-                2) echo "go runtime error" ;;
-                3) echo "some source data could not be read" ;;
-                10) echo "repository does not exist" ;;
-                11) echo "failed to lock the repository" ;;
-                12) echo "wrong password" ;;
-                130) echo "interrupted" ;;
-                # not restic's, baker's own: no code above 130 is taken
-                90) echo "backups have stopped" ;;
-                *) echo "unknown error" ;;
-              esac
-            }
-
-            ${lockPreamble}
-
-            echo "=== ${name} started $(date)"
-            start="$SECONDS"
-            ${baker}/bin/baker ${job.command} 2>&1 | tee "$log"
-            code="''${PIPESTATUS[0]}"
-            elapsed="$(date -u -d "@$((SECONDS - start))" +%T)"
-            echo "=== ${name} finished with exit code $code $(date)"
-
-            # a run that worked is not worth a notification: backups happen every
-            # hour on every machine, so success pings were pure noise on the phone
-            # and drowned the ones that actually mean something
-            if ((code != 0)); then
-              # the emoji comes from the ntfy tag below, which is rendered in front
-              # of the title, so the body must not repeat it
-              case "$code" in
-                # a backup that could not read some files still wrote a snapshot,
-                # so that is a warning rather than a failure
-                3) head="warnings in $elapsed: $(reason "$code")"; prio=default; tag=warning ;;
-                *) head="failed in $elapsed: $(reason "$code") (exit $code)"; prio=high; tag=x ;;
-              esac
-
-              # every restic command ends with its own summary, so the notification
-              # body is simply the tail of it, minus progress and blank line noise
-              printf '%s\n\n%s\n' "$head" "$(grep -vE '^(\[|$)' "$log" | tail -n 15)" |
-                notify "$prio" "$tag"
-            fi
-
-            exit "$code"
-          '';
-
-      # one definition per job, so linux and darwin cannot drift apart.
-      # backups are deliberately off the full hour: every machine used to start at
-      # :00, which is exactly when the weekly maintenance jobs needed the repo.
-      jobs = {
-        backup = {
-          command = "backup";
-          onCalendar = "*:07";
-          calendarInterval = [ { Minute = 7; } ];
-        };
-        check = {
-          command = "check";
-          onCalendar = "Sat 04:30";
-          calendarInterval = [
-            {
-              Weekday = 6;
-              Hour = 4;
-              Minute = 30;
-            }
-          ];
-        };
-        watchdog = {
-          command = "watchdog";
-          lock = false;
-          onCalendar = "12:20";
-          calendarInterval = [
-            {
-              Hour = 12;
-              Minute = 20;
-            }
-          ];
-        };
-        forget = {
-          command = "forget-prune";
-          onCalendar = "Sun 04:30";
-          calendarInterval = [
-            {
-              Weekday = 0;
-              Hour = 4;
-              Minute = 30;
-            }
-          ];
-        };
-      };
-
-      scripts = mapAttrs runner jobs;
-
-      mkUnit = name: {
-        Unit = {
-          Description = "Restic ${name}";
-          After = [
-            "sops-nix.service"
-            "network.target"
-          ];
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      {
+        konrad.programs.restic.repositories.b2 = {
+          # backblaze through its s3-compatible api, because the native b2 backend
+          # has known error handling issues, see restic docs "preparing a new
+          # repository". The endpoint (shown on the bucket details page) must match
+          # the account's realm, otherwise restic cannot reach the repository.
+          repository = "s3:s3.eu-central-003.backblazeb2.com/backups-km";
+          environment.AWS_ACCESS_KEY_ID = "0035814e69b653f0000000006";
+          environmentFiles.AWS_SECRET_ACCESS_KEY = config.sops.secrets."restic/b2_application_key".path;
         };
 
-        Service = {
-          Type = "oneshot";
-          Nice = 19;
-          IOSchedulingClass = "idle";
-          ExecStart = toString scripts.${name};
-        };
-      };
+        sops.secrets =
+          let
+            sopsFile = ../../../secrets/system.yaml;
+          in
+          {
+            "restic/b2_application_key" = { };
+            "restic/password" = { };
+            "ntfy/token" = { inherit sopsFile; };
+            "ntfy/topic" = { inherit sopsFile; };
+          };
 
-      mkTimer = name: job: {
-        Unit = {
-          Description = "Restic ${name} timer";
-        };
+        home.packages = lib.attrValues wrappers;
+      }
 
-        Install.WantedBy = [ "timers.target" ];
+      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+        systemd.user.services = lib.mapAttrs (name: job: {
+          Unit = {
+            Description = name;
+            # the user manager has no network.target to order against, only this
+            After = [ "sops-nix.service" ];
+          };
+          Service = {
+            Type = "oneshot";
+            Nice = 19;
+            IOSchedulingClass = "idle";
+            ExecStart = lib.escapeShellArgs job.exec;
+          };
+        }) jobs;
 
-        Timer = {
-          Unit = "restic-${name}.service";
-          OnCalendar = job.onCalendar;
-          # all hosts back up to the same repo, so don't let them start in lockstep
-          RandomizedDelaySeconds = 900;
-          AccuracySec = "1m";
-          Persistent = true;
-        };
-      };
+        systemd.user.timers = lib.mapAttrs (name: job: {
+          Unit.Description = name;
+          Install.WantedBy = [ "timers.target" ];
+          Timer = {
+            OnCalendar = onCalendar job.at;
+            # hosts sharing a repository must not start in lockstep
+            RandomizedDelaySec = 900;
+            AccuracySec = "1m";
+            Persistent = true;
+          };
+        }) jobs;
+      })
 
-      mkAgent = name: job: {
-        enable = true;
-        config = {
-          ProcessType = "Background";
-          LowPriorityIO = true;
-          # caffeinate keeps idle and disk sleep away for the duration of the run:
-          # a suspended restic stops refreshing its repository lock, gets killed and
-          # leaves the lock behind.
-          ProgramArguments = [
-            "/usr/bin/caffeinate"
-            "-i"
-            "-m"
-            (toString scripts.${name})
-          ];
-          RunAtLoad = false;
-          # /tmp is wiped on reboot, which left no trace of failed runs
-          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/restic/${name}.log";
-          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/restic/${name}.log";
-          # every key left out here is a wildcard, so an entry without Hour and
-          # Minute launches the job every single minute of that weekday
-          StartCalendarInterval = job.calendarInterval;
-        };
-      };
-    in
-    mkIf cfg.enable {
-      sops.secrets =
-        let
-          sopsFile = ../../../secrets/system.yaml;
-        in
-        {
-          "restic/b2_application_key" = { };
-          "restic/password" = { };
-          "ntfy/token" = { inherit sopsFile; };
-          "ntfy/topic" = { inherit sopsFile; };
-        };
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+        launchd.agents = lib.mapAttrs (name: job: {
+          enable = true;
+          config = {
+            ProcessType = "Background";
+            LowPriorityIO = true;
+            # caffeinate keeps idle and disk sleep away for the duration of the run:
+            # a suspended restic stops refreshing its repository lock, gets killed and
+            # leaves the lock behind.
+            ProgramArguments = [
+              "/usr/bin/caffeinate"
+              "-i"
+              "-m"
+            ]
+            ++ job.exec;
+            RunAtLoad = false;
+            # /tmp is wiped on reboot, which left no trace of failed runs
+            StandardOutPath = "${darwinLogDir}/${name}.log";
+            StandardErrorPath = "${darwinLogDir}/${name}.log";
+            # every key left out is a wildcard, so an entry without Hour and Minute
+            # would launch the job every single minute of that weekday
+            StartCalendarInterval = [ job.at ];
+          };
+        }) jobs;
 
-      home.packages = [ baker ];
-
-      systemd.user.services = mapAttrs' (name: _: nameValuePair "restic-${name}" (mkUnit name)) jobs;
-
-      systemd.user.timers = mapAttrs' (name: job: nameValuePair "restic-${name}" (mkTimer name job)) jobs;
-
-      launchd.agents = mapAttrs' (name: job: nameValuePair "restic-${name}" (mkAgent name job)) jobs;
-    };
+        # launchd opens the log files itself and does not create their directory
+        home.activation.bakerLogDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          run mkdir -p ${lib.escapeShellArg darwinLogDir}
+        '';
+      })
+    ]
+  );
 }

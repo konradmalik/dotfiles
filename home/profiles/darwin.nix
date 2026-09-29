@@ -52,7 +52,7 @@ in
 
   konrad.programs.restic = {
     enable = true;
-    includes = [
+    repositories.b2.includes = [
       "${config.home.homeDirectory}/Code/scratch"
       "${config.home.homeDirectory}/Desktop"
       "${config.home.homeDirectory}/Documents"

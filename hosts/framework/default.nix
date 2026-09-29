@@ -1,8 +1,4 @@
-{
-  config,
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 {
   imports = [
     inputs.nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
@@ -19,27 +15,10 @@
   networking.hostName = "framework";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  fileSystems = {
-    "/mnt/borg" = {
-      device = "/dev/disk/by-partlabel/framework-borg";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
-  };
-
-  sops.secrets.framework-borg = { };
-  konrad.services.borg = {
-    enable = true;
-    name = "home";
-    repoPath = "/mnt/borg/home";
-    passwordFile = config.sops.secrets.framework-borg.path;
-    paths = [ "/home/konrad" ];
-  };
-  konrad.services.ntfy.enable = true;
-
-  systemd.services.${config.konrad.services.borg.systemdName}.unitConfig = {
-    RequiresMountsFor = "/mnt/borg";
-    OnFailure = "${config.konrad.services.ntfy.problemServiceName}@%i.service";
+  fileSystems."/mnt/backup" = {
+    device = "/dev/disk/by-partlabel/framework-borg";
+    fsType = "ext4";
+    options = [ "nofail" ];
   };
 
   konrad.services.hd-idle.enable = true;
