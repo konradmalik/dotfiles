@@ -7,7 +7,10 @@ hl.bind("SUPER + space", hl.dsp.global("quickshell:launcher"))
 -- Screenshots
 -- NOTE: killall is useful for occasional freezes of hyprpicker
 -- just try to screenshot again and it should unfreeze
-hl.bind("SUPER + p", hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --mode region --output /tmp/screenshots"))
+hl.bind(
+  "SUPER + p",
+  hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --mode region --output-folder /tmp/screenshots")
+)
 hl.bind(
   "SUPER + SHIFT + p",
   hl.dsp.exec_cmd("killall hyprpicker ; hyprshot --freeze --raw --mode region --clipboard-only | swappy -f -")
@@ -89,16 +92,8 @@ hl.bind(
   hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
   { locked = true, repeating = true }
 )
-hl.bind(
-  "XF86AudioMute",
-  hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-  { locked = true, repeating = true }
-)
-hl.bind(
-  "XF86AudioMicMute",
-  hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-  { locked = true, repeating = true }
-)
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })
 
 -- Media control
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })

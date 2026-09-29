@@ -110,6 +110,7 @@
               git
               gnumake
               home-manager
+              nixfmt
               nmap
               prettier
               shellcheck
@@ -186,6 +187,6 @@
 
       templates = import ./templates;
 
-      formatter = forAllSystems (pkgs: pkgs.nixfmt);
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
     };
 }

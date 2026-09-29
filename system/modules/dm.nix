@@ -1,15 +1,14 @@
 { config, lib, ... }:
 let
-  allHmUsers = builtins.attrNames config.home-manager.users;
-  hyprlandUsers = builtins.filter (
-    user: config.home-manager.users.${user}.wayland.windowManager.hyprland.enable
-  ) allHmUsers;
+  hyprlandUsers = config.konrad.hyprland.users;
 in
 {
+  imports = [ ./hyprland.nix ];
+
   assertions = [
     {
       assertion = builtins.length hyprlandUsers <= 1;
-      message = "greetd autologin needs exactly one hyprland user, got: ${toString hyprlandUsers}";
+      message = "greetd autologin supports at most one hyprland user, got: ${toString hyprlandUsers}";
     }
   ];
 
