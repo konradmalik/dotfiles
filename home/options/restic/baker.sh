@@ -19,7 +19,7 @@ usage() {
     echo "  forget [args]   apply the retention policy, pass --prune to also free the space"
     echo "  check [args]    verify the repository"
     echo "  watchdog        fail when this host's newest snapshot is too old"
-    echo "  run <command>   run one of the above as a scheduled job: log it, notify on failure"
+    echo "  run <command>   (used in systemd/launchd units) run one of the above as a scheduled job: log it, notify on failure"
     echo
     echo "anything else is passed to restic as is, e.g. snapshots, init or unlock."
 }
