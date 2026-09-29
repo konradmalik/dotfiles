@@ -375,6 +375,20 @@ Host somehost
 EOF
 ```
 
+## Backups
+
+restic, via `home/options/restic`. Every host backs up to backblaze b2, desktops also to `local`,
+an external disk mounted at `/mnt/backup` and shared by whichever machine has it attached.
+Each repository gets a `baker-<name>` command, e.g. `baker-local snapshots`.
+
+The local repository is created once, on any host with the disk attached. The others just use it:
+
+```bash
+$ findmnt /mnt/backup   # must be mounted, or init lands on the root disk
+$ sudo install -d -o konrad -g users -m 700 /mnt/backup/restic
+$ baker-local init
+```
+
 ## Credits
 
 [Misterio77](https://github.com/Misterio77/nix-config) - big inspiration for hyprland and nix files structure.
