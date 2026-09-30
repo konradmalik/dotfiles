@@ -60,6 +60,19 @@ in
     ];
   };
 
+  # the system option is nixos-only, here it runs as a launchd agent
+  services.syncthing = {
+    enable = true;
+    settings = import ../../system/options/syncthing/settings.nix lib {
+      inherit (osConfig.networking) hostName;
+      type = "sendreceive";
+      folders = {
+        Documents = "${config.home.homeDirectory}/Documents";
+        obsidian = obsidianPath;
+      };
+    };
+  };
+
   programs.zsh = {
     shellAliases = {
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";

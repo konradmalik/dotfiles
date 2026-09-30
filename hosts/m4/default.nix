@@ -5,5 +5,12 @@
 
   home-manager.users.konrad.imports = [ ./home.nix ];
 
-  networking.hostName = "m4";
+  networking =
+    let
+      name = "m4";
+    in
+    {
+      computerName = name;
+      hostName = name;
+    };
 }
