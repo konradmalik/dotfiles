@@ -134,13 +134,13 @@ Row {
 
     Indicator {
         active: cameraHold.output
-        text: " "
+        text: ""
         tooltip: "Camera in use\n" + root.cameraUsers
     }
 
     Indicator {
         active: castHold.output
-        text: "󰍺 "
+        text: "󰍺"
         tooltip: {
             const who = root.castDepth > 1 ? "Screen is being captured (" + root.castDepth + " clients)" : "Screen is being captured";
             return root.castTarget !== "" ? who + "\n" + root.castTarget : who;
