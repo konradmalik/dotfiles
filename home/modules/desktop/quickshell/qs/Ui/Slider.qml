@@ -12,10 +12,8 @@ Item {
     property real value: 0
     property real step: 0.05
     property color fill: Theme.accent
-    property bool live: true
 
-    readonly property bool dragging: mouse.pressed && !live
-    readonly property real position: root.clamp(dragging ? mouse.pending : value)
+    readonly property real position: root.clamp(value)
 
     // Dragging and the wheel both report through here, so a caller only has one
     // thing to handle.
@@ -63,8 +61,6 @@ Item {
     MouseArea {
         id: mouse
 
-        property real pending: 0
-
         anchors.fill: parent
 
         // The handle's centre only travels between its own half-widths, so the
@@ -73,17 +69,11 @@ Item {
             const span = track.width - handle.width;
             if (span <= 0)
                 return;
-            const v = root.clamp((x - handle.width / 2) / span);
-            if (root.live)
-                root.moved(v);
-            else
-                mouse.pending = v;
+            root.moved(root.clamp((x - handle.width / 2) / span));
         }
 
         onPressed: event => mouse.pick(event.x)
         onPositionChanged: event => mouse.pick(event.x)
-        onReleased: if (!root.live)
-            root.moved(mouse.pending)
 
         // A wheel reports 120-unit steps and a touchpad reports pixels, so only
         // the sign of the delta is meaningful across both.

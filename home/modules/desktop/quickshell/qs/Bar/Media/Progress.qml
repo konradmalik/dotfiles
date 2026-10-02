@@ -37,18 +37,40 @@ Column {
         onTriggered: root.player.positionChanged()
     }
 
-    // Not live: seeking on every pixel of a drag would stutter the audio, so
-    // the seek lands on release and the clock follows the handle until then.
+    // Live, but rationed: Spotify given a seek per pixel of a drag stops
+    // answering seeks at all, and stops reporting where it is, until it is next
+    // paused. So one seek goes out at once, the rest of the drag waits here, and
+    // whatever the handle was last moved to goes out when the wait is up.
+    Timer {
+        id: throttle
+
+        property real pending: -1
+
+        interval: 250
+
+        function request(value) {
+            if (running) {
+                pending = value;
+                return;
+            }
+            root.player.position = value * root.player.length;
+            pending = -1;
+            start();
+        }
+
+        onTriggered: if (pending >= 0)
+            request(pending)
+    }
+
     Slider {
         id: seek
 
         width: parent.width
-        value: root.player.position / root.player.length
-        live: false
+        value: throttle.pending >= 0 ? throttle.pending : root.player.position / root.player.length
         enabled: root.player.canSeek
         fill: enabled ? Theme.accent : Theme.muted
 
-        onMoved: value => root.player.position = value * root.player.length
+        onMoved: value => throttle.request(value)
     }
 
     Item {
@@ -59,7 +81,7 @@ Column {
             id: elapsed
 
             anchors.left: parent.left
-            text: root.clock(seek.dragging ? seek.position * root.player.length : root.player.position)
+            text: root.clock(seek.value * root.player.length)
             textFormat: Text.PlainText
             color: Theme.muted
             font.family: Theme.popupFontFamily
