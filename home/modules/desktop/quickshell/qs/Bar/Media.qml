@@ -32,6 +32,7 @@ BarItem {
     }
 
     active: player !== null
+    text: root.stateIcon(root.player)
     // Every player, not just the one the icon is reporting, so the hover
     // answers "what else is going?" without opening anything.
     tooltip: Players.all.map(candidate => (candidate === root.player ? "* " : "  ") + candidate.identity + "  " + root.trackOf(candidate)).join("\n")
@@ -41,20 +42,6 @@ BarItem {
         player.next()
     onScrolledDown: if (player?.canGoPrevious)
         player.previous()
-
-    // Not BarItem's own `text`: these glyphs spill past their advance by
-    // different amounts and Qt counts the spill, so a bare Text would change
-    // width on every play/pause and nudge the popup centred under it. A square
-    // slot is wider than any of them and never changes.
-    Text {
-        anchors.verticalCenter: parent.verticalCenter
-        width: height
-        text: root.stateIcon(root.player)
-        horizontalAlignment: Text.AlignHCenter
-        color: root.color
-        font.family: Theme.fontFamily
-        font.pointSize: Theme.fontSize
-    }
 
     component Divider: Item {
         width: parent.width

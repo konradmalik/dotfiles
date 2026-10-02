@@ -36,17 +36,20 @@ Item {
     implicitHeight: Theme.barHeight
     visible: implicitWidth > 0
 
-    Rectangle {
-        anchors.fill: parent
-        visible: root.background.a > 0
-        color: root.background
+    component Highlight: Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width
+        height: Theme.highlightHeight
         radius: Theme.radius
     }
 
-    Rectangle {
-        anchors.fill: parent
+    Highlight {
+        visible: root.background.a > 0
+        color: root.background
+    }
+
+    Highlight {
         color: Theme.hover
-        radius: Theme.radius
         opacity: mouse.containsMouse ? 1 : 0
 
         Behavior on opacity {
@@ -63,7 +66,17 @@ Item {
         spacing: root.spacing
 
         Text {
+            id: label
+
+            // Text narrower than its height gets a square slot with its ink centred in it.
+            //
+            // Everything here is measured from the ink and the line height;
+            // measuring from width (which follows implicitWidth, and includes leftPadding) is a binding loop.
+            readonly property bool square: ink.tightBoundingRect.width < height
+
             anchors.verticalCenter: parent.verticalCenter
+            width: square ? height : implicitWidth
+            leftPadding: square ? Math.round((height - ink.tightBoundingRect.width) / 2 - ink.tightBoundingRect.x) : 0
             visible: root.text !== ""
             text: root.text
             textFormat: Text.PlainText
@@ -71,6 +84,13 @@ Item {
             font.family: Theme.fontFamily
             font.pointSize: Theme.fontSize
             font.bold: root.bold
+
+            TextMetrics {
+                id: ink
+
+                font: label.font
+                text: root.text
+            }
         }
     }
 

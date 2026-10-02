@@ -27,6 +27,10 @@ Singleton {
     // The bar tracks the font so a larger desktop size cannot clip glyphs.
     readonly property int barHeight: Math.round(Env.fontSize * 3)
     readonly property int itemPadding: 6
+    // What hover and background fill behind an item, centred in the bar. Not
+    // the bar's height: text sits well inside its own line, so a full-height
+    // fill leaves far more room above and below it than at the sides.
+    readonly property int highlightHeight: Math.round(Env.fontSize * 2.2)
     // Gaps between the items in a bar row, and between the outermost item and
     // the screen edge. Groups that read as one widget (workspaces, tray) stay
     // tight inside themselves and only take this gap from their neighbours.
