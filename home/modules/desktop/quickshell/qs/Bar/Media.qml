@@ -29,13 +29,15 @@ BarItem {
         return "";
     }
 
-    // What the player is doing.
+    // What the player is doing. The three glyphs have to render at the same
+    // width: the popup hangs centred under this item, so a narrower one would
+    // nudge it sideways on every play/pause.
     function stateIcon(candidate) {
         if (candidate?.playbackState === MprisPlaybackState.Playing)
-            return "";
+            return "󰐌";
         if (candidate?.playbackState === MprisPlaybackState.Paused)
-            return "";
-        return "";
+            return "󰏥";
+        return "󰙦";
     }
 
     // What pressing the button would do, which is the other one.
@@ -46,6 +48,14 @@ BarItem {
     function trackOf(candidate) {
         const parts = [candidate.trackArtist, candidate.trackTitle].filter(p => p);
         return parts.join(" - ") || "nothing playing";
+    }
+
+    function clock(seconds) {
+        const total = Math.max(0, Math.floor(seconds));
+        const h = Math.floor(total / 3600);
+        const m = Math.floor(total % 3600 / 60);
+        const s = String(total % 60).padStart(2, "0");
+        return h > 0 ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`;
     }
 
     active: player !== null
@@ -120,14 +130,58 @@ BarItem {
                         }
 
                         Text {
+                            id: label
+
+                            readonly property bool playing: block.modelData.playbackState === MprisPlaybackState.Playing
+
                             width: parent.width
+                            leftPadding: meter.width + 6
+                            rightPadding: leftPadding
                             text: [root.appIcon(block.modelData.identity), block.modelData.identity].filter(p => p).join(" ")
                             textFormat: Text.PlainText
                             horizontalAlignment: Text.AlignHCenter
                             elide: Text.ElideRight
-                            color: Theme.muted
+                            color: label.playing ? Theme.accent : Theme.muted
                             font.family: Theme.fontFamily
                             font.pointSize: Theme.popupLabelFontSize
+
+                            Row {
+                                id: meter
+
+                                x: (label.width - label.contentWidth) / 2 - width - 6
+                                anchors.verticalCenter: parent.verticalCenter
+                                height: 10
+                                spacing: 2
+                                visible: label.playing
+
+                                Repeater {
+                                    model: [320, 450, 380]
+
+                                    Rectangle {
+                                        id: bar
+
+                                        required property int modelData
+
+                                        anchors.bottom: meter.bottom
+                                        width: 3
+                                        color: Theme.accent
+
+                                        SequentialAnimation on height {
+                                            running: label.playing
+                                            loops: Animation.Infinite
+
+                                            NumberAnimation {
+                                                to: meter.height
+                                                duration: bar.modelData
+                                            }
+                                            NumberAnimation {
+                                                to: 2
+                                                duration: bar.modelData
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
 
                         Text {
@@ -189,6 +243,93 @@ BarItem {
                                 enabled: block.modelData.canGoNext
 
                                 onClicked: block.modelData.next()
+                            }
+                        }
+
+                        Timer {
+                            running: progress.visible && block.modelData.playbackState === MprisPlaybackState.Playing
+                            interval: 1000
+                            repeat: true
+                            triggeredOnStart: true
+
+                            onTriggered: block.modelData.positionChanged()
+                        }
+
+                        Column {
+                            width: parent.width
+                            topPadding: 6
+                            spacing: 2
+                            visible: progress.visible || volume.visible
+
+                            Column {
+                                id: progress
+
+                                width: parent.width
+                                spacing: 2
+                                visible: block.modelData.positionSupported && block.modelData.lengthSupported && block.modelData.length > 0
+
+                                Slider {
+                                    id: seek
+
+                                    width: parent.width
+                                    value: block.modelData.position / block.modelData.length
+                                    live: false
+                                    enabled: block.modelData.canSeek
+                                    fill: enabled ? Theme.accent : Theme.muted
+
+                                    onMoved: value => block.modelData.position = value * block.modelData.length
+                                }
+
+                                Item {
+                                    width: parent.width
+                                    height: elapsed.implicitHeight
+
+                                    Text {
+                                        id: elapsed
+
+                                        anchors.left: parent.left
+                                        text: root.clock(seek.dragging ? seek.position * block.modelData.length : block.modelData.position)
+                                        textFormat: Text.PlainText
+                                        color: Theme.muted
+                                        font.family: Theme.popupFontFamily
+                                        font.pointSize: Theme.popupLabelFontSize
+                                    }
+
+                                    Text {
+                                        anchors.right: parent.right
+                                        text: root.clock(block.modelData.length)
+                                        textFormat: Text.PlainText
+                                        color: Theme.muted
+                                        font.family: Theme.popupFontFamily
+                                        font.pointSize: Theme.popupLabelFontSize
+                                    }
+                                }
+                            }
+
+                            Row {
+                                id: volume
+
+                                width: parent.width
+                                spacing: 8
+                                visible: block.modelData.volumeSupported && block.modelData.canControl
+
+                                Text {
+                                    id: volumeIcon
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    text: block.modelData.volume > 0 ? "󰕾" : "󰖁"
+                                    color: Theme.muted
+                                    font.family: Theme.fontFamily
+                                    font.pointSize: Theme.popupFontSize
+                                }
+
+                                Slider {
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: parent.width - volumeIcon.width - parent.spacing
+                                    value: block.modelData.volume
+
+                                    onMoved: value => block.modelData.volume = value
+                                }
                             }
                         }
                     }
