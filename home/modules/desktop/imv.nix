@@ -17,12 +17,21 @@ let
   ];
 in
 {
-  programs.imv.enable = true;
+  programs.imv = {
+    enable = true;
+    settings = {
+      options.overlay = true;
+      binds = {
+        "<Ctrl+r>" = "rotate by 90";
+        "<Ctrl+Shift+R>" = "rotate by -90";
+      };
+    };
+  };
 
   # imv ships its own entry, but with NoDisplay=true
   xdg.desktopEntries.imv = {
     name = "Image Viewer";
-    exec = "imv %F";
+    exec = "imv-dir %F";
     # imv ships no icon of its own
     icon = "image-x-generic";
     type = "Application";
