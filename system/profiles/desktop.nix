@@ -5,6 +5,7 @@
     ../modules/hyprland.nix
     ../modules/fontconfig.nix
     ../modules/printing.nix
+    ../modules/thunar.nix
 
     ./nixos.nix
   ];
