@@ -146,13 +146,6 @@
               })
             ];
           };
-
-          rpiNodejs = {
-            nixpkgs.overlays = [
-              # FIXME: broken on aarch64 on unstable
-              (final: prev: { nodejs_latest = prev.nodejs_24; })
-            ];
-          };
         in
         {
           framework = inputs.nixpkgs.lib.nixosSystem {
@@ -161,17 +154,11 @@
           };
           rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
             inherit specialArgs;
-            modules = [
-              ./hosts/rpi4-1
-              rpiNodejs
-            ];
+            modules = [ ./hosts/rpi4-1 ];
           };
           rpi4-2 = inputs.nixpkgs.lib.nixosSystem {
             inherit specialArgs;
-            modules = [
-              ./hosts/rpi4-2
-              rpiNodejs
-            ];
+            modules = [ ./hosts/rpi4-2 ];
           };
           x1c6 = inputs.nixpkgs.lib.nixosSystem {
             inherit specialArgs;
