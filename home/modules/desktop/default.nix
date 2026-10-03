@@ -42,5 +42,13 @@
   };
 
   gtk.enable = true;
+  # https://github.com/nix-community/stylix/issues/1560
+  stylix.targets.gtk.extraCss =
+    # css
+    ''
+      .dialog-action-area > .text-button {
+        color: @dialog_fg_color;
+      }
+    '';
   qt.enable = true;
 }
