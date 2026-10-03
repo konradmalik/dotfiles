@@ -16,13 +16,6 @@ let
         description = "restic repository location, as in RESTIC_REPOSITORY";
       };
 
-      passwordFile = mkOption {
-        type = types.str;
-        default = config.sops.secrets."restic/password".path;
-        defaultText = lib.literalExpression ''config.sops.secrets."restic/password".path'';
-        description = "file holding the repository password";
-      };
-
       environment = mkOption {
         type = types.attrsOf types.str;
         default = { };
@@ -115,13 +108,13 @@ let
     let
       exports = {
         RESTIC_REPOSITORY = repo.repository;
-        RESTIC_PASSWORD_FILE = repo.passwordFile;
+        RESTIC_PASSWORD_FILE = cfg.passwordFile;
         BAKER_NAME = name;
         BAKER_INCLUDE_FILE = pkgs.writeText "baker-${name}-includes" (lib.concatLines repo.includes);
         BAKER_EXCLUDE_FILE = excludeFile;
         BAKER_KEEP = toString (lib.mapAttrsToList (k: v: "--keep-${k} ${toString v}") repo.retention);
-        BAKER_NTFY_TOKEN_FILE = config.sops.secrets."ntfy/token".path;
-        BAKER_NTFY_TOPIC_FILE = config.sops.secrets."ntfy/topic".path;
+        BAKER_NTFY_TOKEN_FILE = cfg.ntfy.tokenFile;
+        BAKER_NTFY_TOPIC_FILE = cfg.ntfy.topicFile;
       }
       // lib.optionalAttrs (repo.maxSnapshotAgeDays != null) {
         BAKER_MAX_AGE_DAYS = toString repo.maxSnapshotAgeDays;
@@ -213,24 +206,28 @@ in
       default = import ./excludes.nix config.home.homeDirectory;
       description = "restic exclude patterns, shared by all repositories";
     };
+
+    passwordFile = mkOption {
+      type = types.str;
+      description = "file holding the password, shared by all repositories";
+    };
+
+    ntfy = {
+      tokenFile = mkOption {
+        type = types.str;
+        description = "file holding the ntfy access token for failure notifications";
+      };
+      topicFile = mkOption {
+        type = types.str;
+        description = "file holding the ntfy topic for failure notifications";
+      };
+    };
   };
 
   # great reference https://hugoreeves.com/posts/2019/backups-with-restic/
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
-      {
-        sops.secrets =
-          let
-            sopsFile = ../../../secrets/system.yaml;
-          in
-          {
-            "restic/password" = { };
-            "ntfy/token" = { inherit sopsFile; };
-            "ntfy/topic" = { inherit sopsFile; };
-          };
-
-        home.packages = lib.attrValues wrappers;
-      }
+      { home.packages = lib.attrValues wrappers; }
 
       (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         systemd.user.services = lib.mapAttrs (name: job: {

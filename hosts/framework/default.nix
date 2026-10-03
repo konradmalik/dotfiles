@@ -14,12 +14,4 @@
 
   networking.hostName = "framework";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-  fileSystems."/mnt/backup" = {
-    device = "/dev/disk/by-partlabel/framework-borg";
-    fsType = "ext4";
-    options = [ "nofail" ];
-  };
-
-  konrad.services.hd-idle.enable = true;
 }
