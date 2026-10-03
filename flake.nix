@@ -144,39 +144,24 @@
         };
       };
 
-      nixosConfigurations =
-        let
-          rpiNodejs = {
-            nixpkgs.overlays = [
-              # FIXME: broken on aarch64 on unstable
-              (final: prev: { nodejs_latest = prev.nodejs_24; })
-            ];
-          };
-        in
-        {
-          framework = inputs.nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            modules = [ ./hosts/framework ];
-          };
-          rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            modules = [
-              ./hosts/rpi4-1
-              rpiNodejs
-            ];
-          };
-          rpi4-2 = inputs.nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            modules = [
-              ./hosts/rpi4-2
-              rpiNodejs
-            ];
-          };
-          x1c6 = inputs.nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            modules = [ ./hosts/x1c6 ];
-          };
+      nixosConfigurations = {
+        framework = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/framework ];
         };
+        rpi4-1 = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/rpi4-1 ];
+        };
+        rpi4-2 = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/rpi4-2 ];
+        };
+        x1c6 = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/x1c6 ];
+        };
+      };
 
       packages = forAllSystems (
         pkgs:
