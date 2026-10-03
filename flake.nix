@@ -138,15 +138,6 @@
 
       nixosConfigurations =
         let
-          x1c6IntelCompute = {
-            nixpkgs.overlays = [
-              # FIXME: broken on unstable
-              (final: prev: {
-                intel-compute-runtime-legacy1 = final.stable.intel-compute-runtime-legacy1;
-              })
-            ];
-          };
-
           rpiNodejs = {
             nixpkgs.overlays = [
               # FIXME: broken on aarch64 on unstable
@@ -175,10 +166,7 @@
           };
           x1c6 = inputs.nixpkgs.lib.nixosSystem {
             inherit specialArgs;
-            modules = [
-              ./hosts/x1c6
-              x1c6IntelCompute
-            ];
+            modules = [ ./hosts/x1c6 ];
           };
         };
 
