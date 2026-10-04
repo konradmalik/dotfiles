@@ -14,7 +14,6 @@
     ./shared.nix
 
     ../modules/locale.nix
-    ../modules/locate.nix
     ../modules/memory.nix
     ../modules/nix/nixos.nix
     ../modules/openssh.nix
