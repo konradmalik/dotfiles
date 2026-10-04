@@ -9,8 +9,6 @@
     ../../system/modules/monitoring/prometheus.nix
   ];
 
-  home-manager.users.konrad.imports = [ ./home.nix ];
-
   networking = {
     hostName = "rpi4-2";
     # dhcp is served by the router; we just need a stable address for blocky

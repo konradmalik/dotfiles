@@ -8,15 +8,10 @@
 let
   # apple's middleware, the only way to reach secure enclave backed keys
   skProvider = "/usr/lib/ssh-keychain.dylib";
-  inherit (config.lib.file) mkOutOfStoreSymlink;
-  obsidianPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
 in
 {
   imports = [
-    ../modules/base
-    ../modules/desktop/alacritty.nix
-    ../modules/desktop/ghostty.nix
-    ../modules/desktop/mpv.nix
+    ./workstation.nix
   ];
 
   home = {
@@ -41,24 +36,11 @@ in
 
   programs.ssh.settings."*".SecurityKeyProvider = skProvider;
 
-  konrad.programs.bitwarden.enable = true;
-
   konrad.programs.ssh-egress.hardwareKeys = [ "${config.home.homeDirectory}/.ssh/hardware" ];
 
-  konrad.programs.nvim = {
-    notesPath = mkOutOfStoreSymlink "${obsidianPath}/Personal";
-    spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/state/spell";
-  };
+  konrad.obsidianPath = "${config.home.homeDirectory}/Library/Mobile Documents/iCloud~md~obsidian/Documents";
 
-  konrad.programs.restic = {
-    enable = true;
-    repositories.b2.includes = [
-      "${config.home.homeDirectory}/Code/scratch"
-      "${config.home.homeDirectory}/Desktop"
-      "${config.home.homeDirectory}/Documents"
-      obsidianPath
-    ];
-  };
+  konrad.programs.restic.repositories.b2.includes = [ "${config.home.homeDirectory}/Desktop" ];
 
   # the system option is nixos-only, here it runs as a launchd agent
   services.syncthing = {
@@ -68,7 +50,7 @@ in
       type = "sendreceive";
       folders = {
         Documents = "${config.home.homeDirectory}/Documents";
-        obsidian = obsidianPath;
+        obsidian = config.konrad.obsidianPath;
       };
     };
   };

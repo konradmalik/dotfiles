@@ -2,6 +2,8 @@
 {
   imports = [ ./nixos.nix ];
 
+  home-manager.users.konrad.imports = [ ../../home/profiles/server.nix ];
+
   konrad.services = {
     autoupgrade.enable = true;
     healthcheck.enable = lib.mkDefault true;

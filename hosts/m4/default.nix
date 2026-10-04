@@ -3,8 +3,6 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  home-manager.users.konrad.imports = [ ./home.nix ];
-
   networking =
     let
       name = "m4";

@@ -35,7 +35,10 @@
     fstrim.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ pciutils ];
+  environment.systemPackages = with pkgs; [
+    pciutils
+    usbutils
+  ];
 
   system.stateVersion = lib.mkDefault "26.11";
 }

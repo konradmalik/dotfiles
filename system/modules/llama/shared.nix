@@ -1,5 +1,5 @@
 # The llama-swap endpoint contract, shared by the nixos module next to this file
-# and by home/modules/base/opencode.nix, so neither side repeats it.
+# and by home/modules/workstation/opencode.nix, so neither side repeats it.
 #
 # Only one model is resident at a time, so each has to fit the GTT ceiling the
 # nixos module sets (48GB) on its own, together with its kv cache and compute

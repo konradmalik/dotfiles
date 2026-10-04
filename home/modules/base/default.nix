@@ -9,14 +9,9 @@
   imports = [
     ./bat.nix
     ./btop.nix
-    ./claude
     ./direnv.nix
     ./fzf.nix
     ./git.nix
-    ./glow.nix
-    ./k9s.nix
-    ./lazygit.nix
-    ./opencode.nix
     ./packages.nix
     ./readline.nix
     ./restic.nix

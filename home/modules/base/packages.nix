@@ -9,40 +9,21 @@
       inetutils
       lsof
       moreutils
+      openssl
       rsync
       tree
       unixtools.xxd
       wget
 
-      croc
-      ouch
-      zip
-
       fd
       ripgrep
-      ripgrep-all
-      sad
-      scooter
 
       dua
-      entr
-      hyperfine
       procs
-      viddy
 
-      age
-      fq
-      jc
-      jo
       jq
-      yq-go
-
-      gh
-      glab
     ]
-    ++ (builtins.attrValues custom.scripts)
     ++ lib.optionals stdenvNoCC.hostPlatform.isLinux [
       psmisc
-      trace-cmd
     ];
 }

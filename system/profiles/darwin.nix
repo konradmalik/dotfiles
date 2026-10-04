@@ -17,6 +17,8 @@
     inputs.home-manager.darwinModules.home-manager
   ];
 
+  home-manager.users.konrad.imports = [ ../../home/profiles/darwin.nix ];
+
   services.openssh.extraConfig = ''
     PermitRootLogin no
     PasswordAuthentication no

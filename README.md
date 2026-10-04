@@ -8,7 +8,7 @@ My NixOS and Nix-Darwin configurations.
 ## Layout
 
 - `hosts` - one directory per machine, holding everything specific to it: `default.nix`,
-  `hardware.nix`, its `home.nix`, and `disko.nix` where there is one
+  `hardware.nix`, and `home.nix`/`disko.nix` where there is one
 - `system` - shared system-level (NixOS/nix-darwin) configuration
 - `home` - shared home-manager configuration
 - `secrets` - sops-encrypted secrets, `system.yaml` and `home.yaml`

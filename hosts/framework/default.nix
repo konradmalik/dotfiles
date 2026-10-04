@@ -10,8 +10,6 @@
     ../../system/profiles/desktop.nix
   ];
 
-  home-manager.users.konrad.imports = [ ./home.nix ];
-
   networking.hostName = "framework";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }

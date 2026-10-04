@@ -1,13 +1,10 @@
 { pkgs, ... }:
 {
   imports = [
-    ./alacritty.nix
     ./audio.nix
-    ./ghostty.nix
     ./hidden.nix
     ./firefox.nix
     ./imv.nix
-    ./mpv.nix
     ./ssh-agent.nix
     ./zathura.nix
 

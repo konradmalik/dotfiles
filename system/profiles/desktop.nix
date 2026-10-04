@@ -11,6 +11,8 @@
     ./nixos.nix
   ];
 
+  home-manager.users.konrad.imports = [ ../../home/profiles/desktop.nix ];
+
   environment.systemPackages = with pkgs; [ bashmount ];
 
   konrad.hardware.audio.enable = true;
