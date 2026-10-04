@@ -36,7 +36,7 @@ Inside `system` and `home`:
 | `x1c6`      | NixOS      | laptop, ThinkPad X1 Carbon 6th gen |
 | `rpi4-1`    | NixOS      | server, aarch64                    |
 | `rpi4-2`    | NixOS      | server, aarch64                    |
-| `m4`        | nix-darwin | macOS                              |
+| `m4`        | nix-darwin | macbook air m4                     |
 
 ## Commands
 
