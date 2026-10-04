@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ../modules/backup-disk.nix
+    ../modules/local-backup.nix
     ../modules/dm.nix
     ../modules/hyprland.nix
     ../modules/fontconfig.nix

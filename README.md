@@ -377,8 +377,9 @@ EOF
 
 ## Backups
 
-restic, via `home/options/restic`. Every host backs up to backblaze b2, desktops also to `local`,
-an external disk mounted at `/mnt/backup` and shared by whichever machine has it attached.
+restic, via `home/options/restic`. Every host backs up to backblaze b2 (`home/modules/base/restic.nix`),
+desktops also to `local` (`system/modules/local-backup.nix`), an external disk mounted at `/mnt/backup`
+and shared by whichever machine has it attached.
 Each repository gets a `baker-<name>` command, e.g. `baker-local snapshots`.
 
 The local repository is created once, on any host with the disk attached. The others just use it:
