@@ -28,7 +28,6 @@
       entr
       hyperfine
       procs
-      progress
       viddy
 
       age
