@@ -110,7 +110,8 @@
         persistent-apps = [
           "/System/Applications/Apps.app"
           "/System/Applications/Mission Control.app"
-          "/Applications/Safari.app"
+          # /Applications/Safari.app is a symlink, the dock would show it with an alias arrow
+          "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
           "/Applications/Firefox.app"
           "/Applications/Obsidian.app"
           "/Applications/Goodnotes.app"
