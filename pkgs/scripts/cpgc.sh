@@ -2,4 +2,4 @@
 set -euo pipefail
 
 rev="${1:-@}"
-git rev-parse "$rev" | cbcopy
+git rev-parse "$rev" | pbcopy

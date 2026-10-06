@@ -30,7 +30,7 @@ Exit status follows grep: 0 if something matched, 1 if nothing did.
 
 Examples:
   sops-grep POSTGRES_PASSWORD
-  sops-grep 'pgexxon.*storage' k8s/secrets/exxon-prod-k8s
+  sops-grep 'pg.*storage' k8s/secrets/prod
   sops-grep clientsecret -- -i
   sops-grep 'a+b/c=d' -- -F
   sops-grep -e '-----BEGIN' -- -F

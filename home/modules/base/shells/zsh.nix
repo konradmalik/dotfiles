@@ -91,6 +91,12 @@ in
         '';
   };
 
+  # real executables instead of aliases, so scripts can use them too
+  home.packages = lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
+    (pkgs.writeShellScriptBin "pbcopy" ''exec ${pkgs.wl-clipboard}/bin/wl-copy "$@"'')
+    (pkgs.writeShellScriptBin "pbpaste" ''exec ${pkgs.wl-clipboard}/bin/wl-paste "$@"'')
+  ];
+
   programs.zsh = {
     inherit initContent completionInit;
 
@@ -114,8 +120,6 @@ in
       "..." = "cd ../..";
     }
     // pkgs.lib.optionalAttrs pkgs.stdenvNoCC.hostPlatform.isLinux {
-      pbcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
-      pbpaste = "${pkgs.wl-clipboard}/bin/wl-paste";
       open = "${pkgs.xdg-utils}/bin/xdg-open";
     };
     history = {

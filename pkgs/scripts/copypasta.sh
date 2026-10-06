@@ -6,7 +6,7 @@ trap 'exit 0' SIGINT
 last_value=''
 
 while true; do
-    value="$(cbpaste)"
+    value="$(pbpaste)"
 
     if [ "$last_value" != "$value" ]; then
         echo "$value"

@@ -42,15 +42,6 @@ let
 in
 scriptsToAttr [
   {
-    file = ./bb.sh;
-  }
-  {
-    file = ./cbcopy.sh;
-  }
-  {
-    file = ./cbpaste.sh;
-  }
-  {
     file = ./copypasta.sh;
   }
   {
@@ -67,17 +58,6 @@ scriptsToAttr [
   }
   {
     file = ./flakify.sh;
-  }
-  {
-    file = ./flash-to.sh;
-    deps = with pkgs; [
-      zstd
-      xz
-      file
-    ];
-  }
-  {
-    file = ./google.sh;
   }
   {
     file = ./httpstatus.sh;
@@ -97,13 +77,6 @@ scriptsToAttr [
     file = ./line.sh;
   }
   {
-    file = ./mkcd.sh;
-  }
-  {
-    file = ./notify.py;
-    deps = with pkgs; [ python3 ];
-  }
-  {
     file = ./ntfy-send.sh;
     deps = with pkgs; [
       curl
@@ -115,14 +88,7 @@ scriptsToAttr [
     deps = with pkgs; [ coreutils ];
   }
   {
-    file = ./remind.sh;
-  }
-  {
     file = ./scratch.sh;
-  }
-  {
-    file = ./serveit.sh;
-    deps = with pkgs; [ python3 ];
   }
   {
     file = ./sops-grep.sh;
@@ -144,9 +110,6 @@ scriptsToAttr [
       coreutils
       gawk
     ];
-  }
-  {
-    file = ./timer.sh;
   }
   {
     file = ./tryna.sh;
