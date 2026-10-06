@@ -82,7 +82,7 @@
           qmlLint = pkgs.callPackage ./${quickshellDir}/lint.nix { };
         in
         {
-          default = pkgs.mkShell {
+          default = pkgs.mkShellNoCC {
             NIX_CONFIG = "extra-experimental-features = nix-command flakes";
 
             name = "dotfiles";
