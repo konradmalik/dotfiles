@@ -212,6 +212,26 @@
         )
       );
 
+      # each on the arch it runs on: servers are the rpi4s, restic the x86 laptops
+      checks = {
+        aarch64-linux =
+          let
+            pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
+          in
+          {
+            blocky = pkgs.callPackage ./system/modules/blocky.test.nix { };
+            healthcheck = pkgs.callPackage ./system/options/healthcheck.test.nix { };
+            monitoring = pkgs.callPackage ./system/modules/monitoring/monitoring.test.nix { };
+          };
+        x86_64-linux =
+          let
+            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+          in
+          {
+            restic = pkgs.callPackage ./home/options/restic/restic.test.nix { inherit inputs; };
+          };
+      };
+
       templates = import ./templates;
 
       formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
