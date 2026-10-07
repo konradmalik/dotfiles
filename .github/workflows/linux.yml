@@ -5,16 +5,24 @@ on:
   pull_request:
 
 name: linux
+permissions:
+  contents: read
 jobs:
+  # nix flake check only runs the checks of its own system,
+  # so each arch needs its own runner to get its VM tests run
   flake-check:
-    runs-on: ubuntu-26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-26.04
+          - ubuntu-26.04-arm
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
-      - uses: wimpysworld/nothing-but-nix@v10
-      - uses: DeterminateSystems/nix-installer-action@v23
+      - uses: ./.github/actions/setup-nix
         with:
-          extra-conf: |
-            accept-flake-config = true
+          cachix-auth-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake check
         run: nix flake check
 
@@ -24,16 +32,9 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v7
-      - uses: wimpysworld/nothing-but-nix@v10
-      - uses: DeterminateSystems/nix-installer-action@v23
+      - uses: ./.github/actions/setup-nix
         with:
-          extra-conf: |
-            accept-flake-config = true
-      - if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: cachix/cachix-action@v17
-        with:
-          name: "konradmalik"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          cachix-auth-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Shell build
         run: nix build .#devShells.x86_64-linux.default
 
@@ -43,11 +44,7 @@ jobs:
       - build-shell
     steps:
       - uses: actions/checkout@v7
-      - uses: wimpysworld/nothing-but-nix@v10
-      - uses: DeterminateSystems/nix-installer-action@v23
-        with:
-          extra-conf: |
-            accept-flake-config = true
+      - uses: ./.github/actions/setup-nix
       - name: Formatting and linting
         run: nix develop --command make check
 
@@ -65,15 +62,8 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v7
-      - uses: wimpysworld/nothing-but-nix@v10
-      - uses: DeterminateSystems/nix-installer-action@v23
+      - uses: ./.github/actions/setup-nix
         with:
-          extra-conf: |
-            accept-flake-config = true
-      - if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: cachix/cachix-action@v17
-        with:
-          name: "konradmalik"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          cachix-auth-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake build ${{ matrix.host.hostname }}
         run: nix build .#nixosConfigurations.${{ matrix.host.hostname }}.config.system.build.toplevel

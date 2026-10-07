@@ -1,0 +1,26 @@
+name: Setup Nix
+description: Install Nix (on Linux after freeing the runner's disk), optionally with the cachix cache
+
+inputs:
+  cachix-auth-token:
+    description: >-
+      Enables pushing to the konradmalik cachix. Leave empty to skip; fork PRs
+      get no secrets, so they skip too. The cache is read either way through
+      the flake's nixConfig.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - if: runner.os == 'Linux'
+      uses: wimpysworld/nothing-but-nix@v10
+    - uses: DeterminateSystems/nix-installer-action@v23
+      with:
+        extra-conf: |
+          accept-flake-config = true
+    - if: inputs.cachix-auth-token != ''
+      uses: cachix/cachix-action@v17
+      with:
+        name: "konradmalik"
+        authToken: "${{ inputs.cachix-auth-token }}"
