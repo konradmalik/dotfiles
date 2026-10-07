@@ -212,25 +212,20 @@
         )
       );
 
-      # each on the arch it runs on: servers are the rpi4s, restic the x86 laptops
-      checks = {
-        aarch64-linux =
-          let
-            pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
-          in
-          {
-            blocky = pkgs.callPackage ./system/modules/blocky.test.nix { };
-            healthcheck = pkgs.callPackage ./system/options/healthcheck.test.nix { };
-            monitoring = pkgs.callPackage ./system/modules/monitoring/monitoring.test.nix { };
-          };
-        x86_64-linux =
-          let
-            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-          in
-          {
-            restic = pkgs.callPackage ./home/options/restic/restic.test.nix { inherit inputs; };
-          };
-      };
+      # NixOS VM tests. CI runs the x86_64 ones, where the runners have KVM; what
+      # they test is config, not arch, and the arm host builds cover aarch64.
+      checks = inputs.nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (
+        system:
+        let
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+        in
+        {
+          blocky = pkgs.callPackage ./system/modules/blocky.test.nix { };
+          healthcheck = pkgs.callPackage ./system/options/healthcheck.test.nix { };
+          monitoring = pkgs.callPackage ./system/modules/monitoring/monitoring.test.nix { };
+          restic = pkgs.callPackage ./home/options/restic/restic.test.nix { inherit inputs; };
+        }
+      );
 
       templates = import ./templates;
 

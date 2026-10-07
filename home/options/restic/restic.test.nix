@@ -95,7 +95,8 @@ pkgs'.testers.runNixOSTest {
           konrad("diff /tmp/restore/home/konrad/data/keep.txt data/keep.txt")
           konrad("diff /tmp/restore/home/konrad/data/sub/file data/sub/file")
           konrad("test ! -e /tmp/restore/home/konrad/data/node_modules")
-          konrad("test ! -e /tmp/restore/home/konrad/data/skip")
+          # restic keeps a .nobackup directory and its marker, only the rest goes
+          konrad("test ! -e /tmp/restore/home/konrad/data/skip/file")
 
       with subtest("the watchdog passes after a fresh backup"):
           assert exit_code("baker-local watchdog") == 0
@@ -104,8 +105,10 @@ pkgs'.testers.runNixOSTest {
           konrad("baker-local forget")
           snapshots = json.loads(konrad(f"{restic} snapshots --json"))
           kept = sorted(s["time"][:10] for s in snapshots if s["hostname"] == "machine")
-          # hourly 12 keeps the 12 newest, which already cover every other rule
-          old = [f"2020-01-{d:02}" for d in range(10, 21)]
+          # hourly 12 keeps the 12 newest, which cover every other rule. On top of
+          # that restic keeps the oldest snapshot when a rule has fewer periods of
+          # history than it asks for: here monthly 12 only spans 2 months.
+          old = ["2020-01-01"] + [f"2020-01-{d:02}" for d in range(10, 21)]
           assert kept[:-1] == old and not kept[-1].startswith("2020"), kept
           assert sum(s["hostname"] == "other" for s in snapshots) == 1
 
