@@ -15,12 +15,10 @@ testers.runNixOSTest (
           settings = {
             # the DoH upstreams are unreachable here, and "blocking" refuses to start without them
             upstreams.init.strategy = lib.mkForce "fast";
-            # answered locally, so no upstream is needed. ads.test is mapped too, so a
-            # 0.0.0.0 answer can only come from blocking, not from a failed lookup
-            customDNS.mapping = {
-              "ok.test" = "10.0.0.1";
-              "ads.test" = "10.0.0.2";
-            };
+            # answered locally, so no upstream is needed. ads.test is deliberately not
+            # mapped: customDNS answers before blocking is consulted, and without a
+            # mapping a 0.0.0.0 can only come from blocking (the upstreams are unreachable)
+            customDNS.mapping."ok.test" = "10.0.0.1";
             # concatenated onto the real ads lists
             blocking.denylists.ads = [
               ''
@@ -50,7 +48,8 @@ testers.runNixOSTest (
 
         # over the network, so the firewall rules are exercised too
         client.wait_until_succeeds("dig +short @${dnsIP} ok.test | grep -x 10.0.0.1")
-        client.succeed("dig +short @${dnsIP} ads.test | grep -x 0.0.0.0")
+        # "fast" loading fills the denylists in the background, after DNS is up
+        client.wait_until_succeeds("dig +short @${dnsIP} ads.test | grep -x 0.0.0.0")
       '';
   }
 )

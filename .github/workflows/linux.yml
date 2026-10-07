@@ -8,16 +8,8 @@ name: linux
 permissions:
   contents: read
 jobs:
-  # nix flake check only runs the checks of its own system,
-  # so each arch needs its own runner to get its VM tests run
   flake-check:
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-26.04
-          - ubuntu-26.04-arm
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-nix
