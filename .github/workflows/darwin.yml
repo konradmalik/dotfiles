@@ -5,15 +5,14 @@ on:
   pull_request:
 
 name: darwin
+permissions:
+  contents: read
 jobs:
   flake-check:
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v23
-        with:
-          extra-conf: |
-            accept-flake-config = true
+      - uses: ./.github/actions/setup-nix
       - name: Flake check
         env:
           # workaround for segfaults
@@ -27,15 +26,9 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v23
+      - uses: ./.github/actions/setup-nix
         with:
-          extra-conf: |
-            accept-flake-config = true
-      - if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: cachix/cachix-action@v17
-        with:
-          name: "konradmalik"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          cachix-auth-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Shell build
         run: nix build .#devShells.aarch64-darwin.default
 
@@ -45,14 +38,8 @@ jobs:
       - flake-check
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v23
+      - uses: ./.github/actions/setup-nix
         with:
-          extra-conf: |
-            accept-flake-config = true
-      - if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: cachix/cachix-action@v17
-        with:
-          name: "konradmalik"
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          cachix-auth-token: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Flake build m4
         run: nix build .#darwinConfigurations.m4.system
