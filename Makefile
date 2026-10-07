@@ -16,11 +16,18 @@ PRETTIER_FILES := $(wildcard $(shell $(GIT_LS) '*.json' '*.md' '*.yaml' '*.yml')
 $(foreach v,LUA_FILES NIX_FILES QML_FILES SH_FILES PRETTIER_FILES,\
   $(if $(strip $($(v))),,$(error $(v) is empty, run make from the repo root)))
 
+# quickshell is linux-only, so the devshell carries the qml tools only there
+ifeq ($(shell uname -s),Linux)
+QML_FMT := fmt-qml
+QML_CHECK_FMT := check-fmt-qml
+QML_LINT := lint-qml
+endif
+
 .PHONY: check
 check: check-fmt check-lint
 
 .PHONY: fmt
-fmt: fmt-nix fmt-lua fmt-qml fmt-sh fmt-prettier
+fmt: fmt-nix fmt-lua $(QML_FMT) fmt-sh fmt-prettier
 
 .PHONY: fmt-nix
 fmt-nix:
@@ -43,7 +50,7 @@ fmt-prettier:
 	@prettier --write --log-level warn $(PRETTIER_FILES)
 
 .PHONY: check-fmt
-check-fmt: check-fmt-nix check-fmt-lua check-fmt-qml check-fmt-sh check-fmt-prettier
+check-fmt: check-fmt-nix check-fmt-lua $(QML_CHECK_FMT) check-fmt-sh check-fmt-prettier
 
 .PHONY: check-fmt-nix
 check-fmt-nix:
@@ -70,7 +77,7 @@ check-fmt-prettier:
 	@prettier --check --log-level warn $(PRETTIER_FILES)
 
 .PHONY: check-lint
-check-lint: lint-lua lint-qml lint-sh
+check-lint: lint-lua $(QML_LINT) lint-sh
 
 # the lua here is linted against hyprland's own `hl` stubs, which is why this
 # takes the directory rather than LUA_FILES: .nvim.lua is neovim's, not its
