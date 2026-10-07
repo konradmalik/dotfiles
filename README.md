@@ -64,7 +64,8 @@ $ make check
 ```
 
 Per language, if you'd rather not run the lot: `fmt-nix`, `fmt-lua`, `fmt-qml`, `fmt-sh`,
-`fmt-prettier`, and the matching `check-fmt-*` and `lint-*` targets.
+`fmt-prettier`, and the matching `check-fmt-*` and `lint-*` targets. The qml
+ones run on Linux only, where quickshell and its tools are.
 
 ### NixOS:
 
