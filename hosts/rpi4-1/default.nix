@@ -23,6 +23,9 @@
 
   services.blocky.enable = true;
 
+  # odd/even days so both DNS resolvers never reboot together
+  konrad.services.autoupgrade.dates = "*-*-1/2 02:00";
+
   sops.secrets.healthcheck.key = "healthchecks/rpi4-1";
   konrad.services.healthcheck.urlFile = config.sops.secrets.healthcheck.path;
 }
