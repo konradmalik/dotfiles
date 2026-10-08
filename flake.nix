@@ -32,10 +32,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim.url = "github:konradmalik/neovim-flake";
+    neovim = {
+      url = "github:konradmalik/neovim-flake";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
 
     flake-compat = {
