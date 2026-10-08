@@ -65,8 +65,13 @@ $ nix fmt
 $ nix flake check
 ```
 
-The check covers formatting, shellcheck and the lua and qml lints; the qml
-parts run on Linux only, where quickshell and its tools are.
+The check covers formatting, shellcheck and the lua and qml lints, and on Linux
+the NixOS VM tests too; the qml parts run on Linux only, where quickshell and
+its tools are. To run just one, build it directly:
+
+```bash
+$ nix build .#checks.aarch64-darwin.lint-lua
+```
 
 ### NixOS:
 
