@@ -56,16 +56,17 @@ I'll use the local version for brevity.
 
 ### Formatting and linting
 
-Everything below comes from the devshell, and CI runs the same target.
+Formatting goes through treefmt (`treefmt.nix`), and the style itself lives in
+`.editorconfig`, so the devshell's formatters, and with them the editor, format
+exactly like these:
 
 ```bash
-$ make fmt
-$ make check
+$ nix fmt
+$ nix flake check
 ```
 
-Per language, if you'd rather not run the lot: `fmt-nix`, `fmt-lua`, `fmt-qml`, `fmt-sh`,
-`fmt-prettier`, and the matching `check-fmt-*` and `lint-*` targets. The qml
-ones run on Linux only, where quickshell and its tools are.
+The check covers formatting, shellcheck and the lua and qml lints; the qml
+parts run on Linux only, where quickshell and its tools are.
 
 ### NixOS:
 
