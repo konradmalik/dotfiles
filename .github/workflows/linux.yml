@@ -30,16 +30,6 @@ jobs:
       - name: Shell build
         run: nix build .#devShells.x86_64-linux.default
 
-  check:
-    runs-on: ubuntu-26.04
-    needs:
-      - build-shell
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-nix
-      - name: Formatting and linting
-        run: nix develop --command make check
-
   build-nixos:
     strategy:
       fail-fast: false

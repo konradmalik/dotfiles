@@ -27,6 +27,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     neovim.url = "github:konradmalik/neovim-flake";
     llm-agents = {
@@ -66,6 +70,8 @@
       hyprlandDir = "home/modules/desktop/hyprland";
       quickshellDir = "home/modules/desktop/quickshell";
 
+      treefmtFor = pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+
       specialArgs = {
         inherit inputs;
       };
@@ -80,6 +86,7 @@
           hyprlandLuaLint = pkgs.callPackage ./${hyprlandDir}/lint.nix { };
           qmlTools = pkgs.callPackage ./${quickshellDir}/qml-tools.nix { };
           qmlLint = pkgs.callPackage ./${quickshellDir}/lint.nix { };
+          treefmt = (treefmtFor pkgs).config.build;
         in
         {
           default = pkgs.mkShellNoCC {
@@ -103,21 +110,16 @@
 
             packages = [
               hyprlandLuaLint
-              (getSystem self.formatter)
+              treefmt.wrapper
             ]
+            ++ builtins.attrValues treefmt.programs
             ++ (with pkgs; [
               age
               git
-              gnumake
               home-manager
-              nixfmt
               nmap
-              prettier
-              shellcheck
-              shfmt
               sops
               ssh-to-age
-              stylua
             ])
             ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin darwinPackages
             ++ pkgs.lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
@@ -212,14 +214,28 @@
         )
       );
 
-      # NixOS VM tests. CI runs the x86_64 ones, where the runners have KVM; what
-      # they test is config, not arch, and the arm host builds cover aarch64.
-      checks = inputs.nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (
-        system:
+      checks = forAllSystems (
+        pkgs:
         let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          hyprlandLuaLint = pkgs.callPackage ./${hyprlandDir}/lint.nix { };
+          qmlLint = pkgs.callPackage ./${quickshellDir}/lint.nix { };
         in
         {
+          formatting = (treefmtFor pkgs).config.build.check self;
+
+          lint-lua = pkgs.runCommandLocal "lint-lua" { nativeBuildInputs = [ hyprlandLuaLint ]; } ''
+            export HOME=$TMPDIR
+            hyprland-lua-lint ${./${hyprlandDir}}
+            touch $out
+          '';
+        }
+        // pkgs.lib.optionalAttrs pkgs.stdenvNoCC.hostPlatform.isLinux {
+          lint-qml = pkgs.runCommandLocal "lint-qml" { nativeBuildInputs = [ qmlLint ]; } ''
+            export HOME=$TMPDIR
+            quickshell-lint ${./${quickshellDir}}
+            touch $out
+          '';
+
           blocky = pkgs.callPackage ./system/modules/blocky.test.nix { };
           healthcheck = pkgs.callPackage ./system/options/healthcheck.test.nix { };
           monitoring = pkgs.callPackage ./system/modules/monitoring/monitoring.test.nix { };
@@ -229,6 +245,6 @@
 
       templates = import ./templates;
 
-      formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
+      formatter = forAllSystems (pkgs: (treefmtFor pkgs).config.build.wrapper);
     };
 }
