@@ -65,7 +65,9 @@ in
         After = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStart = lib.getExe' hyprmoncfg "hyprmoncfgd";
+        # lid and monitor changes arrive as UPower and Hyprland events; the
+        # default 1s/5s fallback polls cost ~100 wakeups/s, so poll rarely
+        ExecStart = "${lib.getExe' hyprmoncfg "hyprmoncfgd"} --lid-poll-interval 1m --poll-interval 1m";
         Restart = "on-failure";
         RestartSec = 2;
       };
