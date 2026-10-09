@@ -7,22 +7,10 @@
 let
   cfg = config.konrad.hyprland.monitors;
 
-  # nixpkgs ships 1.9.1, whose daemon re-matches on every layout change and so
-  # undoes a manual `hyprmoncfg apply` whenever another profile sorts first.
-  # 1.22 keeps a layout already on screen and accepts a read-only hyprland.lua.
-  hyprmoncfg = pkgs.hyprmoncfg.overrideAttrs (
-    finalAttrs: _: {
-      version = "1.22.1";
-      src = pkgs.fetchFromGitHub {
-        owner = "crmne";
-        repo = "hyprmoncfg";
-        tag = "v${finalAttrs.version}";
-        hash = "sha256-G7H/xPfmAcrvyHID95UM9hTBAw5UHSFh3NEJjpsb+sQ=";
-      };
-      # newer tests fake hyprctl with shebangs nixpkgs' postPatch doesn't fix
-      doCheck = false;
-    }
-  );
+  # Taken from https://github.com/NixOS/nixpkgs/pull/572107, drop once merged.
+  hyprmoncfg =
+    (builtins.getFlake "github:konradmalik/nixpkgs/0a5a7afce688a1a75bd317f234455f2689c69a9c")
+    .legacyPackages.${pkgs.stdenv.hostPlatform.system}.hyprmoncfg;
 in
 {
   options.konrad.hyprland.monitors = {
