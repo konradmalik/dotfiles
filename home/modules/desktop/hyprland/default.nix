@@ -9,6 +9,7 @@
     ./envs.nix
     ./input.nix
     ./looknfeel.nix
+    ./monitors.nix
     ./touchscreen.nix
   ];
 

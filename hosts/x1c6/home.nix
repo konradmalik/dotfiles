@@ -1,12 +1,19 @@
 {
-  wayland.windowManager.hyprland = {
-    # extraConfig = ''
-    #   hl.on("hyprland.start", function() hl.dispatch(hl.dsp.dpms({ action = "off", monitor = "eDP-1" })) end)
-    # '';
-    settings = {
-      # monitor = [ { output = "eDP-1"; disabled = true; } ];
+  konrad.hyprland.monitors.enable = true;
+  # on plug-in the daemon picks the best hardware match
+  # ties going to the name sorting first
+  konrad.hyprland.monitors.profiles =
+    let
+      laptop.key = "au optronics|0x233d";
+      dell.key = "dell inc.|dell u3419w|9g2f6t2";
+    in
+    {
+      laptop = [ laptop ];
+      dell = [
+        (laptop // { enabled = false; })
+        dell
+      ];
     };
-  };
 
   # only docked now and then, a stale snapshot there is expected
   konrad.programs.restic.repositories.local.maxSnapshotAgeDays = null;
