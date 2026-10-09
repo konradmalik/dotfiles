@@ -6,72 +6,86 @@
 }:
 let
   cfg = config.konrad.hyprland.monitors;
+  names = lib.attrNames cfg.profiles;
+  patterns = lib.concatMapStringsSep "|" lib.escapeShellArg names;
 
-  # Taken from https://github.com/NixOS/nixpkgs/pull/572107, drop once merged.
-  hyprmoncfg =
-    (builtins.getFlake "github:konradmalik/nixpkgs/0a5a7afce688a1a75bd317f234455f2689c69a9c")
-    .legacyPackages.${pkgs.stdenv.hostPlatform.system}.hyprmoncfg;
+  switcher = pkgs.writeShellApplication {
+    name = "monitors";
+    text = ''
+      case "''${1:-}" in
+      ${patterns}) hyprctl eval "require('monitors').apply('$1')" ;;
+      *)
+        echo "usage: monitors <profile>" >&2
+        echo "profiles: ${toString names}" >&2
+        exit 2
+        ;;
+      esac
+    '';
+  };
 in
 {
   options.konrad.hyprland.monitors = {
-    enable = lib.mkEnableOption "hyprmoncfg, switching monitor layouts by profile";
+    enable = lib.mkEnableOption "laptop panel profiles that follow external monitors";
+
+    panel = lib.mkOption {
+      type = lib.types.str;
+      default = "eDP-1";
+      description = "Output name of the built-in panel.";
+    };
 
     profiles = lib.mkOption {
-      type = with lib.types; attrsOf (listOf (attrsOf anything));
-      default = { };
+      type = with lib.types; attrsOf (attrsOf anything);
       description = ''
-        Declarative hyprmoncfg profiles: name to the list of its outputs. An
-        output needs only `key` (`hyprmoncfg monitors` lists them), the rest
-        defaults to enabled at 0x0, scale 1, preferred mode. Nix owns these: one
-        edited in the TUI is overwritten on the next switch. Profiles saved
-        under a new name in the TUI are left alone.
+        Profile name to the `hl.monitor` fields it sets on the panel. The rest
+        default to on, preferred mode, scale 1, left of any external. A
+        `mirror = "external"` mirrors whichever external monitor is connected.
       '';
+    };
+
+    connected = lib.mkOption {
+      type = lib.types.str;
+      default = "docked";
+      description = "Profile applied when an external monitor is connected.";
+    };
+
+    disconnected = lib.mkOption {
+      type = lib.types.str;
+      default = "laptop";
+      description = "Profile applied when no external monitor is connected.";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ hyprmoncfg ];
+    konrad.hyprland.monitors.profiles = lib.mapAttrs (_: lib.mkDefault) {
+      laptop = { };
+      docked.disabled = true;
+      mirror.mirror = "external";
+    };
 
-    xdg.configFile = lib.mapAttrs' (
-      name: outputs:
-      lib.nameValuePair "hyprmoncfg/profiles/${name}.json" {
-        text = builtins.toJSON {
-          inherit name;
-          outputs = map (
-            output:
-            {
-              enabled = true;
-              x = 0;
-              y = 0;
-              scale = 1;
-            }
-            // output
-          ) outputs;
-        };
-        force = true;
+    assertions = [
+      {
+        assertion = cfg.profiles ? ${cfg.connected} && cfg.profiles ? ${cfg.disconnected};
+        message = "konrad.hyprland.monitors: connected and disconnected must name profiles";
       }
-    ) cfg.profiles;
+    ];
 
-    # hyprmoncfg verifies this is the very last line, so its rules win
-    wayland.windowManager.hyprland.extraConfig = lib.mkAfter ''
-      -- Added by hyprmoncfg: its generated monitor rules load last, so nothing before this can override the applied layout.
-      do local path = (os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config") .. "/hypr/hyprmoncfg-monitors.lua"; local file = io.open(path, "r"); if file then file:close(); dofile(path) end end
-    '';
+    home.packages = [ switcher ];
 
-    systemd.user.services.hyprmoncfgd = {
-      Unit = {
-        Description = "Hyprland monitor profile daemon";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" ];
+    wayland.windowManager.hyprland.extraLuaFiles = {
+      monitors = ./monitors.lua;
+      "monitors.config" = {
+        autoLoad = false;
+        content = "return ${
+          lib.generators.toLua { } {
+            inherit (cfg)
+              panel
+              profiles
+              connected
+              disconnected
+              ;
+          }
+        }";
       };
-      Service = {
-        # lid and monitor changes arrive as UPower and Hyprland events; the
-        # default 1s/5s fallback polls cost ~100 wakeups/s, so poll rarely
-        ExecStart = "${lib.getExe' hyprmoncfg "hyprmoncfgd"} --lid-poll-interval 1m --poll-interval 1m";
-        Restart = "on-failure";
-        RestartSec = 2;
-      };
-      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 }
