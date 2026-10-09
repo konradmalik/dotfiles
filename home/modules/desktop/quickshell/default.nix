@@ -171,12 +171,13 @@ let
       '';
 
   # Quickshell reloads a config whenever its files change on disk, but the one
-  # hyprland starts is this read-only store copy, so editing ./qs does nothing
+  # the service runs is this read-only store copy, so editing ./qs does nothing
   # until the next switch. To iterate without rebuilding, run the working tree
   # instead -- ./qs/Config/Env.qml is checked in as a stub for exactly this:
   #
-  #   quickshell kill                       # stop the store copy
+  #   systemctl --user stop quickshell      # stop the store copy
   #   quickshell -p ./qs                    # from this directory; ^C to stop
+  #   systemctl --user start quickshell     # back to the store copy
   #
   # Saving any file under ./qs now reloads the running shell in place. The stub
   # carries fallback colours, fonts and program paths rather than this host's,
@@ -199,13 +200,19 @@ let
 
 in
 {
-  home.packages = [ pkgs.quickshell ];
+  programs.quickshell = {
+    enable = true;
+    configs.shell = shell;
+    activeConfig = "shell";
+    # restarted when it dies, e.g. when an output it draws on goes away
+    systemd.enable = true;
+  };
+  # stopped and started with the session, like hyprpaper
+  systemd.user.services.quickshell.Unit.PartOf = [ "graphical-session.target" ];
 
   wayland.windowManager.hyprland.extraConfig =
     # lua
     ''
-      hl.on("hyprland.start", function() hl.exec_cmd("${pkgs.quickshell}/bin/quickshell -p ${shell}") end)
-
       hl.window_rule({
           name   = "float-quickshell-tui",
           match  = { class = "^${terminalClass}$" },
