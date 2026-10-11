@@ -13,6 +13,8 @@
 
   networking.hostName = "x1c6";
 
+  konrad.localBackup.label = "shiru";
+
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   services.tlp.settings = {

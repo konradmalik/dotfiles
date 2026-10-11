@@ -1,45 +1,58 @@
 # The external backup disk and the local restic repository on it.
-{ lib, utils, ... }:
+{
+  config,
+  lib,
+  utils,
+  ...
+}:
 let
-  disk = "/dev/disk/by-partlabel/framework-borg";
+  disk = "/dev/disk/by-partlabel/${config.konrad.localBackup.label}";
   device = "${utils.escapeSystemdPath disk}.device";
   mountPoint = "/mnt/backup";
 in
 {
-  systemd.mounts = [
-    {
-      what = disk;
-      where = mountPoint;
-      type = "ext4";
-    }
-  ];
+  options.konrad.localBackup.label = lib.mkOption {
+    type = lib.types.str;
+    default = "silvermonkey";
+    description = "GPT partition label of the external backup disk.";
+  };
 
-  systemd.automounts = [
-    {
-      where = mountPoint;
-      wantedBy = [ device ];
-      bindsTo = [ device ];
-      after = [ device ];
-      automountConfig.TimeoutIdleSec = "5min";
-    }
-  ];
+  config = {
+    systemd.mounts = [
+      {
+        what = disk;
+        where = mountPoint;
+        type = "ext4";
+      }
+    ];
 
-  # spins the disk down between the hourly backups
-  konrad.services.hd-idle.enable = true;
+    systemd.automounts = [
+      {
+        where = mountPoint;
+        wantedBy = [ device ];
+        bindsTo = [ device ];
+        after = [ device ];
+        automountConfig.TimeoutIdleSec = "5min";
+      }
+    ];
 
-  home-manager.users.konrad =
-    { config, ... }:
-    {
-      konrad.programs.restic.repositories.local = {
-        repository = "${mountPoint}/restic";
-        includes = [ config.home.homeDirectory ];
-        backupMinute = 37;
-        maintenanceHour = 5;
-        retention = {
-          monthly = 24;
-          yearly = 5;
+    # spins the disk down between the hourly backups
+    konrad.services.hd-idle.enable = true;
+
+    home-manager.users.konrad =
+      { config, ... }:
+      {
+        konrad.programs.restic.repositories.local = {
+          repository = "${mountPoint}/restic";
+          includes = [ config.home.homeDirectory ];
+          backupMinute = 37;
+          maintenanceHour = 5;
+          retention = {
+            monthly = 24;
+            yearly = 5;
+          };
+          maxSnapshotAgeDays = lib.mkDefault 7;
         };
-        maxSnapshotAgeDays = lib.mkDefault 7;
       };
-    };
+  };
 }
