@@ -18,6 +18,15 @@ end
 -- workaround -> while mirroring every frame is repainted in full
 local tracking
 
+-- the last applied profile, for the monitors cli and the bar to show
+local function record(name)
+  local dir = os.getenv("XDG_RUNTIME_DIR")
+  local f = dir and io.open(dir .. "/" .. cfg.stateFile, "w")
+  if not f then return end
+  f:write(name, "\n")
+  f:close()
+end
+
 function M.apply(name)
   local profile = assert(cfg.profiles[name], "no monitor profile " .. name)
   -- hl.monitor merges into the panel's previous rule
@@ -30,6 +39,7 @@ function M.apply(name)
   if rule.mirror == "external" then rule.mirror = external() or "" end
   hl.config({ debug = { damage_tracking = rule.mirror ~= "" and 0 or tracking } })
   hl.monitor(rule)
+  record(name)
 end
 
 local function auto() M.apply(external() and cfg.connected or cfg.disconnected) end
