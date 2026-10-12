@@ -34,6 +34,8 @@
 
   # Enable OSC 52 clipboard
   set-option -g set-clipboard on
+  # automatically forward text copied using set-buffer to system clipboard
+  set-hook -g after-set-buffer 'save-buffer "#{socket_path}.clip" ; load-buffer -w "#{socket_path}.clip" ; delete-buffer'
 
   # vim splits
   bind-key v split-window -h
