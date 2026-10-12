@@ -92,6 +92,7 @@ let
       coreutils
       gnugrep
       jq
+      rclone
       restic
       custom.scripts.ntfy-send
     ];

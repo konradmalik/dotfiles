@@ -1,6 +1,8 @@
 {
   imports = [ ../../system/profiles/darwin.nix ];
 
+  home-manager.users.konrad.imports = [ ./home.nix ];
+
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   networking =

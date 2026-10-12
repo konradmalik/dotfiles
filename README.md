@@ -397,6 +397,8 @@ $ sudo install -d -o konrad -g users -m 700 /mnt/backup/restic
 $ baker-local init
 ```
 
+m4 also backs up to `onedrive`, restic through rclone, set up once by hand (`hosts/m4/home.nix`).
+
 ## Credits
 
 [Misterio77](https://github.com/Misterio77/nix-config) - big inspiration for hyprland and nix files structure.

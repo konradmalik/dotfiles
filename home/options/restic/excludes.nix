@@ -68,6 +68,11 @@ home: [
   "${home}/.config/mozilla/firefox/*/favicons.sqlite"
   "${home}/.config/mozilla/firefox/*/protections.sqlite"
 
+  # photos rebuilds these from the originals and its database
+  "${home}/Pictures/*.photoslibrary/database/search"
+  "${home}/Pictures/*.photoslibrary/resources/caches"
+  "${home}/Pictures/*.photoslibrary/resources/derivatives"
+
   # authoritative copy lives on the imap server, unlike Mail/
   "${home}/.thunderbird/*/ImapMail"
   "${home}/.thunderbird/*/crashes"
