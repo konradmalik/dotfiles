@@ -8,6 +8,7 @@
 
 let
   isLaptop = osConfig.services.upower.enable;
+  monitors = config.konrad.hyprland.monitors;
 
   colors = config.lib.stylix.colors.withHashtag;
   fonts = config.stylix.fonts;
@@ -148,6 +149,7 @@ let
             readonly property bool hasBacklight: ${qmlBool isLaptop}
             readonly property bool hasTailscale: ${qmlBool osConfig.services.tailscale.enable}
             readonly property bool hasPowerProfiles: ${qmlBool osConfig.services.tlp.pd.enable}
+            readonly property bool hasMonitorProfiles: ${qmlBool monitors.enable}
 
             readonly property string distro: "${osConfig.system.nixos.distroName} ${osConfig.system.nixos.version} (${osConfig.system.nixos.codeName})"
 
@@ -155,6 +157,12 @@ let
             readonly property list<string> tailscaleToggle: ${qmlList [ "${tailscaleToggle}" ]}
             readonly property list<string> tailscaleCopyIp: ${qmlList [ "${tailscaleCopyIp}" ]}
             readonly property list<string> cameraWatch: ${qmlList [ "${cameraWatch}" ]}
+
+            // empty while the module is off; the cli is only built while it is on
+            readonly property string monitorPanel: ${qmlString monitors.panel}
+            readonly property list<string> monitorProfiles: ${qmlList (lib.attrNames monitors.profiles)}
+            readonly property string monitorStateFile: ${qmlString monitors.stateFile}
+            readonly property string monitors: ${qmlString (lib.optionalString monitors.enable (lib.getExe monitors.package))}
 
             readonly property string systemMonitor: ${qmlString (lib.getExe config.programs.btop.package)}
             readonly property string mixer: ${qmlString (lib.getExe pkgs.wiremix)}

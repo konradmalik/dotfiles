@@ -67,6 +67,8 @@ Variants {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.itemSpacing
 
+            Monitors {}
+
             Media {}
 
             Privacy {}

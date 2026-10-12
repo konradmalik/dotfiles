@@ -35,6 +35,7 @@ Singleton {
     readonly property bool hasBacklight: true
     readonly property bool hasTailscale: true
     readonly property bool hasPowerProfiles: true
+    readonly property bool hasMonitorProfiles: true
 
     readonly property string distro: "NixOS"
 
@@ -42,6 +43,11 @@ Singleton {
     readonly property list<string> tailscaleToggle: ["true"]
     readonly property list<string> tailscaleCopyIp: ["true"]
     readonly property list<string> cameraWatch: ["true"]
+
+    readonly property string monitorPanel: "eDP-1"
+    readonly property list<string> monitorProfiles: ["default", "docked", "mirror"]
+    readonly property string monitorStateFile: "hyprland-monitor-profile"
+    readonly property string monitors: "monitors"
 
     readonly property string systemMonitor: "btop"
     readonly property string mixer: "wiremix"
