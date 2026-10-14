@@ -1,20 +1,5 @@
-{ lib, ... }:
-let
-  mimeTypes = [
-    "application/vnd.mozilla.xul+xml"
-    "application/xhtml+xml"
-    "text/html"
-    "text/xml"
-    "x-scheme-handler/about"
-    "x-scheme-handler/http"
-    "x-scheme-handler/https"
-    "x-scheme-handler/unknown"
-  ];
-in
 {
-  xdg.mimeApps.defaultApplications = lib.genAttrs mimeTypes (_: [ "firefox.desktop" ]);
-
-  home.sessionVariables.BROWSER = "firefox";
+  # kept as a fallback, zen-browser is the default browser
   programs.firefox = {
     enable = true;
     profiles = {

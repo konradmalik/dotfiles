@@ -50,23 +50,9 @@ home: [
   "${home}/.config/**/ShaderCache"
   "${home}/.config/**/Service Worker/CacheStorage"
 
-  "${home}/.config/mozilla/firefox/Crash Reports"
-  "${home}/.config/mozilla/firefox/Pending Pings"
-  "${home}/.config/mozilla/firefox/*/crashes"
-  "${home}/.config/mozilla/firefox/*/datareporting"
-  "${home}/.config/mozilla/firefox/*/gmp-*"
-  "${home}/.config/mozilla/firefox/*/minidumps"
-  "${home}/.config/mozilla/firefox/*/saved-telemetry-pings"
-  "${home}/.config/mozilla/firefox/*/security_state"
-  "${home}/.config/mozilla/firefox/*/sessionstore-backups"
-  "${home}/.config/mozilla/firefox/*/storage"
-  "${home}/.config/mozilla/firefox/*/AlternateServices.bin"
-  "${home}/.config/mozilla/firefox/*/bounce-tracking-protection.sqlite"
-  "${home}/.config/mozilla/firefox/*/content-prefs.sqlite"
-  "${home}/.config/mozilla/firefox/*/cookies.sqlite"
-  "${home}/.config/mozilla/firefox/*/domain_to_categories.sqlite"
-  "${home}/.config/mozilla/firefox/*/favicons.sqlite"
-  "${home}/.config/mozilla/firefox/*/protections.sqlite"
+  # browser profiles
+  "${home}/.config/mozilla"
+  "${home}/.config/zen"
 
   # photos rebuilds these from the originals and its database
   "${home}/Pictures/*.photoslibrary/database/search"

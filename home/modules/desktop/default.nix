@@ -2,6 +2,7 @@
 {
   imports = [
     ./audio.nix
+    ./editor.nix
     ./hidden.nix
     ./firefox.nix
     ./imv.nix

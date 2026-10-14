@@ -9,5 +9,6 @@
     ./mpv.nix
     ./opencode.nix
     ./packages.nix
+    ./zen-browser.nix
   ];
 }
