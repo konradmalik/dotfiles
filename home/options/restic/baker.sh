@@ -111,6 +111,14 @@ reason() {
     esac
 }
 
+# Changes whenever the machine sleeps: the time of the last wake on darwin, the
+# number of suspends so far on linux. Nothing holds off a closed lid, and
+# restic suspended for longer than its 30 minute lock timeout aborts on wake
+# rather than carry on with a lock someone may have removed meanwhile.
+sleep_mark() {
+    /usr/sbin/sysctl -n kern.waketime 2>/dev/null || cat /sys/power/suspend_stats/success 2>/dev/null
+}
+
 notify() {
     ntfy-send \
         --token-file "$BAKER_NTFY_TOKEN_FILE" \
@@ -133,19 +141,25 @@ run() {
         return 0
     fi
 
-    local log start code elapsed head prio tag
+    local log start mark code elapsed head prio tag
     log="$(mktemp)"
     # shellcheck disable=SC2064 # expand now, the variable is local
     trap "rm -f '$log'" EXIT
 
     echo "=== $* started $(date)"
     start="$SECONDS"
+    mark="$(sleep_mark)"
     if main "$@" 2>&1 | tee "$log"; then code=0; else code="${PIPESTATUS[0]}"; fi
     elapsed=$((SECONDS - start))
     elapsed="$(printf '%dh%02dm%02ds' $((elapsed / 3600)) $((elapsed % 3600 / 60)) $((elapsed % 60)))"
     echo "=== $* finished with exit code $code $(date)"
 
-    if ((code != 0)); then
+    # A run cut short by sleep is not worth a notification: the next one cleans
+    # up the stale lock and reuses the data already uploaded, and the watchdog
+    # still catches backups that stop.
+    if ((code != 0)) && [[ $(sleep_mark) != "$mark" ]]; then
+        echo "=== the machine slept during the run, not notifying"
+    elif ((code != 0)); then
         # a backup that could not read some files still wrote a snapshot, so
         # that is a warning rather than a failure
         if ((code == 3)); then
