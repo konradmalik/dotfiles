@@ -9,6 +9,8 @@ home: [
   "*-wal"
   "*.sqlite-journal"
   ".DS_Store"
+  # syncthing's trashcan versioning, restic keeps its own history
+  ".stversions"
 
   "__pycache__"
   "node_modules"

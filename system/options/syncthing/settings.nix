@@ -15,12 +15,26 @@ let
     x1c6.id = "44QKQXH-FWGCUJB-O4S36QZ-2LJ23DS-GXP5CAC-EIS75BN-EXRSY54-H5TAJAE";
   };
   otherDevices = lib.filterAttrs (n: _: n != hostName) devices;
+  # replaces each folder's .stignore, which syncthing itself never syncs
+  ignorePatterns = [
+    "(?d).DS_Store"
+    "(?d)*.icloud"
+    "(?d).Trash"
+    "(?d).trash"
+    "(?d).git"
+    # per-device obsidian layout, rewritten on every click
+    "(?d).obsidian/workspace*"
+  ];
 in
 assert lib.assertMsg (devices ? ${hostName}) "syncthing: ${hostName} is not in the devices list";
 {
   devices = otherDevices;
   folders = lib.mapAttrs (_: path: {
-    inherit path type;
+    inherit path type ignorePatterns;
     devices = lib.attrNames otherDevices;
+    versioning = {
+      type = "trashcan";
+      params.cleanoutDays = "30";
+    };
   }) folders;
 }

@@ -43,17 +43,29 @@ in
   konrad.programs.restic.repositories.b2.includes = [ "${config.home.homeDirectory}/Desktop" ];
 
   # the system option is nixos-only, here it runs as a launchd agent
-  services.syncthing = {
-    enable = true;
-    settings = import ../../system/options/syncthing/settings.nix lib {
-      inherit (osConfig.networking) hostName;
-      type = "sendreceive";
+  services.syncthing =
+    let
       folders = {
         Documents = "${config.home.homeDirectory}/Documents";
         obsidian = config.konrad.obsidianPath;
       };
+    in
+    {
+      enable = true;
+      settings = lib.mkMerge [
+        (import ../../system/options/syncthing/settings.nix lib {
+          inherit (osConfig.networking) hostName;
+          inherit folders;
+          type = "sendreceive";
+        })
+        # both folders live in icloud, keep the deleted copies out of it
+        {
+          folders = lib.mapAttrs (name: _: {
+            versioning.fsPath = "${config.home.homeDirectory}/Library/Application Support/Syncthing/versions/${name}";
+          }) folders;
+        }
+      ];
     };
-  };
 
   programs.zsh = {
     shellAliases = {
