@@ -82,13 +82,13 @@ $ nix build .#checks.aarch64-darwin.lint-lua
 #### Build and enable config locally:
 
 ```bash
-$ nixos-rebuild --sudo switch
+$ sudo nixos-rebuild switch
 # or
-$ nixos-rebuild --sudo boot
+$ sudo nixos-rebuild boot
 ```
 
-`--sudo` rather than `sudo nixos-rebuild`: evaluation runs as the user who owns the checkout,
-only the activation as root. On machines without `/etc/nixos` add `--flake .`.
+`nixos-rebuild --sudo switch` works too: it evaluates and builds as the user and uses sudo only
+for activation. On machines without `/etc/nixos` add `--flake .`.
 
 To just build (for example for a test):
 
