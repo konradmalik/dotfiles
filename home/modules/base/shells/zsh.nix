@@ -16,6 +16,9 @@ let
       setopt pushdignoredups    # Do not store duplicates in the stack.
       setopt pushdsilent         # Do not print the directory stack after pushd or popd.
 
+      # history expansion (!!, !$) fills the prompt instead of running right away
+      setopt histverify
+
       ## Reduce latency when pressing <Esc> (helps with vi mode)
       export KEYTIMEOUT=1
 
