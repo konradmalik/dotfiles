@@ -14,7 +14,12 @@ magenta="${esc}[35m"
 cyan="${esc}[36m"
 
 session_name() {
-    basename "$1" | tr . _
+    local dir=$1
+    # worktree layouts check the main branch out as <repo>/main or <repo>/master
+    case $(basename "$dir") in
+    main | master) dir=$(dirname "$dir") ;;
+    esac
+    basename "$dir" | tr . _
 }
 
 heading() {
@@ -75,7 +80,9 @@ fi
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd . --type d --min-depth 3 --max-depth 3 "$TMS_ROOT" | fzf-tmux -p 80%,80% -- \
+    # git repos at any depth: only a main checkout has a .git directory,
+    # submodules and linked worktrees have a .git file instead
+    selected=$(fd --hidden --type d --glob --prune --format '{//}' .git "$TMS_ROOT" | fzf-tmux -p 80%,80% -- \
         --preview="\"$0\" --preview {}" \
         --preview-window="up,60%,border-bottom")
 fi
