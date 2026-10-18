@@ -204,7 +204,10 @@ in
 
     excludes = mkOption {
       type = types.listOf types.str;
-      default = import ./excludes.nix config.home.homeDirectory;
+      default = import ./excludes.nix {
+        home = config.home.homeDirectory;
+        projects = config.xdg.userDirs.projects;
+      };
       description = "restic exclude patterns, shared by all repositories";
     };
 

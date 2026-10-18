@@ -16,7 +16,7 @@
       RCLONE_ONEDRIVE_HARD_DELETE = "true";
     };
     includes = config.konrad.programs.restic.repositories.b2.includes ++ [
-      "${config.home.homeDirectory}/Code"
+      config.xdg.userDirs.projects
       "${config.home.homeDirectory}/Movies"
       "${config.home.homeDirectory}/Music"
       # includes the photos library, with its originals

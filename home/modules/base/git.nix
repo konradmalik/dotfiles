@@ -62,15 +62,15 @@
         in
         [
           {
-            condition = "gitdir/i:~/Code/";
+            condition = "gitdir/i:${config.xdg.userDirs.projects}/";
             contents = personal;
           }
           {
-            condition = "gitdir/i:~/Code/github.com/cerebre-ai/";
+            condition = "gitdir/i:${config.xdg.userDirs.projects}/github.com/cerebre-ai/";
             contents = work;
           }
           {
-            condition = "gitdir/i:~/Code/gitlab.cerebredev.com/";
+            condition = "gitdir/i:${config.xdg.userDirs.projects}/gitlab.cerebredev.com/";
             contents = work;
           }
         ];

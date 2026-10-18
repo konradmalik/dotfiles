@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, projectsDir, ... }:
 let
   name = "tms";
   script = (pkgs.writeScriptBin name (builtins.readFile ./tmux-sessionizer.sh)).overrideAttrs (old: {
@@ -15,5 +15,5 @@ pkgs.symlinkJoin {
   inherit name;
   paths = [ script ] ++ deps;
   buildInputs = [ pkgs.makeWrapper ];
-  postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
+  postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin --set-default TMS_ROOT ${projectsDir}";
 }

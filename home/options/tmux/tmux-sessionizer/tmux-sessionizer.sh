@@ -75,7 +75,7 @@ fi
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd . --type d --min-depth 3 --max-depth 3 ~/Code | fzf-tmux -p 80%,80% -- \
+    selected=$(fd . --type d --min-depth 3 --max-depth 3 "$TMS_ROOT" | fzf-tmux -p 80%,80% -- \
         --preview="\"$0\" --preview {}" \
         --preview-window="up,60%,border-bottom")
 fi

@@ -7,6 +7,7 @@
 {
   imports = [
     ../modules/virtualisation/darwin.nix
+    ../modules/flake-path.nix
     ../modules/nix/darwin.nix
     ./shared.nix
     ../modules/stylix/shared.nix
