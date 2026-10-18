@@ -1,7 +1,8 @@
 # restic exclude patterns: a pattern without a leading slash matches at any
 # depth, "*" stays within one path component and "**" crosses any number of
 # them. A directory is skipped as a whole, restic does not descend into it.
-home: [
+{ home, projects }:
+[
   "*.o"
   "*.pyc"
   "*.log"
@@ -18,8 +19,8 @@ home: [
   ".mypy_cache"
   ".pytest_cache"
   ".ruff_cache"
-  "${home}/Code/**/bin"
-  "${home}/Code/**/obj"
+  "${projects}/**/bin"
+  "${projects}/**/obj"
 
   "${home}/.cache"
   "${home}/.local/share"

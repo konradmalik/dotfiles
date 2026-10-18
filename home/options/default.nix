@@ -1,6 +1,7 @@
 {
   bitwarden = import ./bitwarden;
   nvim = import ./nvim.nix;
+  repos = import ./repos.nix;
   restic = import ./restic;
   ssh-egress = import ./ssh-egress.nix;
   ssh-keys = import ./ssh-keys.nix;

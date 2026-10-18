@@ -7,7 +7,9 @@
 with lib;
 let
   cfg = config.konrad.programs.tmux;
-  tmux-sessionizer = pkgs.callPackage ./tmux-sessionizer { };
+  tmux-sessionizer = pkgs.callPackage ./tmux-sessionizer {
+    projectsDir = config.xdg.userDirs.projects;
+  };
   tmux-switcher = pkgs.callPackage ./tmux-switcher { };
   baseConfig = pkgs.callPackage ./config.nix {
     inherit tmux-switcher tmux-sessionizer;

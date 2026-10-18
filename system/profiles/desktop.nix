@@ -3,6 +3,7 @@
   imports = [
     ../modules/local-backup.nix
     ../modules/dm.nix
+    ../modules/flake-path.nix
     ../modules/hyprland.nix
     ../modules/fontconfig.nix
     ../modules/printing.nix

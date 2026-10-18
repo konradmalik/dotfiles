@@ -60,5 +60,9 @@
     cacheHome = "${config.home.homeDirectory}/.cache";
     dataHome = "${config.home.homeDirectory}/.local/share";
     stateHome = "${config.home.homeDirectory}/.local/state";
+    userDirs = {
+      enable = true;
+      projects = "${config.home.homeDirectory}/Code";
+    };
   };
 }

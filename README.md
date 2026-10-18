@@ -48,11 +48,15 @@ Inside `system` and `home`:
 github:konradmalik/dotfiles#<target>
 # local current dir
 .#<target>
-# absolute local git repo
-git+file://$HOME/Code/github.com/konradmalik/dotfiles#<target>
 ```
 
 I'll use the local version for brevity.
+
+> [!NOTE]
+> Checkouts live under the XDG projects dir (`~/Code`) as `<host>/<user>/<repo>`.
+> Repos the config refers to by path are declared in `konrad.repos` (`home/options/repos.nix`)
+> and cloned on activation if missing. On workstations the dotfiles checkout is also linked
+> as `/etc/nixos` (NixOS) or `/etc/nix-darwin` (darwin), so rebuilds need no `--flake`.
 
 ### Formatting and linting
 
@@ -78,15 +82,26 @@ $ nix build .#checks.aarch64-darwin.lint-lua
 #### Build and enable config locally:
 
 ```bash
-$ sudo nixos-rebuild --flake . switch
+$ nixos-rebuild --sudo switch
 # or
-$ sudo nixos-rebuild --flake . boot
+$ nixos-rebuild --sudo boot
 ```
+
+`--sudo` rather than `sudo nixos-rebuild`: evaluation runs as the user who owns the checkout,
+only the activation as root. On machines without `/etc/nixos` add `--flake .`.
 
 To just build (for example for a test):
 
 ```bash
 $ nix build .#nixosConfigurations.framework.config.system.build.toplevel
+```
+
+#### Deploy to an rpi from another machine
+
+This can be faster than building on a raspberry pi:
+
+```bash
+$ nixos-rebuild --sudo switch --flake .#rpi4-1 --target-host rpi4-1
 ```
 
 #### Build sd-image:
@@ -117,7 +132,7 @@ $ unzstd -c result/sd-image/*.img.zst | sudo dd of=/dev/sdX bs=4M conv=fsync sta
 
 In NixOS ISO:
 
-Clone this repo
+Clone this repo (a throwaway checkout, the installed system clones its own into `~/Code`)
 
 ```bash
 $ git clone https://github.com/konradmalik/dotfiles
@@ -146,11 +161,14 @@ Generate/add sops keys (if required for the configuration). Do this later only i
 Host ones will be picked up automatically. Add user ones to `/home/USER/.config/sops/age/keys.txt`.
 For details refer to [sops-nix](#sops-nix) section.
 
-Finally, use hardware-configuration and disko to install nixos:
+Commit and push the new host files, then install:
 
 ```bash
-$ sudo nixos-install --flake .#x1c6 --root /mnt
+$ sudo nixos-install --flake github:konradmalik/dotfiles#x1c6 --root /mnt
 ```
+
+Installing from `github:` means the throwaway checkout can go, first activation clones the real
+one. For an existing host there is nothing to generate, so skip the clone and install straight away.
 
 #### Fix something on NixOS from ISO
 
@@ -183,18 +201,21 @@ $ nixos-enter
 
 ### nix-darwin:
 
-First clone this repo to the machine.
-
-Then you need to install nix. `nix-darwin` manual suggests using [lix](https://lix.systems/install/) as the bootstrapper.
+You need to install nix. `nix-darwin` manual suggests using [lix](https://lix.systems/install/) as the bootstrapper.
 
 Next install [homebrew](https://brew.sh/).
 
-Enter the devshell from this repo.
-
-Finally, build and enable config locally:
+Finally, build and enable config, first activation clones this repo into `~/Code` and links it as
+`/etc/nix-darwin`:
 
 ```bash
-$ sudo darwin-rebuild switch --flake .
+$ sudo nix run nix-darwin -- switch --flake github:konradmalik/dotfiles#m4
+```
+
+From then on:
+
+```bash
+$ sudo darwin-rebuild switch
 ```
 
 Once that succeeds, uninstall the bootstrapper. `nix.package` owns nix from here on, but the installer

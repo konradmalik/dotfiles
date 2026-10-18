@@ -15,17 +15,22 @@ in
   };
 
   config = {
+    konrad.repos = {
+      dotfiles.url = "https://github.com/konradmalik/dotfiles";
+      neovim.url = "https://github.com/konradmalik/neovim-flake";
+    };
+
     konrad.programs.bitwarden.enable = true;
 
     konrad.programs.nvim = {
       notesPath = mkOutOfStoreSymlink "${config.konrad.obsidianPath}/Personal";
-      spellPath = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/github.com/konradmalik/neovim-flake/state/spell";
+      spellPath = mkOutOfStoreSymlink "${config.konrad.repos.neovim.path}/state/spell";
     };
 
     konrad.programs.restic = {
       enable = true;
       repositories.b2.includes = [
-        "${config.home.homeDirectory}/Code/scratch"
+        "${config.xdg.userDirs.projects}/scratch"
         "${config.home.homeDirectory}/Documents"
         config.konrad.obsidianPath
       ];
