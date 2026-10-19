@@ -38,6 +38,16 @@ Singleton {
     readonly property int barMargin: 12
     readonly property int radius: 4
 
+    readonly property list<string> volumeIcons: ["", "", ""]
+    readonly property string mutedIcon: ""
+    readonly property string micIcon: ""
+    readonly property string micMutedIcon: ""
+    readonly property list<string> brightnessIcons: ["", "", "", "", "", "", "", "", ""]
+
+    function glyph(icons, level) {
+        return icons[Math.max(0, Math.min(icons.length - 1, Math.floor(level * icons.length)))];
+    }
+
     readonly property int popupPadding: 10
     readonly property int popupRadius: 4
     // One clickable line in a popup, and the width every popup body gets: the
@@ -55,4 +65,8 @@ Singleton {
     // How tall the history list in the center may grow before it scrolls.
     readonly property int notificationCenterMaxHeight: 520
     readonly property int notificationHistory: 20
+
+    readonly property int osdWidth: 520
+    readonly property int osdPadding: 24
+    readonly property int osdTimeout: 1500
 }

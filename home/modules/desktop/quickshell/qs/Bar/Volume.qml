@@ -14,8 +14,6 @@ BarItem {
     readonly property real volume: sink?.audio?.volume ?? 0
     readonly property bool muted: sink?.audio?.muted ?? false
 
-    readonly property list<string> icons: ["", "", ""]
-
     // Every real device, for the tooltip: the mask keeps duplex nodes, which are
     // both a sink and a source, and !isStream drops the per-application streams.
     readonly property var sinks: root.devices(PwNodeType.AudioSink)
@@ -48,7 +46,7 @@ BarItem {
             sink.audio.volume = Math.max(0, Math.min(1, value));
     }
 
-    text: muted ? "" : icons[Math.min(icons.length - 1, Math.floor(volume * icons.length))]
+    text: muted ? Theme.mutedIcon : Theme.glyph(Theme.volumeIcons, volume)
     tooltip: root.deviceLines("Output", root.sinks, root.sink).concat(root.deviceLines("Input", root.sources, root.source)).join("\n")
 
     onLeftClicked: root.popupOpen = !root.popupOpen

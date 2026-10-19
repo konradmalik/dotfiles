@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Hyprland
 import qs.Common
 import qs.Notifications
+import qs.Osd
 import qs.Panels
 import "Bar"
 
@@ -11,6 +12,8 @@ ShellRoot {
     Bar {}
 
     Popups {}
+
+    Osd {}
 
     Launcher {}
 
