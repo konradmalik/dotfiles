@@ -706,11 +706,11 @@
         "which-key-nvim": "which-key-nvim"
       },
       "locked": {
-        "lastModified": 1792163421,
-        "narHash": "sha256-VYMiceVdtqRq/xjltg9l13ra/MUPnK8k/I5RpcE/ilQ=",
+        "lastModified": 1792395088,
+        "narHash": "sha256-Gb/ZACxLRvEe/90iL6K0MDrYoQvwjjJaqoS7tG79FXI=",
         "owner": "konradmalik",
         "repo": "neovim-flake",
-        "rev": "fcbdbad8bd1207b47adf7131cad2bd6428906a18",
+        "rev": "2fb754f189e401e510da38ee29ca79343a67592e",
         "type": "github"
       },
       "original": {
@@ -950,11 +950,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792052620,
-        "narHash": "sha256-fTY/wL9aX4I8qIt7x7IZqxiUYkUJh6MmNdZLLgOKvXo=",
+        "lastModified": 1792395025,
+        "narHash": "sha256-J09JM3wn4oqJfKy0CL5+fs0Q0n3UstLeriAVqnywoLA=",
         "owner": "konradmalik",
         "repo": "nvim-treesitter-nightly-overlay",
-        "rev": "5fcbe2be2a054132e17beb6693b295db1ca76e03",
+        "rev": "d4f2f26533006a0835c9d361a8cf3c1ae68b909f",
         "type": "github"
       },
       "original": {
@@ -982,11 +982,11 @@
     "nvim-treesitter_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1791978420,
-        "narHash": "sha256-2KMktps3gP0nkQDxbsWACbBQRhToEFbdIAeXyEirxAY=",
+        "lastModified": 1792235598,
+        "narHash": "sha256-Mqm97KrXqusrt3zz7hbU8hp/EPgKtnub039H9N93uiA=",
         "owner": "nvim-treesitter",
         "repo": "nvim-treesitter",
-        "rev": "ca581c3436fc2b236847f5b739ebc263739e5ca6",
+        "rev": "d4a9b23a383266bdb0bfb42d565f31e83f27be5e",
         "type": "github"
       },
       "original": {
