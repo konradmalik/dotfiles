@@ -5,5 +5,5 @@
   konrad.programs.ssh-egress.allowAgentOnlyKeys = true;
 
   konrad.programs.nvim.package =
-    inputs.neovim.inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    inputs.neovim.packages.${pkgs.stdenv.hostPlatform.system}.nvim-minimal;
 }
