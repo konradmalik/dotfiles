@@ -84,6 +84,14 @@ scriptsToAttr [
     ];
   }
   {
+    file = ./populate-repos.sh;
+    deps = with pkgs; [
+      gh
+      glab
+      jq
+    ];
+  }
+  {
     file = ./realize-symlink.sh;
     deps = with pkgs; [ coreutils ];
   }
