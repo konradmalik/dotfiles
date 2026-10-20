@@ -2,6 +2,7 @@
   imports = [
     ./alacritty.nix
     ./claude
+    ./glab.nix
     ./ghostty.nix
     ./glow.nix
     ./k9s.nix

@@ -21,7 +21,6 @@
       yq-go
 
       gh
-      glab
     ]
     ++ (builtins.attrValues custom.scripts)
     ++ lib.optionals stdenvNoCC.hostPlatform.isLinux [
