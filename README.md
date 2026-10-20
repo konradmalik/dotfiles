@@ -60,18 +60,17 @@ I'll use the local version for brevity.
 
 ### Formatting and linting
 
-Formatting goes through treefmt (`treefmt.nix`), and the style itself lives in
-`.editorconfig`, so the devshell's formatters, and with them the editor, format
-exactly like these:
+Formatting goes through treefmt (`treefmt.nix`). The style lives in
+`.editorconfig` in this repo, so the devshell's formatters respect the same style.
 
 ```bash
 $ nix fmt
 $ nix flake check
 ```
 
-The check covers formatting, shellcheck and the lua and qml lints, and on Linux
-the NixOS VM tests too; the qml parts run on Linux only, where quickshell and
-its tools are. To run just one, build it directly:
+The check covers formatting, shellcheck and lua lint.
+On Linux it's qml (quickshell) lint and NixOS VM tests too.
+To run just one, build it directly:
 
 ```bash
 $ nix build .#checks.aarch64-darwin.lint-lua
@@ -132,7 +131,7 @@ $ unzstd -c result/sd-image/*.img.zst | sudo dd of=/dev/sdX bs=4M conv=fsync sta
 
 In NixOS ISO:
 
-Clone this repo (a throwaway checkout, the installed system clones its own into `~/Code`)
+Clone this repo (a throwaway checkout):
 
 ```bash
 $ git clone https://github.com/konradmalik/dotfiles
@@ -167,8 +166,9 @@ Commit and push the new host files, then install:
 $ sudo nixos-install --flake github:konradmalik/dotfiles#x1c6 --root /mnt
 ```
 
-Installing from `github:` means the throwaway checkout can go, first activation clones the real
-one. For an existing host there is nothing to generate, so skip the clone and install straight away.
+Installing from `github:` means the throwaway checkout can go, first activation clones the real one.
+
+For an existing host there is nothing to generate, so skip the clone and install straight away.
 
 #### Fix something on NixOS from ISO
 
