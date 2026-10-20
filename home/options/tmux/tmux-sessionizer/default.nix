@@ -6,7 +6,6 @@ let
   });
   deps = with pkgs; [
     tmux
-    fd
     fzf
     coreutils
   ];

@@ -22,6 +22,27 @@ session_name() {
     basename "$dir" | tr . _
 }
 
+# git repos at any depth: only a main checkout has a .git directory,
+# submodules and linked worktrees have a .git file instead. Never descends
+# into anything with a .git, so repo contents (node_modules and all) are
+# never traversed
+repos() (
+    shopt -s dotglob nullglob
+    walk() {
+        local dir
+        for dir in "$1"/*/; do
+            dir=${dir%/}
+            [[ -L $dir ]] && continue
+            if [[ -d $dir/.git ]]; then
+                printf '%s\n' "$dir"
+            elif [[ ! -e $dir/.git ]]; then
+                walk "$dir"
+            fi
+        done
+    }
+    walk "${1%/}"
+)
+
 heading() {
     printf '%s\n' "${bold}${magenta}▌ $1${reset}"
 }
@@ -80,9 +101,7 @@ fi
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    # git repos at any depth: only a main checkout has a .git directory,
-    # submodules and linked worktrees have a .git file instead
-    selected=$(fd --hidden --type d --glob --prune --format '{//}' .git "$TMS_ROOT" | fzf-tmux -p 80%,80% -- \
+    selected=$(repos "$TMS_ROOT" | fzf-tmux -p 80%,80% -- \
         --preview="\"$0\" --preview {}" \
         --preview-window="up,60%,border-bottom")
 fi
