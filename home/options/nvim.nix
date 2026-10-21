@@ -58,8 +58,6 @@ in
         MANPAGER = lib.mkDefault "${lib.getExe nvim} --clean +Man!";
       };
 
-      programs.git.settings.core.editor = lib.mkDefault "${lib.getExe nvim} --clean";
-
       xdg.stateFile."nvim/notes" = {
         enable = cfg.notesPath != null;
         source = cfg.notesPath;
