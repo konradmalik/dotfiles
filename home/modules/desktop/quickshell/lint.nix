@@ -29,16 +29,10 @@ writeShellApplication {
 
     # qmllint reports warnings and still exits 0,
     # so '--max-warnings 0' is what makes it fail properly
-    #
-    # FIXME: drop the three category overrides once quickshell > 0.3.2 lands in nixpkgs.
-    # fixed upstream in 2b4501a "build: expose dependency metatypes in light dep".
     ${lib.getExe' qt.qtdeclarative "qmllint"} \
       -I ${qt.qtdeclarative}/${qt.qtbase.qtQmlPrefix} \
       -I ${quickshell}/${qt.qtbase.qtQmlPrefix} \
       -I "$dir" \
-      --missing-property disable \
-      --unqualified disable \
-      --incompatible-type disable \
       --max-warnings 0 \
       "''${files[@]}"
   '';
