@@ -1,10 +1,13 @@
 {
   findutils,
   lib,
-  qt6,
+  callPackage,
   quickshell,
   writeShellApplication,
 }:
+let
+  qt = callPackage ./qt.nix { };
+in
 writeShellApplication {
   name = "quickshell-lint";
   runtimeInputs = [ findutils ];
@@ -26,9 +29,9 @@ writeShellApplication {
 
     # qmllint reports warnings and still exits 0,
     # so '--max-warnings 0' is what makes it fail properly
-    ${lib.getExe' qt6.qtdeclarative "qmllint"} \
-      -I ${qt6.qtdeclarative}/${qt6.qtbase.qtQmlPrefix} \
-      -I ${quickshell}/${qt6.qtbase.qtQmlPrefix} \
+    ${lib.getExe' qt.qtdeclarative "qmllint"} \
+      -I ${qt.qtdeclarative}/${qt.qtbase.qtQmlPrefix} \
+      -I ${quickshell}/${qt.qtbase.qtQmlPrefix} \
       -I "$dir" \
       --max-warnings 0 \
       "''${files[@]}"
