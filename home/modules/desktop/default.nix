@@ -24,7 +24,9 @@
   home = {
     packages = with pkgs; [
       bitwarden-desktop
-      calibre
+      # TODO: pyopenjtalk-plus tests fail on python3.14 (piper-tts dep); pinned to nixpkgs from main
+      (builtins.getFlake "github:NixOS/nixpkgs/f20cd90e28fe0403873f473b29e42662cd86e8c4")
+      .legacyPackages.${pkgs.stdenv.hostPlatform.system}.calibre
       obsidian
       signal-desktop
       slack
