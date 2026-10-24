@@ -1,16 +1,18 @@
 {
   lib,
-  qt6,
+  callPackage,
   quickshell,
   symlinkJoin,
   writeShellScriptBin,
 }:
 let
+  qt = callPackage ./qt.nix { };
+
   wrap =
     name:
     writeShellScriptBin name ''
-      export QML_IMPORT_PATH="${qt6.qtdeclarative}/${qt6.qtbase.qtQmlPrefix}:${quickshell}/${qt6.qtbase.qtQmlPrefix}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
-      exec ${lib.getExe' qt6.qtdeclarative name} -E "$@"
+      export QML_IMPORT_PATH="${qt.qtdeclarative}/${qt.qtbase.qtQmlPrefix}:${quickshell}/${qt.qtbase.qtQmlPrefix}''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}"
+      exec ${lib.getExe' qt.qtdeclarative name} -E "$@"
     '';
 in
 symlinkJoin {
@@ -21,6 +23,6 @@ symlinkJoin {
       "qmllint"
     ]
     ++ [
-      (writeShellScriptBin "qmlformat" ''exec ${lib.getExe' qt6.qtdeclarative "qmlformat"} "$@"'')
+      (writeShellScriptBin "qmlformat" ''exec ${lib.getExe' qt.qtdeclarative "qmlformat"} "$@"'')
     ];
 }

@@ -39,8 +39,6 @@ Singleton {
     onNetworkChanged: settle.restart()
 
     property Timer settle: Timer {
-        id: settle
-
         interval: 150
         running: true
         onTriggered: addrProc.running = true
