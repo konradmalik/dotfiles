@@ -22,9 +22,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    # ./theme.nix instead
-    stylix.targets.tmux.enable = false;
-
     programs.tmux = {
       enable = true;
       aggressiveResize = true;

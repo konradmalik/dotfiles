@@ -1,8 +1,6 @@
 { config, ... }:
 {
   imports = [
-    ./hardware.nix
-
     ../../system/profiles/rpi4.nix
   ];
 

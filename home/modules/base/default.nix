@@ -18,8 +18,6 @@
     ./shells
     ./sops.nix
     ./ssh-keys.nix
-    ./starship.nix
-    ./yazi.nix
   ]
   ++ builtins.attrValues (import ./../../options);
 

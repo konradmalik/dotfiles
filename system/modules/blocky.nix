@@ -19,12 +19,17 @@
     after = [ "network-online.target" ];
   };
 
+  # `blocky stats` on the host itself
+  environment.systemPackages = lib.optional config.services.blocky.enable config.services.blocky.package;
+
   services.blocky = {
     settings = {
       ports = {
         dns = 53;
         http = 4000;
       };
+      # rolling 24h in memory, served at /api/stats
+      statistics.enable = true;
       upstreams = {
         init.strategy = "blocking";
         groups.default = [

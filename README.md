@@ -8,14 +8,13 @@ My NixOS and Nix-Darwin configurations.
 ## Layout
 
 - `hosts` - one directory per machine, holding everything specific to it: `default.nix`,
-  `hardware.nix`, and `home.nix`/`disko.nix` where there is one
+  and `hardware.nix`/`home.nix`/`disko.nix` where there is one
 - `system` - shared system-level (NixOS/nix-darwin) configuration
 - `home` - shared home-manager configuration
 - `secrets` - sops-encrypted secrets, `system.yaml` and `home.yaml`
 - `pkgs` - own packages (`fonts`, `scripts`), available as `pkgs.custom.*` in configs and as
   flake `packages`
-- `files` - static assets (wallpapers, grafana dashboards - the dashboards are imported by hand
-  through the Grafana UI, not provisioned, so nothing in nix references them)
+- `files` - static assets (wallpapers)
 - `templates` - flake templates
 - `router` - home network and MikroTik router config, see [router/readme.md](./router/readme.md)
 
@@ -101,6 +100,33 @@ This can be faster than building on a raspberry pi:
 
 ```bash
 $ nixos-rebuild --sudo switch --flake .#rpi4-1 --target-host rpi4-1
+```
+
+#### Firmware updates
+
+fwupd runs on every NixOS host except the rpis and pulls firmware (UEFI, NVMe, docks, some
+peripherals) from [LVFS](https://fwupd.org):
+
+```bash
+$ fwupdmgr refresh
+$ fwupdmgr get-updates
+$ fwupdmgr update
+```
+
+The rpi4 bootloader EEPROM isn't on LVFS, so there it goes through Raspberry Pi's
+`rpi-eeprom-update`. The package is unfree and the script stages the update on the boot
+partition, which the sd-image doesn't mount, so on the rpi:
+
+```bash
+$ sudo mkdir -p /boot/firmware
+$ sudo mount /dev/disk/by-label/FIRMWARE /boot/firmware
+$ NIXPKGS_ALLOW_UNFREE=1 nix shell --impure nixpkgs#raspberrypi-eeprom
+# shows current vs latest version
+$ sudo BOOTFS=/boot/firmware "$(command -v rpi-eeprom-update)"
+# stages the latest one, flashed by the rpi itself on the next boot
+$ sudo BOOTFS=/boot/firmware "$(command -v rpi-eeprom-update)" -a
+$ sudo umount /boot/firmware
+$ sudo reboot
 ```
 
 #### Build sd-image:

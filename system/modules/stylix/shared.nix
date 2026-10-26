@@ -4,6 +4,9 @@
   ...
 }:
 {
+  # tmux themes itself from the palette, see home/options/tmux/theme.nix
+  home-manager.sharedModules = [ { stylix.targets.tmux.enable = false; } ];
+
   stylix = {
     enable = true;
     autoEnable = true;
