@@ -21,10 +21,9 @@
     };
   };
 
-  # Allow to authenticate users using only ssh keys
-  # from "/etc/ssh/authorized_keys.d/%u"
-  security.pam.sshAgentAuth.enable = true;
-  # Passwordless sudo when SSH'ing with keys
-  # from "/etc/ssh/authorized_keys.d/%u"
-  security.pam.services.sudo.sshAgentAuth = true;
+  # Passwordless sudo when SSH'ing with a forwarded agent holding a key
+  # from "/etc/ssh/authorized_keys.d/$ruser" (the module's default).
+  # pam_rssh allows to parse sk-* (secure enclave) keys
+  security.pam.rssh.enable = true;
+  security.pam.services.sudo.rssh = true;
 }
