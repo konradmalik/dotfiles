@@ -37,6 +37,14 @@
     openFirewall = true;
   };
 
+  services.audiobookshelf = {
+    enable = true;
+    host = "0.0.0.0";
+    openFirewall = true;
+  };
+  # library lives on the external disk; don't start against an empty /mnt
+  systemd.services.audiobookshelf.unitConfig.RequiresMountsFor = [ "/mnt" ];
+
   konrad.services.hd-idle.enable = true;
 
   fileSystems = {
