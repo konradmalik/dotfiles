@@ -1,12 +1,7 @@
 { config, ... }:
 {
   imports = [
-    ./hardware.nix
-
     ../../system/profiles/rpi4.nix
-
-    ../../system/modules/monitoring/grafana.nix
-    ../../system/modules/monitoring/prometheus.nix
   ];
 
   networking = {

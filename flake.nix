@@ -229,7 +229,6 @@
 
           blocky = pkgs.callPackage ./system/modules/blocky.test.nix { };
           healthcheck = pkgs.callPackage ./system/options/healthcheck.test.nix { };
-          monitoring = pkgs.callPackage ./system/modules/monitoring/monitoring.test.nix { };
           restic = pkgs.callPackage ./home/options/restic/restic.test.nix { inherit inputs; };
         }
       );

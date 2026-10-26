@@ -1,6 +1,10 @@
-{ lib, ... }:
+{ lib, modulesPath, ... }:
 {
-  imports = [ ./nixos.nix ];
+  imports = [
+    ./nixos.nix
+    # headless defaults: no docs, xdg icons/sounds/mime, udisks, default packages
+    "${modulesPath}/profiles/minimal.nix"
+  ];
 
   home-manager.users.konrad.imports = [ ../../home/profiles/server.nix ];
 
@@ -11,6 +15,12 @@
       enable = true;
       bidirectional = false;
     };
+  };
+
+  # minimal.nix drops all docs, but man pages are worth their space
+  documentation = {
+    enable = true;
+    man.enable = true;
   };
 
   systemd.sleep.settings.Sleep = {

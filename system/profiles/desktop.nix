@@ -1,13 +1,17 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
+    inputs.stylix.nixosModules.stylix
+
     ../modules/local-backup.nix
     ../modules/dm.nix
     ../modules/flake-path.nix
     ../modules/hyprland.nix
     ../modules/fontconfig.nix
     ../modules/printing.nix
+    ../modules/stylix
     ../modules/thunar.nix
+    ../modules/virtualisation/linux.nix
 
     ./nixos.nix
   ];

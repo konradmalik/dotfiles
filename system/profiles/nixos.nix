@@ -9,7 +9,6 @@
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
-    inputs.stylix.nixosModules.stylix
 
     ./shared.nix
 
@@ -17,9 +16,7 @@
     ../modules/memory.nix
     ../modules/nix/nixos.nix
     ../modules/openssh.nix
-    ../modules/stylix
     ../modules/tailscale.nix
-    ../modules/virtualisation/linux.nix
 
     ../user/nixos.nix
   ]
@@ -31,7 +28,7 @@
   };
 
   services = {
-    fwupd.enable = true;
+    fwupd.enable = lib.mkDefault true;
     fstrim.enable = true;
   };
 

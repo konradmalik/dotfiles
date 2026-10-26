@@ -10,6 +10,8 @@
     ./mpv.nix
     ./opencode.nix
     ./packages.nix
+    ./starship.nix
+    ./yazi.nix
     ./zen-browser.nix
   ];
 }

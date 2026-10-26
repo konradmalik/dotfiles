@@ -32,7 +32,11 @@ testers.runNixOSTest (
       client =
         { pkgs, ... }:
         {
-          environment.systemPackages = [ pkgs.dnsutils ];
+          environment.systemPackages = with pkgs; [
+            curl
+            dnsutils
+            jq
+          ];
         };
     };
 
@@ -50,6 +54,10 @@ testers.runNixOSTest (
         client.wait_until_succeeds("dig +short @${dnsIP} ok.test | grep -x 10.0.0.1")
         # "fast" loading fills the denylists in the background, after DNS is up
         client.wait_until_succeeds("dig +short @${dnsIP} ads.test | grep -x 0.0.0.0")
+
+        # the block above is counted in the in-memory stats, which are fed asynchronously
+        client.wait_until_succeeds("curl --fail -s http://${dnsIP}:4000/api/stats | jq -e '.summary.blocked >= 1'")
+        dns.succeed("blocky stats")
       '';
   }
 )
