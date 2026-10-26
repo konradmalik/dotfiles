@@ -4,7 +4,14 @@
 let
   # baker notifies through custom.scripts.ntfy-send. Test nodes get a read-only
   # pkgs, so the overlay is applied to the one the test is built from instead.
-  pkgs' = pkgs.extend (final: prev: { custom = import ../../../pkgs final; });
+  pkgs' = pkgs.extend (
+    final: prev: {
+      custom = import ../../../pkgs {
+        pkgs = final;
+        inherit inputs;
+      };
+    }
+  );
 in
 pkgs'.testers.runNixOSTest {
   name = "restic";

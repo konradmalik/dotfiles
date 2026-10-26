@@ -11,7 +11,10 @@
         stable = import inputs.nixpkgs-stable {
           inherit (prev.stdenv.hostPlatform) system;
         };
-        custom = import ../../../pkgs final;
+        custom = import ../../../pkgs {
+          pkgs = final;
+          inherit inputs;
+        };
       })
     ];
     config = {

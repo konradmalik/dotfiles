@@ -1,9 +1,9 @@
-pkgs:
+{ pkgs, inputs }:
 
 let
   mkNerdFont = pkgs.callPackage ./mkNerdFont.nix { };
 in
 {
-  iosemka = mkNerdFont (pkgs.callPackage ./iosemka.nix { });
   iorkeley = mkNerdFont (pkgs.callPackage ./iorkeley.nix { });
+  nordwand = mkNerdFont (pkgs.callPackage ./nordwand.nix { src = inputs.nordwand-mono; });
 }

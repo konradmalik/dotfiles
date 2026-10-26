@@ -26,9 +26,10 @@ Singleton {
             base0F: "#d27e99"
         })
 
-    readonly property string fontFamily: "Iorkeley Nerd Font"
+    // generic families, which fontconfig resolves to what stylix set as default
+    readonly property string fontFamily: "monospace"
     readonly property int fontSize: 10
-    readonly property string popupFontFamily: "Ubuntu Sans"
+    readonly property string popupFontFamily: "sans-serif"
     readonly property int popupFontSize: 11
 
     readonly property bool hasBattery: true

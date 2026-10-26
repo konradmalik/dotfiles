@@ -51,6 +51,11 @@
       };
     };
 
+    nordwand-mono = {
+      url = "github:tywr/Nordwand-Mono";
+      flake = false;
+    };
+
     flake-compat = {
       url = "github:NixOS/flake-compat";
       flake = false;
@@ -173,7 +178,7 @@
       packages = forAllSystems (
         pkgs:
         let
-          custom = import ./pkgs pkgs;
+          custom = import ./pkgs { inherit pkgs inputs; };
         in
         custom.fonts
         // custom.scripts

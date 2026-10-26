@@ -878,6 +878,22 @@
         "type": "github"
       }
     },
+    "nordwand-mono": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792700300,
+        "narHash": "sha256-CsCpeWgjw5/UPgBmMFEX5Mhq19H8xyIo6bUro4W5AL4=",
+        "owner": "tywr",
+        "repo": "Nordwand-Mono",
+        "rev": "ff3dbd058b47b08c2b7c7dc5f758e3a5d80e3f8a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tywr",
+        "repo": "Nordwand-Mono",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -1020,6 +1036,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-stable": "nixpkgs-stable_2",
+        "nordwand-mono": "nordwand-mono",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix_2",
