@@ -5,6 +5,13 @@
 }:
 let
   cfg = config.konrad.programs.nvim;
+  # notes and spellfiles are written by nvim, so they must stay writable out of the store
+  liveDir = lib.types.nullOr (
+    lib.types.pathWith {
+      absolute = true;
+      inStore = false;
+    }
+  );
 in
 {
   options.konrad.programs.nvim = {
@@ -25,19 +32,19 @@ in
     };
 
     notesPath = lib.mkOption {
-      type = lib.types.nullOr lib.types.path;
+      type = liveDir;
       default = null;
       description = ''
-        Absolute path to root folder for quick-notes functionality.
+        Absolute path to root folder for quick-notes functionality, linked in place.
         Provide null to keep this in XDG state folder.
       '';
     };
 
     spellPath = lib.mkOption {
-      type = lib.types.nullOr lib.types.path;
+      type = liveDir;
       default = null;
       description = ''
-        Absolute path to root folder of spellfiles.
+        Absolute path to root folder of spellfiles, linked in place.
         Provide null to keep it in XDG state folder.
       '';
     };
@@ -60,12 +67,12 @@ in
 
       xdg.stateFile."nvim/notes" = {
         enable = cfg.notesPath != null;
-        source = cfg.notesPath;
+        source = config.lib.file.mkOutOfStoreSymlink cfg.notesPath;
       };
 
       xdg.stateFile."nvim/spell" = {
         enable = cfg.spellPath != null;
-        source = cfg.spellPath;
+        source = config.lib.file.mkOutOfStoreSymlink cfg.spellPath;
       };
 
       programs.git.ignores = lib.mkIf cfg.extendGitIgnores [

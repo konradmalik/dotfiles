@@ -1,7 +1,4 @@
 { config, lib, ... }:
-let
-  inherit (config.lib.file) mkOutOfStoreSymlink;
-in
 {
   imports = [
     ../modules/base
@@ -23,8 +20,8 @@ in
     konrad.programs.bitwarden.enable = true;
 
     konrad.programs.nvim = {
-      notesPath = mkOutOfStoreSymlink "${config.konrad.obsidianPath}/Personal";
-      spellPath = mkOutOfStoreSymlink "${config.konrad.repos.neovim.path}/state/spell";
+      notesPath = "${config.konrad.obsidianPath}/Personal";
+      spellPath = "${config.konrad.repos.neovim.path}/state/spell";
     };
 
     konrad.programs.restic = {
