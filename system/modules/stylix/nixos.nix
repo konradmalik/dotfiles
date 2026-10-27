@@ -1,10 +1,14 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }:
 {
-  imports = [ ./shared.nix ];
+  imports = [
+    inputs.stylix.nixosModules.stylix
+    ./shared.nix
+  ];
 
   # not supported by nix-darwin
   stylix = {

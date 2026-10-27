@@ -10,11 +10,10 @@
     ../modules/flake-path.nix
     ../modules/nix/darwin.nix
     ./shared.nix
-    ../modules/stylix/shared.nix
+    ../modules/stylix/darwin.nix
 
     ../user/darwin.nix
 
-    inputs.stylix.darwinModules.stylix
     inputs.home-manager.darwinModules.home-manager
   ];
 
