@@ -56,8 +56,8 @@
         "nix-command"
         "flakes"
       ];
-      keep-derivations = true;
-      keep-outputs = true;
+      keep-derivations = lib.mkDefault true;
+      keep-outputs = lib.mkDefault true;
       trusted-users = [
         "root"
       ]

@@ -17,6 +17,13 @@
     };
   };
 
+  # servers mostly fetch from caches and build little, so build inputs aren't worth
+  # their space; anything gc'd is fetched again on the next build
+  nix.settings = {
+    keep-derivations = false;
+    keep-outputs = false;
+  };
+
   # minimal.nix drops all docs, but man pages are worth their space
   documentation = {
     enable = true;
