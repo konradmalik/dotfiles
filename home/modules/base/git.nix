@@ -1,31 +1,11 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
 {
-  home.packages = with pkgs; [
-    difftastic
-    git-absorb
-    git-extras
-    git-who
-  ];
-
-  programs.delta = {
-    enable = true;
-    options = {
-      hyperlinks = true;
-      navigate = true;
-      side-by-side = true;
-      syntax-theme = "base16";
-    };
-    enableGitIntegration = true;
-  };
-
   programs.git =
     let
-      difft = "${lib.getExe pkgs.difftastic}";
       hardwareKeys = config.konrad.programs.ssh-egress.hardwareKeys;
       # machines that keep no key files of their own have nothing to name here, so git
       # asks the forwarded agent instead and signs as the laptop the session came from
@@ -108,11 +88,6 @@
           ds = "diff --staged";
           dt = "diff --stat";
 
-          dft = "difftool";
-          dfts = "difftool --staged";
-          dlog = "-c diff.external=${difft} log -p --ext-diff";
-          dshow = "-c diff.external=${difft} show HEAD --ext-diff";
-
           g = "graph";
           l = "log";
 
@@ -169,14 +144,6 @@
           algorithm = "histogram";
           mnemonicPrefix = true;
           renames = true;
-          tool = "difftastic";
-        };
-
-        difftool = {
-          prompt = false;
-          difftastic = {
-            cmd = "${difft} \"$LOCAL\" \"$REMOTE\"";
-          };
         };
 
         gpg = {
@@ -212,10 +179,6 @@
         mergetool = {
           keepBackup = false;
           prompt = false;
-        };
-
-        pager = {
-          difftool = true;
         };
 
         push = {

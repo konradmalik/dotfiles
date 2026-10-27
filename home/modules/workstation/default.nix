@@ -2,8 +2,10 @@
   imports = [
     ./alacritty.nix
     ./claude
+    ./direnv.nix
     ./glab.nix
     ./ghostty.nix
+    ./git.nix
     ./glow.nix
     ./k9s.nix
     ./lazygit.nix

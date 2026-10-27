@@ -9,7 +9,6 @@
   imports = [
     ./bat.nix
     ./btop.nix
-    ./direnv.nix
     ./fzf.nix
     ./git.nix
     ./packages.nix
