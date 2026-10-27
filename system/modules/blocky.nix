@@ -30,6 +30,9 @@
       };
       # rolling 24h in memory, served at /api/stats
       statistics.enable = true;
+      # the default logs every query to the journal, i.e. constant writes to the sd card;
+      # stats above don't depend on it
+      queryLog.type = "none";
       upstreams = {
         init.strategy = "blocking";
         groups.default = [
