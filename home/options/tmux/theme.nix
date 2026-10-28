@@ -1,7 +1,6 @@
 { config }:
 let
-  # servers don't load stylix, so they take the terminal's own ansi colors in the same
-  # base16 slots (base09 orange has no ansi slot, red stands out the same way)
+  # if stylix is missing (servers), use terminal's ansi colors
   c =
     if config.lib ? stylix then
       config.lib.stylix.colors.withHashtag
@@ -17,6 +16,10 @@ let
 in
 # sh
 ''
+  # tell tmux ui to use terminal colors
+  # instead of its built-in light/dark one (which can also be wrong)
+  set -s theme terminal
+
   set -g status-style "fg=${c.base04},bg=default"
   set -g window-status-style "bg=default"
   set -g window-status-current-style "fg=${c.base0A},bg=default"
