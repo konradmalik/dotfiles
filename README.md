@@ -278,7 +278,11 @@ The launchd daemon is started on demand with the
 
 #### Docker on Darwin
 
-Use [colima](https://github.com/abiosoft/colima). It's installed via homebrew.
+Podman via home-manager's `services.podman`. The machine is created on activation but
+not started at login: `podman machine start` / `podman machine stop`.
+
+Tools that need the docker socket (testcontainers etc.) want a one-time
+`sudo podman-mac-helper install`.
 
 ## sops-nix
 
