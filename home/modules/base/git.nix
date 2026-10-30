@@ -159,7 +159,6 @@
         fetch = {
           all = true;
           prune = true;
-          pruneTags = true;
           writeCommitGraph = true;
         };
 
