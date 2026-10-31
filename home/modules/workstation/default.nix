@@ -1,8 +1,10 @@
 {
   imports = [
     ./alacritty.nix
+    ./bat.nix
     ./claude
     ./direnv.nix
+    ./eza.nix
     ./glab.nix
     ./ghostty.nix
     ./git.nix
@@ -15,5 +17,6 @@
     ./starship.nix
     ./yazi.nix
     ./zen-browser.nix
+    ./zoxide.nix
   ];
 }

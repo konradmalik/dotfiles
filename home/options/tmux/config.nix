@@ -1,5 +1,4 @@
 {
-  tmux-sessionizer,
   tmux-switcher,
 }:
 # sh
@@ -75,9 +74,6 @@
   bind-key m setw mouse
   # enable mouse by default, useful for resizing
   set-option -g mouse on
-
-  # tmux sessionizer
-  bind-key C-o run-shell -b "${tmux-sessionizer}/bin/tms"
 
   # tmux windowizer; only zsh knows what is typed at the prompt, so just ask it
   # to run its widget (the hex is \e[999~, bound to it in ./default.nix)

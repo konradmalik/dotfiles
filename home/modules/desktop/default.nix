@@ -36,10 +36,16 @@
 
       hyprshot
       swappy
+
+      # real executables instead of aliases, so scripts can use them too
+      (writeShellScriptBin "pbcopy" ''exec ${wl-clipboard}/bin/wl-copy "$@"'')
+      (writeShellScriptBin "pbpaste" ''exec ${wl-clipboard}/bin/wl-paste "$@"'')
     ];
 
     sessionVariables.SSH_ASKPASS_REQUIRE = "prefer";
   };
+
+  programs.zsh.shellAliases.open = "${pkgs.xdg-utils}/bin/xdg-open";
 
   gtk.enable = true;
   # https://github.com/nix-community/stylix/issues/1560

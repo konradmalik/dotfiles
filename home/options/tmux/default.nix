@@ -12,13 +12,14 @@ let
   };
   tmux-switcher = pkgs.callPackage ./tmux-switcher { };
   baseConfig = pkgs.callPackage ./config.nix {
-    inherit tmux-switcher tmux-sessionizer;
+    inherit tmux-switcher;
   };
   themeConfig = import ./theme.nix { inherit config; };
 in
 {
   options.konrad.programs.tmux = {
     enable = mkEnableOption "Enables personalized tmux through home-manager";
+    sessionizer.enable = mkEnableOption "tms, a project picker over the projects dir";
   };
 
   config = mkIf cfg.enable {
@@ -35,10 +36,15 @@ in
       escapeTime = 0;
       baseIndex = 1;
       historyLimit = 50000;
-      extraConfig = lib.concatStringsSep "\n" [
-        baseConfig
-        themeConfig
-      ];
+      extraConfig = lib.concatStringsSep "\n" (
+        [
+          baseConfig
+          themeConfig
+        ]
+        ++ lib.optional cfg.sessionizer.enable ''
+          bind-key C-o run-shell -b "${tmux-sessionizer}/bin/tms"
+        ''
+      );
       plugins = [
         {
           plugin = pkgs.tmuxPlugins.extrakto;
@@ -62,8 +68,8 @@ in
     programs.fzf.tmux.enableShellIntegration = true;
 
     home.packages = [
-      tmux-sessionizer
       tmux-switcher
-    ];
+    ]
+    ++ lib.optional cfg.sessionizer.enable tmux-sessionizer;
   };
 }

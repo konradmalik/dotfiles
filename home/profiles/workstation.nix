@@ -19,6 +19,8 @@
 
     konrad.programs.bitwarden.enable = true;
 
+    konrad.programs.tmux.sessionizer.enable = true;
+
     konrad.programs.nvim = {
       notesPath = "${config.konrad.obsidianPath}/Personal";
       spellPath = "${config.konrad.repos.neovim.path}/state/spell";

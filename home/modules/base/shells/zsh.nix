@@ -94,12 +94,6 @@ in
         '';
   };
 
-  # real executables instead of aliases, so scripts can use them too
-  home.packages = lib.optionals pkgs.stdenvNoCC.hostPlatform.isLinux [
-    (pkgs.writeShellScriptBin "pbcopy" ''exec ${pkgs.wl-clipboard}/bin/wl-copy "$@"'')
-    (pkgs.writeShellScriptBin "pbpaste" ''exec ${pkgs.wl-clipboard}/bin/wl-paste "$@"'')
-  ];
-
   programs.zsh = {
     inherit initContent completionInit;
 
@@ -121,9 +115,6 @@ in
       rm = "rm -i";
       ".." = "cd ..";
       "..." = "cd ../..";
-    }
-    // pkgs.lib.optionalAttrs pkgs.stdenvNoCC.hostPlatform.isLinux {
-      open = "${pkgs.xdg-utils}/bin/xdg-open";
     };
     history = {
       path = "${config.xdg.dataHome}/zsh/zsh_history";

@@ -7,7 +7,6 @@
 }:
 {
   imports = [
-    ./bat.nix
     ./btop.nix
     ./fzf.nix
     ./git.nix
