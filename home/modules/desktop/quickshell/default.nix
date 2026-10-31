@@ -151,6 +151,8 @@ let
             readonly property bool hasPowerProfiles: ${qmlBool osConfig.services.tlp.pd.enable}
             readonly property bool hasMonitorProfiles: ${qmlBool monitors.enable}
 
+            readonly property bool watchFiles: false
+
             readonly property string distro: "${osConfig.system.nixos.distroName} ${osConfig.system.nixos.version} (${osConfig.system.nixos.codeName})"
 
             readonly property list<string> terminalArgv: ${qmlList terminalArgv}

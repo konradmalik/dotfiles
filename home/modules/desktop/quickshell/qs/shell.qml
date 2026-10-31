@@ -1,14 +1,18 @@
 //@ pragma UseQApplication
 
+import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import qs.Common
+import qs.Config
 import qs.Notifications
 import qs.Osd
 import qs.Panels
 import "Bar"
 
 ShellRoot {
+    Component.onCompleted: Quickshell.watchFiles = Env.watchFiles
+
     Bar {}
 
     Popups {}

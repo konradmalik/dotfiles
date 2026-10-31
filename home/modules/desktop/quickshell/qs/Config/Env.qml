@@ -38,6 +38,8 @@ Singleton {
     readonly property bool hasPowerProfiles: true
     readonly property bool hasMonitorProfiles: true
 
+    readonly property bool watchFiles: true
+
     readonly property string distro: "NixOS"
 
     readonly property list<string> terminalArgv: ["alacritty", "--class", "quickshell-tui", "-e", "/bin/sh", "-c"]
