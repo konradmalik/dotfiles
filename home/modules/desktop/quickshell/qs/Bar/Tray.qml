@@ -16,7 +16,7 @@ Row {
     readonly property bool showItems: !root.collapsible || Shell.trayExpanded
 
     // An empty tray takes no space in the bar row, gap included.
-    visible: implicitWidth > 0
+    visible: root.collapsible
 
     Repeater {
         model: SystemTray.items

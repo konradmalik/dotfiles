@@ -32,9 +32,11 @@ Item {
     signal scrolledUp
     signal scrolledDown
 
-    implicitWidth: active && row.implicitWidth > 0 ? row.implicitWidth + padding * 2 : 0
+    readonly property bool hasContent: text !== "" || row.children.length > 1
+
+    implicitWidth: visible ? row.implicitWidth + padding * 2 : 0
     implicitHeight: Theme.barHeight
-    visible: implicitWidth > 0
+    visible: active && hasContent
 
     component Highlight: Rectangle {
         anchors.verticalCenter: parent.verticalCenter
