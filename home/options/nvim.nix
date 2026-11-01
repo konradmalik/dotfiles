@@ -82,6 +82,15 @@ in
         MANPAGER = lib.mkDefault "${lib.getExe nvim} --clean +Man!";
       };
 
+      # vim.loader keys bytecode by file path and every build lives under new store paths,
+      # so entries of old builds are never hit again and nvim never prunes them
+      home.activation.nvimLuacRemoval =
+        lib.hm.dag.entryAfter [ "writeBoundary" ]
+          # bash
+          ''
+            $DRY_RUN_CMD rm -rf ${config.xdg.cacheHome}/${nvim.meta.mainProgram}/luac
+          '';
+
       xdg.stateFile."nvim/notes" = {
         enable = cfg.notesPath != null;
         source = config.lib.file.mkOutOfStoreSymlink cfg.notesPath;
