@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -48,6 +49,15 @@ in
         Provide null to keep it in XDG state folder.
       '';
     };
+
+    devFlakePath = lib.mkOption {
+      type = liveDir;
+      default = null;
+      description = ''
+        Absolute path to a local neovim flake checkout. When set, adds `nvim-next`
+        which runs it via `nix run`. Provide null to skip it.
+      '';
+    };
   };
 
   config =
@@ -55,7 +65,14 @@ in
       nvim = cfg.package;
     in
     lib.mkIf cfg.enable {
-      home.packages = [ nvim ];
+      home.packages = [
+        nvim
+      ]
+      ++ lib.optional (cfg.devFlakePath != null) (
+        pkgs.writeShellScriptBin "nvim-next" ''
+          exec nix run ${lib.escapeShellArg cfg.devFlakePath} -- "$@"
+        ''
+      );
 
       home.sessionVariables = {
         # should be like that but many programs don't respect VISUAL in favor of EDITOR so...

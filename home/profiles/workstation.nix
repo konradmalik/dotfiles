@@ -24,6 +24,7 @@
     konrad.programs.nvim = {
       notesPath = "${config.konrad.obsidianPath}/Personal";
       spellPath = "${config.konrad.repos.neovim.path}/state/spell";
+      devFlakePath = config.konrad.repos.neovim.path;
     };
 
     konrad.programs.restic = {
