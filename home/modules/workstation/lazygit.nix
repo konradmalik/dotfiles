@@ -5,10 +5,15 @@
     settings = {
       git = {
         overrideGpg = true;
+        # cycle with `|`
         diffRenderers = [
           {
             colorArg = "always";
-            command = "${lib.getExe pkgs.delta} --dark --paging=never";
+            command = "${lib.getExe pkgs.delta} --paging=never";
+          }
+          {
+            type = "extDiff";
+            command = "${lib.getExe pkgs.difftastic} --color=always --background={{colorScheme}} --context={{diffContext}}";
           }
         ];
       };
