@@ -83,8 +83,6 @@
           m = "commit --amend --verbose";
 
           d = "diff";
-          dc = "diff --cached";
-          dl = "diff HEAD^..HEAD";
           ds = "diff --staged";
           dt = "diff --stat";
 
@@ -142,6 +140,8 @@
 
         diff = {
           algorithm = "histogram";
+          colorMoved = "default";
+          colorMovedWS = "allow-indentation-change";
           mnemonicPrefix = true;
           renames = true;
         };

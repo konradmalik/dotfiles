@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   difft = "${lib.getExe pkgs.difftastic}";
 in
@@ -13,6 +18,10 @@ in
   programs.delta = {
     enable = true;
     options = {
+      # follow stylix instead of querying the terminal (slow/noisy in tmux, ssh);
+      # with polarity "either" both are false and delta detects it
+      dark = config.stylix.polarity == "dark";
+      light = config.stylix.polarity == "light";
       hyperlinks = true;
       navigate = true;
       side-by-side = true;
@@ -26,7 +35,7 @@ in
       dft = "difftool";
       dfts = "difftool --staged";
       dlog = "-c diff.external=${difft} log -p --ext-diff";
-      dshow = "-c diff.external=${difft} show HEAD --ext-diff";
+      dshow = "-c diff.external=${difft} show --ext-diff";
     };
 
     diff.tool = "difftastic";
