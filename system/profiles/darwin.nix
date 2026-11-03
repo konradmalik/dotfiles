@@ -54,7 +54,6 @@
 
     masApps = {
       Bitwarden = 1352778147;
-      GoodNotes = 1444383602;
       Tailscale = 1475387142;
     };
   };
@@ -114,7 +113,6 @@
           "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
           "${config.users.users.konrad.home}/Applications/Home Manager Apps/Zen Browser (Beta).app"
           "/Applications/Obsidian.app"
-          "/Applications/Goodnotes.app"
           "/Applications/NetNewsWire.app"
           "/System/Applications/Mail.app"
           "/System/Applications/Calendar.app"
