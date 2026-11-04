@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  aerospace = lib.getExe' config.services.aerospace.package "aerospace";
+  aerospace = lib.getExe config.home-manager.users.konrad.programs.aerospace.package;
 
   screenshot =
     flags:
@@ -50,10 +50,21 @@ let
   scratchpad = "S";
 in
 {
-  services.aerospace = {
+  # home-manager's module rather than nix-darwin's: nix-darwin passes the config to
+  # launchd as a store path, so every change restarted aerospace and lost window placement,
+  # home-manager keeps it in ~/.config and runs reload-config when it changes
+  home-manager.users.konrad.programs.aerospace = {
     enable = true;
+    launchd.enable = true;
     settings = {
       config-version = 2;
+      # nix-darwin's module wrote these out, aerospace docs don't promise them as fallbacks
+      accordion-padding = 30;
+      default-root-container-layout = "tiles";
+      default-root-container-orientation = "auto";
+      enable-normalization-flatten-containers = true;
+      enable-normalization-opposite-orientation-for-nested-containers = true;
+      key-mapping.preset = "qwerty";
       # like the hyprland bar, first five always exist, the rest only while they have windows
       persistent-workspaces = lib.take 5 workspaceNames;
 
@@ -122,7 +133,7 @@ in
   # colors come from stylix
   services.jankyborders = {
     enable = true;
-    width = 2.0;
-    style = "round";
+    # below hides most of it under the window's shadow and rounded corners
+    order = "above";
   };
 }
