@@ -70,7 +70,8 @@ in
       mode.main.binding = {
         # Program bindings
         alt-enter = "exec-and-forget open -na Ghostty";
-        alt-b = "exec-and-forget open -a '${config.users.users.konrad.home}/Applications/Home Manager Apps/Zen Browser (Beta).app'";
+        # held alt would otherwise put Zen into Troubleshoot Mode on launch
+        alt-b = "exec-and-forget open --env MOZ_DISABLE_SAFE_MODE_KEY=1 -a '${config.users.users.konrad.home}/Applications/Home Manager Apps/Zen Browser (Beta).app'";
 
         # Screenshots
         alt-p = screenshot "";
