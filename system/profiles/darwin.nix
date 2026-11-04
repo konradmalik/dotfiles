@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    ../modules/aerospace.nix
     ../modules/virtualisation/darwin.nix
     ../modules/flake-path.nix
     ../modules/nix/darwin.nix
