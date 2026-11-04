@@ -6,7 +6,7 @@
       "ignoredups"
       "ignorespace"
     ];
-    # history expansion (!!, !$) fills the prompt instead of running right away
-    initExtra = "shopt -s histverify";
+    # history expansion (!!, !$) expands in place when pressing space
+    initExtra = "bind Space:magic-space";
   };
 }
