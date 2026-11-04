@@ -31,19 +31,20 @@ let
     )
   ) directions;
 
+  # padded so they sort
+  workspaceNames = lib.genList (i: lib.fixedWidthNumber 2 (i + 1)) 10;
+
   workspaceBindings = lib.mergeAttrsList (
-    lib.genList (
-      i:
+    lib.imap1 (
+      i: name:
       let
-        key = toString (lib.mod (i + 1) 10);
-        # padded so they sort
-        name = lib.fixedWidthNumber 2 (i + 1);
+        key = toString (lib.mod i 10);
       in
       {
         "alt-${key}" = "workspace ${name}";
         "alt-shift-${key}" = "move-node-to-workspace ${name}";
       }
-    ) 10
+    ) workspaceNames
   );
 
   scratchpad = "S";
@@ -52,6 +53,10 @@ in
   services.aerospace = {
     enable = true;
     settings = {
+      config-version = 2;
+      # like the hyprland bar, first five always exist, the rest only while they have windows
+      persistent-workspaces = lib.take 5 workspaceNames;
+
       gaps = {
         inner = {
           horizontal = 5;
@@ -105,8 +110,12 @@ in
     };
   };
 
-  # recommended by aerospace, turns off "displays have separate spaces" (needs a logout)
-  system.defaults.spaces.spans-displays = true;
+  system.defaults = {
+    # recommended by aerospace, turns off "displays have separate spaces" (needs a logout)
+    spaces.spans-displays = true;
+    # menu bar workspace indicator, "i3 style grouped" in the UI
+    CustomUserPreferences."bobko.aerospace".displayStyle = "i3";
+  };
 
   # colors come from stylix
   services.jankyborders = {
