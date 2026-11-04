@@ -29,6 +29,8 @@ in
         "zen.view.compact.enable-at-startup" = false;
         "zen.view.sidebar-expanded" = false;
         "zen.view.use-single-toolbar" = false;
+        # native colored traffic lights that dim when the window loses focus
+        "zen.widget.mac.mono-window-controls" = false;
         "zen.window-sync.sync-only-pinned-tabs" = true;
         "zen.workspaces.continue-where-left-off" = true;
       };
