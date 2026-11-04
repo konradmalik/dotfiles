@@ -57,10 +57,12 @@ in
       # like the hyprland bar, first five always exist, the rest only while they have windows
       persistent-workspaces = lib.take 5 workspaceNames;
 
+      # inner is the whole gap between windows, unlike hyprland's per-window gaps_in,
+      # so it matches outer for even spacing (hyprland's 5 in / 10 out looks the same)
       gaps = {
         inner = {
-          horizontal = 5;
-          vertical = 5;
+          horizontal = 10;
+          vertical = 10;
         };
         outer = {
           left = 10;
