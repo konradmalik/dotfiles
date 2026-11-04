@@ -58,13 +58,6 @@ in
     launchd.enable = true;
     settings = {
       config-version = 2;
-      # nix-darwin's module wrote these out, aerospace docs don't promise them as fallbacks
-      accordion-padding = 30;
-      default-root-container-layout = "tiles";
-      default-root-container-orientation = "auto";
-      enable-normalization-flatten-containers = true;
-      enable-normalization-opposite-orientation-for-nested-containers = true;
-      key-mapping.preset = "qwerty";
       # like the hyprland bar, first five always exist, the rest only while they have windows
       persistent-workspaces = lib.take 5 workspaceNames;
 
@@ -78,7 +71,8 @@ in
         outer = {
           left = 10;
           bottom = 10;
-          top = 10;
+          # the menu bar already separates windows from the screen edge
+          top = 0;
           right = 10;
         };
       };
@@ -87,7 +81,10 @@ in
 
       mode.main.binding = {
         # Program bindings
-        alt-enter = "exec-and-forget open -na Ghostty";
+        # a running ghostty gets a new window over applescript (open -n would add another
+        # instance and dock icon); open hands its env to the app, and the
+        # exec-and-forget shell's SHLVL would start every terminal at 2
+        alt-enter = "exec-and-forget pgrep -xq ghostty && osascript -e 'tell application \"Ghostty\"' -e 'new window' -e 'activate' -e 'end tell' || env -u SHLVL open -a Ghostty";
         # held alt would otherwise put Zen into Troubleshoot Mode on launch
         alt-b = "exec-and-forget open --env MOZ_DISABLE_SAFE_MODE_KEY=1 -a '${config.users.users.konrad.home}/Applications/Home Manager Apps/Zen Browser (Beta).app'";
 
@@ -128,12 +125,15 @@ in
     spaces.spans-displays = true;
     # menu bar workspace indicator, "i3 style grouped" in the UI
     CustomUserPreferences."bobko.aerospace".displayStyle = "i3";
-  };
-
-  # colors come from stylix
-  services.jankyborders = {
-    enable = true;
-    # below hides most of it under the window's shadow and rounded corners
-    order = "above";
+    WindowManager = {
+      # macOS's own tiling fights aerospace when dragging windows
+      EnableTilingByEdgeDrag = false;
+      EnableTopTilingByEdgeDrag = false;
+      EnableTilingOptionAccelerator = false;
+      # clicking the wallpaper in a gap would sweep every window away
+      EnableStandardClickToShowDesktop = false;
+    };
+    # ctrl-cmd + drag moves a window from anywhere, like hyprland's super + drag (needs a logout)
+    NSGlobalDomain.NSWindowShouldDragOnGesture = true;
   };
 }
