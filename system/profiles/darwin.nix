@@ -144,7 +144,12 @@
         ShowDayOfWeek = true;
       };
       screencapture.target = "clipboard";
-      WindowManager.EnableTiledWindowMargins = false;
+      WindowManager = {
+        EnableTiledWindowMargins = false;
+        EnableTilingByEdgeDrag = true;
+        EnableTopTilingByEdgeDrag = true;
+        EnableTilingOptionAccelerator = true;
+      };
       trackpad = {
         Clicking = true;
       };
@@ -171,10 +176,32 @@
         NSAutomaticSpellingCorrectionEnabled = false;
       };
       CustomUserPreferences = {
+        # Window > Move & Resize defaults to fn+ctrl+arrows, unreachable without a fn key;
+        # cmd+ctrl matches the native ctrl+cmd+F fullscreen and never reaches the terminal
+        # (@ is cmd, ^ is ctrl)
+        NSGlobalDomain.NSUserKeyEquivalents = {
+          "Left" = "@^h";
+          "Return to Previous Size" = "@^j";
+          "Fill" = "@^k";
+          "Right" = "@^l";
+        };
+        # Siri and Apple Intelligence themselves are turned on in System Settings (consent and
+        # model download can't go through defaults), this only keeps the ways of invoking it off
         "com.apple.Siri" = {
           "UAProfileCheckingStatus" = 0;
-          "siriEnabled" = 0;
+          # "Listen for"
+          VoiceTriggerUserEnabled = false;
+          # "Keyboard shortcut"
+          KeyboardShortcutSAE = {
+            enabled = false;
+            value.type = "SAE1.0";
+          };
+          KeyboardShortcutPreSAE = {
+            enabled = false;
+            value.type = "standard";
+          };
         };
+        "com.apple.voicetrigger"."VoiceTrigger Enabled" = false;
         "com.apple.AdLib" = {
           allowApplePersonalizedAdvertising = false;
         };
