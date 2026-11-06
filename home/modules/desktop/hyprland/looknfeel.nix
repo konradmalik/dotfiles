@@ -25,6 +25,7 @@
     };
 
     misc = {
+      allow_session_lock_restore = true;
       animate_mouse_windowdragging = false;
       disable_autoreload = true;
       disable_hyprland_logo = true;
