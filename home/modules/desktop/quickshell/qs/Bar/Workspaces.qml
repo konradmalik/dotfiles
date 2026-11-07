@@ -58,6 +58,7 @@ Row {
             padding: Theme.itemPadding
             text: focused ? "󱓻" : modelData === 10 ? "0" : String(modelData)
             color: focused ? Theme.accentAlt : Theme.text
+            underline: ws?.hasFullscreen ?? false
             opacity: focused || occupied ? 1 : 0.5
 
             onLeftClicked: root.goTo(modelData)

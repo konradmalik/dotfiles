@@ -17,6 +17,7 @@ Item {
     property int padding: Theme.itemPadding
     property int spacing: 4
     property bool bold: false
+    property bool underline: false
     property bool active: true
 
     // Set by items that drop a BarPopup: a tooltip must not stack on top of the
@@ -59,6 +60,16 @@ Item {
                 duration: 100
             }
         }
+    }
+
+    Rectangle {
+        visible: root.underline
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: Math.round((parent.height + Theme.highlightHeight) / 2) - height - 2
+        width: row.width
+        height: 2
+        radius: 1
+        color: root.color
     }
 
     Row {
