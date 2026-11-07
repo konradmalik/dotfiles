@@ -31,6 +31,7 @@
     enable = true;
     openFirewall = true;
   };
+  systemd.services.jellyfin.unitConfig.RequiresMountsFor = [ "/mnt" ];
 
   services.audiobookshelf = {
     enable = true;
@@ -42,6 +43,11 @@
 
   konrad.services.hd-idle.enable = true;
 
+  # The Seagate Expansion (0bc2:231a) wedges under UAS on the Pi 4 and drops off
+  # the bus (uas_zap_pending, "can't set config #1"). The trailing ":u" forces the
+  # plain usb-storage (BOT) driver for it: slightly slower, but stable.
+  boot.kernelParams = [ "usb-storage.quirks=0bc2:231a:u" ];
+
   fileSystems = {
     "/mnt" = {
       device = "/dev/disk/by-uuid/37d6273c-f954-442c-9c0d-3ee305898fd9";
@@ -49,6 +55,7 @@
       options = [
         "nofail"
         "noatime"
+        "x-systemd.automount"
       ];
     };
   };
