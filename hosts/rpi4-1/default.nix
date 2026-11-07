@@ -2,6 +2,8 @@
 {
   imports = [
     ../../system/profiles/rpi4.nix
+    ../../system/modules/beszel-agent.nix
+    ../../system/modules/beszel-hub.nix
   ];
 
   networking = {
@@ -21,9 +23,20 @@
 
   services.blocky.enable = true;
 
+  services.beszel.agent.smartmon.enable = true;
+
   # odd/even days so both DNS resolvers never reboot together
   konrad.services.autoupgrade.dates = "*-*-1/2 02:00";
 
   sops.secrets.healthcheck.key = "healthchecks/rpi4-1";
   konrad.services.healthcheck.urlFile = config.sops.secrets.healthcheck.path;
+
+  fileSystems."/mnt" = {
+    device = "/dev/disk/by-uuid/ea8a0e2d-7ed1-4de7-bd7e-6ffacfba02d8";
+    fsType = "ext4";
+    options = [
+      "nofail"
+      "noatime"
+    ];
+  };
 }

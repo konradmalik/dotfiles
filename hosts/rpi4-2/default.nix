@@ -2,7 +2,17 @@
 {
   imports = [
     ../../system/profiles/rpi4.nix
+    ../../system/modules/beszel-agent.nix
   ];
+
+  services.beszel.agent = {
+    openFirewall = true;
+    smartmon.enable = true;
+  };
+  systemd.services.beszel-agent = {
+    wants = [ "mnt.mount" ];
+    after = [ "mnt.mount" ];
+  };
 
   networking = {
     hostName = "rpi4-2";
