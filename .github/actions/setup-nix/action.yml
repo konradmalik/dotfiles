@@ -14,7 +14,7 @@ runs:
   using: composite
   steps:
     - if: runner.os == 'Linux'
-      uses: wimpysworld/nothing-but-nix@v10
+      uses: wimpysworld/nothing-but-nix@v11
     - uses: DeterminateSystems/nix-installer-action@v23
       with:
         extra-conf: |
