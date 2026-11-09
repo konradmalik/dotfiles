@@ -6,7 +6,6 @@
     ./hardware.nix
     ./disko.nix
 
-    ../../system/modules/llama
     ../../system/profiles/desktop.nix
   ];
 

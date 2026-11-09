@@ -12,7 +12,6 @@
     ./k9s.nix
     ./lazygit.nix
     ./mpv.nix
-    ./opencode.nix
     ./packages.nix
     ./starship.nix
     ./yazi.nix
