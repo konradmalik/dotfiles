@@ -21,8 +21,6 @@
       yq-go
 
       gh
-
-      zapfast
     ]
     ++ (builtins.attrValues custom.scripts)
     ++ lib.optionals stdenvNoCC.hostPlatform.isLinux [

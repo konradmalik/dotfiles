@@ -47,7 +47,6 @@
       "microsoft-teams"
       "netnewswire"
       "obsidian"
-      "signal"
       "slack"
       "spotify"
     ];
@@ -118,7 +117,6 @@
           "/System/Applications/Calendar.app"
           "/System/Applications/Reminders.app"
           "/Applications/Slack.app"
-          "/Applications/Signal.app"
           "${config.users.users.konrad.home}/Applications/Home Manager Apps/ZapFast.app"
           "/System/Applications/Messages.app"
           "/Applications/Spotify.app"
