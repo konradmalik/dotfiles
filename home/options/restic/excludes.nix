@@ -23,6 +23,7 @@
   "${projects}/**/obj"
 
   "${home}/.cache"
+  "${home}/.gvfs"
   "${home}/.local/share"
   "${home}/.local/state"
   "${home}/Downloads"

@@ -44,6 +44,7 @@ in
       {
         konrad.programs.restic.repositories.local = {
           repository = "${mountPoint}/restic";
+          inherit mountPoint;
           includes = [ config.home.homeDirectory ];
           backupMinute = 37;
           maintenanceHour = 5;

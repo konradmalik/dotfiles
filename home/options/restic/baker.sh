@@ -8,6 +8,7 @@
 #   BAKER_INCLUDE_FILE, BAKER_EXCLUDE_FILE    one path or pattern per line
 #   BAKER_KEEP                                forget flags, "--keep-daily 7 ..."
 #   BAKER_MAX_AGE_DAYS                        watchdog threshold, unset disables it
+#   BAKER_MOUNT_POINT                         where the repository's disk mounts, if any
 #   BAKER_NTFY_TOKEN_FILE, BAKER_NTFY_TOPIC_FILE
 set -uo pipefail
 
@@ -27,7 +28,15 @@ usage() {
 # --retry-lock makes every command wait for a lock held by another host sharing
 # the repository instead of failing immediately. forget --prune takes an
 # exclusive lock and would otherwise fail whenever any other host is backing up.
+#
+# With the disk away its mount point is a plain directory on the root
+# filesystem, and a repository initialized in there would silently take every
+# backup.
 restic() {
+    if [[ -n ${BAKER_MOUNT_POINT-} ]] && ! mountpoint -q "$BAKER_MOUNT_POINT"; then
+        echo "nothing is mounted at $BAKER_MOUNT_POINT" >&2
+        return 10
+    fi
     command restic --retry-lock 1h "$@"
 }
 

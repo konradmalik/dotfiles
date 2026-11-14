@@ -16,6 +16,13 @@ let
         description = "restic repository location, as in RESTIC_REPOSITORY";
       };
 
+      mountPoint = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        example = "/mnt/backup";
+        description = "mount point of the disk holding the repository, restic refuses to run while nothing is mounted there";
+      };
+
       environment = mkOption {
         type = types.attrsOf types.str;
         default = { };
@@ -88,14 +95,17 @@ let
 
   baker = pkgs.writeShellApplication {
     name = "baker";
-    runtimeInputs = with pkgs; [
-      coreutils
-      gnugrep
-      jq
-      rclone
-      restic
-      custom.scripts.ntfy-send
-    ];
+    runtimeInputs =
+      with pkgs;
+      [
+        coreutils
+        gnugrep
+        jq
+        rclone
+        restic
+        custom.scripts.ntfy-send
+      ]
+      ++ lib.optional pkgs.stdenv.isLinux util-linux;
     # baker.sh sets its own options, errexit deliberately not among them
     bashOptions = [ ];
     text = builtins.readFile ./baker.sh;
@@ -116,6 +126,9 @@ let
         BAKER_KEEP = toString (lib.mapAttrsToList (k: v: "--keep-${k} ${toString v}") repo.retention);
         BAKER_NTFY_TOKEN_FILE = cfg.ntfy.tokenFile;
         BAKER_NTFY_TOPIC_FILE = cfg.ntfy.topicFile;
+      }
+      // lib.optionalAttrs (repo.mountPoint != null) {
+        BAKER_MOUNT_POINT = repo.mountPoint;
       }
       // lib.optionalAttrs (repo.maxSnapshotAgeDays != null) {
         BAKER_MAX_AGE_DAYS = toString repo.maxSnapshotAgeDays;
