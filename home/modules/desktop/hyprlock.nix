@@ -25,6 +25,7 @@ in
     settings = {
       general = {
         hide_cursor = true;
+        # helps when screen disables on idle and comes back as 'a different one'
         ignore_empty_input = true;
       };
 
