@@ -105,7 +105,7 @@ let
         restic
         custom.scripts.ntfy-send
       ]
-      ++ lib.optional pkgs.stdenv.isLinux util-linux;
+      ++ lib.optional pkgs.stdenv.hostPlatform.isLinux util-linux;
     # baker.sh sets its own options, errexit deliberately not among them
     bashOptions = [ ];
     text = builtins.readFile ./baker.sh;
@@ -138,7 +138,10 @@ let
     pkgs.writeShellScriptBin "baker-${name}" ''
       ${lib.concatLines (lib.mapAttrsToList (k: v: "export ${k}=${lib.escapeShellArg v}") exports)}
       ${lib.concatLines (
-        lib.mapAttrsToList (k: file: "export ${k}=\"$(<${lib.escapeShellArg file})\"") repo.environmentFiles
+        # a bare export would hide a missing file and run restic with an empty secret
+        lib.mapAttrsToList (
+          k: file: "${k}=\"$(<${lib.escapeShellArg file})\" || exit 1; export ${k}"
+        ) repo.environmentFiles
       )}
       exec ${lib.getExe baker} "$@"
     '';
@@ -244,7 +247,14 @@ in
   # great reference https://hugoreeves.com/posts/2019/backups-with-restic/
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
-      { home.packages = lib.attrValues wrappers; }
+      {
+        home.packages = lib.attrValues wrappers;
+
+        assertions = lib.mapAttrsToList (name: repo: {
+          assertion = repo.mountPoint == null || pkgs.stdenv.hostPlatform.isLinux;
+          message = "konrad.programs.restic.repositories.${name}.mountPoint is linux only, baker checks it with util-linux's mountpoint";
+        }) cfg.repositories;
+      }
 
       (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         systemd.user.services = lib.mapAttrs (name: job: {

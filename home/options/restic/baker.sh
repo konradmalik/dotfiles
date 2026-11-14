@@ -143,8 +143,8 @@ run() {
     local job="${1:?usage: run <command>}"
 
     # A local repository sits on a disk that is not always attached, and there
-    # is nothing to report while it is away. The watchdog still runs, so a disk
-    # that stays away for too long does get noticed.
+    # is nothing to report while it is away. The watchdog still runs and fails
+    # on its first run without the disk, whatever BAKER_MAX_AGE_DAYS says.
     if [[ $job != watchdog && $RESTIC_REPOSITORY == /* && ! -e $RESTIC_REPOSITORY/config ]]; then
         echo "$RESTIC_REPOSITORY is not available, skipping"
         return 0

@@ -36,7 +36,11 @@ pkgs'.testers.runNixOSTest {
         };
       };
 
-      systemd.tmpfiles.rules = [ "d /var/backup 0755 konrad users -" ];
+      systemd.tmpfiles.rules = [
+        "d /var/backup 0755 konrad users -"
+        # a writable directory nothing is mounted at
+        "d /var/unmounted 0755 konrad users -"
+      ];
 
       home-manager = {
         useGlobalPkgs = true;
@@ -55,6 +59,11 @@ pkgs'.testers.runNixOSTest {
             };
             repositories.local = {
               repository = "/var/backup/restic";
+              includes = [ "/home/konrad/data" ];
+            };
+            repositories.unmounted = {
+              repository = "/var/unmounted/restic";
+              mountPoint = "/var/unmounted";
               includes = [ "/home/konrad/data" ];
             };
           };
@@ -88,6 +97,10 @@ pkgs'.testers.runNixOSTest {
 
       with subtest("scheduled jobs skip a local repository that is not there"):
           assert "is not available, skipping" in konrad("baker-local run backup")
+
+      with subtest("a repository whose mount point has nothing mounted is refused"):
+          assert exit_code("baker-unmounted init") == 10
+          konrad("test ! -e /var/unmounted/restic")
 
       with subtest("the watchdog fails while only old snapshots exist"):
           konrad("baker-local init")
