@@ -28,7 +28,6 @@
       obsidian
       slack
       spotify
-      zapfast
       # for xdg-open in 'gx' in vim for example
       xdg-utils
 
