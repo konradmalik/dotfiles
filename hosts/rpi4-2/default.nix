@@ -40,6 +40,7 @@
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+    cacheDir = "/mnt/jellyfin-cache";
   };
   systemd.services.jellyfin.unitConfig.RequiresMountsFor = [ "/mnt" ];
 
