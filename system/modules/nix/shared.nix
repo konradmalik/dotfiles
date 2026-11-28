@@ -16,18 +16,6 @@
           inherit inputs;
         };
       })
-      # TODO remove once NixOS/nixpkgs#590962 reaches nixpkgs-unstable
-      (
-        final: prev:
-        lib.optionalAttrs prev.stdenv.hostPlatform.isDarwin {
-          inherit
-            ((builtins.getFlake "github:NixOS/nixpkgs/680275f0bb6afce84fbac3e75fc47c5f2272400b")
-              .legacyPackages.${prev.stdenv.hostPlatform.system}
-            )
-            swift
-            ;
-        }
-      )
     ];
     config = {
       allowUnfree = true;
