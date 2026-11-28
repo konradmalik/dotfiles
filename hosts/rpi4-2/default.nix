@@ -1,4 +1,10 @@
 { config, ... }:
+let
+  # write access to a media dir via ACLs
+  acl = user: {
+    "A+".argument = "u:${user}:rwX,d:u:${user}:rwX";
+  };
+in
 {
   imports = [
     ../../system/profiles/rpi4.nix
@@ -43,6 +49,11 @@
     cacheDir = "/mnt/jellyfin-cache";
   };
   systemd.services.jellyfin.unitConfig.RequiresMountsFor = [ "/mnt" ];
+  # jellyfin saves uploaded subtitles next to the media
+  systemd.tmpfiles.settings.jellyfinMediaAcl = {
+    "/mnt/Filmy" = acl config.services.jellyfin.user;
+    "/mnt/Seriale" = acl config.services.jellyfin.user;
+  };
 
   services.audiobookshelf = {
     enable = true;
@@ -51,6 +62,10 @@
   };
   # library lives on the external disk; don't start against an empty /mnt
   systemd.services.audiobookshelf.unitConfig.RequiresMountsFor = [ "/mnt" ];
+  # audiobookshelf writes uploads (and optionally covers/metadata) into the library
+  systemd.tmpfiles.settings.audiobookshelfMediaAcl = {
+    "/mnt/Audiobooks" = acl config.services.audiobookshelf.user;
+  };
 
   konrad.services.hd-idle.enable = true;
 
